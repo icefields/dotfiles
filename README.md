@@ -19,9 +19,12 @@ ie. if the default shell is **Fish**, on MacOs:
 ```
 ln -s /opt/homebrew/bin/fish /opt/default_shell-kitty_config 
 ```
+
+```
  _                   _ 
 | |                 (_)
 | |     _   _   ___  _ 
 | |    | | | | / __|| |
 | |____| |_| || (__ | |
 \_____/ \__,_| \___||_|
+```
