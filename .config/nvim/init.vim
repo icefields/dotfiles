@@ -29,13 +29,15 @@ set ttyfast                 " Speed up scrolling in Vim
 call plug#begin()
     " Plugins
     Plug 'http://github.com/tpope/vim-surround'         " Surrounding ysw)
-    Plug 'https://github.com/preservim/nerdtree'        " NerdTree
+    " Plug 'https://github.com/preservim/nerdtree'        " NerdTree
+    Plug 'scrooloose/nerdtree'
     Plug 'https://github.com/tpope/vim-commentary'      " For Commenting gcc & gc
     Plug 'https://github.com/vim-airline/vim-airline'   " Status bar
     Plug 'https://github.com/lifepillar/pgsql.vim'      " PSQL Pluging needs :SQLSetType pgsql.vim
     Plug 'https://github.com/ap/vim-css-color'          " CSS Color Preview
     Plug 'https://github.com/rafi/awesome-vim-colorschemes' " Retro Scheme
-    Plug 'https://github.com/neoclide/coc.nvim'         " Auto Completion
+    " Plug 'https://github.com/neoclide/coc.nvim'         " Auto Completion
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'https://github.com/ryanoasis/vim-devicons'    " Developer Icons
     Plug 'https://github.com/tc50cal/vim-terminal'      " Vim Terminal
     Plug 'https://github.com/preservim/tagbar'          " Tagbar for code navigation
@@ -47,10 +49,8 @@ call plug#begin()
     Plug 'ryanoasis/vim-devicons'
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
-    Plug 'scrooloose/nerdtree'
     Plug 'preservim/nerdcommenter'
     Plug 'mhinz/vim-startify'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 nnoremap <C-f> :NERDTreeFocus<CR>
