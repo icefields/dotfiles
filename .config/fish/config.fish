@@ -83,6 +83,7 @@ if status is-interactive
     end
 
     ### THEME BOBTHEFISH ###
+    ### https://github.com/oh-my-fish/theme-bobthefish ###
     set -g theme_nerd_fonts yes
     set -g theme_powerline_fonts yes
     # theme Show full path
