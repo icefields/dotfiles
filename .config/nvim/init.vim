@@ -1,3 +1,23 @@
+""" SOURCES
+""" https://github.com/junegunn/vim-plug/
+""" https://www.youtube.com/watch?v=JWReY93Vl6g
+""" https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+"""       _                   _ 
+"""      | |                 (_)
+"""      | |     _   _   ___  _ 
+"""      | |    | | | | / __|| |
+"""      | |____| |_| || (__ | |
+"""      \_____/ \__,_| \___||_|      
+"""                                 
+""" :PlugClean :PlugInstall :UpdateRemotePlugins
+""" cocInstall, install manually coc-java, coc-python, coc-html, etc ...
+""" instructions: https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+""" :CocInstall coc-python
+""" :CocInstall coc-clangd
+""" :CocInstall coc-snippets
+""" :CocCommand snippets.edit... FOR EACH FILE TYPE
+"""
+
 set nocompatible            " disable compatibility to old-time vi
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
@@ -66,4 +86,23 @@ nmap <F8> :TagbarToggle<CR>
 "  :colorscheme fogbell 
 "  :colorscheme rdark-terminal2
 :colorscheme nord
+
+
+" air-line
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
 
