@@ -99,8 +99,8 @@ nmap <F8> :TagbarToggle<CR>
 """ --- COLOUR SCHEME ---
 " :colorscheme jellybeans
 " :colorscheme fogbell 
-" :colorscheme rdark-terminal2
-:colorscheme nord
+:colorscheme rdark-terminal2
+" colorscheme nord
 
 
 """ --- AIRLINE ---
