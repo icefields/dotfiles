@@ -73,9 +73,11 @@ if status is-interactive
         case "Ubuntu"
             abbr --add ca batcat	        
             abbr --add upd "sudo apt update && sudo apt upgrade -y"
-	        cd
+            set -e SESSION_MANAGER
+            cd
         case "Arch"
             abbr --add ca bat
+            set -e SESSION_MANAGER
 	case "macOS"
             abbr --add ca bat
         case '*'
