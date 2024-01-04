@@ -73,10 +73,12 @@ if status is-interactive
         case "Ubuntu"
             abbr --add ca batcat	        
             abbr --add upd "sudo apt update && sudo apt upgrade -y"
+            # to work with distrobox
             set -e SESSION_MANAGER
             cd
         case "Arch"
             abbr --add ca bat
+            # to work with distrobox
             set -e SESSION_MANAGER
 	case "macOS"
             abbr --add ca bat
