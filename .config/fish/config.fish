@@ -18,9 +18,12 @@ if status is-interactive
     ### ABBREVIATIONS ###
     abbr --add l exa -al --color=always --group-directories-first    
     # git
+    abbr --add ad git add .
+    abbr --add pus git push -u origin main 
+    abbr --add com git commit -m 
     abbr --add gcb git checkout -b
-    abbr --add gco git checkout   
-    abbr --add gp git pull
+    abbr --add che git checkout   
+    abbr --add pul git pull
 
     ### ALIASES ###
     # Colorize grep output (good for log files)
@@ -43,8 +46,8 @@ if status is-interactive
     alias clone='git clone'
     alias commit='git commit -m'
     alias fetch='git fetch'
-    alias pull='git pull origin'
-    alias push='git push origin'
+    alias pull='git pull'
+    alias push='git push -u origin'
     alias tag='git tag'
     alias newtag='git tag -a'
 
