@@ -94,13 +94,14 @@ nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
 inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
 nmap <F8> :TagbarToggle<CR>
 
-:set completeopt-=preview " For No Previews
+" Investigate this 
+" :set completeopt-=preview " For No Previews
 
 """ --- COLOUR SCHEME ---
 " :colorscheme jellybeans
 " :colorscheme fogbell 
-:colorscheme rdark-terminal2
-" colorscheme nord
+" :colorscheme rdark-terminal2
+colorscheme nord
 
 
 """ --- AIRLINE ---
