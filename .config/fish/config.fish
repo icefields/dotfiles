@@ -19,9 +19,11 @@ if status is-interactive
     abbr --add l exa -al --color=always --group-directories-first    
     # git
     abbr --add ad git add .
-    abbr --add pus git push -u origin main 
-    abbr --add com git commit -m 
-    abbr --add gcb git checkout -b
+    abbr --add pus git push -u origin 
+    abbr --add pum git push -u origin main 
+    abbr --add pud git push -u origin dev 
+    abbr --add com git commit -m \"
+    abbr --add chb git checkout -b
     abbr --add che git checkout   
     abbr --add pul git pull
 
