@@ -87,7 +87,9 @@ if status is-interactive
             set -e SESSION_MANAGER
 	case "macOS"
             abbr --add ca bat
-        case '*'
+        case "Linuxmint"
+	    abbr --add ca bat
+	case '*'
             echo "CANNOT DETECT OS, CHECK fish.config FILE"
     end
 
