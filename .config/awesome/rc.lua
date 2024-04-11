@@ -6,6 +6,8 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+-- Collision
+require("collision")()
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
@@ -49,7 +51,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+-- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/luci4/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -65,8 +68,8 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
+    awful.layout.suit.floating,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
@@ -77,7 +80,7 @@ awful.layout.layouts = {
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -175,7 +178,7 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
+        gears.wallpaper.maximized(wallpaper, s, false)
     end
 end
 
@@ -328,8 +331,30 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+
+    -- LibreWolf
+    awful.key(
+        { modkey }, "b",     
+	function () 
+	    awful.util.spawn("librewolf")
+	end, 
+	{ description = "LibreWolf (open)", group = "luci4" }
+    ),
+
+    -- Prompt (Dmenu)
+    awful.key(
+        { modkey }, "space",     
+	function () 
+	    awful.util.spawn("dmenu_run")
+	end, 
+	{ description = "run prompt", group = "luci4" }
+    ),
+
+    -- Prompt (default)
+    awful.key({ modkey },            "r",     
+	function () 
+		awful.screen.focused().mypromptbox:run() 
+	end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
@@ -475,6 +500,11 @@ awful.rules.rules = {
      }
     },
 
+   -- { rule = { class = "vivaldi" },
+   --       properties = { opacity = 1, maximized = false, floating = false } },
+
+   { rule = { class = "nemo" },
+          properties = { opacity = 1, maximized = false, floating = false } },
     -- Floating clients.
     { rule_any = {
         instance = {
@@ -508,7 +538,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -581,4 +611,13 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-awful.util.spawn_with_shell("~/.config/awesome/screens.sh")
+awful.util.spawn_with_shell("/home/lucifer/.config/awesome/screens.sh")
+awful.util.spawn_with_shell("/home/lucifer/.config/awesome/picom_delayed.sh")
+awful.spawn.with_shell("redshift-gtk")
+awful.spawn.with_shell("blueman-applet")
+awful.spawn.with_shell("nm-applet")
+-- awful.util.spawn.with_shell("picom")
+awful.spawn.with_shell("keepassxc")
+awful.spawn.with_shell("nemo")
+awful.spawn.with_shell("/home/lucifer/apps/Joplin/Joplin-2.12.18.AppImage")
+awful.spawn.with_shell("/home/lucifer/apps/Nextcloud-3.12.3-x86_64.AppImage")
