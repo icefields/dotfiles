@@ -6,8 +6,14 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+
+-- Luci4 custom
 -- Collision
 require("collision")()
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
@@ -69,17 +75,17 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    awful.layout.suit.floating,
+    -- awful.layout.suit.floating,
     awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    --awful.layout.suit.tile.bottom,
+    --awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
+    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -217,7 +223,15 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    -- Luci4 bar customization
+    s.mywibox = awful.wibox({
+	screen = s,
+        fg = beautiful.fg_normal, height = 24,
+        bg = beautiful.bg_normal, position = "top",
+        border_color = beautiful.border_focus,
+        border_width = beautiful.topBar_border
+    })
+    -- ORIG s.mywibox = awful.wibar({ position = "top", screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -231,10 +245,28 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            ram_widget(),
+            
+	    cpu_widget(),
+	    -- or custom
+	    -- cpu_widget({
+            -- width = 70,
+            -- step_width = 2,
+            -- step_spacing = 0,
+            -- color = '#434c5e'
+            -- })
+
+	    mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
+            
+            logout_menu_widget(),
+            -- custom version of logout widget
+            -- logout_menu_widget{
+            -- font = 'Play 14',
+            -- onlock = function() awful.spawn.with_shell('i3lock-fancy') end
+            -- }
         },
     }
 end)
@@ -252,10 +284,13 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+
+    -- Luci4 changed arrows because of conflict with Collision
+    awful.key({ modkey,           }, "[",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+    awful.key({ modkey,           }, "]",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
+    
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
@@ -331,10 +366,25 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
+    -- Luci4 defined key bindings
+    awful.key( { }, "XF86AudioRaiseVolume", 
+        function () 
+           awful.util.spawn("amixer -D pulse sset Master 2%+", false) 
+        end
+    ),
+    awful.key( { }, "XF86AudioLowerVolume", 
+        function () 
+           awful.util.spawn("amixer -D pulse sset Master 2%-", false) 
+        end
+    ),
+    awful.key( { }, "XF86AudioMute", 
+        function () 
+           awful.util.spawn("amixer -D pulse sset Master toggle", false) 
+        end
+    ),
 
     -- LibreWolf
-    awful.key(
-        { modkey }, "b",     
+    awful.key( { modkey }, "b",     
 	function () 
 	    awful.util.spawn("librewolf")
 	end, 
@@ -342,8 +392,7 @@ globalkeys = gears.table.join(
     ),
 
     -- Prompt (Dmenu)
-    awful.key(
-        { modkey }, "space",     
+    awful.key( { modkey }, "space",     
 	function () 
 	    awful.util.spawn("dmenu_run")
 	end, 
@@ -621,3 +670,4 @@ awful.spawn.with_shell("keepassxc")
 awful.spawn.with_shell("nemo")
 awful.spawn.with_shell("/home/lucifer/apps/Joplin/Joplin-2.12.18.AppImage")
 awful.spawn.with_shell("/home/lucifer/apps/Nextcloud-3.12.3-x86_64.AppImage")
+awful.spawn.with_shell("/home/lucifer/apps/tutanota-desktop-linux.AppImage")

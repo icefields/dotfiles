@@ -95,12 +95,14 @@ if status is-interactive
 
     ### THEME BOBTHEFISH ###
     ### https://github.com/oh-my-fish/theme-bobthefish ###
+    set -g theme_color_scheme dark
+    set -g theme_show_project_parent no
     set -g theme_nerd_fonts yes
     set -g theme_powerline_fonts yes
     # theme Show full path
     set -g fish_prompt_pwd_dir_length 0
     # Cursor on a new line
-    set -g theme_newline_cursor no
+    set -g theme_newline_cursor yes
     # display "arch", "ubuntu" etc
     set -g theme_display_hostname yes
     # date prompt
