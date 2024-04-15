@@ -282,29 +282,37 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
-              {description="show help", group="awesome"}),
+    awful.key({ modkey,           }, "s",      
+        hotkeys_popup.show_help,
+        { description="show help", group="awesome" }
+    ),
 
     -- Luci4 changed arrows because of conflict with Collision
-    awful.key({ modkey,           }, "[",   awful.tag.viewprev,
-              {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "]",  awful.tag.viewnext,
-              {description = "view next", group = "tag"}),
-    
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
-              {description = "go back", group = "tag"}),
+    awful.key({ modkey,           }, "[",   
+        awful.tag.viewprev,
+        { description = "view previous", group = "tag"}
+    ),
+    awful.key({ modkey,           }, "]",  
+        awful.tag.viewnext,
+        { description = "view next", group = "tag"}
+    ),
+
+    awful.key({ modkey,           }, "Escape", 
+        awful.tag.history.restore,
+        { description = "go back", group = "tag"}
+    ),
 
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
         end,
-        {description = "focus next by index", group = "client"}
+        { description = "focus next by index", group = "client"}
     ),
     awful.key({ modkey,           }, "k",
         function ()
             awful.client.focus.byidx(-1)
         end,
-        {description = "focus previous by index", group = "client"}
+        { description = "focus previous by index", group = "client"}
     ),
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
@@ -389,6 +397,14 @@ globalkeys = gears.table.join(
 	    awful.util.spawn("librewolf")
 	end, 
 	{ description = "LibreWolf (open)", group = "luci4" }
+    ),
+
+    -- Android Studio
+    awful.key( { modkey }, "a",     
+	function () 
+	    awful.util.spawn("/opt/android-studio/bin/studio.sh")
+	end, 
+	{ description = "Android Studio (open)", group = "luci4" }
     ),
 
     -- Prompt (Dmenu)
@@ -538,15 +554,49 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     raise = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons,
-                     screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
-     }
+        properties = { 
+            border_width = beautiful.border_width,
+            border_color = beautiful.border_normal,
+            focus = awful.client.focus.filter,
+            raise = true,
+            keys = clientkeys,
+            buttons = clientbuttons,
+            screen = awful.screen.preferred,
+            placement = awful.placement.no_overlap+awful.placement.no_offscreen
+        }
+    },
+    
+    -- KeepassXc, floating
+    { rule = { class = "KeePassXC" },
+	    properties = { 
+            floating = true,
+            maximized_vertical = false, 
+            maximized_horizontal = false,
+            maximized = false
+        } 
+    },
+
+    -- attempt to index a nil value (global tags)
+    -- Tutanota
+    { rule = { class = "tutanota-desktop" },
+	    properties = { 
+	        tag = "2", 
+            minimized = true,
+            maximized_vertical = false, 
+            maximized_horizontal = false,
+            maximized = false,
+
+        } 
+    },
+
+    -- Android Studio
+    { rule = { class = "jetbrains-studio" },
+	    properties = { 
+	        tag = "4",
+            --maximized = true,
+	        --maximized_vertical = true, 
+            --maximized_horizontal = true 
+        }
     },
 
    -- { rule = { class = "vivaldi" },
@@ -662,6 +712,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 awful.util.spawn_with_shell("/home/lucifer/.config/awesome/screens.sh")
 awful.util.spawn_with_shell("/home/lucifer/.config/awesome/picom_delayed.sh")
+awful.spawn.with_shell("xfce4-power-manager")
 awful.spawn.with_shell("redshift-gtk")
 awful.spawn.with_shell("blueman-applet")
 awful.spawn.with_shell("nm-applet")

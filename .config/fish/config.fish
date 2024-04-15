@@ -88,7 +88,8 @@ if status is-interactive
 	case "macOS"
             abbr --add ca bat
         case "Linuxmint"
-	    abbr --add ca bat
+	    abbr --add ca batcat 
+            abbr --add upd "sudo apt update && sudo apt upgrade -y"
 	case '*'
             echo "CANNOT DETECT OS, CHECK fish.config FILE"
     end
