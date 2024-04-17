@@ -10,6 +10,7 @@ require("awful.autofocus")
 -- Luci4 custom
 -- Collision
 require("collision")()
+
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
@@ -138,43 +139,69 @@ mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
-                                              if client.focus then
-                                                  client.focus:move_to_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
-                                              if client.focus then
-                                                  client.focus:toggle_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-                )
+    awful.button( { }, 1, 
+        function(t) 
+            t:view_only() 
+        end
+    ),
+    awful.button( { modkey }, 1, 
+        function(t)
+            if client.focus then
+                client.focus:move_to_tag(t)
+            end
+        end
+    ),
+    awful.button( { }, 3, 
+        awful.tag.viewtoggle
+    ),
+    awful.button({ modkey }, 3, 
+        function(t)
+            if client.focus then
+                client.focus:toggle_tag(t)
+            end
+        end
+    ),
+    awful.button( { }, 4, 
+        function(t) 
+            awful.tag.viewnext(t.screen) 
+        end
+    ),
+    awful.button( { }, 5, 
+        function(t) 
+            awful.tag.viewprev(t.screen) 
+        end
+    )
+)
 
 local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  c:emit_signal(
-                                                      "request::activate",
-                                                      "tasklist",
-                                                      {raise = true}
-                                                  )
-                                              end
-                                          end),
-                     awful.button({ }, 3, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+    awful.button( { }, 1, 
+        function (c)
+            if c == client.focus then
+                c.minimized = true
+            else
+                c:emit_signal("request::activate", 
+                    "tasklist",
+                    { raise = true }
+                )
+            end
+        end
+    ),
+    awful.button( { }, 3, 
+        function()
+            awful.menu.client_list( { theme = { width = 250 } } )
+        end
+    ),
+    awful.button( { }, 4, 
+        function ()
+            awful.client.focus.byidx(1)
+        end
+    ),
+    awful.button( { }, 5, 
+        function ()
+            awful.client.focus.byidx(-1)
+        end
+    )
+)
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -553,7 +580,7 @@ root.keys(globalkeys)
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
-    { rule = { },
+    {   rule = { },
         properties = { 
             border_width = beautiful.border_width,
             border_color = beautiful.border_normal,
@@ -567,7 +594,7 @@ awful.rules.rules = {
     },
     
     -- KeepassXc, floating
-    { rule = { class = "KeePassXC" },
+    {   rule = { class = "KeePassXC" },
 	    properties = { 
             floating = true,
             maximized_vertical = false, 
@@ -578,9 +605,10 @@ awful.rules.rules = {
 
     -- attempt to index a nil value (global tags)
     -- Tutanota
-    { rule = { class = "tutanota-desktop" },
+    {   rule = { class = "tutanota-desktop" },
 	    properties = { 
-	        tag = "2", 
+	        tag = "2",
+            screen = 2,
             minimized = true,
             maximized_vertical = false, 
             maximized_horizontal = false,
@@ -590,7 +618,7 @@ awful.rules.rules = {
     },
 
     -- Android Studio
-    { rule = { class = "jetbrains-studio" },
+    {   rule = { class = "jetbrains-studio" },
 	    properties = { 
 	        tag = "4",
             --maximized = true,
@@ -599,45 +627,80 @@ awful.rules.rules = {
         }
     },
 
-   -- { rule = { class = "vivaldi" },
-   --       properties = { opacity = 1, maximized = false, floating = false } },
+    -- Vivaldi browser
+    {   rule = { class = "Vivaldi-stable" },
+        properties = {
+            tag = "2",
+            opacity = 1, 
+            maximized = false, 
+            floating = false 
+        } 
+    },
 
-   { rule = { class = "nemo" },
-          properties = { opacity = 1, maximized = false, floating = false } },
-    -- Floating clients.
-    { rule_any = {
-        instance = {
-          "DTA",  -- Firefox addon DownThemAll.
-          "copyq",  -- Includes session name in class.
-          "pinentry",
-        },
-        class = {
-          "Arandr",
-          "Blueman-manager",
-          "Gpick",
-          "Kruler",
-          "MessageWin",  -- kalarm.
-          "Sxiv",
-          "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-          "Wpa_gui",
-          "veromix",
-          "xtightvncviewer"},
-
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
-        -- and the name shown there might not match defined rules here.
-        name = {
-          "Event Tester",  -- xev.
-        },
-        role = {
-          "AlarmWindow",  -- Thunderbird's calendar.
-          "ConfigManager",  -- Thunderbird's about:config.
-          "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+    -- Messaging apps will go on tag 5
+    -- Signal
+    {   rule = { class = "Signal" },
+        properties = {
+            tag = "5"
         }
-      }, properties = { floating = true }},
+    },
+    -- Telegram
+    {   rule = { class = "TelegramDesktop" },
+        properties = {
+            tag = "5"
+        }
+    },
+
+    { rule = { class = "nemo" },
+          properties = { 
+              opacity = 1, 
+              maximized = false, 
+              floating = false 
+          } 
+    },
+    -- Floating clients.
+    {   rule_any = {
+            instance = {
+                "DTA",  -- Firefox addon DownThemAll.
+                "copyq",  -- Includes session name in class.
+                "pinentry",
+            },
+            class = {
+                "Arandr",
+                "Blueman-manager",
+                "Gpick",
+                "Kruler",
+                "MessageWin",  -- kalarm.
+                "Sxiv",
+                "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
+                "Wpa_gui",
+                "veromix",
+                "xtightvncviewer"
+            },
+
+            -- Note that the name property shown in xprop might be set slightly after creation of the client
+            -- and the name shown there might not match defined rules here.
+            name = {
+                "Event Tester",  -- xev.
+            },
+            role = {
+                "AlarmWindow",  -- Thunderbird's calendar.
+                "ConfigManager",  -- Thunderbird's about:config.
+                "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+            }
+        }, 
+        properties = { 
+            floating = true 
+        }
+    },
 
     -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = false }
+    {   rule_any = {
+            type = { "normal", "dialog" }
+        }, 
+        properties = { 
+            titlebars_enabled = false 
+        }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.

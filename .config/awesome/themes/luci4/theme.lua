@@ -16,10 +16,10 @@ theme.font          = "Fira Code Medium 10" --"Inter 10"
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
 theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_minimize   = "#00617b"--"#444444"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#aaaaaa"
+theme.fg_normal     = "#03bfc2"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
@@ -27,10 +27,10 @@ theme.fg_minimize   = "#ffffff"
 theme.useless_gap   = dpi(2)
 theme.border_width  = dpi(1)
 theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_focus  = "#71cf5f"
 theme.border_marked = "#91231c"
 
-theme.topBar_border = dpi(1)
+theme.topBar_border = dpi(0)
 
 -- There are other variable sets
 -- overriding the default one when
@@ -101,7 +101,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = "/home/lucifer/Pictures/wallpapers/cat_minimalism_vector_102411_1920x1080.jpg" --luci-bg3-blackbg.png"
+theme.wallpaper =  "/home/lucifer/Pictures/wallpapers/undefinedImgur.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
