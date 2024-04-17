@@ -11,15 +11,15 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Fira Code Medium 10" --"Inter 10"
+theme.font          = "UbuntuSansMono Nerd Font Mono Medium 11"--"Fira Code Medium 10" --"Inter 10"
 
 theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
-theme.bg_urgent     = "#ff0000"
+theme.bg_focus      = "#224442" --"#535d6c"
+theme.bg_urgent     = "#0000ff"
 theme.bg_minimize   = "#00617b"--"#444444"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#03bfc2"
+theme.fg_normal     = "#d2f0cb" --"#03bfc2"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"

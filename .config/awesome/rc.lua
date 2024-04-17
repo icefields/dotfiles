@@ -288,12 +288,15 @@ awful.screen.connect_for_each_screen(function(s)
             mytextclock,
             s.mylayoutbox,
             
-            logout_menu_widget(),
+	    -- default logout widget
+            -- logout_menu_widget(),
             -- custom version of logout widget
-            -- logout_menu_widget{
+            logout_menu_widget{
             -- font = 'Play 14',
-            -- onlock = function() awful.spawn.with_shell('i3lock-fancy') end
-            -- }
+                onlock = function() 
+                    awful.spawn.with_shell('i3lock -c 002020') 
+                end
+            },
         },
     }
 end)
@@ -417,23 +420,42 @@ globalkeys = gears.table.join(
            awful.util.spawn("amixer -D pulse sset Master toggle", false) 
         end
     ),
-
+    -- Lock screen shortcut
+    awful.key( { modkey, "Mod1" }, "l",     
+	    function()   
+            awful.spawn.with_shell('i3lock -c 002020') 
+        end, { 
+            description = "Lock screen", 
+            group = "luci4" 
+        }
+    ),
     -- LibreWolf
     awful.key( { modkey }, "b",     
-	function () 
-	    awful.util.spawn("librewolf")
-	end, 
-	{ description = "LibreWolf (open)", group = "luci4" }
+	    function () 
+	        awful.util.spawn("librewolf")
+	    end, { 
+            description = "LibreWolf (open)", 
+            group = "luci4" 
+        }
     ),
-
+    -- Kitty on Ubuntu (c as in console)
+    awful.key( { modkey, }, "c",     
+	    function()   
+            awful.spawn.with_shell("/usr/bin/distrobox-enter  -n ubuntu --   kitty")
+        end, { 
+            description = "Open Kitty Terminal on Ubuntu container", 
+            group = "luci4" 
+        }
+    ),
     -- Android Studio
     awful.key( { modkey }, "a",     
-	function () 
-	    awful.util.spawn("/opt/android-studio/bin/studio.sh")
-	end, 
-	{ description = "Android Studio (open)", group = "luci4" }
+	    function () 
+	        awful.util.spawn("/opt/android-studio/bin/studio.sh")
+	    end, {
+            description = "Android Studio (open)", 
+            group = "luci4" 
+        }
     ),
-
     -- Prompt (Dmenu)
     awful.key( { modkey }, "space",     
 	function () 
@@ -591,8 +613,7 @@ awful.rules.rules = {
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap+awful.placement.no_offscreen
         }
-    },
-    
+    }, 
     -- KeepassXc, floating
     {   rule = { class = "KeePassXC" },
 	    properties = { 
@@ -602,21 +623,25 @@ awful.rules.rules = {
             maximized = false
         } 
     },
-
-    -- attempt to index a nil value (global tags)
     -- Tutanota
     {   rule = { class = "tutanota-desktop" },
 	    properties = { 
 	        tag = "2",
-            screen = 2,
+            screen = screen.count(), -- open on secondary screen if present
             minimized = true,
+            floating = true,
             maximized_vertical = false, 
             maximized_horizontal = false,
             maximized = false,
-
         } 
     },
-
+    -- Lxappearance, floating
+    {   rule = { class = "Lxappearance" },
+        properties = {
+            floating = true,
+            maximized = false
+        }
+    },
     -- Android Studio
     {   rule = { class = "jetbrains-studio" },
 	    properties = { 
@@ -652,11 +677,13 @@ awful.rules.rules = {
     },
 
     { rule = { class = "nemo" },
-          properties = { 
-              opacity = 1, 
-              maximized = false, 
-              floating = false 
-          } 
+        properties = { 
+            opacity = 1, 
+            tag = 1,
+            screen = screen.count(), -- open on secondary screen if present
+            maximized = false, 
+            floating = false 
+        } 
     },
     -- Floating clients.
     {   rule_any = {
