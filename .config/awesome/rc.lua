@@ -106,6 +106,16 @@ myawesomemenu = {
 
 -- Luci4 custom menu with favourite applications
 flaggedmenu = {
+    {   "Kitty Ubuntu", 
+        function()
+            awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
+        end 
+    },
+    {   "Vivaldi",
+        function()
+            awful.spawn.with_shell("vivaldi")
+        end
+    },
     {   "notepadqq", 
         function()
             awful.spawn.with_shell("~/.config/awesome/open_notepadqq_ubuntu.sh")
@@ -811,15 +821,15 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-awful.util.spawn_with_shell("/home/lucifer/.config/awesome/screens.sh")
-awful.util.spawn_with_shell("/home/lucifer/.config/awesome/picom_delayed.sh")
-awful.spawn.with_shell("xfce4-power-manager")
-awful.spawn.with_shell("redshift-gtk")
-awful.spawn.with_shell("blueman-applet")
-awful.spawn.with_shell("nm-applet")
--- awful.util.spawn.with_shell("picom")
-awful.spawn.with_shell("keepassxc")
-awful.spawn.with_shell("nemo")
-awful.spawn.with_shell("/home/lucifer/apps/Joplin/Joplin-2.12.18.AppImage")
-awful.spawn.with_shell("/home/lucifer/apps/Nextcloud-3.12.3-x86_64.AppImage")
-awful.spawn.with_shell("/home/lucifer/apps/tutanota-desktop-linux.AppImage")
+awful.util.spawn_with_shell("~/.config/awesome/autostart.sh")
+--awful.util.spawn_with_shell("/home/lucifer/.config/awesome/screens.sh")
+--awful.util.spawn_with_shell("/home/lucifer/.config/awesome/picom_delayed.sh")
+--awful.spawn.with_shell("xfce4-power-manager")
+--awful.spawn.with_shell("redshift-gtk")
+--awful.spawn.with_shell("blueman-applet")
+--awful.spawn.with_shell("nm-applet")
+--awful.spawn.with_shell("keepassxc")
+--awful.spawn.with_shell("nemo")
+--awful.spawn.with_shell("/home/lucifer/apps/Joplin/Joplin-2.12.18.AppImage")
+--awful.spawn.with_shell("/home/lucifer/apps/Nextcloud-3.12.3-x86_64.AppImage")
+--awful.spawn.with_shell("/home/lucifer/apps/tutanota-desktop-linux.AppImage")
