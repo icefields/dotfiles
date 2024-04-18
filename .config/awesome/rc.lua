@@ -106,10 +106,17 @@ myawesomemenu = {
 
 -- Luci4 custom menu with favourite applications
 flaggedmenu = {
+    {   "Kitty Arch", 
+        function()
+            awful.spawn.with_shell("~/.config/awesome/open_kitty_arch.sh")
+        end,
+        beautiful.kittyArch_icon
+    },
     {   "Kitty Ubuntu", 
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
-        end 
+        end,
+        beautiful.kitty_icon
     },
     {   "Vivaldi",
         function()
@@ -119,12 +126,13 @@ flaggedmenu = {
     {   "notepadqq", 
         function()
             awful.spawn.with_shell("~/.config/awesome/open_notepadqq_ubuntu.sh")
-        end 
+        end,
+        beautiful.notepadqq_icon
     }
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_flagged = { "Flagged", flaggedmenu, beautiful.awesome_icon }
+local menu_flagged = { "Flagged", flaggedmenu, beautiful.kitty_icon }
 local menu_terminal = { "open terminal", terminal }
 
 if has_fdo then
@@ -747,7 +755,9 @@ awful.rules.rules = {
             type = { "normal", "dialog" }
         }, 
         properties = { 
-            titlebars_enabled = false 
+            titlebars_enabled = false,
+            -- Some maximized windows have gaps at the right and bottom
+            size_hints_honor = false
         }
     },
 

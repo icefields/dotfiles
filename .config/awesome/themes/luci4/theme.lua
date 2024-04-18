@@ -12,6 +12,7 @@ local themes_path = gfs.get_themes_dir()
 local theme = {}
 
 theme.font          = "UbuntuSansMono Nerd Font Mono Medium 11"--"Fira Code Medium 10" --"Inter 10"
+theme.taglist_font = "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#224442" --"#535d6c"
@@ -125,6 +126,16 @@ theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
 theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
+
+-- application icons
+theme.kitty_icon = "~/.config/awesome/themes/luci4/icons/kitty.svg"
+theme.kittyArch_icon = "~/.config/awesome/themes/luci4/icons/kitty-arch.svg"
+theme.ubuntu_icon = "~/.config/awesome/themes/luci4/icons/ubuntu.png"
+theme.signal_icon = "~/.config/awesome/themes/luci4/icons/signal-desktop.png"
+theme.notepadqq_icon = "~/.config/awesome/themes/luci4/icons/notepadqq.svg"
+theme.kdenlive_icon = "~/.config/awesome/themes/luci4/icons/kdenlive.svg"
+theme.neovim_icon = "~/.config/awesome/themes/luci4/icons/org.daa.NeovimGtk.svg"
+theme.androidStudio_icon = "~/.config/awesome/themes/luci4/icons/studio.svg"
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
