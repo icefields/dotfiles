@@ -97,28 +97,39 @@ awful.layout.layouts = {
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
+    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+    { "manual", terminal .. " -e man awesome" },
+    { "edit config", editor_cmd .. " " .. awesome.conffile },
+    { "restart", awesome.restart },
+    { "quit", function() awesome.quit() end },
+}
+
+-- Luci4 custom menu with favourite applications
+flaggedmenu = {
+    {   "notepadqq", 
+        function()
+            awful.spawn.with_shell("~/.config/awesome/open_notepadqq_ubuntu.sh")
+        end 
+    }
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
+local menu_flagged = { "Flagged", flaggedmenu, beautiful.awesome_icon }
 local menu_terminal = { "open terminal", terminal }
 
 if has_fdo then
     mymainmenu = freedesktop.menu.build({
-        before = { menu_awesome },
+        before = { menu_awesome, menu_flagged },
         after =  { menu_terminal }
     })
 else
     mymainmenu = awful.menu({
         items = {
-                  menu_awesome,
-                  { "Debian", debian.menu.Debian_menu.Debian },
-                  menu_terminal,
-                }
+            menu_awesome,
+            menu_flagged,
+            { "Debian", debian.menu.Debian_menu.Debian },
+            menu_terminal,
+        }
     })
 end
 
@@ -294,7 +305,7 @@ awful.screen.connect_for_each_screen(function(s)
             logout_menu_widget{
             -- font = 'Play 14',
                 onlock = function() 
-                    awful.spawn.with_shell('i3lock -c 002020') 
+                    awful.spawn.with_shell('~/.config/awesome/lockscreen.sh') 
                 end
             },
         },
@@ -423,7 +434,7 @@ globalkeys = gears.table.join(
     -- Lock screen shortcut
     awful.key( { modkey, "Mod1" }, "l",     
 	    function()   
-            awful.spawn.with_shell('i3lock -c 002020') 
+            awful.spawn.with_shell('~/.config/awesome/lockscreen.sh') 
         end, { 
             description = "Lock screen", 
             group = "luci4" 
@@ -441,7 +452,7 @@ globalkeys = gears.table.join(
     -- Kitty on Ubuntu (c as in console)
     awful.key( { modkey, }, "c",     
 	    function()   
-            awful.spawn.with_shell("/usr/bin/distrobox-enter  -n ubuntu --   kitty")
+            awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
         end, { 
             description = "Open Kitty Terminal on Ubuntu container", 
             group = "luci4" 

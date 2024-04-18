@@ -96,7 +96,7 @@ if status is-interactive
 
     ### THEME BOBTHEFISH ###
     ### https://github.com/oh-my-fish/theme-bobthefish ###
-    set -g theme_color_scheme dark
+    set -g theme_color_scheme terminal-dark
     set -g theme_show_project_parent no
     set -g theme_nerd_fonts yes
     set -g theme_powerline_fonts yes
