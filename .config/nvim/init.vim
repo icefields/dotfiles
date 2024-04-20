@@ -2,12 +2,14 @@
 """ https://github.com/junegunn/vim-plug/
 """ https://www.youtube.com/watch?v=JWReY93Vl6g
 """ https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
-"""       _                   _ 
-"""      | |                 (_)
-"""      | |     _   _   ___  _ 
-"""      | |    | | | | / __|| |
-"""      | |____| |_| || (__ | |
-"""      \_____/ \__,_| \___||_|      
+"""
+"""   ▄        ▄     ▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄     ▄ 
+"""  ▐░▌      ▐░▌   ▐░▌▐░█▀▀▀▀▀  ▀▀█░█▀▀ ▐░▌   ▐░▌
+"""  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░█   █░▌
+"""  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░░░░░░░▌
+"""  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌    ▀▀▀▀▀█░▌
+"""  ▐░█▄▄▄▄▄ ▐░█▄▄▄█░▌▐░█▄▄▄▄▄  ▄▄█░█▄▄       ▐░▌
+"""   ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀        ▀ 
 """                                 
 """ :PlugClean :PlugInstall :UpdateRemotePlugins
 """ cocInstall, install manually coc-java, coc-python, coc-html, etc ...
