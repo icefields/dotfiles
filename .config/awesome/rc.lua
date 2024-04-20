@@ -84,8 +84,8 @@ awful.layout.layouts = {
     -- awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.max,
+    awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
@@ -132,7 +132,7 @@ flaggedmenu = {
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_flagged = { "Flagged", flaggedmenu, beautiful.kitty_icon }
+local menu_flagged = { "Flagged", flaggedmenu, beautiful.powerampache2speaker_icon }
 local menu_terminal = { "open terminal", terminal }
 
 if has_fdo then
@@ -268,7 +268,9 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
+        buttons = taglist_buttons,
+        -- show all tags regardless of the window
+        -- source = function() return root.tags() end
     }
 
     -- Create a tasklist widget
@@ -642,14 +644,26 @@ awful.rules.rules = {
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap+awful.placement.no_offscreen
         }
-    }, 
+    },
+
+    -- Archive browser/extractor, floating
+    {   rule = { class = "File-roller" },
+	    properties = { 
+            floating = true,
+            maximized_vertical = false, 
+            maximized_horizontal = false,
+            maximized = false,
+            placement = awful.placement.centered
+        } 
+    },
     -- KeepassXc, floating
     {   rule = { class = "KeePassXC" },
 	    properties = { 
             floating = true,
             maximized_vertical = false, 
             maximized_horizontal = false,
-            maximized = false
+            maximized = false,
+            placement = awful.placement.centered
         } 
     },
     -- Tutanota
@@ -668,13 +682,20 @@ awful.rules.rules = {
     {   rule = { class = "Lxappearance" },
         properties = {
             floating = true,
-            maximized = false
+            maximized = false,
+            placement = awful.placement.centered
         }
     },
     -- Android Studio
     {   rule = { class = "jetbrains-studio" },
 	    properties = { 
 	        tag = "4",
+            size_hints_honor = false, -- no gaps on full screen
+            titlebars_enabled = false, 
+            fullscreen = true,
+            floating = false, 
+            border_width = 0, 
+            --border_color = 0, 
             --maximized = true,
 	        --maximized_vertical = true, 
             --maximized_horizontal = true 
@@ -723,6 +744,8 @@ awful.rules.rules = {
             },
             class = {
                 "Arandr",
+                "vlc",
+                "Xviewer",
                 "Blueman-manager",
                 "Gpick",
                 "Kruler",
@@ -746,7 +769,8 @@ awful.rules.rules = {
             }
         }, 
         properties = { 
-            floating = true 
+            floating = true,
+            placement = awful.placement.centered
         }
     },
 
