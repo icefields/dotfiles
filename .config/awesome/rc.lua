@@ -342,12 +342,30 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
+-- Luci4 print area of screen
 globalkeys = gears.table.join(
+    -- Luci4 print area of screen
+    awful.key({ "Control" }, "Print", 
+        function () 
+            awful.util.spawn("gnome-screenshot -a")
+        end, {
+            description = "print area of the  screen", 
+            group = "luci4" 
+        }
+    ),
+    -- Print full screen
+    awful.key({ }, "Print", 
+        function () 
+            awful.util.spawn("gnome-screenshot")
+        end, {
+            description = "print full screen", 
+            group = "luci4" 
+        }
+    ),
     awful.key({ modkey,           }, "s",      
         hotkeys_popup.show_help,
         { description="show help", group="awesome" }
     ),
-
     -- Luci4 changed arrows because of conflict with Collision
     awful.key({ modkey,           }, "[",   
         awful.tag.viewprev,
