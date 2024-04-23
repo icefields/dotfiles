@@ -15,7 +15,23 @@ Fish configuration files and functions.
 ## Bash
 Bash config files (`.bashrc`)
 ## Vim and NeoVim
-Vim and NeoVim configuration files.
+***Check Vim and NeoVim configuration files headers and their own readme for updated instructions.*** `.config/nvim/init.vim`
+
+*SOURCES*
+https://github.com/junegunn/vim-plug/
+https://www.youtube.com/watch?v=JWReY93Vl6g
+https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+
+```
+:PlugClean :PlugInstall :UpdateRemotePlugins
+cocInstall, install manually coc-java, coc-python, coc-html, etc ...
+instructions: https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+:CocInstall coc-python
+:CocInstall coc-clangd
+:CocInstall coc-snippets
+:CocCommand snippets.edit... FOR EACH FILE TYPE
+```
+
 ## Kitty
 In the advanced section of kitty.conf, the option `shell` is set to `/opt/default_shell-kitty_config` which is a link that points to the default shell. Create that link in your system before using Kitty.
 ie. if the default shell is **Fish**, on Linux:
@@ -30,6 +46,11 @@ ie. if the default shell is **Fish**, on MacOs:
 ```
 ln -s /opt/homebrew/bin/fish /opt/default_shell-kitty_config 
 ```
+*Kitty font config*
+In the kitty.config specify a font that is not a nerd font, according to kitty's instructions.
+Then download the Symbols only nerd font and set it up as a fallback font (all mappings are in kitty.config already, in this repo).
+Use the test-fonts.sh script from the official nerd fonts repo to test 
+`curl -JLO https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/bin/scripts/test-fonts.sh`
 
 <br>
 
