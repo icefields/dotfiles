@@ -18,9 +18,9 @@ Bash config files (`.bashrc`)
 ***Check Vim and NeoVim configuration files headers and their own readme for updated instructions.*** `.config/nvim/init.vim`
 
 *SOURCES*
-https://github.com/junegunn/vim-plug/
-https://www.youtube.com/watch?v=JWReY93Vl6g
-https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+https://github.com/junegunn/vim-plug/<br>
+https://www.youtube.com/watch?v=JWReY93Vl6g<br>
+https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions<br>
 
 ```
 :PlugClean :PlugInstall :UpdateRemotePlugins
