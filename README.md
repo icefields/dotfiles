@@ -14,10 +14,18 @@
 Fish configuration files and functions.
 ## Bash
 Bash config files (`.bashrc`)
+## Awesome WM
+Requires all the autostarting apps to be installed, comment out, in `autorun.sh`, the apps that are not installed.<br>
+Some of the widges from `awesome-wm-widgets` (https://github.com/streetturtle/awesome-wm-widgets) are used in the config.<br>
+Requires Collision (https://github.com/Elv13/collision) for extended functionalities and shortcuts.<br>
+Collision and awesome-wm-widgets to be cloned in the root awesome directory (`~/.config/awesome`)<br>
+Everything else included in the awesome config `rc.lua`, in the scripts in the same directory, and the subdirectories (ie. ./themes/..)
+## Picom
+This shouldn't have any requirements other than installing `picom`.
 ## Vim and NeoVim
-***Check Vim and NeoVim configuration files headers and their own readme for updated instructions.*** `.config/nvim/init.vim`
+***Check Vim and NeoVim configuration files headers and their own readme for more instructions.*** `.config/nvim/init.vim`
 
-*SOURCES*
+**SOURCES**<br>
 https://github.com/junegunn/vim-plug/<br>
 https://www.youtube.com/watch?v=JWReY93Vl6g<br>
 https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions<br>
@@ -46,12 +54,12 @@ ie. if the default shell is **Fish**, on MacOs:
 ```
 ln -s /opt/homebrew/bin/fish /opt/default_shell-kitty_config 
 ```
-*Kitty font config*
-In the kitty.config specify a font that is not a nerd font, according to kitty's instructions.
+**Kitty font config**<br>
+In the `kitty.config` specify a font that is not a nerd font, according to kitty's instructions.
 Then download the Symbols only nerd font and set it up as a fallback font (all mappings are in kitty.config already, in this repo).
-Use the test-fonts.sh script from the official nerd fonts repo to test 
-`curl -JLO https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/bin/scripts/test-fonts.sh`
-
+Use the test-fonts.sh script from the official nerd fonts repo to test<br>
+`curl -JLO https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/bin/scripts/test-fonts.sh`<br>
+More on kitty fonts: https://erwin.co/kitty-and-nerd-fonts/
 <br>
 
 # Bare Repository Instructions
