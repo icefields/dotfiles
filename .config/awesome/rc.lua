@@ -1,3 +1,17 @@
+-----------------------------------------------------
+-- ----------------------------------------------- --
+--   ▄        ▄     ▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄     ▄   --
+--  ▐░▌      ▐░▌   ▐░▌▐░█▀▀▀▀▀  ▀▀█░█▀▀ ▐░▌   ▐░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░█   █░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░░░░░░░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌    ▀▀▀▀▀█░▌  --
+--  ▐░█▄▄▄▄▄ ▐░█▄▄▄█░▌▐░█▄▄▄▄▄  ▄▄█░█▄▄       ▐░▌  --
+--   ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀        ▀   --
+-- ----------------------------------------------- --
+-- -------- Luci4 config  for Awesome WM --------- --
+-- -------- https://github.com/icefields --------- --
+-----------------------------------------------------
+
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
@@ -14,6 +28,8 @@ require("collision")()
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 
 -- Widget and layout library
 local wibox = require("wibox")
@@ -106,13 +122,13 @@ myawesomemenu = {
 
 -- Luci4 custom menu with favourite applications
 flaggedmenu = {
-    {   "Kitty Arch", 
+    {   "Kitty Arch",
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_arch.sh")
         end,
         beautiful.kittyArch_icon
     },
-    {   "Kitty Ubuntu", 
+    {   "Kitty Ubuntu",
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
         end,
@@ -123,7 +139,7 @@ flaggedmenu = {
             awful.spawn.with_shell("vivaldi")
         end
     },
-    {   "notepadqq", 
+    {   "notepadqq",
         function()
             awful.spawn.with_shell("~/.config/awesome/open_notepadqq_ubuntu.sh")
         end,
@@ -165,67 +181,81 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+local cw = calendar_widget( {
+    theme = 'nord',
+    placement = 'top_right',
+    start_sunday = false,
+    radius = 2,
+    -- with customized next/previous (see table above)
+    previous_month_button = 1,
+    next_month_button = 3,
+})
+mytextclock:connect_signal("button::press",
+    function(_, _, _, button)
+        if button == 1 then cw.toggle() end
+    end)
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-    awful.button( { }, 1, 
-        function(t) 
-            t:view_only() 
+    awful.button( { }, 1,
+        function(t)
+            t:view_only()
         end
     ),
-    awful.button( { modkey }, 1, 
+    awful.button( { modkey }, 1,
         function(t)
             if client.focus then
                 client.focus:move_to_tag(t)
             end
         end
     ),
-    awful.button( { }, 3, 
+    awful.button( { }, 3,
         awful.tag.viewtoggle
     ),
-    awful.button({ modkey }, 3, 
+    awful.button({ modkey }, 3,
         function(t)
             if client.focus then
                 client.focus:toggle_tag(t)
             end
         end
     ),
-    awful.button( { }, 4, 
-        function(t) 
-            awful.tag.viewnext(t.screen) 
+    awful.button( { }, 4,
+        function(t)
+            awful.tag.viewnext(t.screen)
         end
     ),
-    awful.button( { }, 5, 
-        function(t) 
-            awful.tag.viewprev(t.screen) 
+    awful.button( { }, 5,
+        function(t)
+            awful.tag.viewprev(t.screen)
         end
     )
 )
 
 local tasklist_buttons = gears.table.join(
-    awful.button( { }, 1, 
+    awful.button( { }, 1,
         function (c)
             if c == client.focus then
                 c.minimized = true
             else
-                c:emit_signal("request::activate", 
+                c:emit_signal("request::activate",
                     "tasklist",
                     { raise = true }
                 )
             end
         end
     ),
-    awful.button( { }, 3, 
+    awful.button( { }, 3,
         function()
             awful.menu.client_list( { theme = { width = 250 } } )
         end
     ),
-    awful.button( { }, 4, 
+    awful.button( { }, 4,
         function ()
             awful.client.focus.byidx(1)
         end
     ),
-    awful.button( { }, 5, 
+    awful.button( { }, 5,
         function ()
             awful.client.focus.byidx(-1)
         end
@@ -304,28 +334,32 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             ram_widget(),
-            
-	    cpu_widget(),
-	    -- or custom
-	    -- cpu_widget({
+            cpu_widget(),
+            -- or custom
+            -- cpu_widget({
             -- width = 70,
             -- step_width = 2,
             -- step_spacing = 0,
             -- color = '#434c5e'
             -- })
-
-	    mykeyboardlayout,
+            mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+            volume_widget {
+                widget_type = 'horizontal_bar',
+                size = 36,
+                width = 100,
+                shape = 'powerline',
+                with_icon = true
+            },
             s.mylayoutbox,
-            
-	    -- default logout widget
+            -- default logout widget
             -- logout_menu_widget(),
             -- custom version of logout widget
             logout_menu_widget{
             -- font = 'Play 14',
-                onlock = function() 
-                    awful.spawn.with_shell('~/.config/awesome/lockscreen.sh') 
+                onlock = function()
+                    awful.spawn.with_shell('~/.config/awesome/lockscreen.sh')
                 end
             },
         },
@@ -345,45 +379,45 @@ root.buttons(gears.table.join(
 -- Luci4 print area of screen
 globalkeys = gears.table.join(
     -- Luci4 print area of screen
-    awful.key({ "Control" }, "Print", 
-        function () 
+    awful.key({ "Control" }, "Print",
+        function ()
             awful.util.spawn("gnome-screenshot -a")
         end, {
-            description = "print area of the  screen", 
-            group = "luci4" 
+            description = "print area of the  screen",
+            group = "luci4"
         }
     ),
     -- Print full screen
-    awful.key({ }, "Print", 
-        function () 
+    awful.key({ }, "Print",
+        function ()
             awful.util.spawn("gnome-screenshot")
         end, {
-            description = "print full screen", 
-            group = "luci4" 
+            description = "Print full screen",
+            group = "luci4"
         }
     ),
-    awful.key({ modkey,           }, "s",      
+    awful.key({ modkey,           }, "s",
         hotkeys_popup.show_help,
         { description="show help", group="awesome" }
     ),
     -- Luci4 changed arrows because of conflict with Collision
-    awful.key({ modkey,           }, "[",   
+    awful.key({ modkey,           }, "[",
         awful.tag.viewprev,
         { description = "view previous", group = "tag"}
     ),
-    awful.key({ modkey,           }, "]",  
+    awful.key({ modkey,           }, "]",
         awful.tag.viewnext,
         { description = "view next", group = "tag"}
     ),
 
-    awful.key({ modkey,           }, "Escape", 
+    awful.key({ modkey,           }, "Escape",
         awful.tag.history.restore,
         { description = "go back", group = "tag"}
     ),
 
     awful.key({ modkey,           }, "j",
         function ()
-            awful.client.focus.byidx( 1)
+            awful.client.focus.byidx(1)
         end,
         { description = "focus next by index", group = "client"}
     ),
@@ -454,71 +488,76 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Luci4 defined key bindings
-    awful.key( { }, "XF86AudioRaiseVolume", 
-        function () 
-           awful.util.spawn("amixer -D pulse sset Master 2%+", false) 
+    awful.key( { }, "XF86AudioRaiseVolume",
+        function ()
+           awful.util.spawn("amixer -D pulse sset Master 2%+", false)
         end
     ),
-    awful.key( { }, "XF86AudioLowerVolume", 
-        function () 
-           awful.util.spawn("amixer -D pulse sset Master 2%-", false) 
+    awful.key( { }, "XF86AudioLowerVolume",
+        function ()
+           awful.util.spawn("amixer -D pulse sset Master 2%-", false)
         end
     ),
-    awful.key( { }, "XF86AudioMute", 
-        function () 
-           awful.util.spawn("amixer -D pulse sset Master toggle", false) 
+    awful.key( { }, "XF86AudioMute",
+        function ()
+           awful.util.spawn("amixer -D pulse sset Master toggle", false)
         end
     ),
     -- Lock screen shortcut
-    awful.key( { modkey, "Mod1" }, "l",     
-	    function()   
-            awful.spawn.with_shell('~/.config/awesome/lockscreen.sh') 
-        end, { 
-            description = "Lock screen", 
-            group = "luci4" 
+    awful.key( { modkey, "Mod1" }, "l",
+        function()
+            awful.spawn.with_shell('~/.config/awesome/lockscreen.sh')
+        end, {
+            description = "Lock screen",
+            group = "luci4"
         }
     ),
     -- LibreWolf
-    awful.key( { modkey }, "b",     
-	    function () 
-	        awful.util.spawn("librewolf")
-	    end, { 
-            description = "LibreWolf (open)", 
-            group = "luci4" 
+    awful.key( { modkey }, "b",
+        function ()
+            awful.util.spawn("librewolf")
+        end, {
+            description = "LibreWolf (open)",
+            group = "luci4"
         }
     ),
     -- Kitty on Ubuntu (c as in console)
-    awful.key( { modkey, }, "c",     
-	    function()   
+    awful.key( { modkey, }, "c",
+        function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
-        end, { 
-            description = "Open Kitty Terminal on Ubuntu container", 
-            group = "luci4" 
+        end, {
+            description = "Open Kitty Terminal on Ubuntu container",
+            group = "luci4"
         }
     ),
     -- Android Studio
-    awful.key( { modkey }, "a",     
-	    function () 
-	        awful.util.spawn("/opt/android-studio/bin/studio.sh")
-	    end, {
-            description = "Android Studio (open)", 
-            group = "luci4" 
+    awful.key( { modkey }, "a",
+        function ()
+            awful.util.spawn("/opt/android-studio/bin/studio.sh")
+        end, {
+            description = "Android Studio (open)",
+            group = "luci4"
         }
     ),
     -- Prompt (Dmenu)
-    awful.key( { modkey }, "space",     
-	function () 
-	    awful.util.spawn("dmenu_run")
-	end, 
-	{ description = "run prompt", group = "luci4" }
+    awful.key( { modkey }, "space",
+        function ()
+            awful.util.spawn("dmenu_run")
+        end, {
+            description = "run prompt",
+            group = "luci4"
+            }
     ),
 
     -- Prompt (default)
-    awful.key({ modkey },            "r",     
-	function () 
-		awful.screen.focused().mypromptbox:run() 
-	end,
-              {description = "run prompt", group = "launcher"}),
+    awful.key({ modkey },            "r",
+        function ()
+            awful.screen.focused().mypromptbox:run()
+        end, {
+            description = "run prompt",
+            group = "launcher"
+        }
+    ),
 
     awful.key({ modkey }, "x",
               function ()
@@ -652,7 +691,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     {   rule = { },
-        properties = { 
+        properties = {
             border_width = beautiful.border_width,
             border_color = beautiful.border_normal,
             focus = awful.client.focus.filter,
@@ -666,35 +705,35 @@ awful.rules.rules = {
 
     -- Archive browser/extractor, floating
     {   rule = { class = "File-roller" },
-	    properties = { 
+        properties = {
             floating = true,
-            maximized_vertical = false, 
+            maximized_vertical = false,
             maximized_horizontal = false,
             maximized = false,
             placement = awful.placement.centered
-        } 
+        }
     },
     -- KeepassXc, floating
     {   rule = { class = "KeePassXC" },
-	    properties = { 
+        properties = {
             floating = true,
-            maximized_vertical = false, 
+            maximized_vertical = false,
             maximized_horizontal = false,
             maximized = false,
             placement = awful.placement.centered
-        } 
+        }
     },
     -- Tutanota
     {   rule = { class = "tutanota-desktop" },
-	    properties = { 
-	        tag = "2",
-            screen = screen.count(), -- open on secondary screen if present
-            minimized = true,
+        properties = {
+            -- tag = "2",
+            -- screen = screen.count(), -- open on secondary screen if present
+            -- minimized = true,
             floating = true,
-            maximized_vertical = false, 
+            maximized_vertical = false,
             maximized_horizontal = false,
             maximized = false,
-        } 
+        }
     },
     -- Lxappearance, floating
     {   rule = { class = "Lxappearance" },
@@ -706,17 +745,17 @@ awful.rules.rules = {
     },
     -- Android Studio
     {   rule = { class = "jetbrains-studio" },
-	    properties = { 
-	        tag = "4",
+        properties = {
+            tag = "4",
             size_hints_honor = false, -- no gaps on full screen
-            titlebars_enabled = false, 
+            titlebars_enabled = false,
             fullscreen = true,
-            floating = false, 
-            border_width = 0, 
-            --border_color = 0, 
+            floating = false,
+            border_width = 0,
+            --border_color = 0,
             --maximized = true,
-	        --maximized_vertical = true, 
-            --maximized_horizontal = true 
+            --maximized_vertical = true,
+            --maximized_horizontal = true
         }
     },
 
@@ -724,10 +763,10 @@ awful.rules.rules = {
     {   rule = { class = "Vivaldi-stable" },
         properties = {
             tag = "2",
-            opacity = 1, 
-            maximized = false, 
-            floating = false 
-        } 
+            opacity = 1,
+            maximized = false,
+            floating = false
+        }
     },
 
     -- Messaging apps will go on tag 5
@@ -745,13 +784,13 @@ awful.rules.rules = {
     },
 
     { rule = { class = "nemo" },
-        properties = { 
-            opacity = 1, 
+        properties = {
+            opacity = 1,
             tag = 1,
             screen = screen.count(), -- open on secondary screen if present
-            maximized = false, 
-            floating = false 
-        } 
+            maximized = false,
+            floating = false
+        }
     },
     -- Floating clients.
     {   rule_any = {
@@ -785,8 +824,8 @@ awful.rules.rules = {
                 "ConfigManager",  -- Thunderbird's about:config.
                 "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
             }
-        }, 
-        properties = { 
+        },
+        properties = {
             floating = true,
             placement = awful.placement.centered
         }
@@ -795,8 +834,8 @@ awful.rules.rules = {
     -- Add titlebars to normal clients and dialogs
     {   rule_any = {
             type = { "normal", "dialog" }
-        }, 
-        properties = { 
+        },
+        properties = {
             titlebars_enabled = false,
             -- Some maximized windows have gaps at the right and bottom
             size_hints_honor = false
@@ -874,14 +913,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 awful.util.spawn_with_shell("~/.config/awesome/autostart.sh")
---awful.util.spawn_with_shell("/home/lucifer/.config/awesome/screens.sh")
---awful.util.spawn_with_shell("/home/lucifer/.config/awesome/picom_delayed.sh")
---awful.spawn.with_shell("xfce4-power-manager")
---awful.spawn.with_shell("redshift-gtk")
---awful.spawn.with_shell("blueman-applet")
---awful.spawn.with_shell("nm-applet")
---awful.spawn.with_shell("keepassxc")
---awful.spawn.with_shell("nemo")
---awful.spawn.with_shell("/home/lucifer/apps/Joplin/Joplin-2.12.18.AppImage")
---awful.spawn.with_shell("/home/lucifer/apps/Nextcloud-3.12.3-x86_64.AppImage")
---awful.spawn.with_shell("/home/lucifer/apps/tutanota-desktop-linux.AppImage")
+-- restore wallpaper, must run nitrogen at least once to set a wallpaper before
+awful.util.spawn_with_shell("lua ~/.config/awesome/nitrogen-random.lua")

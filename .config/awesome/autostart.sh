@@ -17,6 +17,5 @@ run xfce4-power-manager
 run keepassxc
 run nemo
 run "/home/lucifer/apps/Joplin/Joplin-2.12.18.AppImage"
-run "/home/lucifer/apps/Nextcloud-3.12.3-x86_64.AppImage --background"
-# autostart tutanota in background
-run "/home/lucifer/apps/tutanota-desktop-linux.AppImage -a"
+run "/home/lucifer/.config/awesome/start_nextcloud.sh"
+run "/home/lucifer/.config/awesome/start_tuta.sh"
