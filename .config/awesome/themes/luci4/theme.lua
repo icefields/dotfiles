@@ -26,14 +26,14 @@ theme.taglist_font = "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#224442" --"#535d6c"
-theme.bg_urgent     = "#0000ff"
+theme.bg_urgent     = "#bada55"
 theme.bg_minimize   = "#00617b"--"#444444"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#d2f0cb" --"#03bfc2"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = "#ffdead" -- "#d2f0cb" --"#03bfc2"
+theme.fg_focus      = "#f4f8e3"
+theme.fg_urgent     = "#000055"
+theme.fg_minimize   = "#f4f8e3"
 
 theme.useless_gap   = dpi(2)
 theme.border_width  = dpi(2)
@@ -57,12 +57,12 @@ theme.topBar_border = dpi(0)
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(11)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
+    taglist_square_size, "#65726f" -- theme.fg_normal
 )
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
+    taglist_square_size, "#65726f" -- theme.fg_normal
 )
 
 -- Variables set for theming notifications:
@@ -76,6 +76,12 @@ theme.notification_icon_size = dpi(66)
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
+theme.menu_bg_normal = "#121716"
+theme.menu_bg_focus = "#060707"
+theme.menu_fg_normal = "#fff1de"
+-- theme.menu_fg_focus = "#0000ff"
+--theme.menu_border_color
+theme.menu_border_width = dpi(2)
 theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height = dpi(30)
 theme.menu_width  = dpi(200)

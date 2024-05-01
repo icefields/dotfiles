@@ -326,7 +326,8 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            -- menu on the left of the  bar
+            -- mylauncher,
             s.mytaglist,
             s.mypromptbox,
         },
@@ -801,11 +802,13 @@ awful.rules.rules = {
             },
             class = {
                 "Arandr",
+                "QjackCtl",
                 "vlc",
                 "Xviewer",
                 "Blueman-manager",
                 "Gpick",
                 "Kruler",
+                "video-downloader",
                 "MessageWin",  -- kalarm.
                 "Sxiv",
                 "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
