@@ -178,7 +178,6 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
--- wibox.container.background = "#ffffff"
 -- {{{ Wibar
 
 -- Luci4 volume widget configuration
@@ -317,8 +316,9 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
-    -- Create a taglist widget
-    luciTagList = awful.widget.taglist {
+    
+    -- Luci4 Create a taglist widget
+    local luciTagList = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
