@@ -178,6 +178,29 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
+-- wibox.container.background = "#ffffff"
+-- {{{ Wibar
+
+-- Luci4 volume widget configuration
+local luciVolumeWidget = volume_widget {
+    widget_type = 'horizontal_bar',
+    size = 36,
+    width = 100,
+    shape = 'powerline',
+    with_icon = true,
+    main_color = beautiful.border_focus,
+    -- mute_color = beautiful.,
+    bg_color = beautiful.border_normal
+}
+
+-- Luci4 system tray with consistent background (otherwise padding will create a frame around it)
+local luciSysTrayColour = wibox.widget.background()
+luciSysTrayColour:set_widget(wibox.layout.margin(wibox.widget.systray(), 4,4,4,4))
+luciSysTrayColour:set_fg(beautiful.fg_systray)
+luciSysTrayColour:set_bg(beautiful.bg_systray)
+
+-- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
+
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
@@ -295,13 +318,22 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist {
+    luciTagList = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
+        --style   = {
+        --    shape = gears.shape.powerline
+       -- }
         -- show all tags regardless of the window
         -- source = function() return root.tags() end
     }
+    local luciTagListColour = wibox.widget.background()
+    luciTagListColour:set_widget(luciTagList)  
+    luciTagListColour:set_fg(beautiful.fg_systray)
+    luciTagListColour:set_bg(beautiful.bg_normal)
+
+    s.mytaglist = luciTagListColour
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
@@ -313,9 +345,11 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     -- Luci4 bar customization
     s.mywibox = awful.wibox({
-	screen = s,
-        fg = beautiful.fg_normal, height = 24,
-        bg = beautiful.bg_normal, position = "top",
+        screen = s,
+        fg = beautiful.fg_normal, 
+        height = 24,
+        bg = beautiful.topBar_bg, -- bg_normal 
+        position = "top",
         border_color = beautiful.border_focus,
         border_width = beautiful.topBar_border
     })
@@ -344,20 +378,15 @@ awful.screen.connect_for_each_screen(function(s)
             -- color = '#434c5e'
             -- })
             mykeyboardlayout,
-            wibox.widget.systray(),
+            -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
+            luciSysTrayColour, 
             mytextclock,
-            volume_widget {
-                widget_type = 'horizontal_bar',
-                size = 36,
-                width = 100,
-                shape = 'powerline',
-                with_icon = true
-            },
+            luciVolumeWidget,
             s.mylayoutbox,
             -- default logout widget
             -- logout_menu_widget(),
             -- custom version of logout widget
-            logout_menu_widget{
+            logout_menu_widget {
             -- font = 'Play 14',
                 onlock = function()
                     awful.spawn.with_shell('~/.config/awesome/lockscreen.sh')

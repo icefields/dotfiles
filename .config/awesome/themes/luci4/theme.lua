@@ -21,27 +21,60 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "UbuntuSansMono Nerd Font Mono Medium 11"--"Fira Code Medium 10" --"Inter 10"
+-- LUCI4 COLOUR THEME
+local colours = {
+    black = "#000000",
+    red = "#91231c",
+    green = "#65726f",
+    badass = { -- source https://www.color-hex.com/color/bada55
+        main = "#bada55",
+        shade1 = "#a7c44c",
+        shade6 = "#4a5722",
+        shade8 = "#252b11",
+        shade9 = "#121508",
+        tint1 = "#c0dd66"
+    },
+    dead = { -- source https://www.color-hex.com/color/ffdead
+        main = "#ffdead",
+        shade2 = "#ccb18a",
+        shade4 = "#998567",
+        shade5 = "#7f6f56",
+        shade6 = "#665845",
+        shade7 = "#4c4233",
+        shade8 = "#332c22",
+        shade9 = "#191611",
+        tint5 = "#ffeed6",
+        tint6 = "#fff1de"
+    }
+}
+-- END LUCI4 Colour Theme
+
+theme.font = "UbuntuSansMono Nerd Font Mono Medium 11"
 theme.taglist_font = "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#224442" --"#535d6c"
-theme.bg_urgent     = "#bada55"
-theme.bg_minimize   = "#00617b"--"#444444"
-theme.bg_systray    = theme.bg_normal
+theme.topBar_bg = colours.dead.shade7
 
-theme.fg_normal     = "#ffdead" -- "#d2f0cb" --"#03bfc2"
-theme.fg_focus      = "#f4f8e3"
-theme.fg_urgent     = "#000055"
-theme.fg_minimize   = "#f4f8e3"
+theme.bg_normal     = colours.dead.shade9
+theme.bg_focus      = colours.dead.shade7 -- "#224442"
+theme.bg_urgent     = colours.badass.main
+theme.bg_minimize   = theme.bg_normal
+theme.bg_systray    = theme.topBar_bg -- "#4a5722" --theme.bg_normal
+theme.systray_icon_spacing = dpi(5)
+
+theme.fg_normal     = colours.dead.main -- "#d2f0cb"
+theme.fg_focus      = colours.dead.tint5
+theme.fg_urgent     = colours.badass.shade8
+theme.fg_minimize   = colours.dead.shade4
+theme.fg_systray = colours.dead.tint6
 
 theme.useless_gap   = dpi(2)
 theme.border_width  = dpi(2)
-theme.border_normal = "#000000"
-theme.border_focus  = "#71cf5f"
-theme.border_marked = "#91231c"
+theme.border_normal = colours.dead.shade8
+theme.border_focus  = colours.badass.main -- "#71cf5f"
+theme.border_marked = colours.red
 
 theme.topBar_border = dpi(0)
+theme.mute_volume = colours.red
 
 -- There are other variable sets
 -- overriding the default one when
@@ -59,10 +92,10 @@ theme.topBar_border = dpi(0)
 -- Generate taglist squares:
 local taglist_square_size = dpi(11)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, "#65726f" -- theme.fg_normal
+    taglist_square_size, colours.green -- theme.fg_normal
 )
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, "#65726f" -- theme.fg_normal
+    taglist_square_size, colours.green -- theme.fg_normal
 )
 
 -- Variables set for theming notifications:
@@ -76,11 +109,11 @@ theme.notification_icon_size = dpi(66)
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_bg_normal = "#121716"
-theme.menu_bg_focus = "#060707"
-theme.menu_fg_normal = "#fff1de"
+theme.menu_bg_normal = colours.badass.shade9 -- "#121716"
+theme.menu_bg_focus = colours.black
+theme.menu_fg_normal = colours.dead.tint6
 -- theme.menu_fg_focus = "#0000ff"
---theme.menu_border_color
+-- theme.menu_border_color = 
 theme.menu_border_width = dpi(2)
 theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height = dpi(30)
