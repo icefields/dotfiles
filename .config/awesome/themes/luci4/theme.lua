@@ -50,15 +50,14 @@ local colours = {
 -- END LUCI4 Colour Theme
 
 theme.font = "UbuntuSansMono Nerd Font Mono Medium 11"
-theme.taglist_font = "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
-theme.topBar_bg = colours.dead.shade7
+theme.topBar_bg = colours.dead.shade9
 
 theme.bg_normal     = colours.dead.shade9
 theme.bg_focus      = colours.dead.shade7 -- "#224442"
 theme.bg_urgent     = colours.badass.main
 theme.bg_minimize   = theme.bg_normal
-theme.bg_systray    = theme.topBar_bg -- "#4a5722" --theme.bg_normal
+theme.bg_systray    = colours.dead.shade8 -- "#4a5722" --theme.bg_normal
 theme.systray_icon_spacing = dpi(5)
 
 theme.fg_normal     = colours.dead.main -- "#d2f0cb"
@@ -76,6 +75,10 @@ theme.border_marked = colours.red
 theme.topBar_border = dpi(0)
 theme.mute_volume = colours.red
 
+theme.taglist_font = "UbuntuSansMono Nerd Font Mono SemiBold 14"
+theme.tasklist_fg_normal = colours.dead.tint6
+-- theme.taglist_bg_focus = theme.bg_normal
+-- theme.taglist_fg_focus = theme.fg_systray
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
@@ -107,15 +110,14 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 theme.notification_icon_size = dpi(66)
 
 -- Variables set for theming the menu:
--- menu_[bg|fg]_[normal|focus]
--- menu_[border_color|border_width]
 theme.menu_bg_normal = colours.badass.shade9 -- "#121716"
-theme.menu_bg_focus = colours.black
+theme.menu_bg_focus = colours.badass.shade6
 theme.menu_fg_normal = colours.dead.tint6
 -- theme.menu_fg_focus = "#0000ff"
 -- theme.menu_border_color = 
 theme.menu_border_width = dpi(2)
-theme.menu_submenu_icon = themes_path.."default/submenu.png"
+-- theme.menu_submenu_icon = themes_path.."default/submenu.png"
+theme.menu_submenu = " "--" " --"▶ "
 theme.menu_height = dpi(30)
 theme.menu_width  = dpi(200)
 

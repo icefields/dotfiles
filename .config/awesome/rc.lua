@@ -194,7 +194,7 @@ local luciVolumeWidget = volume_widget {
 
 -- Luci4 system tray with consistent background (otherwise padding will create a frame around it)
 local luciSysTrayColour = wibox.widget.background()
-luciSysTrayColour:set_widget(wibox.layout.margin(wibox.widget.systray(), 4,4,4,4))
+luciSysTrayColour:set_widget(wibox.layout.margin(wibox.widget.systray(), 3,3,3,3))
 luciSysTrayColour:set_fg(beautiful.fg_systray)
 luciSysTrayColour:set_bg(beautiful.bg_systray)
 
@@ -316,7 +316,7 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
-    
+
     -- Luci4 Create a taglist widget
     local luciTagList = awful.widget.taglist {
         screen  = s,
@@ -329,7 +329,7 @@ awful.screen.connect_for_each_screen(function(s)
         -- source = function() return root.tags() end
     }
     local luciTagListColour = wibox.widget.background()
-    luciTagListColour:set_widget(luciTagList)  
+    luciTagListColour:set_widget(luciTagList)
     luciTagListColour:set_fg(beautiful.fg_systray)
     luciTagListColour:set_bg(beautiful.bg_normal)
 
