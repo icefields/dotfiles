@@ -19,6 +19,7 @@ Requires all the autostarting apps to be installed, comment out, in `autorun.sh`
 Some of the widges from `awesome-wm-widgets` (https://github.com/streetturtle/awesome-wm-widgets) are used in the config.<br>
 Requires Collision (https://github.com/Elv13/collision) for extended functionalities and shortcuts.<br>
 Collision and awesome-wm-widgets to be cloned in the root awesome directory (`~/.config/awesome`)<br>
+The directory `$HOME/apps` will be scanned for AppImages, which will be added to the menu. Keep your executable apps there, or edit the location in rc.lua.
 Everything else included in the awesome config `rc.lua`, in the scripts in the same directory, and the subdirectories (ie. ./themes/..)
 ## Picom
 This shouldn't have any requirements other than installing `picom`.

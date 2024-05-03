@@ -120,6 +120,16 @@ myawesomemenu = {
     { "quit", function() awesome.quit() end },
 }
 
+-- Luci4 scan all the apps in the folder $HOME/apps and add to menu
+local appsMenu = { }
+for appl in io.popen([[ls -pa $HOME/apps/ | grep -v /]]):lines() do
+    table.insert(appsMenu, { appl,
+        function ()
+             awful.spawn.with_shell("~/apps/"..appl)
+        end
+    })
+end
+
 -- Luci4 custom menu with favourite applications
 flaggedmenu = {
     {   "Kitty Arch",
@@ -144,16 +154,23 @@ flaggedmenu = {
             awful.spawn.with_shell("~/.config/awesome/open_notepadqq_ubuntu.sh")
         end,
         beautiful.notepadqq_icon
+    },
+    {   "Calibre",
+        function()
+            awful.spawn.with_shell("/usr/bin/distrobox-enter  -n arch --   calibre")
+        end
     }
+
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
 local menu_flagged = { "Flagged", flaggedmenu, beautiful.powerampache2speaker_icon }
+local menu_apps = { "Apps", appsMenu, beautiful.powerampache2speaker_icon }
 local menu_terminal = { "open terminal", terminal }
 
 if has_fdo then
     mymainmenu = freedesktop.menu.build({
-        before = { menu_awesome, menu_flagged },
+        before = { menu_awesome, menu_flagged, menu_apps },
         after =  { menu_terminal }
     })
 else
@@ -554,9 +571,9 @@ globalkeys = gears.table.join(
     -- Kitty on Ubuntu (c as in console)
     awful.key( { modkey, }, "c",
         function()
-            awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
+            awful.spawn.with_shell("~/.config/awesome/open_kitty_arch.sh")
         end, {
-            description = "Open Kitty Terminal on Ubuntu container",
+            description = "Open Kitty Terminal on Arch container",
             group = "luci4"
         }
     ),
