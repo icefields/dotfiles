@@ -189,6 +189,18 @@ flaggedmenu = {
             awful.spawn.with_shell("$HOME/apps/reaper_linux_x86_64/REAPER/reaper")
         end,
         beautiful.reaper_icon
+    },
+    {   "QjackCtl",
+        function()
+            awful.spawn("qjackctl")
+        end,
+        beautiful.jack_icon
+    },
+    {   "Tor Browser",
+        function()
+            awful.spawn.with_shell("$HOME/apps/tor-browser/Tor Browser")
+        end,
+        beautiful.tor_icon
     }
 }
 
