@@ -146,18 +146,19 @@ flaggedmenu = {
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_arch.sh")
         end,
-        beautiful.kittyArch_icon
+        beautiful.kitty_icon
     },
     {   "Kitty Ubuntu",
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
         end,
-        beautiful.kitty_icon
+        beautiful.ubuntu_icon
     },
     {   "Vivaldi",
         function()
             awful.spawn.with_shell("vivaldi")
-        end
+        end,
+        beautiful.vivaldi_icon
     },
     {   "notepadqq",
         function()
@@ -168,22 +169,26 @@ flaggedmenu = {
     {   "Calibre",
         function()
             awful.spawn.with_shell("/usr/bin/distrobox-enter  -n arch --   calibre")
-        end
+        end,
+        beautiful.calibre_icon
     },
     {   "UpScayl",
         function()
             awful.spawn.with_shell("/usr/bin/distrobox-enter  -n arch --   upscayl")
-        end
+        end,
+        beautiful.supertux_icon
     },
     {   "Gimp",
         function()
             awful.spawn("gimp")
-        end
+        end,
+        beautiful.gimp_icon
     },
     {   "Reaper",
         function()
             awful.spawn.with_shell("$HOME/apps/reaper_linux_x86_64/REAPER/reaper")
-        end
+        end,
+        beautiful.reaper_icon
     }
 }
 
