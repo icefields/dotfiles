@@ -181,6 +181,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- application icons
 theme.powerampache2speaker_icon = "~/.config/awesome/themes/luci4/icons/ic_speaker_colored_432px.svg"
+theme.favourite_icon = "$HOME/.config/awesome/themes/luci4/icons/ic_favourite-applications.svg"
 theme.kitty_icon = "~/.config/awesome/themes/luci4/icons/kitty.svg"
 theme.kittyArch_icon = "~/.config/awesome/themes/luci4/icons/kitty-arch.svg"
 theme.ubuntu_icon = "~/.config/awesome/themes/luci4/icons/ubuntu.png"

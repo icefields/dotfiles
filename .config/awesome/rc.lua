@@ -122,10 +122,20 @@ myawesomemenu = {
 
 -- Luci4 scan all the apps in the folder $HOME/apps and add to menu
 local appsMenu = { }
-for appl in io.popen([[ls -pa $HOME/apps/ | grep -v /]]):lines() do
-    table.insert(appsMenu, { appl,
+for appExecutableName in io.popen([[ls -pa $HOME/apps/ | grep -v /]]):lines() do
+    -- Luci4 making app names readable in the menu
+    local appName = appExecutableName:gsub(" Standalone", "")
+                                     :gsub("x86_64", "")
+                                     :gsub("AppImage", "")
+                                     :gsub("appimage", "")
+                                     :gsub("-", " ")
+                                     :gsub("x86-64","")
+                                     :gsub("linux","")
+                                     :gsub("%."," ")
+
+    table.insert(appsMenu, { appName,
         function ()
-             awful.spawn.with_shell("~/apps/"..appl)
+             awful.spawn.with_shell("$HOME/apps/"..appExecutableName)
         end
     })
 end
@@ -159,12 +169,26 @@ flaggedmenu = {
         function()
             awful.spawn.with_shell("/usr/bin/distrobox-enter  -n arch --   calibre")
         end
+    },
+    {   "UpScayl",
+        function()
+            awful.spawn.with_shell("/usr/bin/distrobox-enter  -n arch --   upscayl")
+        end
+    },
+    {   "Gimp",
+        function()
+            awful.spawn("gimp")
+        end
+    },
+    {   "Reaper",
+        function()
+            awful.spawn.with_shell("$HOME/apps/reaper_linux_x86_64/REAPER/reaper")
+        end
     }
-
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_flagged = { "Flagged", flaggedmenu, beautiful.powerampache2speaker_icon }
+local menu_flagged = { "Flagged", flaggedmenu, beautiful.favourite_icon }
 local menu_apps = { "Apps", appsMenu, beautiful.powerampache2speaker_icon }
 local menu_terminal = { "open terminal", terminal }
 
@@ -847,6 +871,7 @@ awful.rules.rules = {
                 "pinentry",
             },
             class = {
+                "Amp Locker", -- glitch and crash if not floating
                 "Arandr",
                 "QjackCtl",
                 "vlc",
