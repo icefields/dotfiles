@@ -146,7 +146,7 @@ flaggedmenu = {
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_arch.sh")
         end,
-        beautiful.kitty_icon
+        beautiful.arch_icon
     },
     {   "Kitty Ubuntu",
         function()
@@ -193,22 +193,23 @@ flaggedmenu = {
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_flagged = { "Flagged", flaggedmenu, beautiful.favourite_icon }
+local menu_flagged = { "Favourites", flaggedmenu, beautiful.favourite_icon }
 local menu_apps = { "Apps", appsMenu, beautiful.powerampache2speaker_icon }
-local menu_terminal = { "open terminal", terminal }
+local menu_terminal = { "open terminal", terminal, beautiful.kitty_icon }
 
 if has_fdo then
     mymainmenu = freedesktop.menu.build({
-        before = { menu_awesome, menu_flagged, menu_apps },
-        after =  { menu_terminal }
+        before = { menu_flagged, menu_apps },
+        after =  { menu_awesome, menu_terminal }
     })
 else
     mymainmenu = awful.menu({
         items = {
-            menu_awesome,
             menu_flagged,
+            menu_apps,
             { "Debian", debian.menu.Debian_menu.Debian },
-            menu_terminal,
+            menu_awesome,
+            menu_terminal
         }
     })
 end
