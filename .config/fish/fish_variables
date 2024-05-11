@@ -4,6 +4,17 @@ SETUVAR --export MARONNE:1000
 SETUVAR --export SHELL:/usr/sbin/bash
 SETUVAR --export UID:1000
 SETUVAR __fish_initialized:3400
+SETUVAR _fish_abbr_ad:git\x20add\x20\x2e
+SETUVAR _fish_abbr_ca:batcat
+SETUVAR _fish_abbr_chb:git\x20checkout\x20\x2db
+SETUVAR _fish_abbr_che:git\x20checkout
+SETUVAR _fish_abbr_com:git\x20commit\x20\x2dm\x20\x22
+SETUVAR _fish_abbr_l:exa\x20\x2dal\x20\x2d\x2dcolor\x3dalways\x20\x2d\x2dgroup\x2ddirectories\x2dfirst
+SETUVAR _fish_abbr_pud:git\x20push\x20\x2du\x20origin\x20dev
+SETUVAR _fish_abbr_pul:git\x20pull
+SETUVAR _fish_abbr_pum:git\x20push\x20\x2du\x20origin\x20main
+SETUVAR _fish_abbr_pus:git\x20push\x20\x2du\x20origin
+SETUVAR _fish_abbr_upd:sudo\x20apt\x20update\x20\x26\x26\x20sudo\x20apt\x20upgrade\x20\x2dy
 SETUVAR budspencer_nobell:\x1d
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr

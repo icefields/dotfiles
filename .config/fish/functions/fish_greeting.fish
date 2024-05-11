@@ -51,7 +51,7 @@ function fish_greeting
     # Randomly pick a intro graphic
 	set chosen_ascii (random)"%"(count $ascii_intros)
 	set chosen_ascii $ascii_intros[(math $chosen_ascii"+1")]
-	neofetch --ascii_distro $chosen_ascii
+	fastfetch --disable-linewrap --logo $chosen_ascii
 	
 	echo " "
 	
