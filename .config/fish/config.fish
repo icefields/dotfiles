@@ -26,6 +26,8 @@ if status is-interactive
     abbr --add chb git checkout -b
     abbr --add che git checkout   
     abbr --add pul git pull
+    abbr --add cpup rsync --progress -auv # copy only if the destination is older
+    abbr --add cp rsync --progress -av
 
     ### ALIASES ###
     # Colorize grep output (good for log files)
@@ -59,6 +61,7 @@ if status is-interactive
     alias psmem='ps auxf | sort -nr -k 4'
     alias pscpu='ps auxf | sort -nr -k 3'
 
+    alias getpath="find -type f | fzf | sed 's/^..//' | tr -d '\n' | xclip -selection c"
 
     # adding flags
     alias df='df -h'                          # human-readable sizes

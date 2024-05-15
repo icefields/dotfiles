@@ -851,7 +851,7 @@ awful.rules.rules = {
     -- Vivaldi browser
     {   rule = { class = "Vivaldi-stable" },
         properties = {
-            tag = "2",
+            -- tag = "2",
             opacity = 1,
             maximized = false,
             floating = false
