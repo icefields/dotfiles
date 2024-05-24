@@ -135,7 +135,7 @@ for appExecutableName in io.popen([[ls -pa $HOME/apps/ | grep -v /]]):lines() do
 
     table.insert(appsMenu, { appName,
         function ()
-             awful.spawn.with_shell("$HOME/apps/"..appExecutableName)
+             awful.spawn.with_shell("\"$HOME/apps/"..appExecutableName.."\" &")
         end
     })
 end
@@ -328,7 +328,7 @@ local tasklist_buttons = gears.table.join(
     ),
     awful.button( { }, 3,
         function()
-            awful.menu.client_list( { theme = { width = 250 } } )
+            awful.menu.client_list( { theme = { width = 500 } } )
         end
     ),
     awful.button( { }, 4,
@@ -397,7 +397,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
-        filter  = awful.widget.tasklist.filter.currenttags,
+        filter  = awful.widget.tasklist.filter.alltags,
         buttons = tasklist_buttons
     }
 
@@ -438,7 +438,7 @@ awful.screen.connect_for_each_screen(function(s)
             -- })
             mykeyboardlayout,
             -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
-            luciSysTrayColour, 
+            luciSysTrayColour,
             mytextclock,
             luciVolumeWidget,
             s.mylayoutbox,
@@ -467,6 +467,14 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 -- Luci4 print area of screen
 globalkeys = gears.table.join(
+     awful.key({ "Mod1" }, "Tab",
+        function ()
+            awful.menu.client_list( { theme = { width = 500 } } )
+        end, {
+            description = "show task list",
+            group = "luci4"
+        }
+    ),
     -- Luci4 print area of screen
     awful.key({ "Control" }, "Print",
         function ()

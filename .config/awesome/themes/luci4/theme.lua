@@ -29,6 +29,9 @@ local colours = {
     badass = { -- source https://www.color-hex.com/color/bada55
         main = "#bada55",
         shade1 = "#a7c44c",
+        shade2 = "#94ae44",
+        shade3 = "#82983b",
+        shade4 = "#6f8233",
         shade6 = "#4a5722",
         shade8 = "#252b11",
         shade9 = "#121508",
@@ -56,11 +59,11 @@ theme.topBar_bg = colours.dead.shade9
 theme.bg_normal     = colours.dead.shade9
 theme.bg_focus      = colours.dead.shade7 -- "#224442"
 theme.bg_urgent     = colours.badass.main
-theme.bg_minimize   = theme.bg_normal
-theme.bg_systray    = colours.dead.shade8 -- "#4a5722" --theme.bg_normal
-theme.systray_icon_spacing = dpi(5)
+theme.bg_minimize   = colours.badass.shade8 --theme.bg_normal
+theme.bg_systray    = colours.badass.shade4 -- "#4a5722" --theme.bg_normal
+theme.systray_icon_spacing = dpi(4)
 
-theme.fg_normal     = colours.dead.main -- "#d2f0cb"
+theme.fg_normal     = colours.dead.tint5 -- "#d2f0cb"
 theme.fg_focus      = colours.dead.tint5
 theme.fg_urgent     = colours.badass.shade8
 theme.fg_minimize   = colours.dead.shade4
@@ -120,6 +123,8 @@ theme.menu_border_width = dpi(2)
 theme.menu_submenu = " "--" " --"▶ "
 theme.menu_height = dpi(30)
 theme.menu_width  = dpi(200)
+
+theme.clock_bg = colours.badass.shade4
 
 -- You can add as many variables as
 -- you wish and access them by using
