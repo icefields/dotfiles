@@ -260,8 +260,9 @@ luciSysTrayColour:set_bg(beautiful.bg_systray)
 -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
 
 -- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+-- Create a textclock widget and change the format property using Pango markup
+local mytextclock = wibox.widget.textclock("<span color='"..beautiful.clock_fg.."'> <b>%a</b> %b %d, %H:%M </span>")
+
 local cw = calendar_widget( {
     theme = 'nord',
     placement = 'top_right',
@@ -397,7 +398,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
-        filter  = awful.widget.tasklist.filter.minimizedcurrenttags, --alltags,
+        filter  = awful.widget.tasklist.filter.currenttags, -- minimizedcurrenttags, --alltags,
         buttons = tasklist_buttons,
         style    = {
             spacing = 2,
@@ -501,39 +502,53 @@ globalkeys = gears.table.join(
             group = "luci4"
         }
     ),
-    awful.key({ modkey,           }, "s",
-        hotkeys_popup.show_help,
-        { description="show help", group="awesome" }
+    awful.key({ modkey, }, "s",
+        hotkeys_popup.show_help, { 
+            description="show help", 
+            group="awesome" 
+        }
     ),
+
     -- Luci4 changed arrows because of conflict with Collision
-    awful.key({ modkey,           }, "[",
-        awful.tag.viewprev,
-        { description = "view previous", group = "tag"}
-    ),
-    awful.key({ modkey,           }, "]",
-        awful.tag.viewnext,
-        { description = "view next", group = "tag"}
-    ),
+    -- awful.key({ modkey,           }, "[",
+    --     awful.tag.viewprev,
+    --     { description = "view previous", group = "tag"}
+    -- ),
+    -- awful.key({ modkey,           }, "]",
+    --     awful.tag.viewnext,
+    --     { description = "view next", group = "tag"}
+    -- ),
 
-    awful.key({ modkey,           }, "Escape",
-        awful.tag.history.restore,
-        { description = "go back", group = "tag"}
+    awful.key({ modkey, }, "Escape",
+        awful.tag.history.restore, { 
+            description = "go back", 
+            group = "tag"
+        }
     ),
-
-    awful.key({ modkey,           }, "j",
+    awful.key({ modkey, }, "j",
         function ()
             awful.client.focus.byidx(1)
-        end,
-        { description = "focus next by index", group = "client"}
+        end, { 
+            description = "focus next by index", 
+            group = "client"
+        }
     ),
-    awful.key({ modkey,           }, "k",
+    awful.key({ modkey, }, "k",
         function ()
             awful.client.focus.byidx(-1)
-        end,
-        { description = "focus previous by index", group = "client"}
+        end, { 
+            description = "focus previous by index", 
+            group = "client"
+        }
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
+    awful.key({ modkey, }, "w", 
+        function () 
+            mymainmenu:show() 
+        end, {
+            description = "show main menu", 
+            group = "awesome"
+        }
+    ),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
@@ -562,7 +577,6 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
-
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
@@ -581,18 +595,18 @@ globalkeys = gears.table.join(
               {description = "select previous", group = "layout"}),
 
     awful.key({ modkey, "Control" }, "n",
-              function ()
-                  local c = awful.client.restore()
-                  -- Focus restored client
-                  if c then
-                    c:emit_signal(
-                        "request::activate", "key.unminimize", {raise = true}
-                    )
-                  end
-              end,
-              {description = "restore minimized", group = "client"}),
-
-    -- Luci4 defined key bindings
+        function ()
+            local c = awful.client.restore()
+            -- Focus restored client
+            if c then
+                c:emit_signal("request::activate", "key.unminimize", {raise = true})
+            end
+        end, {
+            description = "restore minimized", 
+            group = "client"
+        }
+    ),
+    -- Luci4 Audio key bindings
     awful.key( { }, "XF86AudioRaiseVolume",
         function ()
            awful.util.spawn("amixer -D pulse sset Master 2%+", false)
@@ -651,7 +665,7 @@ globalkeys = gears.table.join(
         end, {
             description = "run prompt",
             group = "luci4"
-            }
+        }
     ),
     -- Dmenu Share
     awful.key( { modkey, "Mod1" }, "space",
@@ -673,33 +687,46 @@ globalkeys = gears.table.join(
     ),
 
     awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run {
-                    prompt       = "Run Lua code: ",
-                    textbox      = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                  }
-              end,
-              {description = "lua execute prompt", group = "awesome"}),
+        function ()
+            awful.prompt.run {
+                prompt       = "Run Lua code: ",
+                textbox      = awful.screen.focused().mypromptbox.widget,
+                exe_callback = awful.util.eval,
+                history_path = awful.util.get_cache_dir() .. "/history_eval"
+            }
+        end, {
+            description = "lua execute prompt", 
+            group = "awesome"
+        }
+    ),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+    awful.key({ modkey }, "p", 
+        function() menubar.show() end, {
+            description = "show the menubar", 
+            group = "launcher"
+        })
 )
 
 clientkeys = gears.table.join(
-    awful.key({ modkey,           }, "f",
+    awful.key({ modkey, }, "f",
         function (c)
             c.fullscreen = not c.fullscreen
             c:raise()
-        end,
-        {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
-              {description = "close", group = "client"}),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
-              {description = "toggle floating", group = "client"}),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-              {description = "move to master", group = "client"}),
+        end, {
+            description = "toggle fullscreen", 
+            group = "client"
+        }),
+    awful.key({ modkey, "Shift" }, "c",      
+        function (c) c:kill() end, {
+            description = "close", 
+            group = "client"
+        }),
+    awful.key({ modkey, "Control" }, "space",  
+        awful.client.floating.toggle, 
+        { description = "toggle floating", group = "client" }),
+    awful.key({ modkey, "Control" }, "Return", 
+        function (c) c:swap(awful.client.getmaster()) end, 
+        { description = "move to master", group = "client" }),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,

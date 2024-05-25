@@ -98,6 +98,7 @@ theme.menu_height = dpi(30)
 theme.menu_width  = dpi(200)
 
 theme.clock_bg = colour2.shade4
+theme.clock_fg = colour2.tint3
 theme.tasklist_border_width  = dpi(1.5)
 theme.tasklist_border_colour = colour2.shade3
 -- You can add as many variables as
