@@ -15,71 +15,44 @@
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
+local colours = require("themes.luci4.colours")
 
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
 local theme = {}
+local colour1 = colours.dead
+local colour2 = colours.teal
 
--- LUCI4 COLOUR THEME
-local colours = {
-    black = "#000000",
-    red = "#91231c",
-    green = "#65726f",
-    badass = { -- source https://www.color-hex.com/color/bada55
-        main = "#bada55",
-        shade1 = "#a7c44c",
-        shade2 = "#94ae44",
-        shade3 = "#82983b",
-        shade4 = "#6f8233",
-        shade6 = "#4a5722",
-        shade8 = "#252b11",
-        shade9 = "#121508",
-        tint1 = "#c0dd66"
-    },
-    dead = { -- source https://www.color-hex.com/color/ffdead
-        main = "#ffdead",
-        shade2 = "#ccb18a",
-        shade4 = "#998567",
-        shade5 = "#7f6f56",
-        shade6 = "#665845",
-        shade7 = "#4c4233",
-        shade8 = "#332c22",
-        shade9 = "#191611",
-        tint5 = "#ffeed6",
-        tint6 = "#fff1de"
-    }
-}
--- END LUCI4 Colour Theme
+theme.font          = "UbuntuSansMono Nerd Font Mono Medium 11"
+theme.tasklist_font = "UbuntuSansMono Nerd Font Mono 10"
+theme.taglist_font  = "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
-theme.font = "UbuntuSansMono Nerd Font Mono Medium 11"
+theme.topBar_bg     = colour1.shade9
+theme.topBar_border = dpi(0)
 
-theme.topBar_bg = colours.dead.shade9
-
-theme.bg_normal     = colours.dead.shade9
-theme.bg_focus      = colours.dead.shade7 -- "#224442"
-theme.bg_urgent     = colours.badass.main
-theme.bg_minimize   = colours.badass.shade8 --theme.bg_normal
-theme.bg_systray    = colours.badass.shade4 -- "#4a5722" --theme.bg_normal
+theme.bg_normal     = colour1.shade9
+theme.bg_focus      = colour1.shade7 -- "#224442"
+theme.bg_urgent     = colour2.main
+theme.bg_minimize   = colour2.black-- shade8 --theme.bg_normal
+theme.bg_systray    = colour2.shade4 -- "#4a5722" --theme.bg_normal
 theme.systray_icon_spacing = dpi(4)
 
-theme.fg_normal     = colours.dead.tint5 -- "#d2f0cb"
-theme.fg_focus      = colours.dead.tint5
-theme.fg_urgent     = colours.badass.shade8
-theme.fg_minimize   = colours.dead.shade4
-theme.fg_systray = colours.dead.tint6
+theme.fg_normal     = colour1.tint5 -- "#d2f0cb"
+theme.fg_focus      = colour1.tint5
+theme.fg_urgent     = colour2.shade8
+theme.fg_minimize   = colour1.shade2
+theme.fg_systray    = colour1.tint6
 
 theme.useless_gap   = dpi(2)
 theme.border_width  = dpi(2)
-theme.border_normal = colours.dead.shade8
-theme.border_focus  = colours.badass.main -- "#71cf5f"
+theme.border_normal = colour1.shade8
+theme.border_focus  = colour2.main -- "#71cf5f"
 theme.border_marked = colours.red
 
-theme.topBar_border = dpi(0)
-theme.mute_volume = colours.red
+theme.mute_volume   = colours.red
 
-theme.taglist_font = "UbuntuSansMono Nerd Font Mono SemiBold 14"
-theme.tasklist_fg_normal = colours.dead.tint6
+theme.tasklist_fg_normal = colour1.tint6
 -- theme.taglist_bg_focus = theme.bg_normal
 -- theme.taglist_fg_focus = theme.fg_systray
 -- There are other variable sets
@@ -113,9 +86,9 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 theme.notification_icon_size = dpi(66)
 
 -- Variables set for theming the menu:
-theme.menu_bg_normal = colours.badass.shade9 -- "#121716"
-theme.menu_bg_focus = colours.badass.shade6
-theme.menu_fg_normal = colours.dead.tint6
+theme.menu_bg_normal    = colour2.shade9 -- "#121716"
+theme.menu_bg_focus     = colour2.shade6
+theme.menu_fg_normal    = colour1.tint6
 -- theme.menu_fg_focus = "#0000ff"
 -- theme.menu_border_color = 
 theme.menu_border_width = dpi(2)
@@ -124,8 +97,9 @@ theme.menu_submenu = " "--" " --"▶ "
 theme.menu_height = dpi(30)
 theme.menu_width  = dpi(200)
 
-theme.clock_bg = colours.badass.shade4
-
+theme.clock_bg = colour2.shade4
+theme.tasklist_border_width  = dpi(1.5)
+theme.tasklist_border_colour = colour2.shade3
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua

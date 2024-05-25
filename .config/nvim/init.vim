@@ -102,10 +102,10 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " :set completeopt-=preview " For No Previews
 
 """ --- COLOUR SCHEME ---
-" :colorscheme jellybeans
-" :colorscheme fogbell 
-" :colorscheme rdark-terminal2
-colorscheme nord
+colorscheme jellybeans
+" colorscheme fogbell 
+" colorscheme rdark-terminal2
+" colorscheme nord
 
 
 """ --- AIRLINE ---

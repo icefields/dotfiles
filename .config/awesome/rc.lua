@@ -397,8 +397,16 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
-        filter  = awful.widget.tasklist.filter.alltags,
-        buttons = tasklist_buttons
+        filter  = awful.widget.tasklist.filter.minimizedcurrenttags, --alltags,
+        buttons = tasklist_buttons,
+        style    = {
+            spacing = 2,
+            shape = gears.shape.octogon, -- powerline, --rounded_rect,
+            shape_border_width = beautiful.tasklist_border_width,
+            shape_border_color = beautiful.tasklist_border_colour,
+            font = beautiful.tasklist_font,
+            tasklist_disable_icon = false
+        }
     }
 
     -- Create the wibox
@@ -645,7 +653,15 @@ globalkeys = gears.table.join(
             group = "luci4"
             }
     ),
-
+    -- Dmenu Share
+    awful.key( { modkey, "Mod1" }, "space",
+        function ()
+            awful.spawn.with_shell("~/.config/awesome/share.sh &")
+        end, {
+            description = "get a share link and copy",
+            group = "luci4"
+        }
+    ),
     -- Prompt (default)
     awful.key({ modkey },            "r",
         function ()
