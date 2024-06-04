@@ -24,11 +24,13 @@ local theme = {}
 local colour1 = colours.dead
 local colour2 = colours.teal
 
+theme.rect_radius = 6
+
 theme.font          = "UbuntuSansMono Nerd Font Mono Medium 11"
 theme.tasklist_font = "UbuntuSansMono Nerd Font Mono 10"
 theme.taglist_font  = "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
-theme.topBar_bg     = colour1.shade9
+theme.topBar_bg     = colour2.shade8
 theme.topBar_border = dpi(0)
 
 theme.bg_normal     = colour1.shade9
@@ -37,6 +39,7 @@ theme.bg_urgent     = colour2.main
 theme.bg_minimize   = colour2.black-- shade8 --theme.bg_normal
 theme.bg_systray    = colour2.shade4 -- "#4a5722" --theme.bg_normal
 theme.systray_icon_spacing = dpi(4)
+theme.systray_margin = dpi(3)
 
 theme.fg_normal     = colour1.tint5 -- "#d2f0cb"
 theme.fg_focus      = colour1.tint5
@@ -71,10 +74,10 @@ theme.tasklist_fg_normal = colour1.tint6
 -- Generate taglist squares:
 local taglist_square_size = dpi(11)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, colours.green -- theme.fg_normal
+    taglist_square_size, colour2.shade2 -- colours.green
 )
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, colours.green -- theme.fg_normal
+    taglist_square_size, colour2.main -- theme.fg_normal
 )
 
 -- Variables set for theming notifications:

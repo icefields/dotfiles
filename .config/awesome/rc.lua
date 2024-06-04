@@ -251,13 +251,17 @@ local luciVolumeWidget = volume_widget {
     bg_color = beautiful.border_normal
 }
 
--- Luci4 system tray with consistent background (otherwise padding will create a frame around it)
-local luciSysTrayColour = wibox.widget.background()
-luciSysTrayColour:set_widget(wibox.layout.margin(wibox.widget.systray(), 3,3,3,3))
+local systray = wibox.widget.systray()
+-- systray.opacity = 0.95
+local luciSysTrayColour = wibox.container.background()
 luciSysTrayColour:set_fg(beautiful.fg_systray)
 luciSysTrayColour:set_bg(beautiful.bg_systray)
+luciSysTrayColour.shape = function(cr, width, height)
+    gears.shape.rounded_rect(cr, width, height, beautiful.rect_radius)
+end
+local trayMargin = beautiful.systray_margin
+luciSysTrayColour:set_widget(wibox.layout.margin(systray, trayMargin, trayMargin, trayMargin, trayMargin))
 
--- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
 
 -- {{{ Wibar
 -- Create a textclock widget and change the format property using Pango markup
@@ -267,7 +271,7 @@ local cw = calendar_widget( {
     theme = 'nord',
     placement = 'top_right',
     start_sunday = false,
-    radius = 2,
+    radius = beautiful.rect_radius,
     -- with customized next/previous (see table above)
     previous_month_button = 1,
     next_month_button = 3,
@@ -402,7 +406,9 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons,
         style    = {
             spacing = 2,
-            shape = gears.shape.octogon, -- powerline, --rounded_rect,
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, beautiful.rect_radius)
+            end, -- gears.shape.octogon, -- powerline, --rounded_rect,
             shape_border_width = beautiful.tasklist_border_width,
             shape_border_color = beautiful.tasklist_border_colour,
             font = beautiful.tasklist_font,
