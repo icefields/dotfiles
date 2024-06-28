@@ -201,6 +201,12 @@ flaggedmenu = {
             awful.spawn.with_shell("$HOME/apps/tor-browser/Tor Browser")
         end,
         beautiful.tor_icon
+    },
+    {   "Telegram",
+        function()
+            awful.spawn.with_shell("$HOME/apps/Telegram/Telegram")
+        end,
+        beautiful.telegram_icon
     }
 }
 
