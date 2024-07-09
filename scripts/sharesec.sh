@@ -24,3 +24,4 @@ fi
 zip -r /tmp/$dir.zip /tmp/$dir
 zipcloak /tmp/$dir.zip
 curl -F"file=@/tmp/$dir.zip" 0x0.st | xclip -selection c
+notify-send "Link Copied"
