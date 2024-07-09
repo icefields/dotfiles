@@ -26,6 +26,7 @@ Optionally, install and add `lxsession` (policy kit, polKit) to  the the autorun
 Everything else included in the awesome config `rc.lua`, in the scripts in the same directory, and the subdirectories (ie. ./themes/..)
 <br>
 ***share.sh*** will use dmenu to select a file and create a share link that will be copied to the clipboard. `xclip` and `dmenu` required. <br>
+***scriy/sharesec.sh*** will allow the selection of multiple files, zip them, encrypt them if a password is passed, upload them and return a link (ie. for sharing) <br>
 ## Picom
 This shouldn't have any requirements other than installing `picom`.
 ## Vim and NeoVim

@@ -688,6 +688,18 @@ globalkeys = gears.table.join(
             group = "luci4"
         }
     ),
+
+    -- encrypted Share
+    awful.key( { modkey, "Mod1" }, "s",
+        function ()
+            awful.spawn.with_shell("kitty $HOME/scripts/sharesec.sh")
+        end, {
+            description = "zip, encrypt, get a share link and copy",
+            group = "luci4"
+        }
+    ),
+
+
     -- Prompt (default)
     awful.key({ modkey },            "r",
         function ()

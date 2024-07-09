@@ -13,6 +13,7 @@ run "/home/lucifer/.config/awesome/picom_delayed.sh"
 run blueman-applet
 run nm-applet
 run redshift-gtk
+run xfce4-clipman
 run xfce4-power-manager
 run keepassxc
 run "/home/lucifer/.config/awesome/start_filemanager.sh"
