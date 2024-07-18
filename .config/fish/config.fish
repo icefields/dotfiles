@@ -42,6 +42,15 @@ if status is-interactive
     alias .4='cd ../../../..'
     alias .5='cd ../../../../..'
 
+    # get error messages from journalctl
+    alias jctl="journalctl -p 3 -xb"
+
+    # gpg encryption
+    # verify signature for isos
+    alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
+    # receive the key of a developer
+    alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
+
     # git
     alias addup='git add -u'
     alias addall='git add .'
@@ -61,7 +70,9 @@ if status is-interactive
     alias psmem='ps auxf | sort -nr -k 4'
     alias pscpu='ps auxf | sort -nr -k 3'
 
+    # ALIASES (misc)
     alias getpath="find -type f | fzf | sed 's/^..//' | tr -d '\n' | xclip -selection c"
+    alias tree="exa -alh@ --color=always --group-directories-first --tree --level"
 
     # adding flags
     alias df='df -h'                          # human-readable sizes
@@ -86,6 +97,21 @@ if status is-interactive
             cd
         case "Arch"
             abbr --add ca bat
+
+            # pacman and yay
+            alias pacsyu='sudo pacman -Syu'      # update only standard pkgs
+            alias pacsyyu='sudo pacman -Syyu'    # Refresh pkglist & update standard pkgs
+            alias parsua='paru -Sua --noconfirm' # update only AUR pkgs (paru)
+            alias parsyu='paru -Syu --noconfirm' # update standard pkgs and AUR pkgs (paru)
+            alias unlock='sudo rm /var/lib/pacman/db.lck'   # remove pacman lock
+            alias orphan='sudo pacman -Rns (pacman -Qtdq)'  # remove orphaned packages (DANGEROUS!)
+
+            # get fastest mirrors
+            alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+            alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+            alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+            alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+
             # to work with distrobox
             set -e SESSION_MANAGER
 	case "macOS"
