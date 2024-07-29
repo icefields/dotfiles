@@ -1,0 +1,7 @@
+# Function for creating a backup file
+# ex: backup file.txt
+# result: copies file as file.txt.bak
+function tari --argument filename
+    tar -zcvf "$(string replace -a '/' '' $filename).tar.gz" $filename
+end
+
