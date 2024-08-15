@@ -115,10 +115,13 @@ if status is-interactive
 
             # to work with distrobox
             set -e SESSION_MANAGER
-	case "macOS"
+        case "Fedora"
+            alias vim='nvim'
+            abbr --add upd "sudo dnf upgrade"
+        case "macOS"
             abbr --add ca bat
         case "Linuxmint"
-	    abbr --add ca batcat 
+	        abbr --add ca batcat 
             abbr --add upd "sudo apt update && sudo apt upgrade -y"
 	case '*'
             echo "CANNOT DETECT OS, CHECK fish.config FILE"

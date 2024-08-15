@@ -8,7 +8,7 @@
 --  ▐░█▄▄▄▄▄ ▐░█▄▄▄█░▌▐░█▄▄▄▄▄  ▄▄█░█▄▄       ▐░▌  --
 --   ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀        ▀   --
 -- ----------------------------------------------- --
--- -------- Luci4 config  for Awesome WM --------- --
+-- -------- Luci4 config for Awesome WM  --------- --
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
 
@@ -937,13 +937,13 @@ awful.rules.rules = {
     -- Signal
     {   rule = { class = "Signal" },
         properties = {
-            tag = "5"
+            tag = "8"
         }
     },
     -- Telegram
     {   rule = { class = "TelegramDesktop" },
         properties = {
-            tag = "5"
+            tag = "8"
         }
     },
 
