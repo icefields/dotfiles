@@ -10,7 +10,7 @@
     },
 
     "custom/light_dark": {
-        "format": "󰐾",
+        "format": " ",//"󰐾",
 //        "on-click": "~/.config/waybar/scripts/baraction light",
         "tooltip": false
     }
