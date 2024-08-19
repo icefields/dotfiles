@@ -141,6 +141,8 @@ You're done, from now on you can now type config commands to add and update your
 
 # Power Management
 No power Management application is really required, just configure `/etc/systemd/logind.conf` appropriately
+<br>
+`sleep-manager.sh` launched from hyprland.conf with `exec-once = ~/.config/hypr/sleep-manager.sh` is going to take care of locking the machine after a timeout.
 
 ```
 [Login]
