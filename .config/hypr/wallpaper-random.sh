@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory containing the wallpapers
-DIRECTORY="~/Pictures/wallpapers"
+DIRECTORY="$HOME/Pictures/wallpapers"
 cd "$DIRECTORY" || { echo "Directory not found"; exit 1; }
 
 # Check if the directory is empty
