@@ -55,11 +55,11 @@ ln -s /opt/homebrew/bin/fish /opt/default_shell-kitty_config
 ```
 ie. if the default shell is **Bash**, on Linux:
 ```
-ln -s /opt/homebrew/bin/fish /opt/default_shell-kitty_config 
+ln -s $(which fish) /opt/default_shell-kitty_config 
 ```
 ie. if the default shell is **Fish**, on MacOs:
 ```
-ln -s /opt/homebrew/bin/fish /opt/default_shell-kitty_config 
+ln -s $(which fish) /opt/default_shell-kitty_config 
 ```
 **Kitty font config**<br>
 In the `kitty.config` specify a font that is not a nerd font, according to kitty's instructions.
@@ -138,3 +138,28 @@ gitdots config --local status.showUntrackedFiles no
 
 You're done, from now on you can now type config commands to add and update your dotfiles:
 *see step *3 - Add files one by one to the repo and push. Other files in `$HOME` that are not tracked manually will not be tracked.**
+
+# Power Management
+No power Management application is really required, just configure `/etc/systemd/logind.conf` appropriately
+
+```
+[Login]
+IdleAction=suspend
+IdleActionSec=32min
+HandleLidSwitch=suspend
+HandlePowerKey=suspend #poweroff
+HandleSleepKey=suspend
+
+# Controls whether the lid switch should be ignored if an inhibition is in place.
+# Value: no means the lid switch will not be ignored if an application or service has inhibited power-saving actions. The system will still respond to the lid switch event even if an application has requested to prevent power-saving actions.
+LidSwitchIgnoreInhibited=no
+
+# Controls what action the system should take when the lid is closed while the laptop is docked or connected to external monitors.
+# Value: ignore means the system will ignore the lid switch event when docked, so closing the lid will not trigger any action.
+HandleLidSwitchDocked=ignore
+
+# Controls the maximum delay before the system honors an inhibition request, which prevents actions like suspension or hibernation.
+# Value: 1800 means the system will wait up to 30 minutes before checking if any inhibition requests are in place.
+InhibitDelayMaxSec=1600
+```
+
