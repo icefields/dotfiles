@@ -165,3 +165,9 @@ HandleLidSwitchDocked=ignore
 InhibitDelayMaxSec=1600
 ```
 
+# Applications (Hyprland)
+<b>web browser:</b>
+thunar
+<b>text editor:</b>
+nvim
+`sudo ln -s $(which kitty) /usr/bin/gnome-terminal` so thunar will open text files in nvim
