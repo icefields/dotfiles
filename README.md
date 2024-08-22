@@ -166,7 +166,7 @@ InhibitDelayMaxSec=1600
 ```
 
 # Applications (Hyprland)
-<b>web browser:</b>
+<b>files browser:</b>
 thunar
 <b>text editor:</b>
 nvim
