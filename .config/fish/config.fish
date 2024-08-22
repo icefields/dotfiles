@@ -116,8 +116,14 @@ if status is-interactive
             # to work with distrobox
             set -e SESSION_MANAGER
         case "Fedora"
-            alias vim='nvim'
+            abbr --add vi "nvim"
             abbr --add upd "sudo dnf upgrade"
+
+            # Launch hyprland automatically
+            if test (tty) = "/dev/tty1"
+                exec Hyprland
+            end
+
         case "macOS"
             abbr --add ca bat
         case "Linuxmint"
