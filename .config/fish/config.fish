@@ -116,6 +116,7 @@ if status is-interactive
             # to work with distrobox
             set -e SESSION_MANAGER
         case "Fedora"
+            alias dmenu='wofi --dmenu'
             abbr --add vi "nvim"
             abbr --add upd "sudo dnf upgrade"
 
