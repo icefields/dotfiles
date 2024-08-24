@@ -158,7 +158,11 @@ InhibitDelayMaxSec=1600
 
 # Applications (Hyprland)
 <b>files browser:</b>
-thunar
+thunar <br>
 <b>text editor:</b>
 nvim
 `sudo ln -s $(which kitty) /usr/bin/gnome-terminal` so thunar will open text files in nvim
+<br>
+<b>dmenu</b> is replaced by wofi in Wayland, to allow scripts that rely on dmenu to work:<br>
+`sudo ln -s /home/luci/.config/wofi/dmenu.sh /usr/bin/dmenu`<br>
+
