@@ -45,7 +45,7 @@
 
     "custom/launch_wofi": {
         "format": "",
-        "on-click": "sh -c '(sleep 0.5s; wofi)' & disown",
+        "on-click": "sh -c '(sleep 0.5s; wofi --conf ~/.config/wofi/config-bmenu)' & disown",
         "tooltip": false
     },
 

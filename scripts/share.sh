@@ -3,12 +3,11 @@
 showmenu() {
     # Read input from standard input
     input=$(cat)
-    
-    # Check for dmenu or wofi and use the appropriate one
-    if command -v dmenu >/dev/null 2>&1; then
+   
+    if command -v wofi >/dev/null 2>&1; then
+        echo "$input" | wofi --conf $HOME/.config/wofi/config-smenu --style $HOME/.config/wofi/styleS.css 
+    elif command -v dmenu >/dev/null 2>&1; then
         echo "$input" | dmenu -i -l 25
-    elif command -v wofi >/dev/null 2>&1; then
-        echo "$input" | wofi --dmenu -i -l 25
     elif command -v fzf >/dev/null 2>&1; then
         echo "$input" | fzf
     else
