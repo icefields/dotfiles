@@ -6,11 +6,11 @@ showmenu() {
     
     # Check for dmenu or wofi and use the appropriate one
     if command -v dmenu >/dev/null 2>&1; then
-        # Use dmenu
         echo "$input" | dmenu -i -l 25
     elif command -v wofi >/dev/null 2>&1; then
-        # Use wofi
         echo "$input" | wofi --dmenu -i -l 25
+    elif command -v fzf >/dev/null 2>&1; then
+        echo "$input" | fzf
     else
         echo "Neither dmenu nor wofi is installed."
         return 1
