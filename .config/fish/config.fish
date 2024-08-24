@@ -88,13 +88,15 @@ if status is-interactive
     else
         set OS_NAME (lsb_release -is)
     end    
-    
+
+    if test -n "$CONTAINER_ID"
+        set -e SESSION_MANAGER
+    end
+
     switch $OS_NAME
         case "Ubuntu"
             abbr --add ca batcat	        
             abbr --add upd "sudo apt update && sudo apt upgrade -y"
-            # to work with distrobox
-            set -e SESSION_MANAGER
             cd
         case "Arch"
             abbr --add ca bat
@@ -113,8 +115,6 @@ if status is-interactive
             alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
             alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
 
-            # to work with distrobox
-            set -e SESSION_MANAGER
         case "Fedora"
             alias dmenu='wofi --dmenu'
             abbr --add vi "nvim"
