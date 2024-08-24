@@ -682,7 +682,7 @@ globalkeys = gears.table.join(
     -- Dmenu Share
     awful.key( { modkey, "Mod1" }, "space",
         function ()
-            awful.spawn.with_shell("~/.config/awesome/share.sh &")
+            awful.spawn.with_shell("$HOME/scripts/share.sh &")
         end, {
             description = "get a share link and copy",
             group = "luci4"

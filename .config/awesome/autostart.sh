@@ -10,6 +10,7 @@ run() {
 # run picom
 run "/home/lucifer/.config/awesome/screens.sh"
 run "/home/lucifer/.config/awesome/picom_delayed.sh"
+run lxqt-policykit-agent
 run blueman-applet
 run nm-applet
 run redshift-gtk
