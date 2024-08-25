@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory containing the wallpapers
-DIRECTORY="$HOME/Pictures/wallpapers"
+DIRECTORY="$HOME/Pictures/wallpapers/current"
 cd "$DIRECTORY" || { echo "Directory not found"; exit 1; }
 
 # Check if the directory is empty
@@ -19,6 +19,7 @@ FILE2=$(ls | shuf -n 1)
 # corresponding links to those 3 files have to be present in
 # /usr/share/hyprland/ 
 # in order for hyprland to pick them up and set the random wallpaper.
+
 rm wall0.png
 rm wall1.png
 rm wall2.png
