@@ -37,6 +37,10 @@ instructions: https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
 :CocInstall coc-snippets
 :CocCommand snippets.edit... FOR EACH FILE TYPE
 ```
+install Python neovim<br>
+pip3 install pynvim<br>
+install node neovim<br>
+sudo npm install -g neovim<br>
 
 ## Kitty
 In the advanced section of kitty.conf, the option `shell` is set to `/opt/default_shell-kitty_config` which is a link that points to the default shell. Create that link in your system before using Kitty.
