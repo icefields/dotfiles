@@ -20,9 +20,9 @@ FILE2=$(ls | shuf -n 1)
 # /usr/share/hyprland/ 
 # in order for hyprland to pick them up and set the random wallpaper.
 
-rm wall0.png
-rm wall1.png
-rm wall2.png
+# rm wall0.png
+# rm wall1.png
+# rm wall2.png
 cp "$FILE0" "wall0.png"
 cp "$FILE1" "wall1.png"
 cp "$FILE2" "wall2.png"
