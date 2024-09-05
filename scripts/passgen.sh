@@ -1,6 +1,6 @@
 #!/bin/bash
 generate_string() {
-    head --lines=3 /dev/urandom | tr -cd '[:print:]' | tr -s '\\ \"/!' 'pwkyx' | tr -s "'" "b" 
+    head --lines=3 /dev/urandom | tr -cd '[:print:]' | tr -s '\\ \"/!' 'pwkyx' | tr -s "'" "b" | sed -e 's/0/?/g' -e 's/[oO]/%/g' -e 's/[iIl]/@/g' 
 }
 
 defined_string=$(generate_string)
