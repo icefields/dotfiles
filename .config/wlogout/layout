@@ -1,7 +1,7 @@
 {
     "label" : "lock",
     "action" : "swaylock",
-    "text" : "Lock"
+    "text" : "Lock",
 }
 
 {
@@ -32,4 +32,4 @@
     "label" : "reboot",
     "action" : "systemctl reboot",
     "text" : "Reboot"
-}
+},
