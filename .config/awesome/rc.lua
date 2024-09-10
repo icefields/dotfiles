@@ -922,7 +922,6 @@ awful.rules.rules = {
             --maximized_horizontal = true
         }
     },
-
     -- Vivaldi browser
     {   rule = { class = "Vivaldi-stable" },
         properties = {
@@ -968,6 +967,7 @@ awful.rules.rules = {
                 "Arandr",
                 "QjackCtl",
                 "vlc",
+                "mpv",
                 "Xviewer",
                 "Blueman-manager",
                 "Gpick",
