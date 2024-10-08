@@ -486,10 +486,9 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
--- Luci4 print area of screen
 globalkeys = gears.table.join(
-     awful.key({ "Mod1" }, "Tab",
-        function ()
+     awful.key({ "Mod1" }, "Tab", 
+        function () 
             awful.menu.client_list( { theme = { width = 500 } } )
         end, {
             description = "show task list",
@@ -649,6 +648,15 @@ globalkeys = gears.table.join(
             awful.util.spawn("librewolf")
         end, {
             description = "LibreWolf (open)",
+            group = "luci4"
+        }
+    ),
+    -- Nemo
+    awful.key( { modkey }, "e",
+        function ()
+            awful.util.spawn("nemo")
+        end, {
+            description = "Nemo (open)",
             group = "luci4"
         }
     ),
