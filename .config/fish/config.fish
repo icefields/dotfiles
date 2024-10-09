@@ -82,6 +82,14 @@ if status is-interactive
     ### DOT FILES BACKUP, BARE REPO
     alias gitdots='/usr/bin/git --git-dir=$HOME/.git-dotfiles/ --work-tree=$HOME'
 
+    # VIM - NVIM
+    # if vim doesn't exist but nvim does exist, alias vim -> nvim
+    # if not command -v vim > /dev/null
+        if command -v nvim > /dev/null
+            alias vim='nvim'
+        end
+    # end
+
     ### OS SPECIFIC ###
     if test (uname -s) = "Darwin"
         set OS_NAME (sw_vers -productName)
