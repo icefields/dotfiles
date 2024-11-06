@@ -1,1 +1,1 @@
-/usr/bin/distrobox-enter  -n ubuntu --   kitty
+/usr/bin/distrobox-enter  -n isol-arch --   kitty

@@ -148,7 +148,7 @@ flaggedmenu = {
         end,
         beautiful.arch_icon
     },
-    {   "Kitty Ubuntu",
+    {   "Kitty Isolated",
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
         end,
@@ -660,7 +660,7 @@ globalkeys = gears.table.join(
             group = "luci4"
         }
     ),
-    -- Kitty on Ubuntu (c as in console)
+    -- Kitty on Arch Distrobox (c as in console)
     awful.key( { modkey, }, "c",
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_arch.sh")
@@ -874,7 +874,18 @@ awful.rules.rules = {
             placement = awful.placement.no_overlap+awful.placement.no_offscreen
         }
     },
-
+     -- vlc media player, floating
+    {   rule = { class = "vlc" },
+        properties = {
+            floating = true,
+            width = 800, 
+            height = 600,
+            maximized_vertical = false,
+            maximized_horizontal = false,
+            maximized = false,
+            placement = awful.placement.centered
+        }
+    },
     -- Archive browser/extractor, floating
     {   rule = { class = "File-roller" },
         properties = {
@@ -974,7 +985,6 @@ awful.rules.rules = {
                 "Amp Locker", -- glitch and crash if not floating
                 "Arandr",
                 "QjackCtl",
-                "vlc",
                 "mpv",
                 "Xviewer",
                 "Blueman-manager",
