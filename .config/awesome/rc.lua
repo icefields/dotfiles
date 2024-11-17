@@ -672,7 +672,7 @@ globalkeys = gears.table.join(
     -- Android Studio
     awful.key( { modkey }, "a",
         function ()
-            awful.util.spawn("/opt/android-studio/bin/studio.sh")
+            awful.util.spawn("/opt/android-studio/bin/studio")
         end, {
             description = "Android Studio (open)",
             group = "luci4"
@@ -984,6 +984,7 @@ awful.rules.rules = {
             class = {
                 "Amp Locker", -- glitch and crash if not floating
                 "Arandr",
+                "Berry Amp - Charles Caswell",
                 "QjackCtl",
                 "mpv",
                 "Xviewer",
