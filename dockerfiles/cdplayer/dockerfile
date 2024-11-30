@@ -1,0 +1,52 @@
+FROM ubuntu:latest
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y \
+        vim \
+	net-tools \
+	iproute2 \
+	lsof \
+	alsa-utils \
+	alsa-base \
+	vlc \
+#    	libasound2 \
+	mpg123 \
+    	cdtool \
+	libsdl1.2-dev \
+	lsb-release \
+	fish \
+	sudo \
+	mplayer \
+        ffmpeg \
+        libcdio-dev \
+        libcdio-paranoia2 \
+        && apt-get clean
+#        && rm -rf /var/lib/apt/lists/*
+
+# Expose port for streaming
+EXPOSE 8888
+
+# Set the entrypoint to a script that handles streaming
+COPY start-stream.sh /usr/local/bin/start-stream.sh
+RUN chmod +x /usr/local/bin/start-stream.sh
+# RUN sudo ln -s /dev/snd/pcmC0D3p /dev/snd/pcmC0D0p
+
+# Install the fish shell as default
+# Create a new user for running the shell and provide it with sudo access
+RUN useradd -m -s /usr/bin/fish luci && echo "luci:tessy" | chpasswd && usermod -aG sudo luci
+
+# Change default shell to fish for the new user
+#RUN chsh -s /usr/bin/fish luci
+
+RUN ln -s /dev/sr0 /dev/cdrom
+# Switch to the new user
+#USER luci
+
+# Set working directory
+#WORKDIR /home/luci
+
+# Specify the default command
+#CMD ["fish"]
+#ENTRYPOINT ["/usr/local/bin/start-stream.sh"]
+
