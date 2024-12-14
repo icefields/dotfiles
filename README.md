@@ -3,6 +3,43 @@
 # Dot Files Backup
 ## Fish
 Fish configuration files and functions.
+
+### Functions:
+<b>tari</b> - Compresses files and directories <br>
+examples: <br>
+`tari file.txt`<br>
+`tari dir-name/`<br>
+Result: files and dirs are compressed into file.txt.tar.gz, dir-name.tar.gz<br>
+
+<b>tarx</b> - De-compresses files and directories, same as `tar -zxvf` <br>
+examples: <br>
+`tarx file.tar.gz`<br>
+
+<b>backup</b> - Function for creating a backup file <br>
+examples: <br>
+`backup file.txt`<br>
+Result: copies file as file.txt.bak <br>
+
+<b>fcd</b> - Navigate to directory directly, if more dirs match the name, a list is provided for selection <br>
+examples: <br>
+`fcd luci4`<br>
+Result: navigates to the directory called luci4, wherever it is <br>
+
+<b>passgen</b> - Generate a random password <br>
+examples: <br>
+`passgen 32`<br>
+Result: generates a 32-character password <br>
+
+<b>getpath</b> - Finds a path and copies to clipboard <br>
+examples: <br>
+`getpath somepath`<br>
+
+<b>tree</b> - Shows a tree view of the specified depth <br>
+examples: <br>
+`tree 2`<br>
+Result: shows a tree view of the current directory, of depth 2 <br>
+
+
 ## Bash
 Bash config files (`.bashrc`)
 ## Awesome WM
@@ -184,7 +221,8 @@ nvim
 <b>dmenu</b> is replaced by wofi in Wayland, to allow scripts that rely on dmenu to work:<br>
 `sudo ln -s /home/luci/.config/wofi/dmenu.sh /usr/bin/dmenu`<br>
 
-# Other Application (incomplete)
+# Other Applications (incomplete)
+
 | app | required by | note |
 | --- | --- | --- |
 | fastfetch | kitty |https://github.com/fastfetch-cli/fastfetch/releases/ |
@@ -192,4 +230,8 @@ nvim
 | bat / batcat | fish | package manager |
 | eza | fish | package manager |
 | python3-pynvim | neovim | package manager |
-| npm | neovim |  sudo npm install -g neovim |
+| npm | neovim | sudo npm install -g neovim |
+| xclip | fish, awesome | |
+| wl-copy | fish, hyprland | |
+| fzf | fish, hyprland, awesome | package manager |
+
