@@ -38,23 +38,23 @@ instructions: https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
 :CocCommand snippets.edit... FOR EACH FILE TYPE
 ```
 install Python neovim<br>
-pip3 install pynvim<br>
+`pip3 install pynvim`<br>
 install node neovim<br>
-sudo npm install -g neovim<br>
+`sudo npm install -g neovim`<br>
 
 ## Kitty
 In the advanced section of kitty.conf, the option `shell` is set to `/opt/default_shell-kitty_config` which is a link that points to the default shell. Create that link in your system before using Kitty.
 ie. if the default shell is **Fish**, on Linux:
 ```
-ln -s /opt/homebrew/bin/fish /opt/default_shell-kitty_config 
+ln -s $(which fish) /opt/default_shell-kitty_config 
 ```
 ie. if the default shell is **Bash**, on Linux:
 ```
-ln -s $(which fish) /opt/default_shell-kitty_config 
+ln -s $(which bash) /opt/default_shell-kitty_config 
 ```
 ie. if the default shell is **Fish**, on MacOs:
 ```
-ln -s $(which fish) /opt/default_shell-kitty_config 
+ln -s /opt/homebrew/bin/fish /opt/default_shell-kitty_config 
 ```
 **Kitty font config**<br>
 In the `kitty.config` specify a font that is not a nerd font, according to kitty's instructions.
@@ -184,3 +184,12 @@ nvim
 <b>dmenu</b> is replaced by wofi in Wayland, to allow scripts that rely on dmenu to work:<br>
 `sudo ln -s /home/luci/.config/wofi/dmenu.sh /usr/bin/dmenu`<br>
 
+# Other Application (incomplete)
+| app | required by | note |
+| --- | --- | --- |
+| fastfetch | kitty |https://github.com/fastfetch-cli/fastfetch/releases/ |
+| lolcat | kitty | package manager |
+| bat / batcat | fish | package manager |
+| eza | fish | package manager |
+| python3-pynvim | neovim | package manager |
+| npm | neovim |  sudo npm install -g neovim |
