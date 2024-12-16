@@ -97,15 +97,17 @@ if status is-interactive
         set OS_NAME (lsb_release -is)
     end    
 
+    # if the variable $CONTAINER_ID exists, the sessions is in a distrobox container
     if test -n "$CONTAINER_ID"
         set -e SESSION_MANAGER
+        # check if we're in the right home directory
+        test (pwd) != $HOME && cd
     end
 
     switch $OS_NAME
         case "Ubuntu"
             abbr --add ca batcat	        
             abbr --add upd "sudo apt update && sudo apt upgrade -y"
-            cd
         case "Arch"
             abbr --add ca bat
 
