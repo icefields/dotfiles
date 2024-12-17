@@ -58,7 +58,12 @@ Check and edit `~/.config/awesome/screens.sh` according to your desired screen s
 Everything else included in the awesome config `rc.lua`, in the scripts in the same directory, and the subdirectories (ie. ./themes/..)
 <br>
 ***share.sh*** will use dmenu to select a file and create a share link that will be copied to the clipboard. `xclip` and `dmenu` required. <br>
-***scriy/sharesec.sh*** will allow the selection of multiple files, zip them, encrypt them if a password is passed, upload them and return a link (ie. for sharing) <br>
+***scriy/sharesec.sh*** will allow the selection of multiple files, zip them, encrypt them if a password is passed, upload them and return a link (ie. for sharing) <br><br>
+Add to (or create if it doesn't exist) `~/.config/awesome/autostart-custom.sh` applications to run at startup, on top of the ones that are already running by default (defined in `~/.config/awesome/autostart.sh` ).<br><br>
+<b>Screen Resolution and scaling</b><br>
+To customize the <b>screen resolution</b> add this line to `autostart-custom.sh`: `xrandr -s 1920x1080` .<br>
+For scaling, create or edit `~/.Xresources` and add `Xft.dpi:148` .
+
 ## Picom
 This shouldn't have any requirements other than installing `picom`.
 ## Vim and NeoVim
