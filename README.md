@@ -225,6 +225,25 @@ nvim
 <b>dmenu</b> is replaced by wofi in Wayland, to allow scripts that rely on dmenu to work:<br>
 `sudo ln -s /home/luci/.config/wofi/dmenu.sh /usr/bin/dmenu`<br>
 
+# Fonts
+<b>Awesome:</b>
+```
+UbuntuSansMono Nerd Font Mono Medium
+UbuntuSansMono Nerd Font Mono
+UbuntuSansMono Nerd Font Mono SemiBold
+```
+<b>Kitty:</b>
+```
+Fira Code
+Fira Code Medium
+Fira Code Italic
+Symbols only nerd font
+```
+<b>Other Fonts:</b>
+```
+Inter
+```
+
 # Other Applications (incomplete)
 
 | app | required by | note |
