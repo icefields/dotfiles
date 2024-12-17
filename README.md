@@ -42,15 +42,19 @@ Result: shows a tree view of the current directory, of depth 2 <br>
 
 ## Bash
 Bash config files (`.bashrc`)
+
 ## Awesome WM
 Requires all the autostarting apps to be installed, comment out, in `autorun.sh`, the apps that are not installed.<br>
+<i>(incomplete) list of apps required by awesome scripts:</i> `i3lock nitrogen picom lxqt-policykit redshift-gtk xfce4-clipman xfce4-clipman xfce4-power-manager` <br>
+`blueman-applet` comes with `blueman` package. `nm-applet` comes with `network-manager` <br><br>
 Some of the widges from `awesome-wm-widgets` (https://github.com/streetturtle/awesome-wm-widgets) are used in the config.<br>
 Requires Collision (https://github.com/Elv13/collision) for extended functionalities and shortcuts.<br>
-Collision and awesome-wm-widgets to be cloned in the root awesome directory (`~/.config/awesome`)<br>
-The directory `$HOME/apps` will be scanned for AppImages, which will be added to the menu. Keep your ***Standalone Applications and AppImages*** there, or edit the location in rc.lua.<br>
+Collision and awesome-wm-widgets to be cloned in the root awesome directory (`~/.config/awesome`)<br><br>
+The directory `$HOME/apps` will be scanned for AppImages, which will be added to the menu. Keep your ***Standalone Applications and AppImages*** there, or edit the location in rc.lua.<br><br>
 i3lock is used as the screensaver, `rc.lua` contains a shortcut to lock the screen that references to `lockscreen.sh` in the same directory.<br>
 For new Arch installation install Blueman (double check the [Arch Wiki](https://wiki.archlinux.org/title/bluetooth) in case this info is outdated)<br>
 Optionally, install and add `lxsession` (policy kit, polKit) to  the the autorun file.<br>
+Check and edit `~/.config/awesome/screens.sh` according to your desired screen settings.<br>
 Everything else included in the awesome config `rc.lua`, in the scripts in the same directory, and the subdirectories (ie. ./themes/..)
 <br>
 ***share.sh*** will use dmenu to select a file and create a share link that will be copied to the clipboard. `xclip` and `dmenu` required. <br>
