@@ -62,7 +62,7 @@ Everything else included in the awesome config `rc.lua`, in the scripts in the s
 Add to (or create if it doesn't exist) `~/.config/awesome/autostart-custom.sh` applications to run at startup, on top of the ones that are already running by default (defined in `~/.config/awesome/autostart.sh` ).<br><br>
 <b>Screen Resolution and scaling</b><br>
 To customize the <b>screen resolution</b> add this line to `autostart-custom.sh`: `xrandr -s 1920x1080` .<br>
-For scaling, create or edit `~/.Xresources` and add `Xft.dpi:148` .
+For scaling, create or edit `~/.Xresources` and add `Xft.dpi:148` (check https://dpi.lv for the right dpi value, you can use a multiple or fraction of that number) .
 
 ## Picom
 This shouldn't have any requirements other than installing `picom`.
