@@ -256,7 +256,7 @@ create the following symlinks: <br>
 `link -> original file` <br>
 `/usr/share/hyprland/wall0.png -> $HOME/.config/hypr/wallpapers/wall0.png` <br> 
 `/usr/share/hyprland/wall1.png -> $HOME/.config/hypr/wallpapers/wall1.png` <br>
-`/usr/share/hyprland/wall2.png -> $HOME/.config/hypr/wallpapers/wall2.png` <br><br>
+`/usr/share/hyprland/wall2.png -> $HOME/.config/hypr/wallpapers/wall2.png` <br>
 
 symlink the images to use as wallpapers, one by one, to `.config/hypr/wallpapers/`.
 
