@@ -1,8 +1,7 @@
 <!-- ![luci4-ascii](https://github.com/user-attachments/assets/b1b97840-3a3d-4b1a-aae1-5d86d7bc9024) -->
-![image](https://github.com/user-attachments/assets/d86777ad-25ff-471e-97aa-879a64cb7e65)
+# Dot Files Luci4
+![image](https://github.com/user-attachments/assets/b33396c0-0abd-46b7-9db8-9aa6e87789fb)
 
-
-# Dot Files Backup
 ## Fish
 Fish configuration files and functions.
 
