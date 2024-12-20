@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory containing the wallpapers
-DIRECTORY="$HOME/Pictures/wallpapers/current"
+DIRECTORY="$HOME/.config/hypr/wallpapers"
 cd "$DIRECTORY" || { echo "Directory not found"; exit 1; }
 
 # start log file
