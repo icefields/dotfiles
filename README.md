@@ -1,4 +1,6 @@
-![luci4-ascii](https://github.com/user-attachments/assets/b1b97840-3a3d-4b1a-aae1-5d86d7bc9024)
+<!-- ![luci4-ascii](https://github.com/user-attachments/assets/b1b97840-3a3d-4b1a-aae1-5d86d7bc9024) -->
+![image](https://github.com/user-attachments/assets/d86777ad-25ff-471e-97aa-879a64cb7e65)
+
 
 # Dot Files Backup
 ## Fish
