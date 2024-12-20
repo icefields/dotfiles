@@ -261,7 +261,7 @@ create the following symlinks: <br>
 symlink the images to use as wallpapers, one by one, to `.config/hypr/wallpapers/`.
 
 ### Awesome Instructions
-symlink the images to use as wallpapers, one by one, to `.config/awesome/themes/luci4/wallpapers`.
+symlink the images to use as wallpapers, one by one, to `.config/awesome/themes/luci4/wallpapers/`.
 
 # Other Applications (incomplete)
 
