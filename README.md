@@ -250,7 +250,8 @@ Inter
 ```
 
 # Wallpapers
-Wallpapers are in `Pictures/wallpapers`
+Wallpapers are in `Pictures/wallpapers`. <br>
+There are scripts in place to automate the process. Follow this initial setup to get started.
 ### Hyprland Instructions
 create the following symlinks: <br>
 `link -> original file` <br>
@@ -258,10 +259,10 @@ create the following symlinks: <br>
 `/usr/share/hyprland/wall1.png -> $HOME/.config/hypr/wallpapers/wall1.png` <br>
 `/usr/share/hyprland/wall2.png -> $HOME/.config/hypr/wallpapers/wall2.png` <br>
 
-symlink the images to use as wallpapers, one by one, to `.config/hypr/wallpapers/`.
+symlink or copy the images to use as wallpapers, one by one, into `.config/hypr/wallpapers/`.
 
 ### Awesome Instructions
-symlink the images to use as wallpapers, one by one, to `.config/awesome/themes/luci4/wallpapers/`.
+symlink or copy the images to use as wallpapers, one by one, into `.config/awesome/themes/luci4/wallpapers/`.
 
 # Other Applications (incomplete)
 
