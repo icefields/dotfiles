@@ -249,6 +249,20 @@ Symbols only nerd font
 Inter
 ```
 
+# Wallpapers
+Wallpapers are in `Pictures/wallpapers`
+### Hyprland Instructions
+create the following symlinks: <br>
+`link -> original file` <br>
+`/usr/share/hyprland/wall0.png -> $HOME/.config/hypr/wallpapers/wall0.png` <br> 
+`/usr/share/hyprland/wall1.png -> $HOME/.config/hypr/wallpapers/wall1.png` <br>
+`/usr/share/hyprland/wall2.png -> $HOME/.config/hypr/wallpapers/wall2.png` <br><br>
+
+symlink the images to use as wallpapers, one by one, to `.config/hypr/wallpapers/`.
+
+### Awesome Instructions
+symlink the images to use as wallpapers, one by one, to `.config/awesome/themes/luci4/wallpapers`.
+
 # Other Applications (incomplete)
 
 | app | required by | note |
