@@ -76,6 +76,9 @@ if status is-interactive
     alias tarx="tar -zxvf" # de-archive a tar file. USE 'tari filename' to compress
     alias :q='exit'
 
+    # Reboot to macOS on dual-boot with Asahi Linux.
+    alias rebootToMac="sudo sh -c 'echo 1 | asahi-bless; reboot'"
+    
     # adding flags
     alias df='df -h'                          # human-readable sizes
     alias free='free -m'                      # show sizes in MB
