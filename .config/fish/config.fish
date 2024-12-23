@@ -74,6 +74,7 @@ if status is-interactive
     alias getpath="find -type f | fzf | sed 's/^..//' | tr -d '\n' | xclip -selection c"
     alias tree="exa -alh@ --color=always --group-directories-first --tree --level"
     alias tarx="tar -zxvf" # de-archive a tar file. USE 'tari filename' to compress
+    alias :q='exit'
 
     # adding flags
     alias df='df -h'                          # human-readable sizes
