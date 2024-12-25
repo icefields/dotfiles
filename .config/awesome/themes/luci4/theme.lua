@@ -179,10 +179,12 @@ theme.calibre_icon = "~/.config/awesome/themes/luci4/icons/accessories-ebook-rea
 theme.vivaldi_icon = "~/.config/awesome/themes/luci4/icons/vivaldi.svg"
 theme.reaper_icon = "~/.config/awesome/themes/luci4/icons/reaper.png"
 theme.arch_icon = "~/.config/awesome/themes/luci4/icons/distributor-logo-archlinux.svg"
+theme.arcolinux_icon = "~/.config/awesome/themes/luci4/icons/arcolinux-hello.svg"
 theme.supertux_icon = "~/.config/awesome/themes/luci4/icons/supertux.svg"
 theme.tor_icon = "~/.config/awesome/themes/luci4/icons/tor.svg"
 theme.jack_icon = "~/.config/awesome/themes/luci4/icons/qv4l2.svg"
 theme.telegram_icon = "~/.config/awesome/themes/luci4/icons/telegram.svg"
+theme.freetube_icon = "~/.config/awesome/themes/luci4/icons/freetube.svg"
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil

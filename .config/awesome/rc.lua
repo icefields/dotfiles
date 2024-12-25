@@ -150,15 +150,21 @@ flaggedmenu = {
     },
     {   "Kitty Isolated",
         function()
-            awful.spawn.with_shell("~/.config/awesome/open_kitty_ubuntu.sh")
+            awful.spawn.with_shell("~/.config/awesome/open_kitty_arch-isolated.sh")
         end,
-        beautiful.ubuntu_icon
+        beautiful.arcolinux_icon
     },
     {   "Vivaldi",
         function()
             awful.spawn.with_shell("vivaldi")
         end,
         beautiful.vivaldi_icon
+    }, 
+    {   "Freetube",
+        function()
+            awful.spawn.with_shell("~/.config/awesome/open_freetube.sh")
+        end,
+        beautiful.freetube_icon
     },
     {   "notepadqq",
         function()
