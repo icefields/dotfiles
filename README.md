@@ -279,3 +279,14 @@ symlink or copy the images to use as wallpapers, one by one, into `.config/aweso
 | wl-copy | fish, hyprland | |
 | fzf | fish, hyprland, awesome | package manager |
 
+## pacman config
+located at `/etc/pacman.conf`
+<br>
+Under "misc options" add:
+```
+# Misc options
+Color
+ILoveCandy
+
+ParallelDownloads = 5
+```
