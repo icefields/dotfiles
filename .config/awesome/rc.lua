@@ -124,7 +124,8 @@ myawesomemenu = {
 
 -- Luci4 scan all the apps in the folder $HOME/apps and add to menu
 local appsMenu = { }
-for appExecutableName in io.popen([[ls -pa $HOME/apps/ | grep -v /]]):lines() do
+local appImageCommandFile = io.popen([[ls -pa $HOME/apps/ | grep -v /]])
+for appExecutableName in appImageCommandFile:lines() do
     -- Luci4 making app names readable in the menu
     local appName = appExecutableName:gsub(" Standalone", "")
                                      :gsub("x86_64", "")
@@ -141,6 +142,22 @@ for appExecutableName in io.popen([[ls -pa $HOME/apps/ | grep -v /]]):lines() do
         end,
         get_icon_for_application(awesome, appName)
     })
+end
+appImageCommandFile:close()
+
+-- Luci4 scan for Flatpak
+local flatpakCommandFile = io.popen("flatpak list --app --columns=application")
+if flatpakCommandFile then
+    for flatpakApp in flatpakCommandFile:lines() do
+        local flatpakAppName = string.match(flatpakApp, "([^%.]+)$") 
+        table.insert(appsMenu, { flatpakAppName,
+            function ()
+                 awful.spawn.with_shell("flatpak run "..flatpakApp)
+            end,
+            get_icon_for_application(awesome, flatpakAppName)
+        })
+    end
+    flatpakCommandFile:close()
 end
 
 -- Luci4 custom menu with favourite applications
