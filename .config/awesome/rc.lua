@@ -162,25 +162,25 @@ flaggedmenu = {
     }, 
     {   "Freetube",
         function()
-            awful.spawn.with_shell("~/.config/awesome/open_freetube.sh")
+            awful.spawn.with_shell("$HOME/apps/Freetube")
         end,
         beautiful.freetube_icon
     },
     {   "notepadqq",
         function()
-            awful.spawn.with_shell("~/.config/awesome/open_notepadqq_ubuntu.sh")
+            awful.spawn.with_shell("$HOME/apps/Notepadqq")
         end,
         beautiful.notepadqq_icon
     },
     {   "Calibre",
         function()
-            awful.spawn.with_shell("/usr/bin/distrobox-enter  -n arch --   calibre")
+            awful.spawn.with_shell("$HOME/apps/Calibre")
         end,
         beautiful.calibre_icon
     },
     {   "UpScayl",
         function()
-            awful.spawn.with_shell("/usr/bin/distrobox-enter  -n arch --   upscayl")
+            awful.spawn.with_shell("$HOME/apps/Upscayl")
         end,
         beautiful.supertux_icon
     },
