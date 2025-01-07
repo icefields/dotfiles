@@ -208,6 +208,12 @@ flaggedmenu = {
         end,
         beautiful.tor_icon
     },
+    {   "Steam",
+        function()
+            awful.spawn("steam")
+        end,
+        beautiful.steam_icon
+    },
     {   "Telegram",
         function()
             awful.spawn.with_shell("$HOME/apps/Telegram/Telegram")
