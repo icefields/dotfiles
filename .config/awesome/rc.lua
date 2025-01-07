@@ -16,6 +16,8 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+require("get_app_icon")
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -136,7 +138,8 @@ for appExecutableName in io.popen([[ls -pa $HOME/apps/ | grep -v /]]):lines() do
     table.insert(appsMenu, { appName,
         function ()
              awful.spawn.with_shell("\"$HOME/apps/"..appExecutableName.."\" &")
-        end
+        end,
+        get_icon_for_application(awesome, appName)
     })
 end
 
