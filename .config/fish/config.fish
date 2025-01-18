@@ -75,6 +75,8 @@ if status is-interactive
     alias tree="exa -alh@ --color=always --group-directories-first --tree --level"
     alias tarx="tar -zxvf" # de-archive a tar file. USE 'tari filename' to compress
     alias :q='exit'
+    alias toreset="$HOME/scripts/tor_relay_reset.sh"
+    alias toripify="torsocks wget -qO - https://api.ipify.org; echo" 
 
     # Reboot to macOS on dual-boot with Asahi Linux.
     alias rebootToMac="sudo sh -c 'echo 1 | asahi-bless; reboot'"

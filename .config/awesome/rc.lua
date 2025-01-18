@@ -728,7 +728,6 @@ globalkeys = gears.table.join(
             group = "luci4"
         }
     ),
-
     -- encrypted Share
     awful.key( { modkey, "Mod1" }, "s",
         function ()
@@ -738,8 +737,6 @@ globalkeys = gears.table.join(
             group = "luci4"
         }
     ),
-
-
     -- Prompt (default)
     awful.key({ modkey },            "r",
         function ()
@@ -749,7 +746,16 @@ globalkeys = gears.table.join(
             group = "launcher"
         }
     ),
-
+    
+    -- Tor reset
+    awful.key({ modkey },            "i",
+        function ()
+            awful.spawn.with_shell("fish -c '$HOME/scripts/tor_relay_reset.sh'")
+        end, {
+            description = "reset tor relay, change ip address",
+            group = "luci4"
+        }
+    ),
     awful.key({ modkey }, "x",
         function ()
             awful.prompt.run {
