@@ -182,7 +182,7 @@ flaggedmenu = {
     }, 
     {   "Freetube",
         function()
-            awful.spawn.with_shell("$HOME/apps/Freetube")
+            awful.spawn.with_shell("$HOME/apps/FreeTube")
         end,
         beautiful.freetube_icon
     },
