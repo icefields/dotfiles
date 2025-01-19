@@ -2,7 +2,8 @@
 
 source torsocks off
 echo "Tor mode deactivated. Command will NOT go through Tor anymore."
-torsocks wget -qO - https://api.ipify.org; echo
+oldIp=$(torsocks wget -qO - https://api.ipify.org; echo)
+echo $oldIp
 
 # Define the Tor control port and password
 TOR_HOST="127.0.0.1"
@@ -20,5 +21,7 @@ TOR_PASSWORD=$TOR_PASSWORD
   echo "quit"
 } | telnet $TOR_HOST $TOR_PORT
 
-torsocks wget -qO - https://api.ipify.org; echo
+newIp=$(torsocks wget -qO - https://api.ipify.org; echo)
+echo $newIp
 
+notify-send "Old Tor IP:${oldIp}  -  New Tor IP: ${newIp}"
