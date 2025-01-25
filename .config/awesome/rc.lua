@@ -186,7 +186,7 @@ flaggedmenu = {
         end,
         beautiful.freetube_icon
     },
-    {   "notepadqq",
+    {   "Notepadqq",
         function()
             awful.spawn.with_shell("$HOME/apps/Notepadqq")
         end,

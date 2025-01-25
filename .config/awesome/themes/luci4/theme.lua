@@ -85,7 +85,6 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
--- beautiful.notification_icon_size = dpi(66)
 theme.notification_icon_size = dpi(66)
 
 -- Variables set for theming the menu:
