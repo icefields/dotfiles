@@ -28,7 +28,7 @@ return function(awful, icons)
     },
     {   "Vivaldi",
         function()
-            awful.spawn.with_shell("vivaldi")
+            awful.spawn("vivaldi")
         end,
         icons.vivaldi
     },
