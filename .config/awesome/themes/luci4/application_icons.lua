@@ -63,7 +63,8 @@ local icons = {
     telegram = telegram_icon,
     freeTube = freetube_icon,
     steam = steam_icon,
-    berryAmp = baseDir .. "berryamp.svg"
+    berryAmp = baseDir .. "berryamp.svg",
+    transmission = baseDir .. "transmission.svg"
 }
 -- END LUCI4 Icon Theme
 return icons

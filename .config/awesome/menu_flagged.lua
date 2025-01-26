@@ -38,6 +38,13 @@ return function(awful, icons)
         end,
         icons.freeTube
     },
+    
+    {   "Transmission",
+        function()
+            awful.spawn.with_shell("$HOME/apps/Transmission")
+        end,
+        icons.transmission
+    },
     {   "Berry Amp",
         function()
             awful.spawn.with_shell("\"$HOME/apps/BerryAmpCharlesCaswell Standalone\" &")
