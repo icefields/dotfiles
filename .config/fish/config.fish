@@ -58,7 +58,7 @@ if status is-interactive
     abbr --add pul git pull
     
     # gitdots abbreviatons
-    abbr --add dad gitdots add .
+    abbr --add dad gitdots add
     abbr --add dstatus gitdots status
     abbr --add ddiff gitdots diff
     abbr --add dcom gitdots commit -m \"
