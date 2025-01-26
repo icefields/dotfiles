@@ -166,86 +166,86 @@ flaggedmenu = {
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_arch.sh")
         end,
-        beautiful.arch_icon
+        beautiful.icons.kittyArch
     },
     {   "Kitty Isolated",
         function()
             awful.spawn.with_shell("~/.config/awesome/open_kitty_arch-isolated.sh")
         end,
-        beautiful.arcolinux_icon
+        beautiful.icons.arcoLinux
     },
     {   "Vivaldi",
         function()
             awful.spawn.with_shell("vivaldi")
         end,
-        beautiful.vivaldi_icon
-    }, 
+        beautiful.icons.vivaldi
+    },
     {   "Freetube",
         function()
             awful.spawn.with_shell("$HOME/apps/FreeTube")
         end,
-        beautiful.freetube_icon
+        beautiful.icons.freeTube
     },
-    {   "Notepadqq",
+    {   "Berry Amp",
         function()
-            awful.spawn.with_shell("$HOME/apps/Notepadqq")
+            awful.spawn.with_shell("\"$HOME/apps/BerryAmpCharlesCaswell Standalone\" &")
         end,
-        beautiful.notepadqq_icon
+        beautiful.icons.berryAmp
     },
     {   "Calibre",
         function()
             awful.spawn.with_shell("$HOME/apps/Calibre")
         end,
-        beautiful.calibre_icon
+        beautiful.icons.calibre
     },
     {   "UpScayl",
         function()
             awful.spawn.with_shell("$HOME/apps/Upscayl")
         end,
-        beautiful.supertux_icon
+        beautiful.icons.superTux
     },
     {   "Gimp",
         function()
             awful.spawn("gimp")
         end,
-        beautiful.gimp_icon
+        beautiful.icons.gimp
     },
     {   "Reaper",
         function()
             awful.spawn.with_shell("$HOME/apps/reaper_linux_x86_64/REAPER/reaper")
         end,
-        beautiful.reaper_icon
+        beautiful.icons.reaper
     },
     {   "QjackCtl",
         function()
             awful.spawn("qjackctl")
         end,
-        beautiful.jack_icon
+        beautiful.icons.jack
     },
     {   "Tor Browser",
         function()
             awful.spawn.with_shell("$HOME/apps/tor-browser/Tor Browser")
         end,
-        beautiful.tor_icon
+        beautiful.icons.tor
     },
     {   "Steam",
         function()
             awful.spawn("steam")
         end,
-        beautiful.steam_icon
+        beautiful.icons.steam
     },
     {   "Telegram",
         function()
             awful.spawn.with_shell("$HOME/apps/Telegram/Telegram")
         end,
-        beautiful.telegram_icon
+        beautiful.icons.telegram
     }
 }
 
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_flagged = { "Favourites", flaggedmenu, beautiful.favourite_icon }
-local menu_apps = { "Apps", appsMenu, beautiful.powerampache2speaker_icon }
-local menu_terminal = { "open terminal", terminal, beautiful.kitty_icon }
+local menu_flagged = { "Favourites", flaggedmenu, beautiful.icons.favourite }
+local menu_apps = { "Apps", appsMenu, beautiful.icons.defaultIcon }
+local menu_terminal = { "open terminal", terminal, beautiful.icons.kitty }
 
 if has_fdo then
     mymainmenu = freedesktop.menu.build({

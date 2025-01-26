@@ -21,6 +21,8 @@ local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
 local theme = {}
+theme.icons = require("themes.luci4.application_icons")
+
 local colour1 = colours.dead
 local colour2 = colours.teal
 
@@ -161,32 +163,6 @@ theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
 
--- application icons
-theme.powerampache2speaker_icon = "~/.config/awesome/themes/luci4/icons/ic_speaker_colored_432px.svg"
-theme.favourite_icon = "~/.config/awesome/themes/luci4/icons/ic_favourite-applications.svg"
-theme.kitty_icon = "~/.config/awesome/themes/luci4/icons/kitty-candy.svg"
-theme.kittyArch_icon = "~/.config/awesome/themes/luci4/icons/kitty-arch.svg"
-theme.ubuntu_icon = "~/.config/awesome/themes/luci4/icons/distributor-logo-ubuntu.svg"
-theme.signal_icon = "~/.config/awesome/themes/luci4/icons/signal-desktop.png"
-theme.notepadqq_icon = "~/.config/awesome/themes/luci4/icons/notepadqq-candy.svg"
-theme.kdenlive_icon = "~/.config/awesome/themes/luci4/icons/kdenlive.svg"
-theme.neovim_icon = "~/.config/awesome/themes/luci4/icons/org.daa.NeovimGtk.svg"
-theme.androidStudio_icon = "~/.config/awesome/themes/luci4/icons/studio.svg"
-theme.calibre_icon = "~/.config/awesome/themes/luci4/icons/accessories-ebook-reader.svg"
-theme.gimp_icon = "~/.config/awesome/themes/luci4/icons/gimp.svg"
-theme.calibre_icon = "~/.config/awesome/themes/luci4/icons/accessories-ebook-reader.svg"
-theme.vivaldi_icon = "~/.config/awesome/themes/luci4/icons/vivaldi.svg"
-theme.reaper_icon = "~/.config/awesome/themes/luci4/icons/reaper.png"
-theme.arch_icon = "~/.config/awesome/themes/luci4/icons/distributor-logo-archlinux.svg"
-theme.arcolinux_icon = "~/.config/awesome/themes/luci4/icons/arcolinux-hello.svg"
-theme.supertux_icon = "~/.config/awesome/themes/luci4/icons/supertux.svg"
-theme.tor_icon = "~/.config/awesome/themes/luci4/icons/tor.svg"
-theme.jack_icon = "~/.config/awesome/themes/luci4/icons/qv4l2.svg"
-theme.telegram_icon = "~/.config/awesome/themes/luci4/icons/telegram.svg"
-theme.freetube_icon = "~/.config/awesome/themes/luci4/icons/freetube.svg"
-theme.steam_icon = "~/.config/awesome/themes/luci4/icons/steam.svg"
--- Define the icon theme for application icons. If not set then the icons
--- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 
 return theme
