@@ -659,7 +659,7 @@ globalkeys = gears.table.join(
         }
     ),
     -- Prompt (default)
-    awful.key({ modkey },            "r",
+    awful.key({ modkey }, "r",
         function ()
             awful.screen.focused().mypromptbox:run()
         end, {
@@ -667,13 +667,21 @@ globalkeys = gears.table.join(
             group = "launcher"
         }
     ),
-    
+    -- Play song from Ampache server
+    awful.key({ modkey, "Control" }, "p",
+        function ()
+            awful.spawn.with_shell("$HOME/Code/Lua/ampache/play.sh")
+        end, {
+            description = "Play song from Ampache server",
+            group = "luci4"
+        }
+    ),
     -- Tor reset
-    awful.key({ modkey },            "i",
+    awful.key({ modkey }, "i",
         function ()
             awful.spawn.with_shell("fish -c '$HOME/scripts/tor_relay_reset.sh'")
         end, {
-            description = "reset tor relay, change ip address",
+            description = "Reset tor relay, change ip address",
             group = "luci4"
         }
     ),
