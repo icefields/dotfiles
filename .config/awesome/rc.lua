@@ -607,7 +607,7 @@ globalkeys = gears.table.join(
     -- Nemo
     awful.key( { modkey }, "e",
         function ()
-            awful.util.spawn("nemo")
+            awful.spawn.with_shell("nemo ~/Desktop/")
         end, {
             description = "Nemo (open)",
             group = "luci4"
@@ -954,6 +954,7 @@ awful.rules.rules = {
                 "Berry Amp - Charles Caswell",
                 "QjackCtl",
                 "mpv",
+                "cinnamon-settings sound",
                 "Xviewer",
                 "Blueman-manager",
                 "Gpick",
