@@ -160,6 +160,13 @@ if flatpakCommandFile then
     flatpakCommandFile:close()
 end
 
+-- Luci4 Sort the apps menu by the first element (app name)
+table.sort(appsMenu, 
+    function(a, b)
+        return string.lower(a[1]) < string.lower(b[1])
+    end
+)
+
 -- Luci4 custom menu with favourite applications
 local flaggedmenu = require("menu_flagged")(awful, beautiful.icons)
 -- other menus
