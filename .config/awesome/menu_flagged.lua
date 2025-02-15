@@ -26,6 +26,30 @@ return function(awful, icons)
         end,
         icons.arcoLinux
     },
+    {   "Audio Assault Amp Locker",
+        function()
+            awful.spawn.with_shell("\"$HOME/apps/Amp Locker Standalone\" &")
+        end,
+        icons.audioAssault
+    },
+    {   "Berry Amp",
+        function()
+            awful.spawn.with_shell("\"$HOME/apps/BerryAmpCharlesCaswell Standalone\" &")
+        end,
+        icons.berryAmp
+    },
+    {   "Reaper",
+        function()
+            awful.spawn.with_shell("$HOME/apps/reaper_linux_x86_64/REAPER/reaper")
+        end,
+        icons.reaper
+    },
+    {   "QjackCtl",
+        function()
+            awful.spawn("qjackctl")
+        end,
+        icons.jack
+    },
     {   "Vivaldi",
         function()
             awful.spawn("vivaldi")
@@ -38,18 +62,11 @@ return function(awful, icons)
         end,
         icons.freeTube
     },
-    
     {   "Transmission",
         function()
             awful.spawn.with_shell("$HOME/apps/Transmission")
         end,
         icons.transmission
-    },
-    {   "Berry Amp",
-        function()
-            awful.spawn.with_shell("\"$HOME/apps/BerryAmpCharlesCaswell Standalone\" &")
-        end,
-        icons.berryAmp
     },
     {   "Calibre",
         function()
@@ -68,18 +85,6 @@ return function(awful, icons)
             awful.spawn("gimp")
         end,
         icons.gimp
-    },
-    {   "Reaper",
-        function()
-            awful.spawn.with_shell("$HOME/apps/reaper_linux_x86_64/REAPER/reaper")
-        end,
-        icons.reaper
-    },
-    {   "QjackCtl",
-        function()
-            awful.spawn("qjackctl")
-        end,
-        icons.jack
     },
     {   "Tor Browser",
         function()

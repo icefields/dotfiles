@@ -38,6 +38,7 @@ local jack_icon = baseDir .. "qv4l2.svg"
 local telegram_icon = baseDir .. "telegram.svg"
 local freetube_icon = baseDir .. "freetube.svg"
 local steam_icon = baseDir .. "steam.svg"
+local audioAssault_icon = baseDir .. "audioassault.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -63,6 +64,7 @@ local icons = {
     telegram = telegram_icon,
     freeTube = freetube_icon,
     steam = steam_icon,
+    audioAssault = audioAssault_icon,
     berryAmp = baseDir .. "berryamp.svg",
     transmission = baseDir .. "transmission.svg"
 }
