@@ -683,6 +683,16 @@ globalkeys = gears.table.join(
             group = "luci4"
         }
     ),
+    -- Interact with AI on an external local-network server
+    awful.key({ modkey, "Control" }, "o",
+        function ()
+            awful.spawn.with_shell("$HOME/Code/Lua/ollama/askollama.sh")
+        end, {
+            description = "Ask Ollama a question",
+            group = "luci4"
+        }
+    ),
+
     -- Tor reset
     awful.key({ modkey }, "i",
         function ()
@@ -723,33 +733,55 @@ clientkeys = gears.table.join(
             group = "client"
         }),
     awful.key({ modkey, "Shift" }, "c",      
-        function (c) c:kill() end, {
+        function (c) 
+            c:kill() 
+        end, {
             description = "close", 
             group = "client"
         }),
     awful.key({ modkey, "Control" }, "space",  
-        awful.client.floating.toggle, 
-        { description = "toggle floating", group = "client" }),
+        awful.client.floating.toggle, { 
+            description = "toggle floating", 
+            group = "client" 
+        }),
     awful.key({ modkey, "Control" }, "Return", 
-        function (c) c:swap(awful.client.getmaster()) end, 
-        { description = "move to master", group = "client" }),
-    awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
-              {description = "move to screen", group = "client"}),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
-              {description = "toggle keep on top", group = "client"}),
+        function (c) 
+            c:swap(awful.client.getmaster()) 
+        end, { 
+            description = "move to master", 
+            group = "client" 
+        }),
+    awful.key({ modkey,           }, "o",      
+        function (c) 
+            c:move_to_screen()               
+        end, {
+            description = "move to screen", 
+            group = "client"
+        }),
+    awful.key({ modkey,           }, "t",      
+        function (c) 
+            c.ontop = not c.ontop            
+        end, {
+            description = "toggle keep on top", 
+            group = "client"
+        }),
     awful.key({ modkey,           }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
             c.minimized = true
-        end ,
-        {description = "minimize", group = "client"}),
+        end, {
+            description = "minimize", 
+            group = "client"
+        }),
     awful.key({ modkey,           }, "m",
         function (c)
             c.maximized = not c.maximized
             c:raise()
-        end ,
-        {description = "(un)maximize", group = "client"}),
+        end, {
+            description = "(un)maximize", 
+            group = "client"
+        }),
     awful.key({ modkey, "Control" }, "m",
         function (c)
             c.maximized_vertical = not c.maximized_vertical
@@ -960,7 +992,10 @@ awful.rules.rules = {
                 "Arandr",
                 "Berry Amp - Charles Caswell",
                 "QjackCtl",
+                "Calfjackhost", -- calf subwindow
+                "calfjackhost", -- main calf
                 "mpv",
+                "Mumble",
                 "cinnamon-settings sound",
                 "Xviewer",
                 "Blueman-manager",

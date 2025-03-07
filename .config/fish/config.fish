@@ -151,11 +151,12 @@ if status is-interactive
 
     switch $OS_NAME
         case "Ubuntu"
-            abbr --add ca batcat	        
+            abbr --add ca batcat --color=always	        
+            alias cat='batcat -p --color=always'
             abbr --add upd "sudo apt update && sudo apt upgrade -y"
         case "Arch"
-            abbr --add ca bat
-
+            abbr --add ca bat --color=always
+            alias cat='bat -p --color=always'
             # pacman and yay
             alias pacsyu='sudo pacman -Syu'      # update only standard pkgs
             alias pacsyyu='sudo pacman -Syyu'    # Refresh pkglist & update standard pkgs
@@ -181,9 +182,11 @@ if status is-interactive
             end
 
         case "macOS"
-            abbr --add ca bat
+            abbr --add ca bat --color=always
+            alias cat='bat -p --color=always'
         case "Linuxmint"
-	        abbr --add ca batcat 
+	        abbr --add ca batcat --color=always
+            alias cat='batcat -p --color=always'
             abbr --add upd "sudo apt update && sudo apt upgrade -y"
 	case '*'
             echo "CANNOT DETECT OS, CHECK fish.config FILE"

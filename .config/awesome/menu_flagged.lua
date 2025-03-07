@@ -82,7 +82,7 @@ return function(awful, icons)
     },
     {   "Gimp",
         function()
-            awful.spawn("gimp")
+            awful.spawn.with_shell("$HOME/apps/Gimp3")
         end,
         icons.gimp
     },
