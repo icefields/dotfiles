@@ -97,6 +97,12 @@ return function(awful, icons)
             awful.spawn("steam")
         end,
         icons.steam
+    }, 
+    {   "Mumble",
+        function()
+            awful.spawn("mumble")
+        end,
+        icons.mumble
     },
     {   "Telegram",
         function()
