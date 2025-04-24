@@ -1,4 +1,31 @@
 #!/bin/bash
+
+# This is a classic workaround in the Wayland + Hyprland + xdg-desktop-portal world. 
+# Here's why that matters:
+#
+# This script fixes broken or non-working xdg-desktop-portal behavior, like:
+# - Screen sharing not working in browsers or OBS
+# - Flatpak apps not opening file dialogs
+# - General portal weirdness on startup
+#
+# The script force-kills any running portal services. 
+# Sometimes, the wrong backend (like `wlr`) gets auto-started, or portals start 
+# too early, before the Wayland session is fully ready. That leads to broken 
+# integration. 
+# Then manually start the correct backend (hyprland), give it a moment to 
+# initialize, and start the main xdg-desktop-portal service last — ensuring the 
+# right portal backend is chosen and things work properly.
+#
+# When do you need this?
+# - You're on Hyprland, but apps are using the wlr backend by mistake
+# - Flatpak apps aren't integrating properly
+# - Screen sharing or file dialogs just don't work
+# - You see this in logs: No backend implementation available
+
+# To check what portal backend is being used:
+# echo $XDG_CURRENT_DESKTOP
+# journalctl | grep xdg-desktop-portal
+
 sleep 1
 killall xdg-desktop-portal-hyprland
 killall xdg-desktop-portal-wlr
@@ -6,3 +33,4 @@ killall xdg-desktop-portal
 /usr/lib/xdg-desktop-portal-hyprland &
 sleep 2
 /usr/lib/xdg-desktop-portal &
+
