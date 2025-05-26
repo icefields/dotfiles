@@ -970,6 +970,16 @@ awful.rules.rules = {
             tag = "8"
         }
     },
+    -- Element
+    {   rule = { class = "Element" },
+        properties = {
+            tag = "8",
+            floating = true,
+            width = 1200,
+            height = 900,
+            placement = awful.placement.centered
+        }
+    },
 
     { rule = { class = "nemo" },
         properties = {
