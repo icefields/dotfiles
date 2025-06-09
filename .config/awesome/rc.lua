@@ -149,6 +149,7 @@ appImageCommandFile:close()
 local flatpakCommandFile = io.popen("flatpak list --app --columns=application")
 if flatpakCommandFile then
     for flatpakApp in flatpakCommandFile:lines() do
+        if flatpakApp == "im.riot.Riot" then flatpakApp = "Element" end
         local flatpakAppName = string.match(flatpakApp, "([^%.]+)$") 
         table.insert(appsMenu, { flatpakAppName,
             function ()
@@ -968,6 +969,16 @@ awful.rules.rules = {
     {   rule = { class = "TelegramDesktop" },
         properties = {
             tag = "8"
+        }
+    },
+    -- Element
+    {   rule = { class = "Element" },
+        properties = {
+            tag = "8",
+            floating = true,
+            width = 1200,
+            height = 900,
+            placement = awful.placement.centered
         }
     },
 
