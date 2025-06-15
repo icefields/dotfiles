@@ -1,0 +1,1 @@
+/usr/local/bin/wireguard-randomizer.sh

@@ -30,7 +30,8 @@
         "tray",
         "custom/weather",
         "custom/myhyprv",
-        "custom/light_dark"
+        "custom/audio_profile"
+        //"custom/light_dark"
     ],
 
     "include": [
@@ -52,6 +53,14 @@
     "custom/lock_screen": {
         "format": "",
         "on-click": "sh -c '(sleep 0.5s; swaylock)' & disown",
+        "tooltip": false
+    },
+
+    "custom/audio_profile": {
+        "format": "{}",
+        "exec": "~/.config/waybar/current-pipewire-profile.sh",
+        "on-click": "~/scripts/toggle-pipewire-profile.sh",
+        "interval": 5,
         "tooltip": false
     },
 
