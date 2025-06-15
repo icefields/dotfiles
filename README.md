@@ -265,6 +265,11 @@ symlink or copy the images to use as wallpapers, one by one, into `.config/hypr/
 ### Awesome Instructions
 symlink or copy the images to use as wallpapers, one by one, into `.config/awesome/themes/luci4/wallpapers/`.
 
+### Blue Light Filter
+On Awesome, install `redshift`, it will pick up the config file in `.config/`. <br>
+On Hyprland, I'm using a shader that I wrote, to enable the filter run the script `.config/hypr/redfilter-start.sh`, to stop `.config/hypr/redfilter-stop.sh`, launch it at night automatically using a cronjob, and stop it in the morning the same way. <br>
+TODO: Working on a switch for waybar.
+
 # Other Applications (incomplete)
 The launchers for applications required by scripts should be located under: `$HOME/apps`, `$HOME/.config/awesome`<br>
 also check `$HOME/.config/awesome/autostart.sh`, and the bottom of `$HOME/.config/awesome/rc.lua`
