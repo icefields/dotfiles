@@ -3,7 +3,7 @@
         //shows the current power profile and switches to next on click
         "exec": "~/.config/hyprv_util",
         "return-type" : "json",
-        "interval": 30,
+        "interval": 300,
         "format": "{}",
 //        "on-click": "~/.config/hyprv_util vswitch",
         "tooltip": true
