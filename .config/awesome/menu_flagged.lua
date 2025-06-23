@@ -106,7 +106,7 @@ return function(awful, icons)
     },
     {   "Telegram",
         function()
-            awful.spawn.with_shell("$HOME/apps/Telegram/Telegram")
+            awful.spawn.with_shell("$HOME/apps/Telegram")
         end,
         icons.telegram
     }
