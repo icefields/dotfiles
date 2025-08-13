@@ -46,7 +46,6 @@ if status is-interactive
     # export MANPAGER="/bin/sh -c \"col -b | vim --not-a-term -c 'set ft=man ts=8 nomod nolist noma' -\""
 
     ### ABBREVIATIONS ###
-    abbr --add l exa -al --color=always --group-directories-first    
     # git
     abbr --add ad git add .
     abbr --add pus git push -u origin 
@@ -134,6 +133,14 @@ if status is-interactive
             alias vim='nvim'
         end
     # end
+
+    if command -v eza > /dev/null
+        alias ls='eza -a --color=always --group-directories-first --icons=always'
+        abbr --add l exa -al --color=always --group-directories-first --icons=always
+    else
+        alias ls='exa -a --color=always --group-directories-first --icons'
+        abbr --add l exa -al --color=always --group-directories-first --icons
+    end
 
     ### OS SPECIFIC ###
     if test (uname -s) = "Darwin"
