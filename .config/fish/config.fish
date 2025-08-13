@@ -134,9 +134,10 @@ if status is-interactive
         end
     # end
 
+    # LS
     if command -v eza > /dev/null
-        alias ls='eza -a --color=always --group-directories-first --icons=always'
-        abbr --add l exa -al --color=always --group-directories-first --icons=always
+        alias ls='eza -a --color=always --group-directories-first --icons=always --mounts --git --git-repos'
+        abbr --add l exa -al --color=always --group-directories-first --icons=always --mounts --git --git-repos
     else
         alias ls='exa -a --color=always --group-directories-first --icons'
         abbr --add l exa -al --color=always --group-directories-first --icons
