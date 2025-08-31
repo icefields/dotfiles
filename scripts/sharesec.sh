@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# This script leverages this share-upload util:
+#   https://github.com/icefields/self-hosted-sharelink
+# follow the instructions in the readme for configuration.
+#
+# Before using this, define 2 env variables:
+#   SHARE_LINK_AUTH:    the user defined auth token for the sharelink application.
+#   SHARE_LINK_URL:     the url of the sharelink service
+
 dir=$(uuidgen | cut -d'-' -f1)
 mkdir /tmp/$dir
 
@@ -25,6 +33,10 @@ fi
 
 zip -r /tmp/$dir.zip /tmp/$dir
 zipcloak /tmp/$dir.zip
-curl -F"file=@/tmp/$dir.zip" 0x0.st | xclip -selection clipboard
+#curl -F"file=@/tmp/$dir.zip" 0x0.st | xclip -selection clipboard
+curl -k -X POST \
+  -H "X-Auth-Token: $SHARE_LINK_AUTH" \
+  -F "file=@/tmp/$dir.zip" $SHARE_LINK_URL | jq -r .public_url | xclip -selection clipboard
 
 notify-send "Link Copied"
+
