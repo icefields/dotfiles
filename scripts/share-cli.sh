@@ -23,7 +23,7 @@ copyClipboard() {
         echo "wlcopy $input"
         echo "$input" | wl-copy
     elif command -v xclip >/dev/null 2>&1; then
-        echo "$input" | xclip -selection c
+        echo -n "$input" | xclip -selection c
     else
         echo "Neither wl-copy nor xclip is installed."
         return 1
@@ -31,11 +31,10 @@ copyClipboard() {
 
 }
 
-response=$(curl -k -X POST \
+response=$(curl -k -sS -X POST \
   -H "X-Auth-Token: $SHARE_LINK_AUTH" \
   -F "file=@${FILE_PATH}" \
   $SHARE_LINK_URL)
-
 echo $response
 echo $response | jq -r .public_url | copyClipboard
 

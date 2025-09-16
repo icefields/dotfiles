@@ -29,8 +29,10 @@ local colour2 = colours.teal
 theme.rect_radius = 6
 
 theme.font          = "UbuntuSansMono Nerd Font Mono Medium 11"
-theme.tasklist_font = "UbuntuSansMono Nerd Font Mono 10"
-theme.taglist_font  = "UbuntuSansMono Nerd Font Mono SemiBold 14"
+theme.tasklist_font = "UbuntuSans Nerd Font 11"
+theme.taglist_font  = "HeavyData Nerd Font 14"
+-- theme.tasklist_font = "UbuntuSansMono Nerd Font Mono 10"
+-- theme.taglist_font  = "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
 theme.topBar_bg     = colour2.shade8
 theme.topBar_border = dpi(0)
