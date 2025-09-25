@@ -246,6 +246,8 @@ nvim
 UbuntuSansMono Nerd Font Mono Medium
 UbuntuSansMono Nerd Font Mono
 UbuntuSansMono Nerd Font Mono SemiBold
+UbuntuSans Nerd Font
+HeavyData Nerd Font
 ```
 <b>Kitty:</b>
 ```
