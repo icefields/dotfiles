@@ -38,11 +38,27 @@ copyClipboard() {
 
 }
 
-file=$(find -L $HOME \( -path $HOME/.wine -o -path $HOME/.steam -o -path $HOME/Code -o -path '*/.*' \) -prune -o -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.mpg" -o -iname "*.mpeg" -o -iname "*.webp" -o -iname "*.pdf" -o -iname "*.jpeg" -o -iname "*.zip" -o -iname "*.txt" -o -iname "*.mp3" -o -iname "*.flac" -o -iname "*.wav" -o -iname "*.apk" -o -iname "*.m4a" -o -iname "*.gpt" -o -iname "*.gp3" -o -iname "*.gp4" -o -iname "*.gp5" -o -iname "*.gp" -o -iname "*.gpx" -o -iname "*.svg" -o -iname "*.mp4" -o -iname "*.webm" -o -iname "*.gif" \) | showmenu) #wofi --dmenu -i -l 25)
+file=$(find -L $HOME \( \
+    -path $HOME/Music/DevilplanServerMusic -o \
+    -path $HOME/Music/lyghtersMusic -o \
+    -path $HOME/Music/UbuntuServerMusicCollections -o \
+    -path $HOME/apps -o \
+    -path $HOME/go -o \
+    -path $HOME/Android -o \
+    -path $HOME/.cache -o \
+    -path $HOME/.local -o \
+    -path $HOME/.wine -o \
+    -path $HOME/.steam -o \
+    -path $HOME/Code -o \
+    -path '*/.*' \) -prune -o \
+    -type f \( \
+    -iname "*.png" -o -iname "*.jpg" -o -iname "*.mpg" -o -iname "*.mpeg" -o -iname "*.webp" -o -iname "*.pdf" -o -iname "*.jpeg" -o -iname "*.zip" -o -iname "*.txt" -o -iname "*.mp3" -o -iname "*.flac" -o -iname "*.wav" -o -iname "*.apk" -o -iname "*.m4a" -o -iname "*.gpt" -o -iname "*.gp3" -o -iname "*.gp4" -o -iname "*.gp5" -o -iname "*.gp" -o -iname "*.gpx" -o -iname "*.svg" -o -iname "*.mp4" -o -iname "*.webm" -o -iname "*.gif" \) \
+    | showmenu) #wofi --dmenu -i -l 25)
+
 # curl -F"file=@$file" 0x0.st | copyClipboard
 curl -k -X POST \
   -H "X-Auth-Token: $SHARE_LINK_AUTH" \
   -F "file=@$file" $SHARE_LINK_URL | jq -r .public_url | copyClipboard
 
-notify-send "Link Copied"
+notify-send "Link Copied for $file"
 
