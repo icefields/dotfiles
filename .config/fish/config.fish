@@ -110,7 +110,6 @@ if status is-interactive
 
     # ALIASES (misc)
     alias getpath="find -type f | fzf | sed 's/^..//' | tr -d '\n' | xclip -selection c"
-    alias tree="exa -alh@ --color=always --group-directories-first --tree --level"
     alias tarx="tar -zxvf" # de-archive a tar file. USE 'tari filename' to compress
     alias :q='exit'
     alias toreset="$HOME/scripts/tor_relay_reset.sh"
@@ -137,8 +136,10 @@ if status is-interactive
     # LS
     if command -v eza > /dev/null
         alias ls='eza -a --color=always --group-directories-first --icons=always --mounts --git --git-repos'
-        abbr --add l exa -al --color=always --group-directories-first --icons=always --mounts --git --git-repos
-    else
+        abbr --add l eza -al --color=always --group-directories-first --icons=always --mounts --git --git-repos
+        alias tree="eza -alh@ --color=always --group-directories-first --tree --level"
+    else if command -v exa > /dev/null
+        alias tree="exa -alh@ --color=always --group-directories-first --tree --level"
         alias ls='exa -a --color=always --group-directories-first --icons'
         abbr --add l exa -al --color=always --group-directories-first --icons
     end
