@@ -3,6 +3,13 @@
 import json
 import requests
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+location = os.getenv('CURRENT_LOCATION')
+if location is None:
+    location = ""
 
 WEATHER_CODES = {
     '113': '☀️ ',
@@ -57,8 +64,8 @@ WEATHER_CODES = {
 
 data = {}
 
-
-weather = requests.get("https://wttr.in/?format=j1").json()
+weather = requests.get("https://wttr.in/" + location + "?format=j1").json()
+#weather = requests.get("https://wttr.in/?format=j1").json()
 
 
 def format_time(time):
