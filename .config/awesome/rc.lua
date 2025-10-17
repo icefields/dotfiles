@@ -23,6 +23,11 @@ local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 
+-- Theme handling library
+local beautiful = require("beautiful")
+-- Themes define colours, icons, font and wallpapers.
+beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/luci4/theme.lua")
+
 -- Luci4 custom
 -- Collision
 require("collision")()
@@ -32,11 +37,10 @@ local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
+local wifiButton = require("wifibutton")
 
 -- Widget and layout library
 local wibox = require("wibox")
--- Theme handling library
-local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -75,10 +79,6 @@ end
 -- }}}
 
 -- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
--- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/luci4/theme.lua")
-
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
@@ -247,7 +247,6 @@ mytextclock:connect_signal("button::press",
     function(_, _, _, button)
         if button == 1 then cw.toggle() end
     end)
-
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -420,6 +419,7 @@ awful.screen.connect_for_each_screen(function(s)
             -- })
             mykeyboardlayout,
             -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
+            wifiButton,
             luciSysTrayColour,
             mytextclock,
             luciVolumeWidget,
@@ -651,7 +651,7 @@ globalkeys = gears.table.join(
     -- Dmenu Share
     awful.key( { modkey, "Mod1" }, "space",
         function ()
-            awful.spawn.with_shell("$HOME/scripts/share.sh &")
+            awful.spawn.with_shell("fish -c $HOME/scripts/share.sh &")
         end, {
             description = "get a share link and copy",
             group = "luci4"
