@@ -34,7 +34,7 @@ local function update_wifi_icon()
         "$HOME/scripts/toggle-wifi-profile.sh get", function(stdout)
             local status = stdout:gsub("%s+", "")
             if status == "connected" then
-                wifiButton:get_children_by_id("icon")[1].text = "🟢"
+                wifiButton:get_children_by_id("icon")[1].text = "🔒"
                 -- wifiButton.bg = "#2ecc71"
             else
                 wifiButton:get_children_by_id("icon")[1].text = "🔴"
