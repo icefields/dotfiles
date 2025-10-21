@@ -2,6 +2,10 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 
+local toggleScript = "$HOME/scripts/toggle-wifi-profile.sh toggle"
+local getScript = "$HOME/scripts/toggle-wifi-profile.sh get"
+local statusScript = os.getenv("HOME") .. "/scripts/toggle-wifi-profile.sh status"
+
 local wifiButton = wibox.widget {
     {
         id = "icon",
@@ -28,36 +32,31 @@ local wifiTooltip = awful.tooltip {
     text = "VPN status...",
 }
 
-
 local function update_wifi_icon()
-    awful.spawn.easy_async_with_shell(
-        "$HOME/scripts/toggle-wifi-profile.sh get", function(stdout)
-            local status = stdout:gsub("%s+", "")
-            if status == "connected" then
-                wifiButton:get_children_by_id("icon")[1].text = "🔒"
-                -- wifiButton.bg = "#2ecc71"
-            else
-                wifiButton:get_children_by_id("icon")[1].text = "🔴"
-                -- wifiButton.bg = "#e74c3c"
-            end
+    awful.spawn.easy_async_with_shell(getScript, function(stdout)
+        local status = stdout:gsub("%s+", "")
+        if status == "connected" then
+            wifiButton:get_children_by_id("icon")[1].text = "" --🔐"
+            -- wifiButton.bg = "#2ecc71"
+        else
+            wifiButton:get_children_by_id("icon")[1].text = "🔴"
+            -- wifiButton.bg = "#e74c3c"
+        end
     end)
 end
 
 wifiButton:connect_signal("button::press", function()
-    awful.spawn.easy_async_with_shell(
-        "$HOME/scripts/toggle-wifi-profile.sh toggle", function()
-            gears.timer.start_new(5, function()
-                update_wifi_icon()
-                return false
+    awful.spawn.easy_async_with_shell(toggleScript, function()
+        gears.timer.start_new(5, function()
+            update_wifi_icon()
+            return false
         end)
     end)
 end)
 
 wifiButton:connect_signal("mouse::enter", function(c)
     c.bg = "#5a5a5a"
-
-    local scriptPath = os.getenv("HOME") .. "/scripts/toggle-wifi-profile.sh status"
-    awful.spawn.easy_async_with_shell(scriptPath, function(stdout)
+    awful.spawn.easy_async_with_shell(statusScript, function(stdout)
         wifiTooltip.text = stdout:gsub("%s+$", "")
     end)
 end)
