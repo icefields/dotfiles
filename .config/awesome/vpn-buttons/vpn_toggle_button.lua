@@ -1,15 +1,17 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
+local config = require("vpn-buttons.vpn_common")
+local createVpnTooltip = require("vpn-buttons.vpn_tooltip")
 
-local toggleScript = "$HOME/scripts/toggle-wifi-profile.sh toggle"
-local getScript = "$HOME/scripts/toggle-wifi-profile.sh get"
-local statusScript = os.getenv("HOME") .. "/scripts/toggle-wifi-profile.sh status"
+local toggleScript = config.toggleScript
+local getScript = config.getScript
+local statusScript = config.statusScript
 
 local wifiButton = wibox.widget {
     {
         id = "icon",
-        text = "⏳",
+        text = "",
         widget = wibox.widget.textbox,
         align = "center",
         valign = "center",
@@ -22,21 +24,13 @@ local wifiButton = wibox.widget {
     forced_height = 30,
 }
 
-local wifiTooltip = awful.tooltip {
-    objects = { wifiButton },
-    mode    = "outside",
-    align   = "top",
-    margin_leftright = 8,
-    margin_topbottom = 4,
-    preferred_positions = { "top", "bottom" },
-    text = "VPN status...",
-}
+local wifiTooltip = createVpnTooltip(wifiButton)
 
-local function update_wifi_icon()
+local function updateWifiIcon()
     awful.spawn.easy_async_with_shell(getScript, function(stdout)
         local status = stdout:gsub("%s+", "")
         if status == "connected" then
-            wifiButton:get_children_by_id("icon")[1].text = "" --🔐"
+            wifiButton:get_children_by_id("icon")[1].text = "󰍁" --"--"󱎚" --""
             -- wifiButton.bg = "#2ecc71"
         else
             wifiButton:get_children_by_id("icon")[1].text = "🔴"
@@ -54,19 +48,12 @@ wifiButton:connect_signal("button::press", function()
     end)
 end)
 
-wifiButton:connect_signal("mouse::enter", function(c)
-    c.bg = "#5a5a5a"
-    awful.spawn.easy_async_with_shell(statusScript, function(stdout)
-        wifiTooltip.text = stdout:gsub("%s+$", "")
-    end)
-end)
-
 wifiButton:connect_signal("mouse::leave", function(c)
-    c.bg = "#00000000"
-    update_wifi_icon()
+    -- c.bg = "#00000000"
+    updateWifiIcon()
 end)
 
-update_wifi_icon()
+updateWifiIcon()
 
 return wifiButton
 

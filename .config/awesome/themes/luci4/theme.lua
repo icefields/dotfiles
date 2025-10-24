@@ -28,7 +28,7 @@ local colour2 = colours.teal
 
 theme.rect_radius = 6
 
-theme.font          = "UbuntuSansMono Nerd Font Mono Medium 11"
+theme.font          = "Terminess Nerd Font SemiBold 12.5" -- "3270 Nerd Font SemiBold 14.5" --"Terminess Nerd Font SemiBold 12.5" -- "UbuntuSansMono Nerd Font Mono Medium 11"
 theme.tasklist_font = "UbuntuSans Nerd Font 11"
 theme.taglist_font  = "HeavyData Nerd Font 14"
 -- theme.tasklist_font = "UbuntuSansMono Nerd Font Mono 10"
@@ -52,7 +52,7 @@ theme.fg_minimize   = colour1.shade2
 theme.fg_systray    = colour1.tint6
 
 theme.useless_gap   = dpi(2)
-theme.border_width  = dpi(2)
+theme.border_width  = dpi(3)
 theme.border_normal = colour1.shade8
 theme.border_focus  = colour2.main -- "#71cf5f"
 theme.border_marked = colours.red

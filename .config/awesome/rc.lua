@@ -37,7 +37,8 @@ local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
-local wifiButton = require("wifibutton")
+local toggleVpnButton = require("vpn-buttons.vpn_toggle_button")
+local vpnReconnectButton = require("vpn-buttons.vpn_reconnect_button")
 
 -- Widget and layout library
 local wibox = require("wibox")
@@ -419,7 +420,8 @@ awful.screen.connect_for_each_screen(function(s)
             -- })
             mykeyboardlayout,
             -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
-            wifiButton,
+            toggleVpnButton,
+            vpnReconnectButton,
             luciSysTrayColour,
             mytextclock,
             luciVolumeWidget,
