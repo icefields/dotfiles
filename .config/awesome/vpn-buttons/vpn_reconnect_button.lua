@@ -7,17 +7,18 @@ local config = require("vpn-buttons.vpn_common")
 local vpnReconnectButton = wibox.widget {
     {
         id = "icon",
-        text = " ", --"", --"", --"",
+        text = "", --"", --"",
         widget = wibox.widget.textbox,
         align = "center",
         valign = "center",
+        font = config.font --"Symbols Nerd Font Mono 10"
     },
     widget = wibox.container.background,
     bg = "#00000000",
     fg = "#ffffff",
     shape = gears.shape.rounded_bar,
-    forced_width = 30,
-    forced_height = 30,
+    forced_width = config.buttonSize,
+    forced_height =config.buttonSize,
 }
 
 local wifiTooltip = createVpnTooltip(vpnReconnectButton)

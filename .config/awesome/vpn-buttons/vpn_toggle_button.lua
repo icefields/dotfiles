@@ -4,6 +4,7 @@ local wibox = require("wibox")
 local config = require("vpn-buttons.vpn_common")
 local createVpnTooltip = require("vpn-buttons.vpn_tooltip")
 
+-- scripts
 local toggleScript = config.toggleScript
 local getScript = config.getScript
 local statusScript = config.statusScript
@@ -15,13 +16,14 @@ local wifiButton = wibox.widget {
         widget = wibox.widget.textbox,
         align = "center",
         valign = "center",
+        font = config.font
     },
     widget = wibox.container.background,
     bg = "#00000000",
     fg = "#ffffff",
     shape = gears.shape.rounded_bar,
-    forced_width = 30,
-    forced_height = 30,
+    forced_width = config.buttonSize,
+    forced_height = config.buttonSize,
 }
 
 local wifiTooltip = createVpnTooltip(wifiButton)

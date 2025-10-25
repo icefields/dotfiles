@@ -54,7 +54,7 @@ theme.fg_systray    = colour1.tint6
 theme.useless_gap   = dpi(2)
 theme.border_width  = dpi(3)
 theme.border_normal = colour1.shade8
-theme.border_focus  = colour2.main -- "#71cf5f"
+theme.border_focus  = colour2.tint3 -- "#71cf5f"
 theme.border_marked = colours.red
 
 theme.mute_volume   = colours.red
