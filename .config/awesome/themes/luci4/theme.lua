@@ -22,6 +22,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 theme.icons = require("themes.luci4.application_icons")
+theme.wallpapersPath = "$HOME/.config/awesome/themes/luci4/wallpapers"
 
 local colour1 = colours.dead
 local colour2 = colours.teal

@@ -14,14 +14,22 @@
 
 local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
+
 local browserCmd = "librewolf"
 local fileBrowserCmd = "nemo ~/Desktop/"
 local terminalCmd = "kitty"
+local editorCmd = "nvim"
 
 local commands = {
     terminal = {
         command = terminalCmd,
-        description = "Opena a terminal",
+        description = "Open a terminal",
+        group = groupLauncher,
+        shell = false
+    },
+    editor = {
+        command = editorCmd,
+        description = "Open editor",
         group = groupLauncher,
         shell = false
     },

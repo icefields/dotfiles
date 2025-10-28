@@ -93,7 +93,7 @@ end
 -- {{{ Variable definitions
 -- This is used later as the default terminal and editor to run.
 terminal = awesomeCmds.terminal.command
-editor = os.getenv("EDITOR") or "nvim"
+editor = os.getenv("EDITOR") or awesomeCmds.editor.command
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -713,7 +713,20 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-awful.util.spawn_with_shell("~/.config/awesome/autostart.sh")
+local autostartCmd = "$HOME/.config/awesome/autostart.sh"
+awful.spawn.with_shell(autostartCmd)
+
 -- restore wallpaper, must run nitrogen at least once to set a wallpaper before
-awful.util.spawn_with_shell("lua ~/.config/awesome/nitrogen-random.lua")
+-- awful.util.spawn_with_shell("lua ~/.config/awesome/nitrogen-random.lua")
+for screenNumber = 0,1 do
+    local wallpaperScript = "nitrogen --set-zoom-fill --random " .. beautiful.wallpapersPath .. " --head=" .. screenNumber -- .. " > /dev/null 2>&1"
+    awful.spawn.with_shell(wallpaperScript)
+end
+
+--screen.connect_signal("request::desktop_decoration", function(s)
+--    local wallpaperScript = "nitrogen --set-zoom-fill --random $HOME/.config/awesome/themes/luci4/wallpapers --head=" .. s.index -- .. " > /dev/null 2>&1"
+--    awful.spawn.with_shell(wallpaperScript)
+--
+--    -- awful.spawn.with_shell("nitrogen --set-zoom-fill --random ~/.config/awesome/themes/wallpapers --head=" .. s.index)
+--end)
 
