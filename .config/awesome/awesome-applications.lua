@@ -1,9 +1,30 @@
+-----------------------------------------------------
+-- ----------------------------------------------- --
+--   ▄        ▄     ▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄     ▄   --
+--  ▐░▌      ▐░▌   ▐░▌▐░█▀▀▀▀▀  ▀▀█░█▀▀ ▐░▌   ▐░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░█   █░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░░░░░░░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌    ▀▀▀▀▀█░▌  --
+--  ▐░█▄▄▄▄▄ ▐░█▄▄▄█░▌▐░█▄▄▄▄▄  ▄▄█░█▄▄       ▐░▌  --
+--   ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀        ▀   --
+-- ----------------------------------------------- --
+-- -------- Luci4 config for Awesome WM  --------- --
+-- -------- https://github.com/icefields --------- --
+-----------------------------------------------------
 
 local groupLuci4 = "luci4"
+local groupLauncher = "launcher"
 local browserCmd = "librewolf"
 local fileBrowserCmd = "nemo ~/Desktop/"
+local terminalCmd = "kitty"
 
 local commands = {
+    terminal = {
+        command = terminalCmd,
+        description = "Opena a terminal",
+        group = groupLauncher,
+        shell = false
+    },
     screenshotArea = {
         command = "gnome-screenshot -a",
         description = "Print area of the screen",
@@ -35,7 +56,7 @@ local commands = {
         shell = false
     },
     lockScreen = {
-        command = '~/.config/awesome/lockscreen.sh',
+        command = '$HOME/.config/awesome/scripts/lockscreen.sh',
         description = "Lock Screen",
         group = groupLuci4,
         shell = true
@@ -53,8 +74,14 @@ local commands = {
         shell = true
     },
     kittyArchDistrobox =  {
-        command = "$HOME/.config/awesome/open_kitty_arch.sh",
+        command = "$HOME/.config/awesome/scripts/open_kitty_arch.sh",
         description = "Open Kitty Terminal in Arch Distrobox container",
+        group = groupLuci4,
+        shell = true
+    },
+    kittyArchDistroboxIsolated =  {
+        command = "$HOME/.config/awesome/scripts/open_kitty_arch-isolated.sh",
+        description = "Open Kitty Terminal in an isolated Arch Distrobox container",
         group = groupLuci4,
         shell = true
     },
@@ -99,17 +126,12 @@ local commands = {
         description = "Reset tor relay, change ip address",
         group = groupLuci4,
         shell = true
-    },
-    testing = {
-        command = "notify -send 'test test'",
-        description = "ass",
-        group = "aaasss",
-        shell = true
     }
 }
 
 return {
     commands = commands,
-    groupLuci4 = groupLuci4
+    groupLuci4 = groupLuci4,
+    groupLauncher = groupLauncher
 }
 

@@ -19,11 +19,12 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 -- Load Debian menu entries
 local debian = require("debian.menu")
 
-local function buildMenu(args, terminal, editor_cmd)
+local function buildMenu(args, awesomeCmds, editor_cmd)
     local awesome = args.awesome
     local awful = args.awful
     local beautiful = args.beautiful
     local hotkeys_popup = args.hotkeys_popup
+    local terminal = awesomeCmds.terminal.command
 
     -- your existing menu-building code goes here
     local myawesomemenu = {
@@ -81,7 +82,7 @@ local function buildMenu(args, terminal, editor_cmd)
     )
 
     -- Luci4 custom menu with favourite applications
-    local flaggedmenu = require("menu_flagged")(awful, beautiful.icons)
+    local flaggedmenu = require("menu_flagged")(awful, beautiful.icons, awesomeCmds)
     -- other menus
     local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
     local menu_flagged = { "Favourites", flaggedmenu, beautiful.icons.favourite }

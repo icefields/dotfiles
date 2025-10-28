@@ -47,6 +47,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+local awesomeCmds = require("awesome-applications").commands
+
 -- AwesomeWM-related args to pass to external widgets. 
 local awesomeArgs = ({
     gears = gears,
@@ -90,7 +92,7 @@ end
 
 -- {{{ Variable definitions
 -- This is used later as the default terminal and editor to run.
-terminal = "kitty"
+terminal = awesomeCmds.terminal.command
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -124,7 +126,7 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-local luci4MainMenu = buildMenu(awesomeArgs, terminal, editor_cmd)
+local luci4MainMenu = buildMenu(awesomeArgs, awesomeCmds, editor_cmd)
 
 -- uncomment to use a lanucher, and add to the bar.
 -- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
@@ -366,7 +368,7 @@ awful.screen.connect_for_each_screen(function(s)
             logout_menu_widget {
             -- font = 'Play 14',
                 onlock = function()
-                    awful.spawn.with_shell('$HOME/.config/awesome/lockscreen.sh')
+                    awful.spawn.with_shell(awesomeCmds.lockScreen.command)
                 end
             },
         },
@@ -383,8 +385,9 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key binding
+local showMainMenu = function() luci4MainMenu:show() end
 local keyBindings = require("key-bindings")
-local globalkeys = keyBindings.awesomeGlobalKeys(awesomeArgs, modkey, luci4MainMenu, terminal)
+local globalkeys = keyBindings.awesomeGlobalKeys(awesomeArgs, modkey, showMainMenu)
 local clientkeys = keyBindings.awesomeClientKeys(awesomeArgs, modkey)
 
 -- Bind all key numbers to tags.

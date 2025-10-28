@@ -16,6 +16,7 @@
 local awesomeApps = require("awesome-applications")
 local cmds = awesomeApps.commands
 local groupLuci4 = awesomeApps.groupLuci4
+local groupLauncher = awesomeApps.groupLauncher
 
 local function getEntry(awful, key1, key2, cmdItem)
     return awful.key(key1, key2,
@@ -32,7 +33,7 @@ local function getEntry(awful, key1, key2, cmdItem)
     )
 end
 
-local function awesomeGlobalKeys(args, modkey, luci4MainMenu, terminal)
+local function awesomeGlobalKeys(args, modkey, showMainMenu)
     local awesome = args.awesome
     local awful = args.awful
     local gears = args.gears
@@ -41,25 +42,8 @@ local function awesomeGlobalKeys(args, modkey, luci4MainMenu, terminal)
     local client = args.client
 
     local globalkeys = gears.table.join(
-         awful.key({ "Mod1" }, "Tab", function ()
-            awful.menu.client_list( { theme = { width = 500 } } )
-        end, {
-            description = "show task list",
-            group = groupLuci4
-        }),
-        
         awful.key({ modkey, }, "s", hotkeys_popup.show_help, {
             description="show help", group="awesome" }),
-
-        -- Luci4 changed arrows because of conflict with Collision
-        -- awful.key({ modkey,           }, "[",
-        --     awful.tag.viewprev,
-        --     { description = "view previous", group = "tag"}
-        -- ),
-        -- awful.key({ modkey,           }, "]",
-        --     awful.tag.viewnext,
-        --     { description = "view next", group = "tag"}
-        -- ),
 
         awful.key({ modkey, }, "Escape", awful.tag.history.restore, {
             description = "go back", group = "tag" }),
@@ -70,19 +54,15 @@ local function awesomeGlobalKeys(args, modkey, luci4MainMenu, terminal)
             description = "focus next by index",
             group = "client"
         }),
- 
+
         awful.key({ modkey, }, "k", function ()
             awful.client.focus.byidx(-1)
         end, {
             description = "focus previous by index",
             group = "client"
         }),
-        awful.key({ modkey, }, "w", function ()
-            luci4MainMenu:show()
-        end, {
-            description = "show main menu",
-            group = "awesome"
-        }),
+        awful.key({ modkey, }, "w", showMainMenu, {
+            description = "show main menu", group = "awesome" }),
 
         -- Layout manipulation
         awful.key({ modkey, "Shift" }, "j", function ()
@@ -124,12 +104,6 @@ local function awesomeGlobalKeys(args, modkey, luci4MainMenu, terminal)
         }),
 
         -- Standard program
-        awful.key({ modkey,           }, "Return", function () 
-            awful.spawn(terminal) 
-        end, {
-            description = "open a terminal", 
-            group = "launcher"
-        }),
         awful.key({ modkey, "Control" }, "r", awesome.restart,
                   {description = "reload awesome", group = "awesome"}),
         awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -167,7 +141,7 @@ local function awesomeGlobalKeys(args, modkey, luci4MainMenu, terminal)
                 awful.screen.focused().mypromptbox:run()
             end, {
                 description = "run prompt",
-                group = "launcher"
+                group = groupLauncher
             }
         ),
         awful.key({ modkey }, "x",
@@ -185,8 +159,25 @@ local function awesomeGlobalKeys(args, modkey, luci4MainMenu, terminal)
         ),
         -- Menubar
         awful.key({ modkey }, "p", function() menubar.show() end, {
-            description = "show the menubar", group = "launcher" }),
+            description = "show the menubar", group = groupLauncher }),
 
+        -- Luci4 changed arrows because of conflict with Collision
+        -- awful.key({ modkey,           }, "[",
+        --     awful.tag.viewprev,
+        --     { description = "view previous", group = "tag"}
+        -- ),
+        -- awful.key({ modkey,           }, "]",
+        --     awful.tag.viewnext,
+        --     { description = "view next", group = "tag"}
+        -- ),
+
+        awful.key({ "Mod1" }, "Tab", function ()
+            awful.menu.client_list( { theme = { width = 500 } } )
+        end, {
+            description = "show task list",
+            group = groupLuci4
+        }),
+        getEntry(awful, { modkey,           }, "Return", cmds.terminal),
         -- Luci4 print area of screen
         getEntry(awful, { "Control" }, "Print", cmds.screenshotArea),
         -- Print full screen
@@ -216,8 +207,7 @@ local function awesomeGlobalKeys(args, modkey, luci4MainMenu, terminal)
         -- Interact with AI on an external local-network server
         getEntry(awful, { modkey, "Control" }, "o", cmds.askOllama),
         -- Tor reset
-        getEntry(awful, { modkey }, "i", cmds.resetTor),
-        getEntry(awful, { modkey }, "v", cmds.testing)
+        getEntry(awful, { modkey }, "i", cmds.resetTor)
     )
 
     return globalkeys

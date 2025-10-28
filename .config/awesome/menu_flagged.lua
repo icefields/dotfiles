@@ -12,17 +12,17 @@
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
 
-return function(awful, icons)
+return function(awful, icons, awesomeCmds)
   return {
     {   "Kitty Arch",
         function()
-            awful.spawn.with_shell("~/.config/awesome/open_kitty_arch.sh")
+            awful.spawn.with_shell(awesomeCmds.kittyArchDistrobox.command)
         end,
         icons.kittyArch
     },
     {   "Kitty Isolated",
         function()
-            awful.spawn.with_shell("~/.config/awesome/open_kitty_arch-isolated.sh")
+            awful.spawn.with_shell(awesomeCmds.kittyArchDistroboxIsolated.command)
         end,
         icons.arcoLinux
     },
