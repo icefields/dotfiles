@@ -27,13 +27,23 @@ theme.wallpapersPath = "$HOME/.config/awesome/themes/luci4/wallpapers"
 local colour1 = colours.dead
 local colour2 = colours.teal
 
+-- opacity for tooltip, notifications, etc...
+local mainOpacity = 0.6
+local fgWidgetMain = colour2.tint7
+
 theme.rect_radius = 6
 
-theme.font          = "Terminess Nerd Font SemiBold 12.5" -- "3270 Nerd Font SemiBold 14.5" --"Terminess Nerd Font SemiBold 12.5" -- "UbuntuSansMono Nerd Font Mono Medium 11"
-theme.tasklist_font = "UbuntuSans Nerd Font 11"
-theme.taglist_font  = "HeavyData Nerd Font 14"
--- theme.tasklist_font = "UbuntuSansMono Nerd Font Mono 10"
--- theme.taglist_font  = "UbuntuSansMono Nerd Font Mono SemiBold 14"
+local mainFont = "Terminess Nerd Font"  -- "UbuntuSansMono Nerd Font Mono Medium 11"
+local sansFont = "UbuntuSans Nerd Font"
+local heavyFont = "HeavyData Nerd Font" -- "UbuntuSansMono Nerd Font Mono SemiBold 14"
+
+theme.font          = mainFont .. " SemiBold 12.5"
+theme.tasklist_font = sansFont .. " 11"
+theme.taglist_font  = heavyFont .. " 14"
+theme.tooltip_font  = mainFont .. " 12"
+theme.notification_font = sansFont .. " 10.5"
+theme.hotkeys_font = mainFont .. " SemiBold 12.5"
+theme.hotkeys_description_font = sansFont .. " 10"
 
 theme.topBar_bg     = colour2.shade8
 theme.topBar_border = dpi(0)
@@ -53,28 +63,22 @@ theme.fg_minimize   = colour1.shade2
 theme.fg_systray    = colour1.tint6
 
 theme.useless_gap   = dpi(2)
-theme.border_width  = dpi(3)
+theme.border_width  = dpi(2)
 theme.border_normal = colour1.shade8
-theme.border_focus  = colour2.tint3 -- "#71cf5f"
+theme.border_focus  = colour1.main -- "#71cf5f"
 theme.border_marked = colours.red
 
 theme.mute_volume   = colours.red
 
-theme.tasklist_fg_normal = colour1.tint6
--- theme.taglist_bg_focus = theme.bg_normal
--- theme.taglist_fg_focus = theme.fg_systray
--- There are other variable sets
--- overriding the default one when
--- defined, the sets are:
--- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
+theme.tasklist_fg_normal = fgWidgetMain
 -- tasklist_[bg|fg]_[focus|urgent]
--- titlebar_[bg|fg]_[normal|focus]
+
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- mouse_finder_[color|timeout|animate_timeout|radius|factor]
--- prompt_[fg|bg|fg_cursor|bg_cursor|font]
--- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
--- Example:
---theme.taglist_bg_focus = "#ff0000"
+theme.tooltip_opacity = mainOpacity
+theme.tooltip_fg_color = fgWidgetMain
+theme.tooltip_bg_color = colour2.shade9
+theme.tooltip_border_width = dpi(1)
+theme.tooltip_border_color = colour2.main
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(11)
@@ -82,15 +86,27 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, colour2.shade2 -- colours.green
 )
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, colour2.main -- theme.fg_normal
+    taglist_square_size, colour2.shade3 -- theme.fg_normal
 )
+-- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
+theme.taglist_bg_focus = theme.bg_normal
+theme.taglist_fg_focus = fgWidgetMain
+theme.taglist_bg_empty = theme.bg_normal
+theme.taglist_fg_empty = colour2.shade5
+theme.taglist_bg_occupied = theme.bg_normal
+theme.taglist_fg_occupied = colour2.tint4
 
 -- Variables set for theming notifications:
--- notification_font
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
+theme.notification_opacity = mainOpacity
 theme.notification_icon_size = dpi(66)
+theme.notification_bg = colour2.shade9 
+theme.notification_fg = fgWidgetMain 
+theme.notification_margin = dpi(8)
+theme.notification_border_color = colour2.main
+theme.notification_border_width = dpi(2)
 
 -- Variables set for theming the menu:
 theme.menu_bg_normal    = colour2.shade9 -- "#121716"
@@ -105,13 +121,32 @@ theme.menu_height = dpi(30)
 theme.menu_width  = dpi(200)
 
 theme.clock_bg = colour2.shade4
-theme.clock_fg = colour2.tint3
+theme.clock_fg = colour2.tint7
 theme.tasklist_border_width  = dpi(1.5)
 theme.tasklist_border_colour = colour2.shade3
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
 --theme.bg_widget = "#cc0000"
+
+-- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
+theme.hotkeys_opacity = mainOpacity
+theme.hotkeys_group_margin = dpi(12)
+-- theme.hotkeys_shape = 
+theme.hotkeys_modifiers_fg = colour1.main
+theme.hotkeys_bg = colour2.shade9
+theme.hotkeys_fg = colour2.tint9
+theme.hotkeys_border_width = dpi(2)
+theme.hotkeys_border_color = colour2.tint4
+theme.hotkeys_label_bg = colour2.tint7
+theme.hotkeys_label_fg = colour2.shade9
+
+-- There are other variable sets
+-- overriding the default one when
+-- defined, the sets are:
+-- titlebar_[bg|fg]_[normal|focus]
+-- mouse_finder_[color|timeout|animate_timeout|radius|factor]
+-- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 
 -- Define the image to load
 theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"

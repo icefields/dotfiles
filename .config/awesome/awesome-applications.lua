@@ -11,6 +11,11 @@
 -- -------- Luci4 config for Awesome WM  --------- --
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
+-- This Lua script contains mainly 2 objects:
+-- - commands, a table with common commands used by multiple scripts and by the
+--   Application menu.
+-- - applications, a table that holds all the application propierties in a
+--   centralized objeect, to be used anywhere needed.
 
 local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
@@ -51,7 +56,8 @@ local androidStudio = {
     shell = false
 }
 
-
+-- Common commands and attributes for common applications.
+-- This is used everywhere but mainly to build the Application menu.
 local commands = {
     terminal = {
         command = terminalCmd,

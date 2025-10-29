@@ -24,6 +24,8 @@ local function createWifiTooltip(button, awful, beautiful)
         margin_topbottom = 4,
         preferred_positions = { "top", "bottom" },
         text = "VPN status...",
+        bg = beautiful.tooltip_bg_color,
+        fg = beautiful.tooltip_fg_color
     }
 
     button:connect_signal("mouse::enter", function(c)

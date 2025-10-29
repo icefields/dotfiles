@@ -299,8 +299,8 @@ awful.screen.connect_for_each_screen(function(s)
     }
     local luciTagListColour = wibox.widget.background()
     luciTagListColour:set_widget(luciTagList)
-    luciTagListColour:set_fg(beautiful.fg_systray)
-    luciTagListColour:set_bg(beautiful.bg_normal)
+    --luciTagListColour:set_fg(beautiful.fg_systray)
+    --luciTagListColour:set_bg(beautiful.bg_normal)
 
     s.mytaglist = luciTagListColour
 
