@@ -48,7 +48,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 local awesomeCmds = require("awesome-applications").commands
-local awesomeApplications = require("awesome-applications").getApplications(beautiful.icons)
+local awesomeApplications = require("awesome-applications").applications
 
 -- AwesomeWM-related args to pass to external widgets. 
 local awesomeArgs = ({
@@ -128,7 +128,7 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-local luci4MainMenu = buildMenu(awesomeArgs, awesomeCmds, awesomeApplications, editor_cmd)
+local luci4MainMenu = buildMenu(awesomeArgs, awesomeApplications, editor_cmd)
 
 -- uncomment to use a lanucher, and add to the bar.
 -- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,

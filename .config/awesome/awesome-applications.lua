@@ -17,6 +17,7 @@
 -- - applications, a table that holds all the application propierties in a
 --   centralized objeect, to be used anywhere needed.
 
+local icons = require("themes.luci4.application_icons")
 local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
 
@@ -55,22 +56,24 @@ local androidStudio = {
     group = groupLuci4,
     shell = false
 }
+local terminal = {
+    command = terminalCmd,
+    description = "Open a terminal",
+    group = groupLauncher,
+    shell = false
+}
+local editor = {
+    command = editorCmd,
+    description = "Open editor",
+    group = groupLauncher,
+    shell = false
+}
 
 -- Common commands and attributes for common applications.
 -- This is used everywhere but mainly to build the Application menu.
 local commands = {
-    terminal = {
-        command = terminalCmd,
-        description = "Open a terminal",
-        group = groupLauncher,
-        shell = false
-    },
-    editor = {
-        command = editorCmd,
-        description = "Open editor",
-        group = groupLauncher,
-        shell = false
-    },
+    terminal = terminal,
+    editor = editor,
     screenshotArea = {
         command = "gnome-screenshot -a",
         description = "Print area of the screen",
@@ -151,30 +154,42 @@ local commands = {
 }
 
 -- centralized object to use for all apps.
-function getApplications(icons)
-    local applications = {
-        kittyArchDistrobox = {
-            label = "Kitty Arch",
-            class = "",
-            command = kittyArchDistrobox,
-            subGroup = "Terminals",
-            icon = icons.kittyArch
-        },
-        kittyArchDistroboxIsolated = {
-            label = "Kitty Isolated",
-            class = "",
-            command = kittyArchDistroboxIsolated,
-            subGroup = "Terminals",
-            icon = icons.arcoLinux
-        }
+local applications = {
+     terminal = {
+        label = "Kitty terminal",
+        class = "",
+        command = terminal,
+        subGroup = "Terminals",
+        icon = icons.kitty
+    },
+    editor = {
+        label = "NeoVim",
+        class = "",
+        command = editor,
+        subGroup = "Editor",
+        icon = icons.neoVim
+    },
+    kittyArchDistrobox = {
+        label = "Kitty Arch",
+        class = "",
+        command = kittyArchDistrobox,
+        subGroup = "Terminals",
+        icon = icons.kittyArch
+    },
+    kittyArchDistroboxIsolated = {
+        label = "Kitty Isolated",
+        class = "",
+        command = kittyArchDistroboxIsolated,
+        subGroup = "Terminals",
+        icon = icons.arcoLinux
     }
-    return applications
-end
+}
 
 return {
     commands = commands,
     groupLuci4 = groupLuci4,
     groupLauncher = groupLauncher,
-    getApplications = getApplications
+    applications = applications,
+    icons = icons
 }
 
