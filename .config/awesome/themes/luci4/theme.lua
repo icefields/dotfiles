@@ -11,14 +11,10 @@
 -- ----- Luci4 Custom Theme for Awesome WM ------- --
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
+-- theme.lua
+-- wm-agnostic theme settings.
 
-local theme_assets = require("beautiful.theme_assets")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
 local colours = require("themes.luci4.colours")
-
-local gfs = require("gears.filesystem")
-local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 -- theme.icons = require("themes.luci4.application_icons")
@@ -26,6 +22,8 @@ theme.wallpapersPath = "$HOME/.config/awesome/themes/luci4/wallpapers"
 
 local colour1 = colours.dead
 local colour2 = colours.teal
+theme.colour1 = colour1
+theme.colour2 = colour2
 
 -- opacity for tooltip, notifications, etc...
 local mainOpacity = 0.6
@@ -46,15 +44,15 @@ theme.hotkeys_font = mainFont .. " SemiBold 12.5"
 theme.hotkeys_description_font = sansFont .. " 10"
 
 theme.topBar_bg     = colour2.shade8
-theme.topBar_border = dpi(0)
+theme.topBar_border_dpi = 0
 
 theme.bg_normal     = colour1.shade9
 theme.bg_focus      = colour1.shade7 -- "#224442"
 theme.bg_urgent     = colour2.main
 theme.bg_minimize   = colour2.black-- shade8 --theme.bg_normal
 theme.bg_systray    = colour2.shade4 -- "#4a5722" --theme.bg_normal
-theme.systray_icon_spacing = dpi(4)
-theme.systray_margin = dpi(3)
+theme.systray_icon_spacing_dpi = 4
+theme.systray_margin_dpi = 3
 
 theme.fg_normal     = colour1.tint5 -- "#d2f0cb"
 theme.fg_focus      = colour1.tint5
@@ -62,8 +60,8 @@ theme.fg_urgent     = colour2.shade8
 theme.fg_minimize   = colour1.shade2
 theme.fg_systray    = colour1.tint6
 
-theme.useless_gap   = dpi(2)
-theme.border_width  = dpi(2)
+theme.useless_gap_dpi = 2
+theme.border_width_dpi = 2
 theme.border_normal = colour1.shade8
 theme.border_focus  = colour1.main -- "#71cf5f"
 theme.border_marked = colours.red
@@ -77,17 +75,10 @@ theme.tasklist_fg_normal = fgWidgetMain
 theme.tooltip_opacity = mainOpacity
 theme.tooltip_fg_color = fgWidgetMain
 theme.tooltip_bg_color = colour2.shade9
-theme.tooltip_border_width = dpi(1)
+theme.tooltip_border_width_dpi = 1
 theme.tooltip_border_color = colour2.main
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(11)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, colour2.shade2 -- colours.green
-)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, colour2.shade3 -- theme.fg_normal
-)
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
 theme.taglist_bg_focus = theme.bg_normal
 theme.taglist_fg_focus = fgWidgetMain
@@ -101,12 +92,12 @@ theme.taglist_fg_occupied = colour2.tint4
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
 theme.notification_opacity = mainOpacity
-theme.notification_icon_size = dpi(66)
-theme.notification_bg = colour2.shade9 
-theme.notification_fg = fgWidgetMain 
-theme.notification_margin = dpi(8)
+theme.notification_icon_size_dpi = 66
+theme.notification_bg = colour2.shade9
+theme.notification_fg = fgWidgetMain
+theme.notification_margin_dpi = 8
 theme.notification_border_color = colour2.main
-theme.notification_border_width = dpi(2)
+theme.notification_border_width_dpi = 2
 
 -- Variables set for theming the menu:
 theme.menu_bg_normal    = colour2.shade9 -- "#121716"
@@ -114,15 +105,15 @@ theme.menu_bg_focus     = colour2.shade6
 theme.menu_fg_normal    = colour1.tint6
 -- theme.menu_fg_focus = "#0000ff"
 -- theme.menu_border_color = 
-theme.menu_border_width = dpi(2)
+theme.menu_border_width_dpi = 2
 -- theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_submenu = " "--" " --"▶ "
-theme.menu_height = dpi(30)
-theme.menu_width  = dpi(200)
+theme.menu_height_dpi = 30
+theme.menu_width_dpi = 200
 
 theme.clock_bg = colour2.shade4
 theme.clock_fg = colour2.tint7
-theme.tasklist_border_width  = dpi(1.5)
+theme.tasklist_border_width_dpi= 1.5
 theme.tasklist_border_colour = colour2.shade3
 -- You can add as many variables as
 -- you wish and access them by using
@@ -131,12 +122,12 @@ theme.tasklist_border_colour = colour2.shade3
 
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 theme.hotkeys_opacity = mainOpacity
-theme.hotkeys_group_margin = dpi(12)
+theme.hotkeys_group_margin_dpi = 12
 -- theme.hotkeys_shape = 
 theme.hotkeys_modifiers_fg = colour1.main
 theme.hotkeys_bg = colour2.shade9
 theme.hotkeys_fg = colour2.tint9
-theme.hotkeys_border_width = dpi(2)
+theme.hotkeys_border_width_dpi = 2
 theme.hotkeys_border_color = colour2.tint4
 theme.hotkeys_label_bg = colour2.tint7
 theme.hotkeys_label_fg = colour2.shade9
@@ -147,61 +138,6 @@ theme.hotkeys_label_fg = colour2.shade9
 -- titlebar_[bg|fg]_[normal|focus]
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
-
--- Define the image to load
-theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
-theme.titlebar_close_button_focus  = themes_path.."default/titlebar/close_focus.png"
-
-theme.titlebar_minimize_button_normal = themes_path.."default/titlebar/minimize_normal.png"
-theme.titlebar_minimize_button_focus  = themes_path.."default/titlebar/minimize_focus.png"
-
-theme.titlebar_ontop_button_normal_inactive = themes_path.."default/titlebar/ontop_normal_inactive.png"
-theme.titlebar_ontop_button_focus_inactive  = themes_path.."default/titlebar/ontop_focus_inactive.png"
-theme.titlebar_ontop_button_normal_active = themes_path.."default/titlebar/ontop_normal_active.png"
-theme.titlebar_ontop_button_focus_active  = themes_path.."default/titlebar/ontop_focus_active.png"
-
-theme.titlebar_sticky_button_normal_inactive = themes_path.."default/titlebar/sticky_normal_inactive.png"
-theme.titlebar_sticky_button_focus_inactive  = themes_path.."default/titlebar/sticky_focus_inactive.png"
-theme.titlebar_sticky_button_normal_active = themes_path.."default/titlebar/sticky_normal_active.png"
-theme.titlebar_sticky_button_focus_active  = themes_path.."default/titlebar/sticky_focus_active.png"
-
-theme.titlebar_floating_button_normal_inactive = themes_path.."default/titlebar/floating_normal_inactive.png"
-theme.titlebar_floating_button_focus_inactive  = themes_path.."default/titlebar/floating_focus_inactive.png"
-theme.titlebar_floating_button_normal_active = themes_path.."default/titlebar/floating_normal_active.png"
-theme.titlebar_floating_button_focus_active  = themes_path.."default/titlebar/floating_focus_active.png"
-
-theme.titlebar_maximized_button_normal_inactive = themes_path.."default/titlebar/maximized_normal_inactive.png"
-theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar/maximized_focus_inactive.png"
-theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
-theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
-
--- Luci4 wallpaper, comment out if not using nitrogen
--- theme.wallpaper =  "/home/lucifer/Pictures/wallpapers/wallhalla-28-2560x1440.jpg" --wallhalla-48-3840x2160.jpg"
-
--- You can use your own layout icons like this:
-theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
-theme.layout_fairv = themes_path.."default/layouts/fairvw.png"
-theme.layout_floating  = themes_path.."default/layouts/floatingw.png"
-theme.layout_magnifier = themes_path.."default/layouts/magnifierw.png"
-theme.layout_max = themes_path.."default/layouts/maxw.png"
-theme.layout_fullscreen = themes_path.."default/layouts/fullscreenw.png"
-theme.layout_tilebottom = themes_path.."default/layouts/tilebottomw.png"
-theme.layout_tileleft   = themes_path.."default/layouts/tileleftw.png"
-theme.layout_tile = themes_path.."default/layouts/tilew.png"
-theme.layout_tiletop = themes_path.."default/layouts/tiletopw.png"
-theme.layout_spiral  = themes_path.."default/layouts/spiralw.png"
-theme.layout_dwindle = themes_path.."default/layouts/dwindlew.png"
-theme.layout_cornernw = themes_path.."default/layouts/cornernww.png"
-theme.layout_cornerne = themes_path.."default/layouts/cornernew.png"
-theme.layout_cornersw = themes_path.."default/layouts/cornersww.png"
-theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
-
--- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
-)
-
-theme.icon_theme = nil
 
 return theme
 

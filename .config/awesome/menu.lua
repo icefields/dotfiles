@@ -15,16 +15,18 @@
 -- menu.lua
 require("get_app_icon")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
+local icons = require("awesome-applications").icons
 
 -- Load Debian menu entries
 local debian = require("debian.menu")
 
-local function buildMenu(args, awesomeCmds, awesomeApplications, editor_cmd)
+local function buildMenu(args, awesomeApplications, editor_cmd)
     local awesome = args.awesome
     local awful = args.awful
     local beautiful = args.beautiful
     local hotkeys_popup = args.hotkeys_popup
-    local terminal = awesomeCmds.terminal.command
+    local terminal = awesomeApplications.terminal.command.command
+    local configDir = string.match(awesome.conffile, "^(.+/)rc.lua$")
 
     -- your existing menu-building code goes here
     local myawesomemenu = {
@@ -53,7 +55,7 @@ local function buildMenu(args, awesomeCmds, awesomeApplications, editor_cmd)
             function ()
                  awful.spawn.with_shell("\"$HOME/apps/"..appExecutableName.."\" &")
             end,
-            get_icon_for_application(awesome, appName)
+            get_icon_for_application(configDir, appName)
         })
     end
     appImageCommandFile:close()
@@ -68,7 +70,7 @@ local function buildMenu(args, awesomeCmds, awesomeApplications, editor_cmd)
                 function ()
                     awful.spawn.with_shell("flatpak run "..flatpakApp)
                 end,
-                get_icon_for_application(awesome, flatpakAppName)
+                get_icon_for_application(configDir, flatpakAppName)
             })
         end
         flatpakCommandFile:close()
@@ -82,12 +84,12 @@ local function buildMenu(args, awesomeCmds, awesomeApplications, editor_cmd)
     )
 
     -- Luci4 custom menu with favourite applications
-    local flaggedmenu = require("menu_flagged")(awful, beautiful.icons, awesomeApplications)
+    local flaggedmenu = require("menu_flagged")(awful, icons, awesomeApplications)
     -- other menus
     local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-    local menu_flagged = { "Favourites", flaggedmenu, beautiful.icons.favourite }
-    local menu_apps = { "Apps", appsMenu, beautiful.icons.defaultIcon }
-    local menu_terminal = { "open terminal", terminal, beautiful.icons.kitty }
+    local menu_flagged = { "Favourites", flaggedmenu, icons.favourite }
+    local menu_apps = { "Apps", appsMenu, icons.defaultIcon }
+    local menu_terminal = { awesomeApplications.terminal.label, terminal, awesomeApplications.terminal.icon }
 
     if has_fdo then
         mymainmenu = freedesktop.menu.build({

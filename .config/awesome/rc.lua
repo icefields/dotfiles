@@ -24,7 +24,7 @@ require("awful.autofocus")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/luci4/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/luci4/awesome_theme.lua")
 
 -- Luci4 custom
 -- Collision
@@ -462,7 +462,7 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = require("rules").awesomeRules(awesomeArgs, clientkeys, clientbuttons)
+awful.rules.rules = require("rules").awesomeRules(awesomeArgs, awesomeApplications, clientkeys, clientbuttons)
 -- }}}
 
 -- {{{ Signals

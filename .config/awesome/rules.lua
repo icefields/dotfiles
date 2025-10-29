@@ -16,7 +16,42 @@
 -- local awesomeApps = require("awesome-applications")
 -- local cmds = awesomeApps.commands
 
-local function awesomeRules(args, clientkeys, clientbuttons)
+local function getPlacement(awful, windowPlacement)
+    local placement = {
+        centered     = awful.placement.centered,
+        center       = awful.placement.centered,
+        top_left     = awful.placement.top_left,
+        top_right    = awful.placement.top_right,
+        bottom_left  = awful.placement.bottom_left,
+        bottom_right = awful.placement.bottom_right,
+        top          = awful.placement.top,
+        bottom       = awful.placement.bottom,
+        left         = awful.placement.left,
+        right        = awful.placement.right,
+        under_mouse  = awful.placement.under_mouse,
+        next_to_mouse = awful.placement.next_to_mouse,
+    }
+
+    return placement[windowPlacement] or
+       (awful.placement.no_overlap + awful.placement.no_offscreen)
+end
+
+local function getProperty(awful, property)
+    property.placement = getPlacement(awful, property.windowPlacement)
+    return property
+end
+
+local function getRule(awful, app, screenPos)
+    local properties =  getProperty(awful, app.properties)
+    properties.screen = screenPos or  awful.screen.preferred
+    local rule = {
+        rule = { class = app.class },
+        properties = properties
+    }
+    return rule
+end
+
+local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
     local beautiful = args.beautiful
     local awful = args.awful
     local screen = args.screen
@@ -35,28 +70,9 @@ local function awesomeRules(args, clientkeys, clientbuttons)
                 placement = awful.placement.no_overlap+awful.placement.no_offscreen
             }
         },
-         -- vlc media player, floating
-        {   rule = { class = "vlc" },
-            properties = {
-                floating = true,
-                width = 800, 
-                height = 600,
-                maximized_vertical = false,
-                maximized_horizontal = false,
-                maximized = false,
-                placement = awful.placement.centered
-            }
-        },
-        -- Archive browser/extractor, floating
-        {   rule = { class = "File-roller" },
-            properties = {
-                floating = true,
-                maximized_vertical = false,
-                maximized_horizontal = false,
-                maximized = false,
-                placement = awful.placement.centered
-            }
-        },
+        getRule(awful, awesomeApps.vlc), -- vlc media player, floating
+        getRule(awful, awesomeApps.archiveManager), -- Archive browser/extractor, floating
+        getRule(awful, awesomeApps.fileBrowser, screen.count()),
         -- KeepassXc, floating
         {   rule = { class = "KeePassXC" },
             properties = {
@@ -133,16 +149,6 @@ local function awesomeRules(args, clientkeys, clientbuttons)
                 width = 1200,
                 height = 900,
                 placement = awful.placement.centered
-            }
-        },
-
-        { rule = { class = "nemo" },
-            properties = {
-                opacity = 1,
-                tag = 1,
-                screen = screen.count(), -- open on secondary screen if present
-                maximized = false,
-                floating = false
             }
         },
         -- Floating clients.

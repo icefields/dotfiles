@@ -40,6 +40,9 @@ local freetube_icon = baseDir .. "freetube.svg"
 local steam_icon = baseDir .. "steam.svg"
 local audioAssault_icon = baseDir .. "audioassault.svg"
 local mumble_icon = baseDir .. "mumble.svg"
+local vlc_icon = baseDir .. "vlc.svg"
+local archive_icon = baseDir .. "archive.svg"
+local file_manager_icon = baseDir .. "file-manager.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -68,7 +71,9 @@ local icons = {
     audioAssault = audioAssault_icon,
     berryAmp = baseDir .. "berryamp.svg",
     transmission = baseDir .. "transmission.svg",
-    mumble = mumble_icon
+    mumble = mumble_icon,
+    archiveManager = archive_icon,
+    fileManager = file_manager_icon
 }
 -- END LUCI4 Icon Theme
 return icons

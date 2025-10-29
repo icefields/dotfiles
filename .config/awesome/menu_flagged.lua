@@ -12,6 +12,9 @@
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
 
+-- TODO: remove icons param once migrated all applications inside awesomeApplications.
+-- TODO: loop through awesomeApplications and find all entries where (favourite = true)
+--      create the favourite menu that way.
 return function(awful, icons, awesomeApplications)
   return {
     {   
@@ -26,7 +29,6 @@ return function(awful, icons, awesomeApplications)
         function()
             awful.spawn.with_shell(awesomeApplications.kittyArchDistroboxIsolated.command.command)
         end,
-        -- icons.arcoLinux
         awesomeApplications.kittyArchDistroboxIsolated.icon
     },
     {   "Audio Assault Amp Locker",

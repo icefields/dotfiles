@@ -1,23 +1,6 @@
 local lfs = require("lfs")
 
-function get_files_in_directory(directory)
-    local files = {}
-    for file in lfs.dir(directory) do
-        -- Skip the current (.) and parent (..) directories
-        if file ~= "." and file ~= ".." then
-            -- Remove the ".svg" extension if present
-            local base_name = file
-            if base_name:match("%.svg$") then
-                base_name = base_name:sub(1, -5) -- Remove the last 4 characters (".svg")
-            end
-            table.insert(files, base_name)
-        end
-    end
-    return files
-end
-
-function get_icon_for_application(awesome, appName)
-    local config_dir = string.match(awesome.conffile, "^(.+/)rc.lua$")
+function get_icon_for_application(config_dir, appName)
     local defaultIcon = config_dir.."themes/luci4/icons/ic_speaker_colored_432px.svg"
     local directory = config_dir.."themes/icons-global/"
     local files = get_files_in_directory(directory)
@@ -48,6 +31,22 @@ function get_icon_for_application(awesome, appName)
     if (icon == nil) then icon = defaultIcon end
 
     return icon
+end
+
+function get_files_in_directory(directory)
+    local files = {}
+    for file in lfs.dir(directory) do
+        -- Skip the current (.) and parent (..) directories
+        if file ~= "." and file ~= ".." then
+            -- Remove the ".svg" extension if present
+            local base_name = file
+            if base_name:match("%.svg$") then
+                base_name = base_name:sub(1, -5) -- Remove the last 4 characters (".svg")
+            end
+            table.insert(files, base_name)
+        end
+    end
+    return files
 end
 
 function split_app_name(appName)

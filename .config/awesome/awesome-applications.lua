@@ -153,35 +153,99 @@ local commands = {
     }
 }
 
+local placement = {
+    centered = "centered"
+}
+
 -- centralized object to use for all apps.
 local applications = {
      terminal = {
         label = "Kitty terminal",
-        class = "",
+        class = "kitty",
         command = terminal,
         subGroup = "Terminals",
-        icon = icons.kitty
+        icon = icons.kitty,
+        favourite = true
     },
     editor = {
         label = "NeoVim",
         class = "",
         command = editor,
         subGroup = "Editor",
-        icon = icons.neoVim
+        icon = icons.neoVim,
+        favourite = true
     },
     kittyArchDistrobox = {
         label = "Kitty Arch",
-        class = "",
+        class = "kitty",
         command = kittyArchDistrobox,
         subGroup = "Terminals",
-        icon = icons.kittyArch
+        icon = icons.kittyArch,
+        favourite = true
     },
     kittyArchDistroboxIsolated = {
         label = "Kitty Isolated",
-        class = "",
+        class = "kitty",
         command = kittyArchDistroboxIsolated,
         subGroup = "Terminals",
-        icon = icons.arcoLinux
+        icon = icons.arcoLinux,
+        favourite = true
+    },
+    fileBrowser = {
+        label = "Nemo File Manager",
+        class = "nemo",
+        favourite = false,
+        command = fileBrowser,
+        subGroup = "Utils",
+        icon = icons.fileManager,
+        properties = {
+            opacity = 1,
+            tag = 1,
+            maximized = false,
+            floating = false
+        }
+    },
+    vlc = {
+        label = "Vlc",
+        class = "vlc",
+        favourite = false,
+        command = {
+            command = "vlc",
+            description = "Vlc Media Player",
+            group = "",
+            shell = false
+        },
+        subGroup = "Multimedia",
+        icon = icons.vlc,
+        properties = {
+            floating = true,
+            width = 800,
+            height = 600,
+            maximized_vertical = false,
+            maximized_horizontal = false,
+            maximized = false,
+            windowPlacement = placement.centered
+        }
+    },
+    archiveManager =  {
+        label = "Archive Manager",
+        class = "File-roller",
+        favourite = false,
+        command = {
+            command = "file-roller",
+            description = "File Roller",
+            group = "",
+            shell = false
+        },
+        subGroup = "Utils",
+        icon = icons.archiveManager,
+        properties = {
+            floating = true,
+            maximized_vertical = false,
+            maximized_horizontal = false,
+            maximized = false,
+            windowPlacement = placement.centered
+        }
     }
 }
 
