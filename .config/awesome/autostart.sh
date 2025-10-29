@@ -21,5 +21,5 @@ run "$HOME/.config/awesome/scripts/start_filemanager.sh"
 run "$HOME/apps/Joplin/Joplin.AppImage"
 run "$HOME/.config/awesome/scripts/start_nextcloud.sh"
 run "$HOME/.config/awesome/scripts/start_tuta.sh"
-$HOME/.config/awesome/scripts/autostart-custom.sh &
+$HOME/.config/awesome/autostart-custom.sh &
 

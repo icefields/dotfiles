@@ -12,19 +12,22 @@
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
 
-return function(awful, icons, awesomeCmds)
+return function(awful, icons, awesomeApplications)
   return {
-    {   "Kitty Arch",
+    {   
+        awesomeApplications.kittyArchDistrobox.label,
         function()
-            awful.spawn.with_shell(awesomeCmds.kittyArchDistrobox.command)
+            awful.spawn.with_shell(awesomeApplications.kittyArchDistrobox.command.command)
         end,
-        icons.kittyArch
+        awesomeApplications.kittyArchDistrobox.icon
     },
-    {   "Kitty Isolated",
+    {
+        awesomeApplications.kittyArchDistroboxIsolated.label,
         function()
-            awful.spawn.with_shell(awesomeCmds.kittyArchDistroboxIsolated.command)
+            awful.spawn.with_shell(awesomeApplications.kittyArchDistroboxIsolated.command.command)
         end,
-        icons.arcoLinux
+        -- icons.arcoLinux
+        awesomeApplications.kittyArchDistroboxIsolated.icon
     },
     {   "Audio Assault Amp Locker",
         function()

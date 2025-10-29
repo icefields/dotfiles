@@ -20,6 +20,38 @@ local fileBrowserCmd = "nemo ~/Desktop/"
 local terminalCmd = "kitty"
 local editorCmd = "nvim"
 
+local browser = {
+    command = browserCmd,
+    description = "Open browser",
+    group = groupLuci4,
+    shell = false
+}
+local fileBrowser = {
+    command = fileBrowserCmd,
+    description = "Open file browser",
+    group = groupLuci4,
+    shell = true
+}
+local kittyArchDistrobox =  {
+    command = "$HOME/.config/awesome/scripts/open_kitty_arch.sh",
+    description = "Open Kitty Terminal in Arch Distrobox container",
+    group = groupLuci4,
+    shell = true
+}
+local kittyArchDistroboxIsolated =  {
+    command = "$HOME/.config/awesome/scripts/open_kitty_arch-isolated.sh",
+    description = "Open Kitty Terminal in an isolated Arch Distrobox container",
+    group = groupLuci4,
+    shell = true
+}
+local androidStudio = {
+    command = "/opt/android-studio/bin/studio",
+    description = "Open Android Studio",
+    group = groupLuci4,
+    shell = false
+}
+
+
 local commands = {
     terminal = {
         command = terminalCmd,
@@ -69,36 +101,11 @@ local commands = {
         group = groupLuci4,
         shell = true
     },
-    browser = {
-        command = browserCmd,
-        description = "Open browser",
-        group = groupLuci4,
-        shell = false
-    },
-    fileBrowser = {
-        command = fileBrowserCmd,
-        description = "Open file browser",
-        group = groupLuci4,
-        shell = true
-    },
-    kittyArchDistrobox =  {
-        command = "$HOME/.config/awesome/scripts/open_kitty_arch.sh",
-        description = "Open Kitty Terminal in Arch Distrobox container",
-        group = groupLuci4,
-        shell = true
-    },
-    kittyArchDistroboxIsolated =  {
-        command = "$HOME/.config/awesome/scripts/open_kitty_arch-isolated.sh",
-        description = "Open Kitty Terminal in an isolated Arch Distrobox container",
-        group = groupLuci4,
-        shell = true
-    },
-    androidStudio = {
-        command = "/opt/android-studio/bin/studio",
-        description = "Open Android Studio",
-        group = groupLuci4,
-        shell = false
-    },
+    browser = browser,
+    fileBrowser = fileBrowser,
+    kittyArchDistrobox = kittyArchDistrobox,
+    kittyArchDistroboxIsolated = kittyArchDistroboxIsolated,
+    androidStudio = androidStudio,
     dmenu = {
         command = "dmenu_run",
         description = "run prompt",
@@ -137,9 +144,31 @@ local commands = {
     }
 }
 
+-- centralized object to use for all apps.
+function getApplications(icons)
+    local applications = {
+        kittyArchDistrobox = {
+            label = "Kitty Arch",
+            class = "",
+            command = kittyArchDistrobox,
+            subGroup = "Terminals",
+            icon = icons.kittyArch
+        },
+        kittyArchDistroboxIsolated = {
+            label = "Kitty Isolated",
+            class = "",
+            command = kittyArchDistroboxIsolated,
+            subGroup = "Terminals",
+            icon = icons.arcoLinux
+        }
+    }
+    return applications
+end
+
 return {
     commands = commands,
     groupLuci4 = groupLuci4,
-    groupLauncher = groupLauncher
+    groupLauncher = groupLauncher,
+    getApplications = getApplications
 }
 

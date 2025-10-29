@@ -19,7 +19,7 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 -- Load Debian menu entries
 local debian = require("debian.menu")
 
-local function buildMenu(args, awesomeCmds, editor_cmd)
+local function buildMenu(args, awesomeCmds, awesomeApplications, editor_cmd)
     local awesome = args.awesome
     local awful = args.awful
     local beautiful = args.beautiful
@@ -63,7 +63,7 @@ local function buildMenu(args, awesomeCmds, editor_cmd)
     if flatpakCommandFile then
         for flatpakApp in flatpakCommandFile:lines() do
             if flatpakApp == "im.riot.Riot" then flatpakApp = "Element" end
-            local flatpakAppName = string.match(flatpakApp, "([^%.]+)$") 
+            local flatpakAppName = string.match(flatpakApp, "([^%.]+)$")
             table.insert(appsMenu, { flatpakAppName,
                 function ()
                     awful.spawn.with_shell("flatpak run "..flatpakApp)
@@ -82,7 +82,7 @@ local function buildMenu(args, awesomeCmds, editor_cmd)
     )
 
     -- Luci4 custom menu with favourite applications
-    local flaggedmenu = require("menu_flagged")(awful, beautiful.icons, awesomeCmds)
+    local flaggedmenu = require("menu_flagged")(awful, beautiful.icons, awesomeApplications)
     -- other menus
     local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
     local menu_flagged = { "Favourites", flaggedmenu, beautiful.icons.favourite }
