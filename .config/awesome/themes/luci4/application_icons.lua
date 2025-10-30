@@ -43,6 +43,7 @@ local mumble_icon = baseDir .. "mumble.svg"
 local vlc_icon = baseDir .. "vlc.svg"
 local archive_icon = baseDir .. "archive.svg"
 local file_manager_icon = baseDir .. "file-manager.svg"
+local tutanota_icon = baseDir .. "tutanota-desktop.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -73,7 +74,8 @@ local icons = {
     transmission = baseDir .. "transmission.svg",
     mumble = mumble_icon,
     archiveManager = archive_icon,
-    fileManager = file_manager_icon
+    fileManager = file_manager_icon,
+    tutanota = tutanota_icon
 }
 -- END LUCI4 Icon Theme
 return icons

@@ -84,7 +84,7 @@ local editor = {
     command = editorCmd,
     description = "Open editor",
     group = groupLauncher,
-    shell = false
+    shell = true
 }
 local screenshotArea = {
     command = "gnome-screenshot -a",
@@ -211,6 +211,14 @@ local placement = {
     centered = "centered"
 }
 
+local subGroup = {
+    internet = "Internet",
+    multimedia = "Multimedia",
+    music = "Music",
+    utils = "Utils",
+    terminals = "Terminals"
+}
+
 -- centralized object to use for all apps.
 local applications = {
     raiseVolume = {
@@ -253,7 +261,7 @@ local applications = {
         label = "Kitty terminal",
         class = "kitty",
         command = terminal,
-        subGroup = "Terminals",
+        subGroup = subGroup.terminals,
         icon = icons.kitty,
         favourite = true
     },
@@ -261,7 +269,7 @@ local applications = {
         label = "NeoVim",
         class = "",
         command = editor,
-        subGroup = "Editor",
+        subGroup = subGroup.terminals,
         icon = icons.neoVim,
         favourite = true
     },
@@ -269,7 +277,7 @@ local applications = {
         label = "Kitty Arch",
         class = "kitty",
         command = kittyArchDistrobox,
-        subGroup = "Terminals",
+        subGroup = subGroup.terminals,
         icon = icons.kittyArch,
         favourite = true
     },
@@ -277,7 +285,7 @@ local applications = {
         label = "Kitty Isolated",
         class = "kitty",
         command = kittyArchDistroboxIsolated,
-        subGroup = "Terminals",
+        subGroup = subGroup.terminals,
         icon = icons.arcoLinux,
         favourite = true
     },
@@ -286,7 +294,7 @@ local applications = {
         class = "",
         favourite = true,
         command = browser,
-        subGroup = "Internet",
+        subGroup = subGroup.internet,
         -- icon = icons.,
     },
     fileBrowser = {
@@ -294,7 +302,7 @@ local applications = {
         class = "nemo",
         favourite = false,
         command = fileBrowser,
-        subGroup = "Utils",
+        subGroup = subGroup.utils,
         icon = icons.fileManager,
         properties = {
             opacity = 1,
@@ -313,7 +321,7 @@ local applications = {
             group = "",
             shell = false
         },
-        subGroup = "Multimedia",
+        subGroup = subGroup.multimedia,
         icon = icons.vlc,
         properties = {
             floating = true,
@@ -335,7 +343,7 @@ local applications = {
             group = "",
             shell = false
         },
-        subGroup = "Utils",
+        subGroup = subGroup.utils,
         icon = icons.archiveManager,
         properties = {
             floating = true,
@@ -355,7 +363,7 @@ local applications = {
             group = "",
             shell = false
         },
-        subGroup = "Utils",
+        subGroup = subGroup.utils,
        -- icon = icons.keePass,
         properties = {
             floating = true,
@@ -384,8 +392,345 @@ local applications = {
             --maximized_vertical = true,
             --maximized_horizontal = true
         }
+    },
+    tutanota = {
+        label = "Tutanota",
+        class = "tutanota-desktop",
+        favourite = false,
+        command = {
+            command = "$HOME/apps/tutanota-desktop-linux.AppImage -a",
+            description = "Tutanota email client",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.internet,
+        icon = icons.tutanota,
+        properties = {
+            -- tag = "2",
+            -- screen = screen.count(), -- open on secondary screen if present
+            -- minimized = true,
+            floating = true,
+            maximized_vertical = false,
+            maximized_horizontal = false,
+            maximized = false,
+        }
+    },
+    lxAppearance = {
+        label = "LxAppearance",
+        class = "Lxappearance",
+        favourite = false,
+        command = {
+            command = "lxappearance",
+            description = "Appearance Settings",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.utils,
+        -- icon = icons.
+        properties = {
+            floating = true,
+            maximized = false,
+            windowPlacement = placement.centered
+        }
+    },
+    vivaldi = {
+        label = "Vivaldi Browser",
+        class = "Vivaldi-stable",
+        favourite = true,
+        command = {
+            command = "vivaldi",
+            description = "Vivaldi web browser",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.internet,
+        icon = icons.vivaldi,
+        properties = {
+            -- tag = "2",
+            opacity = 1,
+            maximized = false,
+            floating = false
+        }
+    },
+    signal = {
+        label = "Signal",
+        class = "Signal",
+        favourite = false,
+        command = {
+            command = "$HOME/apps/Signal",
+            description = "Signal messenger",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.internet,
+        icon = icons.signal,
+        properties = {
+            tag = "8"
+        }
+    },
+    telegram = {
+        label = "Telegram",
+        class = "TelegramDesktop",
+        favourite = false,
+        command = {
+            command = "$HOME/apps/Telegram",
+            description = "Telegram messenger",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.internet,
+        icon = icons.telegram,
+        properties = {
+            tag = "8"
+        }
+    },
+    element = {
+        class = "Element",
+        label = "Element",
+        favourite = true,
+        command = {
+            command = "flatpak run im.riot.Riot",
+            description = "Element messenger",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.internet,
+        -- icon = icons.telegram,
+        properties = {
+            tag = "8",
+            floating = true,
+            width = 1200,
+            height = 900,
+            placement = placement.centered
+        }
+    },
+    ampLocker = {
+        label = "Audio Assault Amp Locker",
+        class = "Amp Locker",
+        favourite = true,
+        command = {
+            command = "\"$HOME/apps/Amp Locker Standalone\" &",
+            description = "Audio Assault Amp Locker standalone amp sim",
+            group = "",
+            shell = false
+        },
+        icon = icons.audioAssault,
+        subGroup = "Music",
+        properties = {
+            floating = true,
+            placement = placement.centered
+        }
+    },
+    berryAmp = {
+        label = "Berry Amp",
+        class = "Berry Amp - Charles Caswell",
+        favourite = true,
+        command = {
+            command = "\"$HOME/apps/BerryAmpCharlesCaswell Standalone\" &",
+            description = "Audio Assault Berry Amp standalone amp sim",
+            group = "",
+            shell = false
+        },
+        icon = icons.berryAmp,
+        subGroup = "Music",
+        properties = {
+            floating = true,
+            placement = placement.centered
+        }
+    },
+    reaper = {
+        label = "Reaper",
+        class = "",
+        favourite = true,
+        command = {
+            command = "$HOME/apps/reaper_linux_x86_64/REAPER/reaper",
+            description = "Reaper",
+            group = "",
+            shell = false
+        },
+        icon = icons.reaper,
+        subGroup = "Music"
+    },
+    qJackCtl = {
+        label = "QjackCtl",
+        class = "QjackCtl",
+        favourite = true,
+        command = {
+            command = "qjackctl",
+            description = "jack audio controller",
+            group = "",
+            shell = false
+        },
+        icon = icons.jack,
+        subGroup = "Music",
+        properties = {
+            floating = true,
+            placement = placement.centered
+        }
+    },
+    freetube = {
+        label = "Freetube",
+        class = "",
+        favourite = true,
+        command = {
+            command = "$HOME/apps/FreeTube",
+            description = "Freetube YouTube Invidious client",
+            group = "",
+            shell = false
+        },
+        icon = icons.freeTube,
+        subGroup = "Multimedia"
+    },
+    transmission = {
+        label = "Transmission",
+        class = "",
+        favourite = true,
+        command = {
+            command = "$HOME/apps/Transmission",
+            description = "Freetube YouTube Invidious client",
+            group = "",
+            shell = false
+        },
+        icon = icons.transmission,
+        subGroup = subGroup.internet
+    },
+    calibre = {
+        label = "Calibre",
+        class = "",
+        favourite = true,
+        command = {
+            command = "$HOME/apps/Calibre",
+            description = "Calibre books",
+            group = "",
+            shell = false
+        },
+        icon = icons.calibre,
+        subGroup = subGroup.internet
+    },
+    upscayl = {
+        label= "UpScayl",
+        class = "",
+        favourite = true,
+        command = {
+            command = "$HOME/apps/Upscayl",
+            description = "Use AI to upscale images",
+            group = "",
+            shell = false
+        },
+        icon = icons.superTux,
+        subGroup = "Graphics"
+    },
+    gimp = {
+        label = "Gimp",
+        class = "",
+        favourite = true,
+        command = {
+            command = "$HOME/apps/Gimp3",
+            description = "Gimp image editor",
+            group = "",
+            shell = false
+        },
+        icon = icons.gimp,
+        subGroup = "Graphics"
+    },
+    torBrowser = {
+        label = "Tor Browser",
+        class = "Tor Browser",
+        favourite = true,
+        command = {
+            command = "$HOME/apps/tor-browser/Tor Browser",
+            description = "Tor web browser",
+            group = "",
+            shell = false
+        },
+        icon = icons.tor,
+        subGroup = subGroup.internet,
+        properties = {
+            floating = true,
+            placement = placement.centered
+        }
+    },
+    steam = {
+        label = "Steam",
+        class = "",
+        favourite = true,
+        command = {
+            command = "steam",
+            description = "Steam gaming",
+            group = "",
+            shell = false
+        },
+        icon = icons.steam,
+        subGroup = "Games"
+    },
+    mumble = {
+        label = "Mumble",
+        class = "Mumble",
+        favourite = true,
+        command = {
+            command = "mumble",
+            description = "Mumble messenger",
+            group = "",
+            shell = false
+        },
+        icon = icons.mumble,
+        subGroup = subGroup.internet,
+        properties = {
+            floating = true,
+            placement = placement.centered
+        }
     }
 }
+
+
+function applications:bySubGroup()
+    local grouped = {}
+
+    for _, app in pairs(self) do
+        if type(app) == "table" and app.label then
+            local group = app.subGroup or "Ungrouped"
+
+            -- Only create the group if we need to insert an app
+            if not grouped[group] then
+                grouped[group] = { }
+            end
+
+            table.insert(grouped[group], app)
+        end
+    end
+
+    -- Remove empty groups (mostly for "Ungrouped")
+    for group, apps in pairs(grouped) do
+        if #apps == 0 then
+            grouped[group] = nil
+        end
+    end
+
+    -- Sort each subgroup alphabetically by label
+    for _, apps in pairs(grouped) do
+        table.sort(apps, function(a, b)
+            return a.label:lower() < b.label:lower()
+        end)
+    end
+
+    return grouped
+end
+
+function applications:getFavourites()
+    local favourites = {}
+
+    for _, app in pairs(self) do
+        if type(app) == "table" and app.favourite then
+            table.insert(favourites, app)
+        end
+    end
+
+    table.sort(favourites, function(a, b)
+        return a.label:lower() < b.label:lower()
+    end)
+
+    return favourites
+end
 
 return {
     modkey = modkey,
@@ -394,26 +739,4 @@ return {
     applications = applications,
     icons = icons
 }
-
---local commands = {
---    terminal = terminal,
---    editor = editor,
---    screenshotArea = screenshotArea,
---    screenshotFull = screenshotFull,
---    raiseVolume = raiseVolume,
---    lowerVolume = lowerVolume,
---    muteVolume = muteVolume,
---    lockScreen = lockScreen,
---    browser = browser,
----    fileBrowser = fileBrowser,
---    kittyArchDistrobox = kittyArchDistrobox,
---    kittyArchDistroboxIsolated = kittyArchDistroboxIsolated,
---    androidStudio = androidStudio,
---    dmenu = dmenu,
---    shareMenu = shareMenu,
---    shareMenuEncrypted = shareMenuEncrypted,
---    ampachePlaySong = ampachePlaySong,
---    askOllama = askOllama,
---    resetTor = resetTor
---}
 

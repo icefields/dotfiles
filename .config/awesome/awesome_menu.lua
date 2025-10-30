@@ -16,9 +16,26 @@
 require("get_app_icon")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 local icons = require("wm_applications").icons
+local debian = require("debian.menu") -- Load Debian menu entries
 
--- Load Debian menu entries
-local debian = require("debian.menu")
+local function getFavourites(awful, favouriteApps, configDir)
+    local favourites = { }
+    for _, app in ipairs(favouriteApps) do
+        local item = {
+            app.label,
+            function()
+                 if app.command.shell then
+                    awful.spawn.with_shell(app.command.command)
+                else
+                    awful.spawn(app.command.command)
+                end
+            end,
+            app.icon or get_icon_for_application(configDir, app.label)
+        }
+        table.insert(favourites, item)
+    end
+    return favourites
+end
 
 local function buildMenu(args, awesomeApplications)
     local awesome = args.awesome
@@ -84,30 +101,56 @@ local function buildMenu(args, awesomeApplications)
         end
     )
 
-    -- Luci4 custom menu with favourite applications
-    local flaggedmenu = require("awesome_menu_flagged")(awful, icons, awesomeApplications)
     -- other menus
     local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-    local menu_flagged = { "Favourites", flaggedmenu, icons.favourite }
     local menu_apps = { "Apps", appsMenu, icons.defaultIcon }
+
+    local favourites = awesomeApplications:getFavourites()
+    local flaggedmenu = getFavourites(awful, favourites, configDir)
+    local menu_flagged = { "Favourites", flaggedmenu, icons.favourite }
+
+    local customMenu = { }
+    table.insert(customMenu, menu_flagged)
+    table.insert(customMenu, menu_apps)
+
+    for groupName, appsGroup in pairs(awesomeApplications:bySubGroup()) do
+        if type(appsGroup) == "table" then
+            local menu_custom = {
+                groupName,
+                getFavourites(awful, appsGroup, configDir),
+                get_icon_for_application(configDir, groupName)
+            }
+            table.insert(customMenu, menu_custom)
+        end
+    end
+
+    local menu_fdo = { "Debian", debian.menu.Debian_menu.Debian, 
+        get_icon_for_application(configDir, "debian") 
+    }
     local menu_terminal = { awesomeApplications.terminal.label, terminal, awesomeApplications.terminal.icon }
 
-    if has_fdo then
-        mymainmenu = freedesktop.menu.build({
-            before = { menu_flagged, menu_apps },
-            after =  { menu_awesome, menu_terminal }
-        })
-    else
-        mymainmenu = awful.menu({
-            items = {
-                menu_flagged,
-                menu_apps,
-                { "Debian", debian.menu.Debian_menu.Debian },
-                menu_awesome,
-                menu_terminal
-            }
-        })
-    end
+    table.insert(customMenu, menu_fdo)
+    table.insert(customMenu, menu_awesome)
+    table.insert(customMenu, menu_terminal)
+
+    local mymainmenu = awful.menu({ items = customMenu })
+
+    --if has_fdo then
+    --    mymainmenu = freedesktop.menu.build({
+    --       before = customMenu,
+    --        after =  { menu_awesome, menu_terminal }
+    --    })
+    --else
+    --    mymainmenu = awful.menu({
+    --        items = {
+    --            menu_flagged,
+    --            menu_apps,
+    --            { "Debian", debian.menu.Debian_menu.Debian },
+    --            menu_awesome,
+    --            menu_terminal
+    --        }
+    --    })
+    --end
 
     return mymainmenu
 end

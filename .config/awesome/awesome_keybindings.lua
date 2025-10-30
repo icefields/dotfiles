@@ -109,26 +109,41 @@ local function awesomeGlobalKeys(args, showMainMenu)
 
         -- Standard program
         awful.key({ modkey, "Control" }, "r", awesome.restart,
-                  {description = "reload awesome", group = "awesome"}),
+            {description = "reload awesome", group = "awesome"}),
         awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-                  {description = "quit awesome", group = "awesome"}),
-        awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
-                  {description = "increase master width factor", group = "layout"}),
-        awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
-                  {description = "decrease master width factor", group = "layout"}),
-        awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
-                  {description = "increase the number of master clients", group = "layout"}),
-        awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
-                  {description = "decrease the number of master clients", group = "layout"}),
-        awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1, nil, true)    end,
-                  {description = "increase the number of columns", group = "layout"}),
-        awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
-                  {description = "decrease the number of columns", group = "layout"}),
-        awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
-                  {description = "select next", group = "layout"}),
-        awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
-                  {description = "select previous", group = "layout"}),
-
+            {description = "quit awesome", group = "awesome"}),
+        awful.key({ modkey,           }, "l", function () 
+                awful.tag.incmwfact( 0.05)
+            end, {
+            description = "increase master width factor", group = "layout"}),
+        awful.key({ modkey,           }, "h", function () 
+                awful.tag.incmwfact(-0.05)
+            end, {
+            description = "decrease master width factor", group = "layout"}),
+        awful.key({ modkey, "Shift"   }, "h", function () 
+             awful.tag.incnmaster( 1, nil, true) 
+            end, {
+            description = "increase the number of master clients", group = "layout"}),
+        awful.key({ modkey, "Shift"   }, "l", function ()
+                awful.tag.incnmaster(-1, nil, true) 
+            end, {
+            description = "decrease the number of master clients", group = "layout"}),
+        awful.key({ modkey, "Control" }, "h", function () 
+                awful.tag.incncol( 1, nil, true)
+            end, {
+            description = "increase the number of columns", group = "layout"}),
+        awful.key({ modkey, "Control" }, "l", function () 
+                awful.tag.incncol(-1, nil, true)
+            end, {
+            description = "decrease the number of columns", group = "layout"}),
+        awful.key({ modkey,           }, "space", function () 
+                awful.layout.inc( 1)
+            end, {
+            description = "select next", group = "layout"}),
+        awful.key({ modkey, "Shift"   }, "space", function () 
+                awful.layout.inc(-1)
+            end, {
+            description = "select previous", group = "layout"}),
         awful.key({ modkey, "Control" }, "n", function ()
             local c = awful.client.restore()
             -- Focus restored client
@@ -180,30 +195,18 @@ local function awesomeGlobalKeys(args, showMainMenu)
         end, {
             description = "show task list",
             group = groupLuci4
-        }),
-        getEntry(awful, applications.terminal.command),
-        getEntry(awful, applications.screenshotArea.command), -- Luci4 print area of screen
-        getEntry(awful, applications.screenshotFull.command), -- Print full screen        
-        getEntry(awful, applications.lockScreen.command), -- Lock screen shortcut
-        getEntry(awful, applications.browser.command), -- LibreWolf
-        getEntry(awful, applications.fileBrowser.command),
-        getEntry(awful, applications.kittyArchDistrobox.command),
-        getEntry(awful, applications.androidStudio.command),
-        getEntry(awful, applications.dmenu.command), -- Prompt (Dmenu)
-        getEntry(awful, applications.shareMenu.command), -- Dmenu Share
-        getEntry(awful, applications.shareMenuEncrypted.command), -- encrypted Share
-        -- Play song from Ampache server
-        getEntry(awful, applications.ampachePlaySong.command),
-        -- Interact with AI on an external local-network server
-        getEntry(awful, applications.askOllama.command),
-        -- Tor reset
-        getEntry(awful, applications.resetTor.command),
-        -- Luci4 Audio key bindings
-        getEntry(awful, applications.raiseVolume.command),
-        getEntry(awful, applications.lowerVolume.command),
-        getEntry(awful, applications.muteVolume.command)
+        })
     )
 
+    local customBindings = { }
+    -- Insert custom bindings from applications object
+    for _, appl in pairs(applications) do
+        if type(appl) == "table" and appl.command.keyBinding ~= nil then
+            table.insert(customBindings, getEntry(awful, appl.command))
+        end
+    end
+
+    globalkeys = gears.table.join(globalkeys, table.unpack(customBindings))
     return globalkeys
 end
 

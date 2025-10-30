@@ -53,142 +53,91 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
     local awful = args.awful
     local screen = args.screen
 
-    local rules = {
-        -- All clients will match this rule.
-        {   rule = { },
-            properties = {
-                border_width = beautiful.border_width,
-                border_color = beautiful.border_normal,
-                focus = awful.client.focus.filter,
-                raise = true,
-                keys = clientkeys,
-                buttons = clientbuttons,
-                screen = awful.screen.preferred,
-                placement = awful.placement.no_overlap+awful.placement.no_offscreen
-            }
-        },
-        getRule(awful, awesomeApps.vlc), -- vlc media player, floating
-        getRule(awful, awesomeApps.archiveManager), -- Archive browser/extractor, floating
-        getRule(awful, awesomeApps.fileBrowser, screen.count()),
-        getRule(awful, awesomeApps.keepassxc),
-        getRule(awful, awesomeApps.androidStudio),
-        -- Tutanota
-        {   rule = { class = "tutanota-desktop" },
-            properties = {
-                -- tag = "2",
-                -- screen = screen.count(), -- open on secondary screen if present
-                -- minimized = true,
-                floating = true,
-                maximized_vertical = false,
-                maximized_horizontal = false,
-                maximized = false,
-            }
-        },
-        -- Lxappearance, floating
-        {   rule = { class = "Lxappearance" },
-            properties = {
-                floating = true,
-                maximized = false,
-                placement = awful.placement.centered
-            }
-        },
-                -- Vivaldi browser
-        {   rule = { class = "Vivaldi-stable" },
-            properties = {
-                -- tag = "2",
-                opacity = 1,
-                maximized = false,
-                floating = false
-            }
-        },
-
-        -- Messaging apps will go on tag 5
-        -- Signal
-        {   rule = { class = "Signal" },
-            properties = {
-                tag = "8"
-            }
-        },
-        -- Telegram
-        {   rule = { class = "TelegramDesktop" },
-            properties = {
-                tag = "8"
-            }
-        },
-        -- Element
-        {   rule = { class = "Element" },
-            properties = {
-                tag = "8",
-                floating = true,
-                width = 1200,
-                height = 900,
-                placement = awful.placement.centered
-            }
-        },
-        -- Floating clients.
-        {   rule_any = {
-                instance = {
-                    "DTA",  -- Firefox addon DownThemAll.
-                    "copyq",  -- Includes session name in class.
-                    "pinentry",
-                },
-                class = {
-                    "Amp Locker", -- glitch and crash if not floating
-                    "Arandr",
-                    "Berry Amp - Charles Caswell",
-                    "QjackCtl",
-                    "Calfjackhost", -- calf subwindow
-                    "calfjackhost", -- main calf
-                    "mpv",
-                    "Mumble",
-                    "cinnamon-settings sound",
-                    "Xviewer",
-                    "Blueman-manager",
-                    "Gpick",
-                    "Kruler",
-                    "video-downloader",
-                    "MessageWin",  -- kalarm.
-                    "Sxiv",
-                    "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-                    "Wpa_gui",
-                    "veromix",
-                    "xtightvncviewer",
-                    "Gnome-screenshot"
-                },
-
-                -- Note that the name property shown in xprop might be set slightly after creation of the client
-                -- and the name shown there might not match defined rules here.
-                name = {
-                    "Event Tester",  -- xev.
-                },
-                role = {
-                    "AlarmWindow",  -- Thunderbird's calendar.
-                    "ConfigManager",  -- Thunderbird's about:config.
-                    "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
-                }
+    local rules = { }
+    local allClientRules = {
+        rule = { },
+        properties = {
+            border_width = beautiful.border_width,
+            border_color = beautiful.border_normal,
+            focus = awful.client.focus.filter,
+            raise = true,
+            keys = clientkeys,
+            buttons = clientbuttons,
+            screen = awful.screen.preferred,
+            placement = awful.placement.no_overlap+awful.placement.no_offscreen
+        }
+    }
+    local defaultFloatingRule = {
+        rule_any = {
+            instance = {
+                "DTA",  -- Firefox addon DownThemAll.
+                "copyq",  -- Includes session name in class.
+                "pinentry",
             },
-            properties = {
-                floating = true,
-                placement = awful.placement.centered
-            }
-        },
-
-        -- Add titlebars to normal clients and dialogs
-        {   rule_any = {
-                type = { "normal", "dialog" }
+            class = {
+                --"Amp Locker", -- glitch and crash if not floating
+                "Arandr",
+                --"Berry Amp - Charles Caswell",
+                --"QjackCtl",
+                "Calfjackhost", -- calf subwindow
+                "calfjackhost", -- main calf
+                "mpv",
+                --"Mumble",
+                "cinnamon-settings sound",
+                "Xviewer",
+                "Blueman-manager",
+                "Gpick",
+                "Kruler",
+                "video-downloader",
+                "MessageWin",  -- kalarm.
+                "Sxiv",
+                --"Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
+                "Wpa_gui",
+                "veromix",
+                "xtightvncviewer",
+                "Gnome-screenshot"
             },
-            properties = {
-                titlebars_enabled = false,
-                -- Some maximized windows have gaps at the right and bottom
-                size_hints_honor = false
+
+            -- Note that the name property shown in xprop might be set slightly after creation of the client
+            -- and the name shown there might not match defined rules here.
+            name = {
+                "Event Tester",  -- xev.
+            },
+            role = {
+                "AlarmWindow",  -- Thunderbird's calendar.
+                "ConfigManager",  -- Thunderbird's about:config.
+                "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
             }
         },
-
-        -- Set Firefox to always map on the tag named "2" on screen 1.
-        -- { rule = { class = "Firefox" },
-        --   properties = { screen = 1, tag = "2" } },
+        properties = {
+            floating = true,
+            placement = awful.placement.centered
+        }
     }
 
+    local titleBarsRule = { 
+        rule_any = {
+            type = { "normal", "dialog" }
+        },
+        properties = {
+            titlebars_enabled = false,
+            -- Some maximized windows have gaps at the right and bottom
+            size_hints_honor = false
+        }
+    }
+
+    table.insert(rules, allClientRules)
+    -- Insert rules from applications object
+    for _, appl in pairs(awesomeApps) do
+        if type(appl) == "table" and appl.properties ~= nil then
+            table.insert(rules, getRule(awful, appl))
+        end
+    end
+    -- Insert file browser rule, will appear on last screen for multiscreen setup.
+    table.insert(rules, getRule(awful, awesomeApps.fileBrowser, screen.count()))
+ 
+    table.insert(rules, defaultFloatingRule)
+    table.insert(rules, titleBarsRule)
     return rules
 end
 
