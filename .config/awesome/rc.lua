@@ -35,7 +35,7 @@ local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
-local buildMenu = require("menu")
+local buildMenu = require("awesome_menu")
 
 -- Widget and layout library
 local wibox = require("wibox")
@@ -47,8 +47,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-local awesomeCmds = require("awesome-applications").commands
-local awesomeApplications = require("awesome-applications").applications
+local awesomeApplications = require("wm_applications").applications
 
 -- AwesomeWM-related args to pass to external widgets. 
 local awesomeArgs = ({
@@ -94,16 +93,15 @@ end
 
 -- {{{ Variable definitions
 -- This is used later as the default terminal and editor to run.
-terminal = awesomeCmds.terminal.command
-editor = os.getenv("EDITOR") or awesomeCmds.editor.command
-editor_cmd = terminal .. " -e " .. editor
+terminal = awesomeApplications.terminal.command.command
+editor = awesomeApplications.editor.command.command -- os.getenv("EDITOR") or awesomeApplications.editor.command.command
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
+modkey = require("wm_applications").modkey
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -128,7 +126,7 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-local luci4MainMenu = buildMenu(awesomeArgs, awesomeApplications, editor_cmd)
+local luci4MainMenu = buildMenu(awesomeArgs, awesomeApplications)
 
 -- uncomment to use a lanucher, and add to the bar.
 -- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
@@ -370,7 +368,7 @@ awful.screen.connect_for_each_screen(function(s)
             logout_menu_widget {
             -- font = 'Play 14',
                 onlock = function()
-                    awful.spawn.with_shell(awesomeCmds.lockScreen.command)
+                    awful.spawn.with_shell(awesomeApplications.lockScreen.command.command)
                 end
             },
         },
@@ -388,9 +386,9 @@ root.buttons(gears.table.join(
 
 -- {{{ Key binding
 local showMainMenu = function() luci4MainMenu:show() end
-local keyBindings = require("key-bindings")
-local globalkeys = keyBindings.awesomeGlobalKeys(awesomeArgs, modkey, showMainMenu)
-local clientkeys = keyBindings.awesomeClientKeys(awesomeArgs, modkey)
+local keyBindings = require("awesome_keybindings")
+local globalkeys = keyBindings.awesomeGlobalKeys(awesomeArgs, showMainMenu)
+local clientkeys = keyBindings.awesomeClientKeys(awesomeArgs)
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
@@ -462,7 +460,7 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = require("rules").awesomeRules(awesomeArgs, awesomeApplications, clientkeys, clientbuttons)
+awful.rules.rules = require("awesome_rules").awesomeRules(awesomeArgs, awesomeApplications, clientkeys, clientbuttons)
 -- }}}
 
 -- {{{ Signals

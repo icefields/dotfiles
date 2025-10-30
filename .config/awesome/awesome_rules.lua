@@ -13,9 +13,6 @@
 -----------------------------------------------------
 -- rules.lua
 
--- local awesomeApps = require("awesome-applications")
--- local cmds = awesomeApps.commands
-
 local function getPlacement(awful, windowPlacement)
     local placement = {
         centered     = awful.placement.centered,
@@ -73,16 +70,8 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
         getRule(awful, awesomeApps.vlc), -- vlc media player, floating
         getRule(awful, awesomeApps.archiveManager), -- Archive browser/extractor, floating
         getRule(awful, awesomeApps.fileBrowser, screen.count()),
-        -- KeepassXc, floating
-        {   rule = { class = "KeePassXC" },
-            properties = {
-                floating = true,
-                maximized_vertical = false,
-                maximized_horizontal = false,
-                maximized = false,
-                placement = awful.placement.centered
-            }
-        },
+        getRule(awful, awesomeApps.keepassxc),
+        getRule(awful, awesomeApps.androidStudio),
         -- Tutanota
         {   rule = { class = "tutanota-desktop" },
             properties = {
@@ -103,22 +92,7 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
                 placement = awful.placement.centered
             }
         },
-        -- Android Studio
-        {   rule = { class = "jetbrains-studio" },
-            properties = {
-                tag = "4",
-                size_hints_honor = false, -- no gaps on full screen
-                titlebars_enabled = false,
-                fullscreen = true,
-                floating = false,
-                border_width = 0,
-                --border_color = 0,
-                --maximized = true,
-                --maximized_vertical = true,
-                --maximized_horizontal = true
-            }
-        },
-        -- Vivaldi browser
+                -- Vivaldi browser
         {   rule = { class = "Vivaldi-stable" },
             properties = {
                 -- tag = "2",

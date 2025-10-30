@@ -15,18 +15,19 @@
 -- menu.lua
 require("get_app_icon")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
-local icons = require("awesome-applications").icons
+local icons = require("wm_applications").icons
 
 -- Load Debian menu entries
 local debian = require("debian.menu")
 
-local function buildMenu(args, awesomeApplications, editor_cmd)
+local function buildMenu(args, awesomeApplications)
     local awesome = args.awesome
     local awful = args.awful
     local beautiful = args.beautiful
     local hotkeys_popup = args.hotkeys_popup
     local terminal = awesomeApplications.terminal.command.command
     local configDir = string.match(awesome.conffile, "^(.+/)rc.lua$")
+    local editor_cmd =  terminal .. " -e " .. awesomeApplications.editor.command.command
 
     -- your existing menu-building code goes here
     local myawesomemenu = {
@@ -84,7 +85,7 @@ local function buildMenu(args, awesomeApplications, editor_cmd)
     )
 
     -- Luci4 custom menu with favourite applications
-    local flaggedmenu = require("menu_flagged")(awful, icons, awesomeApplications)
+    local flaggedmenu = require("awesome_menu_flagged")(awful, icons, awesomeApplications)
     -- other menus
     local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
     local menu_flagged = { "Favourites", flaggedmenu, icons.favourite }

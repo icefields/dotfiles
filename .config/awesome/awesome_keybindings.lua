@@ -13,12 +13,16 @@
 -----------------------------------------------------
 -- key-bindings.lua
 
-local awesomeApps = require("awesome-applications")
-local cmds = awesomeApps.commands
+local awesomeApps = require("wm_applications")
+local applications = awesomeApps.applications
 local groupLuci4 = awesomeApps.groupLuci4
 local groupLauncher = awesomeApps.groupLauncher
+local modkey = awesomeApps.modkey
 
-local function getEntry(awful, key1, key2, cmdItem)
+local function getEntry(awful, cmdItem)
+    local key1 = cmdItem.keyBinding.key1
+    local key2 = cmdItem.keyBinding.key2
+
     return awful.key(key1, key2,
         function ()
             if cmdItem.shell then
@@ -33,7 +37,7 @@ local function getEntry(awful, key1, key2, cmdItem)
     )
 end
 
-local function awesomeGlobalKeys(args, modkey, showMainMenu)
+local function awesomeGlobalKeys(args, showMainMenu)
     local awesome = args.awesome
     local awful = args.awful
     local gears = args.gears
@@ -177,43 +181,33 @@ local function awesomeGlobalKeys(args, modkey, showMainMenu)
             description = "show task list",
             group = groupLuci4
         }),
-        getEntry(awful, { modkey,           }, "Return", cmds.terminal),
-        -- Luci4 print area of screen
-        getEntry(awful, { "Control" }, "Print", cmds.screenshotArea),
-        -- Print full screen
-        getEntry(awful, { }, "Print", cmds.screenshotFull),
-        -- Luci4 Audio key bindings
-        getEntry(awful, { }, "XF86AudioRaiseVolume", cmds.raiseVolume),
-        getEntry(awful, { }, "XF86AudioLowerVolume", cmds.lowerVolume),
-        getEntry(awful, { }, "XF86AudioMute", cmds.muteVolume),
-        -- Lock screen shortcut
-        getEntry(awful, { modkey, "Mod1" }, "l", cmds.lockScreen),
-        -- LibreWolf
-        getEntry(awful, { modkey }, "b", cmds.browser),
-        -- Nemo
-        getEntry(awful, { modkey }, "e", cmds.fileBrowser),
-        -- Kitty on Arch Distrobox (c as in console)
-        getEntry(awful, { modkey, }, "c", cmds.kittyArchDistrobox),
-        -- Android Studio
-        getEntry(awful, { modkey }, "a", cmds.androidStudio),
-        -- Prompt (Dmenu)
-        getEntry(awful, { modkey }, "space", cmds.dmenu),
-        -- Dmenu Share
-        getEntry(awful, { modkey, "Mod1" }, "space", cmds.shareMenu),
-        -- encrypted Share
-        getEntry(awful, { modkey, "Mod1" }, "s", cmds.shareMenuEncrypted),
+        getEntry(awful, applications.terminal.command),
+        getEntry(awful, applications.screenshotArea.command), -- Luci4 print area of screen
+        getEntry(awful, applications.screenshotFull.command), -- Print full screen        
+        getEntry(awful, applications.lockScreen.command), -- Lock screen shortcut
+        getEntry(awful, applications.browser.command), -- LibreWolf
+        getEntry(awful, applications.fileBrowser.command),
+        getEntry(awful, applications.kittyArchDistrobox.command),
+        getEntry(awful, applications.androidStudio.command),
+        getEntry(awful, applications.dmenu.command), -- Prompt (Dmenu)
+        getEntry(awful, applications.shareMenu.command), -- Dmenu Share
+        getEntry(awful, applications.shareMenuEncrypted.command), -- encrypted Share
         -- Play song from Ampache server
-        getEntry(awful, { modkey, "Control" }, "p", cmds.ampachePlaySong),
+        getEntry(awful, applications.ampachePlaySong.command),
         -- Interact with AI on an external local-network server
-        getEntry(awful, { modkey, "Control" }, "o", cmds.askOllama),
+        getEntry(awful, applications.askOllama.command),
         -- Tor reset
-        getEntry(awful, { modkey }, "i", cmds.resetTor)
+        getEntry(awful, applications.resetTor.command),
+        -- Luci4 Audio key bindings
+        getEntry(awful, applications.raiseVolume.command),
+        getEntry(awful, applications.lowerVolume.command),
+        getEntry(awful, applications.muteVolume.command)
     )
 
     return globalkeys
 end
 
-local function awesomeClientKeys(args, modkey)
+local function awesomeClientKeys(args)
     local awful = args.awful
     local gears = args.gears
 
