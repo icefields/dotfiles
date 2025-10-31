@@ -11,7 +11,7 @@
 -- -------- Luci4 config for Awesome WM  --------- --
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
--- applications, a table that holds all the application propierties in a
+-- applications, a table that holds all the application properties in a
 -- centralized objeect, to be used anywhere needed.
 
 local icons = require("themes.luci4.application_icons")
@@ -219,6 +219,12 @@ local subGroup = {
     terminals = "Terminals"
 }
 
+-- Default property for floating window.
+local propertiesFloatingCentered = {
+    floating = true,
+    windowPlacement = placement.centered
+}
+
 -- centralized object to use for all apps.
 local applications = {
     raiseVolume = {
@@ -370,7 +376,7 @@ local applications = {
             maximized_vertical = false,
             maximized_horizontal = false,
             maximized = false,
-            placement = placement.centered
+            windowPlacement = placement.centered
         }
     },
     androidStudio = {
@@ -501,7 +507,7 @@ local applications = {
             floating = true,
             width = 1200,
             height = 900,
-            placement = placement.centered
+            windowPlacement = placement.centered
         }
     },
     ampLocker = {
@@ -516,10 +522,7 @@ local applications = {
         },
         icon = icons.audioAssault,
         subGroup = "Music",
-        properties = {
-            floating = true,
-            placement = placement.centered
-        }
+        properties = propertiesFloatingCentered
     },
     berryAmp = {
         label = "Berry Amp",
@@ -533,10 +536,7 @@ local applications = {
         },
         icon = icons.berryAmp,
         subGroup = "Music",
-        properties = {
-            floating = true,
-            placement = placement.centered
-        }
+        properties = propertiesFloatingCentered
     },
     reaper = {
         label = "Reaper",
@@ -563,10 +563,7 @@ local applications = {
         },
         icon = icons.jack,
         subGroup = "Music",
-        properties = {
-            floating = true,
-            placement = placement.centered
-        }
+        properties = propertiesFloatingCentered
     },
     freetube = {
         label = "Freetube",
@@ -645,10 +642,7 @@ local applications = {
         },
         icon = icons.tor,
         subGroup = subGroup.internet,
-        properties = {
-            floating = true,
-            placement = placement.centered
-        }
+        properties = propertiesFloatingCentered
     },
     steam = {
         label = "Steam",
@@ -675,13 +669,56 @@ local applications = {
         },
         icon = icons.mumble,
         subGroup = subGroup.internet,
+        properties = propertiesFloatingCentered
+    },
+    mumble = {
+        label = "Mpv",
+        class = "mpv",
+        favourite = false,
+        command = {
+            command = "mpv",
+            description = "Mpv video player",
+            group = "",
+            shell = false
+        },
+        -- icon = icons.,
+        subGroup = subGroup.multimedia,
         properties = {
             floating = true,
-            placement = placement.centered
+            windowPlacement = placement.centered,
+            width = 800,
+            height = 800
         }
+    },
+    videoDownloader = {
+        label = "Video Downloader",
+        class = "video-downloader",
+        favourite = false,
+        command = {
+            command = "flatpak run com.github.unrud.VideoDownloader",
+            description = "Video Downloader",
+            group = "",
+            shell = false
+        },
+        -- icon = icons.,
+        subGroup = subGroup.multimedia,
+        properties = propertiesFloatingCentered
+    },
+    tigerVnc = {
+        label = "TigerVNC",
+        class = "Vncviewer",
+        favourite = true,
+        command = {
+            command = "flatpak run org.tigervnc.vncviewer",
+            description = "VNC viewer",
+            group = "",
+            shell = false
+        },
+        -- icon = ,
+        subGroup = subGroup.internet,
+        properties = propertiesFloatingCentered
     }
 }
-
 
 function applications:bySubGroup()
     local grouped = {}

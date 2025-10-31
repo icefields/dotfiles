@@ -75,23 +75,23 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
                 "pinentry",
             },
             class = {
-                --"Amp Locker", -- glitch and crash if not floating
-                "Arandr",
                 --"Berry Amp - Charles Caswell",
                 --"QjackCtl",
+                --"Amp Locker", -- glitch and crash if not floating
+                --"mpv",
+                --"Mumble",
+                --"video-downloader",
+                --"Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
+                "Arandr",
                 "Calfjackhost", -- calf subwindow
                 "calfjackhost", -- main calf
-                "mpv",
-                --"Mumble",
                 "cinnamon-settings sound",
                 "Xviewer",
                 "Blueman-manager",
                 "Gpick",
                 "Kruler",
-                "video-downloader",
                 "MessageWin",  -- kalarm.
                 "Sxiv",
-                --"Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
                 "Wpa_gui",
                 "veromix",
                 "xtightvncviewer",
@@ -127,6 +127,7 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
     }
 
     table.insert(rules, allClientRules)
+   
     -- Insert rules from applications object
     for _, appl in pairs(awesomeApps) do
         if type(appl) == "table" and appl.properties ~= nil then
