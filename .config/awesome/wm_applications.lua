@@ -21,7 +21,7 @@ local groupLauncher = "launcher"
 local browserCmd = "librewolf"
 local fileBrowserCmd = "nemo ~/Desktop/"
 local terminalCmd = "kitty"
-local editorCmd = os.getenv("EDITOR") or "nvim"
+local editorCmd = terminalCmd .. " -e " .. (os.getenv("EDITOR") or "nvim")
 local modkey = "Mod4"
 
 local browser = {
@@ -226,6 +226,10 @@ local propertiesFloatingCentered = {
 }
 
 -- centralized object to use for all apps.
+-- omit label to not show the app in the menu.
+-- add keyBinding to open the app with shortcut.
+-- add properties to make the application follow defined window rules.
+-- set favourite to true to add the application to the favourite menu.
 local applications = {
     raiseVolume = {
         command = raiseVolume
@@ -466,7 +470,7 @@ local applications = {
             command = "$HOME/apps/Signal",
             description = "Signal messenger",
             group = "",
-            shell = false
+            shell = true
         },
         subGroup = subGroup.internet,
         icon = icons.signal,
@@ -482,7 +486,7 @@ local applications = {
             command = "$HOME/apps/Telegram",
             description = "Telegram messenger",
             group = "",
-            shell = false
+            shell = true
         },
         subGroup = subGroup.internet,
         icon = icons.telegram,
@@ -573,7 +577,7 @@ local applications = {
             command = "$HOME/apps/FreeTube",
             description = "Freetube YouTube Invidious client",
             group = "",
-            shell = false
+            shell = true
         },
         icon = icons.freeTube,
         subGroup = "Multimedia"
@@ -586,7 +590,7 @@ local applications = {
             command = "$HOME/apps/Transmission",
             description = "Freetube YouTube Invidious client",
             group = "",
-            shell = false
+            shell = true
         },
         icon = icons.transmission,
         subGroup = subGroup.internet
@@ -599,7 +603,7 @@ local applications = {
             command = "$HOME/apps/Calibre",
             description = "Calibre books",
             group = "",
-            shell = false
+            shell = true
         },
         icon = icons.calibre,
         subGroup = subGroup.internet
@@ -612,7 +616,7 @@ local applications = {
             command = "$HOME/apps/Upscayl",
             description = "Use AI to upscale images",
             group = "",
-            shell = false
+            shell = true
         },
         icon = icons.superTux,
         subGroup = "Graphics"
@@ -622,10 +626,23 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = "$HOME/apps/Gimp3",
+            command = "gimp",
             description = "Gimp image editor",
             group = "",
             shell = false
+        },
+        icon = icons.gimp,
+        subGroup = "Graphics"
+    },
+    gimpDev = {
+        label = "Gimp Dev",
+        class = "",
+        favourite = true,
+        command = {
+            command = "$HOME/apps/Gimp3",
+            description = "Gimp image editor",
+            group = "",
+            shell = true
         },
         icon = icons.gimp,
         subGroup = "Graphics"
@@ -671,8 +688,8 @@ local applications = {
         subGroup = subGroup.internet,
         properties = propertiesFloatingCentered
     },
-    mumble = {
-        label = "Mpv",
+    mpv = {
+        -- omit from menu. label = "Mpv",
         class = "mpv",
         favourite = false,
         command = {
@@ -684,8 +701,8 @@ local applications = {
         -- icon = icons.,
         subGroup = subGroup.multimedia,
         properties = {
-            floating = true,
-            windowPlacement = placement.centered,
+            floating = true, 
+            -- windowPlacement = placement.centered,
             width = 800,
             height = 800
         }

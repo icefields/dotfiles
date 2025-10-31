@@ -10,7 +10,7 @@ local function getButton(args)
     local vpnReconnectButton = wibox.widget {
         {
             id = "icon",
-            text = "", --"", --"",
+            text = "󰝳", --"", --"", --"",
             widget = wibox.widget.textbox,
             align = "center",
             valign = "center",

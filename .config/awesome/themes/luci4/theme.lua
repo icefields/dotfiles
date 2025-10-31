@@ -29,7 +29,7 @@ theme.colour2 = colour2
 local mainOpacity = 0.6
 local fgWidgetMain = colour2.tint7
 
-theme.rect_radius = 6
+theme.rect_radius = 4
 
 local mainFont = "Terminess Nerd Font"  -- "UbuntuSansMono Nerd Font Mono Medium 11"
 local sansFont = "UbuntuSans Nerd Font"
@@ -43,8 +43,11 @@ theme.notification_font = sansFont .. " 10.5"
 theme.hotkeys_font = mainFont .. " SemiBold 12.5"
 theme.hotkeys_description_font = sansFont .. " 10"
 
+-- awesome bar
 theme.topBar_bg     = colour2.shade8
+theme.topBar_height = 24
 theme.topBar_border_dpi = 0
+theme.topBar_position = "top"
 
 theme.bg_normal     = colour1.shade9
 theme.bg_focus      = colour1.shade7 -- "#224442"
@@ -68,8 +71,12 @@ theme.border_marked = colours.red
 
 theme.mute_volume   = colours.red
 
-theme.tasklist_fg_normal = fgWidgetMain
 -- tasklist_[bg|fg]_[focus|urgent]
+theme.tasklist_border_width_dpi= 1.5
+theme.tasklist_border_colour = colour2.main
+theme.tasklist_fg_normal = fgWidgetMain
+theme.tasklist_bg_focus = colour2.shade5
+theme.tasklist_fg_focus = colour1.tint6
 
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
 theme.tooltip_opacity = mainOpacity
@@ -80,12 +87,14 @@ theme.tooltip_border_color = colour2.main
 
 -- Generate taglist squares:
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
-theme.taglist_bg_focus = theme.bg_normal
-theme.taglist_fg_focus = fgWidgetMain
+theme.taglist_bg_focus = colour2.shade5
+theme.taglist_fg_focus = colour1.tint7 --fgWidgetMain
 theme.taglist_bg_empty = theme.bg_normal
 theme.taglist_fg_empty = colour2.shade5
 theme.taglist_bg_occupied = theme.bg_normal
 theme.taglist_fg_occupied = colour2.tint4
+theme.taglist_fg_urgent = theme.bg_normal
+theme.taglist_bg_urgent = colour1.main
 
 -- Variables set for theming notifications:
 -- notification_[bg|fg]
@@ -113,8 +122,6 @@ theme.menu_width_dpi = 200
 
 theme.clock_bg = colour2.shade4
 theme.clock_fg = colour2.tint7
-theme.tasklist_border_width_dpi= 1.5
-theme.tasklist_border_colour = colour2.shade3
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua

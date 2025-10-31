@@ -11,8 +11,8 @@
 -- -------- Luci4 config for Awesome WM  --------- --
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
+-- awesome_menu.lua
 
--- menu.lua
 require("get_app_icon")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 local icons = require("wm_applications").icons
@@ -44,7 +44,8 @@ local function buildMenu(args, awesomeApplications)
     local hotkeys_popup = args.hotkeys_popup
     local terminal = awesomeApplications.terminal.command.command
     local configDir = string.match(awesome.conffile, "^(.+/)rc.lua$")
-    local editor_cmd =  terminal .. " -e " .. awesomeApplications.editor.command.command
+    -- local editor_cmd =  terminal .. " -e " .. awesomeApplications.editor.command.command
+    local editor_cmd = awesomeApplications.editor.command.command
 
     -- your existing menu-building code goes here
     local myawesomemenu = {

@@ -92,9 +92,9 @@ end
 -- }}}
 
 -- {{{ Variable definitions
--- This is used later as the default terminal and editor to run.
+-- This is used later as the default terminal. 
+-- editorCmd is set in awesomeApplications
 terminal = awesomeApplications.terminal.command.command
-editor = awesomeApplications.editor.command.command -- os.getenv("EDITOR") or awesomeApplications.editor.command.command
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -139,7 +139,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
-
+mykeyboardlayout.widget:set_font(beautiful.font)
 -- {{{ Wibar
 
 -- Luci4 volume widget configuration
@@ -324,9 +324,9 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibox({
         screen = s,
         fg = beautiful.fg_normal,
-        height = 24,
+        height = beautiful.topBar_height,
         bg = beautiful.topBar_bg, -- bg_normal 
-        position = "top",
+        position = beautiful.topBar_position,
         border_color = beautiful.border_focus,
         border_width = beautiful.topBar_border
     })

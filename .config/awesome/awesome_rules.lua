@@ -39,8 +39,8 @@ local function getProperty(awful, property)
 end
 
 local function getRule(awful, app, screenPos)
-    local properties =  getProperty(awful, app.properties)
-    properties.screen = screenPos or  awful.screen.preferred
+    local properties = getProperty(awful, app.properties)
+    properties.screen = screenPos or awful.screen.preferred
     local rule = {
         rule = { class = app.class },
         properties = properties
