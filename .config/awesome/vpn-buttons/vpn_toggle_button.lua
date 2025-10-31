@@ -24,10 +24,10 @@ end
 
 local function getButton(args)
     local gears = args.gears
-    local wibox = args.wibox
     local awful = args.awful
     local beautiful = args.beautiful
-
+    local wibox = args.wibox
+    
     local wifiButton = wibox.widget {
         {
             id = "icon",
