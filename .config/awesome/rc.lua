@@ -29,7 +29,6 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/luci4/awesom
 -- Luci4 custom
 -- Collision
 require("collision")()
-local buildMenu = require("awesome_menu")
 
 local wibox = require("wibox")
 -- Notification library
@@ -39,7 +38,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
-
+local buildMenu = require("awesome_menu")
+local setWallpaper = require("awesome_wallpaper")
 local awesomeApplications = require("wm_applications").applications
 
 -- AwesomeWM-related args to pass to external widgets. 
@@ -128,60 +128,15 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibar
 
-
--- Seed RNG once for wallpaper randomization.
-math.randomseed(os.time())
-
--- Function to pick a random wallpaper from a directory
-local function getRandomWallpaper(dir)
-    local files = { }
-
-    -- List files in the directory
-    local p = io.popen('ls -1 "' .. dir .. '"')
-    if p then
-        for file in p:lines() do
-            if file:match("%.png$") or file:match("%.jpg$") or file:match("%.jpeg$") or file:match("%.webp$") then
-                table.insert(files, dir .. "/" .. file)
-            end
-        end
-        p:close()
-    end
-
-    if #files > 0 then
-        return files[math.random(#files)]
-    else
-        return nil
-    end
-end
-
-
-
-local function set_wallpaper(s)
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, false)
-    else
-        local wallpaper = getRandomWallpaper(beautiful.wallpapersPath)
-        if wallpaper and gears.filesystem.file_readable(wallpaper) then
-            gears.wallpaper.maximized(wallpaper, s, true)
-        else
-            gears.wallpaper.set("#000000") -- fallback color
-        end
-        --local wallpaperScript = "nitrogen --set-zoom-fill --random " .. beautiful.wallpapersPath .. " --head=" .. (s.index-1) -- .. " > /dev/null 2>&1"
-        --awful.spawn.with_shell(wallpaperScript)
-    end
-end
-
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
+-- screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("property::geometry", function(s) 
+    setWallpaper(s, awesomeArgs)
+end)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper(s)
+    setWallpaper(s, awesomeArgs)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -343,18 +298,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 local autostartCmd = os.getenv("HOME") .. "/.config/awesome/autostart.sh"
 awful.spawn.with_shell(autostartCmd)
-
--- restore wallpaper, must run nitrogen at least once to set a wallpaper before
--- awful.util.spawn_with_shell("lua ~/.config/awesome/nitrogen-random.lua")
---for screenNumber = 0,1 do
---    local wallpaperScript = "nitrogen --set-zoom-fill --random " .. beautiful.wallpapersPath .. " --head=" .. screenNumber -- .. " > /dev/null 2>&1"
---    awful.spawn.with_shell(wallpaperScript)
---end
-
---screen.connect_signal("request::desktop_decoration", function(s)
---    local wallpaperScript = "nitrogen --set-zoom-fill --random $HOME/.config/awesome/themes/luci4/wallpapers --head=" .. s.index -- .. " > /dev/null 2>&1"
---    awful.spawn.with_shell(wallpaperScript)
---
---    -- awful.spawn.with_shell("nitrogen --set-zoom-fill --random ~/.config/awesome/themes/wallpapers --head=" .. s.index)
---end)
 

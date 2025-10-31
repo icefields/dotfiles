@@ -24,6 +24,8 @@ local terminalCmd = "kitty"
 local editorCmd = terminalCmd .. " -e " .. (os.getenv("EDITOR") or "nvim")
 local modkey = "Mod4"
 
+local homeDir = os.getenv("HOME")
+
 local browser = {
     command = browserCmd,
     description = "Open browser",
@@ -45,7 +47,7 @@ local fileBrowser = {
     }
 }
 local kittyArchDistrobox =  {
-    command = "$HOME/.config/awesome/scripts/open_kitty_arch.sh",
+    command = homeDir .. "/.config/awesome/scripts/open_kitty_arch.sh",
     description = "Open Kitty Terminal in Arch Distrobox container",
     group = groupLuci4,
     shell = true,
@@ -55,7 +57,7 @@ local kittyArchDistrobox =  {
     }
 }
 local kittyArchDistroboxIsolated =  {
-    command = "$HOME/.config/awesome/scripts/open_kitty_arch-isolated.sh",
+    command = homeDir .. "/.config/awesome/scripts/open_kitty_arch-isolated.sh",
     description = "Open Kitty Terminal in an isolated Arch Distrobox container",
     group = groupLuci4,
     shell = true
@@ -137,7 +139,7 @@ local  muteVolume = {
     }
 }
 local lockScreen = {
-    command = '$HOME/.config/awesome/scripts/lockscreen.sh',
+    command = homeDir .. "/.config/awesome/scripts/lockscreen.sh",
     description = "Lock Screen",
     group = groupLuci4,
     shell = true,
@@ -157,7 +159,7 @@ local dmenu = {
     }
 }
 local shareMenu = {
-    command = "fish -c $HOME/scripts/share.sh &",
+    command = "fish -c " .. homeDir .. "/scripts/share.sh &",
     description = "Get a share-link, copy to clipboard",
     group = groupLuci4,
     shell = true,
@@ -167,7 +169,7 @@ local shareMenu = {
     }
 }
 local shareMenuEncrypted = {
-    command = "kitty $HOME/scripts/sharesec.sh",
+    command = "kitty " .. homeDir .. "/scripts/sharesec.sh",
     description = "Zip, encrypt, get a share link and copy to clipboard",
     group = groupLuci4,
     shell = true,
@@ -177,7 +179,7 @@ local shareMenuEncrypted = {
     }
 }
 local ampachePlaySong = {
-    command = "$HOME/Code/Lua/ampache/play.sh",
+    command = homeDir .. "/Code/Lua/ampache/play.sh",
     description = "Play song from Ampache server",
     group = groupLuci4,
     shell = true,
@@ -187,7 +189,7 @@ local ampachePlaySong = {
     }
 }
 local askOllama = {
-    command = "$HOME/Code/Lua/ollama/askollama.sh",
+    command = homeDir .. "/Code/Lua/ollama/askollama.sh",
     description = "Ask Ollama a question",
     group = groupLuci4,
     shell = true,
@@ -408,7 +410,7 @@ local applications = {
         class = "tutanota-desktop",
         favourite = false,
         command = {
-            command = "$HOME/apps/tutanota-desktop-linux.AppImage -a",
+            command = homeDir .. "/apps/tutanota-desktop-linux.AppImage -a",
             description = "Tutanota email client",
             group = "",
             shell = false
@@ -467,7 +469,7 @@ local applications = {
         class = "Signal",
         favourite = false,
         command = {
-            command = "$HOME/apps/Signal",
+            command = homeDir .. "/apps/Signal",
             description = "Signal messenger",
             group = "",
             shell = true
@@ -483,7 +485,7 @@ local applications = {
         class = "TelegramDesktop",
         favourite = false,
         command = {
-            command = "$HOME/apps/Telegram",
+            command = homeDir .. "/apps/Telegram",
             description = "Telegram messenger",
             group = "",
             shell = true
@@ -547,7 +549,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = "$HOME/apps/reaper_linux_x86_64/REAPER/reaper",
+            command = homeDir .. "/apps/reaper_linux_x86_64/REAPER/reaper",
             description = "Reaper",
             group = "",
             shell = false
@@ -574,7 +576,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = "$HOME/apps/FreeTube",
+            command = homeDir .. "/apps/FreeTube",
             description = "Freetube YouTube Invidious client",
             group = "",
             shell = true
@@ -587,7 +589,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = "$HOME/apps/Transmission",
+            command = homeDir .. "/apps/Transmission",
             description = "Freetube YouTube Invidious client",
             group = "",
             shell = true
@@ -600,7 +602,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = "$HOME/apps/Calibre",
+            command = homeDir .. "/apps/Calibre",
             description = "Calibre books",
             group = "",
             shell = true
@@ -613,7 +615,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = "$HOME/apps/Upscayl",
+            command = homeDir .. "/apps/Upscayl",
             description = "Use AI to upscale images",
             group = "",
             shell = true
@@ -639,7 +641,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = "$HOME/apps/Gimp3",
+            command = homeDir .. "/apps/Gimp3",
             description = "Gimp image editor",
             group = "",
             shell = true
@@ -652,7 +654,7 @@ local applications = {
         class = "Tor Browser",
         favourite = true,
         command = {
-            command = "$HOME/apps/tor-browser/Tor Browser",
+            command = homeDir .. "/apps/tor-browser/Tor Browser",
             description = "Tor web browser",
             group = "",
             shell = false
