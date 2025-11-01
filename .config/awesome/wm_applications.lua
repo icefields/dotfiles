@@ -13,6 +13,13 @@
 -----------------------------------------------------
 -- applications, a table that holds all the application properties in a
 -- centralized objeect, to be used anywhere needed.
+--
+-- ModKey:
+-- Usually, Mod4 is the key with a logo between Control and Alt.
+-- If you do not like this or do not have such a key,
+-- I suggest you to remap Mod4 to another key using xmodmap or other tools.
+-- However, you can use another modifier like Mod1, but it may interact with others.
+
 
 local icons = require("themes.luci4.application_icons")
 local groupLuci4 = "luci4"

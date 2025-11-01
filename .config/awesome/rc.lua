@@ -34,13 +34,14 @@ local wibox = require("wibox")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
+local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local buildMenu = require("awesome_menu")
 local setWallpaper = require("awesome_wallpaper")
-local awesomeApplications = require("wm_applications").applications
+local applicationsCore = require("wm_applications")
+local awesomeApplications = applicationsCore.applications
 
 -- AwesomeWM-related args to pass to external widgets. 
 local awesomeArgs = ({
@@ -56,42 +57,16 @@ local awesomeArgs = ({
 })
 
 -- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
-end
-
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
-
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
-        in_error = false
-    end)
-end
+require("awesome_error_handling").initErrorHandling(awesome, naughty)
 -- }}}
 
 -- {{{ Variable definitions
--- This is used later as the default terminal. 
--- editorCmd is set in awesomeApplications
 terminal = awesomeApplications.terminal.command.command
+modkey = applicationsCore.modkey -- Default modkey.
+-- editorCmd is set in awesomeApplications
+-- }}}
 
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = require("wm_applications").modkey
-
+-- {{{ Layouts
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
@@ -116,21 +91,17 @@ awful.layout.layouts = {
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 local luci4MainMenu = buildMenu(awesomeArgs, awesomeApplications)
-
+menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- uncomment to use a lanucher, and add to the bar.
 -- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 --                                     menu = luci4MainMenu })
--- }}}
-
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- {{{ Wibar
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 -- screen.connect_signal("property::geometry", set_wallpaper)
-screen.connect_signal("property::geometry", function(s) 
+screen.connect_signal("property::geometry", function(s)
     setWallpaper(s, awesomeArgs)
 end)
 
@@ -296,6 +267,7 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-local autostartCmd = os.getenv("HOME") .. "/.config/awesome/autostart.sh"
+local autostartCmd = gears.filesystem.get_configuration_dir() .. "/autostart.sh"
+-- local autostartCmd = os.getenv("HOME") .. "/.config/awesome/autostart.sh"
 awful.spawn.with_shell(autostartCmd)
 
