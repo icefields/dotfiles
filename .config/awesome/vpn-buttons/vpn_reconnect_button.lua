@@ -14,14 +14,14 @@ local function getButton(args)
             widget = wibox.widget.textbox,
             align = "center",
             valign = "center",
-            font = config.font --"Symbols Nerd Font Mono 10"
+            font = beautiful.topBar_button_font --"Symbols Nerd Font Mono 10"
         },
         widget = wibox.container.background,
         bg = "#00000000",
         fg = "#ffffff",
         shape = gears.shape.rounded_bar,
-        forced_width = config.buttonSize,
-        forced_height =config.buttonSize,
+        forced_width = beautiful.topBar_buttonSize,
+        forced_height = beautiful.topBar_buttonSize,
     }
 
     local wifiTooltip = createVpnTooltip(vpnReconnectButton, awful, beautiful)

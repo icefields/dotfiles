@@ -1,6 +1,3 @@
---local awful = require("awful")
---local gears = require("gears")
---local wibox = require("wibox")
 local config = require("vpn-buttons.vpn_common")
 local createVpnTooltip = require("vpn-buttons.vpn_tooltip")
 
@@ -35,14 +32,14 @@ local function getButton(args)
             widget = wibox.widget.textbox,
             align = "center",
             valign = "center",
-            font = config.font
+            font = beautiful.topBar_button_font
         },
         widget = wibox.container.background,
         bg = "#00000000",
         fg = "#ffffff",
         shape = gears.shape.rounded_bar,
-        forced_width = config.buttonSize,
-        forced_height = config.buttonSize,
+        forced_width = beautiful.topBar_buttonSize,
+        forced_height = beautiful.topBar_buttonSize,
     }
 
     local wifiTooltip = createVpnTooltip(wifiButton, awful, beautiful)

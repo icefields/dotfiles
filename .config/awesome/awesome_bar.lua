@@ -106,7 +106,7 @@ local function getSystemTray(wibox, beautiful, gears)
     luciSysTrayColour:set_fg(beautiful.fg_systray)
     luciSysTrayColour:set_bg(beautiful.bg_systray)
     luciSysTrayColour.shape = function(cr, width, height)
-        gears.shape.rounded_rect(cr, width, height, beautiful.rect_radius)
+        gears.shape.rounded_rect(cr, width, height_, beautiful.rect_radius)
     end
     local trayMargin = beautiful.systray_margin
     luciSysTrayColour:set_widget(wibox.layout.margin(systray, trayMargin, trayMargin, trayMargin, trayMargin))
@@ -131,6 +131,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     -- VPN buttons
     local toggleVpnButton = require("vpn-buttons.vpn_toggle_button")(args)
     local vpnReconnectButton = require("vpn-buttons.vpn_reconnect_button")(args)
+
+    local weatherButton = require("weather.weather_button")(args)
 
     -- Keyboard map indicator and switcher
     local mykeyboardlayout = awful.widget.keyboardlayout()
@@ -230,6 +232,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             toggleVpnButton,
             vpnReconnectButton,
             getSystemTray(wibox, beautiful, gears),
+            weatherButton,
             clockWidget,
             getVolumeWidget(beautiful),
             s.mylayoutbox,

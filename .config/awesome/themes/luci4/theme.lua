@@ -48,6 +48,9 @@ theme.topBar_bg     = colour2.shade8
 theme.topBar_height = 24
 theme.topBar_border_dpi = 0
 theme.topBar_position = "top"
+theme.topBar_buttonSize = 24
+theme.topBar_button_font = "Symbols Nerd Font Mono 9"
+theme.topBar_buttonTooltip_font = "DejaVu Sans Mono 9"
 
 theme.bg_normal     = colour1.shade9
 theme.bg_focus      = colour1.shade7 -- "#224442"
