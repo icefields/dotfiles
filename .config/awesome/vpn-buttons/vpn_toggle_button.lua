@@ -36,7 +36,7 @@ local function getButton(args)
         },
         widget = wibox.container.background,
         bg = "#00000000",
-        fg = "#ffffff",
+        fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
         forced_width = beautiful.topBar_buttonSize,
         forced_height = beautiful.topBar_buttonSize,

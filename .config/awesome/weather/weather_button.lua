@@ -93,7 +93,7 @@ local function getButton(args)
         },
         widget = wibox.container.background,
         bg = "#00000000",  -- Transparent background
-        fg = "#ffffff",  -- Icon color (white)
+        fg = beautiful.topBar_fg,  -- Icon color (white)
         shape = gears.shape.rounded_bar,
         forced_width = beautiful.topBar_buttonSize,
         forced_height = beautiful.topBar_buttonSize

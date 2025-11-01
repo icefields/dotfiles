@@ -51,6 +51,8 @@ theme.topBar_position = "top"
 theme.topBar_buttonSize = 24
 theme.topBar_button_font = "Symbols Nerd Font Mono 9"
 theme.topBar_buttonTooltip_font = "DejaVu Sans Mono 9"
+theme.topBar_fg = colour2.tint7
+-- theme.clock_bg = colour2.shade4
 
 theme.bg_normal     = colour1.shade9
 theme.bg_focus      = colour1.shade7 -- "#224442"
@@ -123,8 +125,6 @@ theme.menu_submenu = " "--" " --"▶ "
 theme.menu_height_dpi = 30
 theme.menu_width_dpi = 200
 
-theme.clock_bg = colour2.shade4
-theme.clock_fg = colour2.tint7
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua

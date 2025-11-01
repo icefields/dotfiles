@@ -106,7 +106,7 @@ local function getSystemTray(wibox, beautiful, gears)
     luciSysTrayColour:set_fg(beautiful.fg_systray)
     luciSysTrayColour:set_bg(beautiful.bg_systray)
     luciSysTrayColour.shape = function(cr, width, height)
-        gears.shape.rounded_rect(cr, width, height_, beautiful.rect_radius)
+        gears.shape.rounded_rect(cr, width, height, beautiful.rect_radius)
     end
     local trayMargin = beautiful.systray_margin
     luciSysTrayColour:set_widget(wibox.layout.margin(systray, trayMargin, trayMargin, trayMargin, trayMargin))
@@ -116,7 +116,7 @@ end
 -- system clock
 -- Create a textclock widget and change the format property using Pango markup
 local function getClockWidget(wibox, beautiful)
-    return wibox.widget.textclock("<span color='"..beautiful.clock_fg.."'> <b>%a</b> %b %d, %H:%M </span>")
+    return wibox.widget.textclock("<span color='"..beautiful.topBar_fg.."'> <b>%a</b> %b %d, %H:%M </span>")
 end
 
 -----------------------------------------
