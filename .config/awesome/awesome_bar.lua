@@ -18,6 +18,7 @@ local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local worldtimeTooltip = require("worldtime_tooltip")
 
 local function getTagListButtons(client, gears, awful)
     local taglist_buttons = gears.table.join(
@@ -177,6 +178,9 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     clockWidget:connect_signal("button::press", function(_, _, _, button)
         if button == 1 then calendarWidget.toggle() end
     end)
+
+    -- Create and connect the world time tooltip to mouse-enter
+    worldtimeTooltip.createWorldTimeTooltip(clockWidget, awful, beautiful)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
