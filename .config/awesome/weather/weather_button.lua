@@ -13,12 +13,13 @@
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
 
-local apiBase = "https://wttr.in/43.6426,-79.3871"
+local config = require("config")
+local apiBase = "https://wttr.in/" .. config.location
 local cachedWeatherFile = os.getenv("HOME") .. "/.cache/current_weather"
 local cachedWeatherScript = "cat " .. cachedWeatherFile
 local fetchSaveWeatherScript = "curl -s '" .. apiBase .. "?Tm' -o tmpWtr && [ -s tmpWtr ] && mv tmpWtr ".. cachedWeatherFile .. " || rm -f tmpWtr"
 -- "curl -s 'https://wttr.in/43.6426,-79.3871?Tm' > /home/lucifer/.cache/current_weather"
-local fetchWeatherIconScript = "curl -s '" .. apiBase .. "?format=%c'"
+local fetchWeatherIconScript = "curl -s '" .. apiBase .. "?m&format=%c+%t+%h'" -- "?format=%c'"
 local fallbackLoadingText = "Loading weather ..."
 local fallbackErrorText = "Error fetching weather"
 
@@ -93,9 +94,9 @@ local function getButton(args)
         },
         widget = wibox.container.background,
         bg = "#00000000",  -- Transparent background
-        fg = beautiful.topBar_fg,  -- Icon color (white)
+        fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
-        forced_width = beautiful.topBar_buttonSize,
+        -- forced_width = beautiful.topBar_buttonSize * 4, -- Omit to make the button wrap around the text
         forced_height = beautiful.topBar_buttonSize
     }
 
@@ -110,7 +111,7 @@ local function getButton(args)
         setWeatherText(awful, beautiful, gears, fetchWeatherIconScript, iconWidget, fallbackIcon, false)
     end)
 
-    return button
+    return wibox.container.margin(button, 10, 5, 0, 0) -- with added padding
 end
 
 return getButton

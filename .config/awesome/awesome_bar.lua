@@ -73,7 +73,7 @@ end
 -- calendar widget
 local function getCalendarWidget(beautiful)
     return calendar_widget( {
-        theme = 'nord',
+        theme = 'naughty', -- nord, outrun, naughty, dark, light
         placement = 'top_right',
         start_sunday = false,
         radius = beautiful.rect_radius,
@@ -119,6 +119,39 @@ local function getClockWidget(wibox, beautiful)
     return wibox.widget.textclock("<span color='"..beautiful.topBar_fg.."'> <b>%a</b> %b %d, %H:%M </span>")
 end
 
+local function getCpuWidget(beautiful)
+    return cpu_widget({
+        width = 44,         -- default: 50
+        step_width = 4,     -- default: 2
+        step_spacing = 1,   -- default: 1
+        enable_kill_button = true,    -- default: false
+        timeout = 2,                  -- default: 1
+        process_info_max_length = -1, -- default: -1
+        color = beautiful.fg_systray
+    })
+end
+
+-- NAME             DEFAULT
+-- color_used 	    beautiful.bg_urgent 	        Color for used RAM
+-- color_free 	    beautiful.fg_normal 	        Color for free RAM
+-- color_buf 	    beautiful.border_color_active   Color for buffers/cache
+-- widget_height 	25 	                            Height of the widget
+-- widget_width 	25 	                            Width of the widget
+-- timeout 	        1           	How often in seconds the widget refreshes
+-- widget_show_buf 	false Whether to display buffers/cache separately in the 
+--              tray widget. If false, buffers/cache are considered free RAM.
+local function getRamWidget(beautiful)
+    return ram_widget({
+        color_used = beautiful.bg_urgent,
+        color_free = beautiful.fg_normal,
+        color_buf = beautiful.border_color_active,
+        widget_height = 25,
+        widget_width = 25,
+        timeout = 4,
+        widget_show_buf = true
+    })
+end
+
 -----------------------------------------
 -- Main function to create the system bar.
 local function createAwesomeBar(args, s, lockScreenCommand)
@@ -147,7 +180,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
-    
+
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
@@ -218,15 +251,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            ram_widget(),
-            cpu_widget(),
-            -- or custom
-            -- cpu_widget({
-            -- width = 70,
-            -- step_width = 2,
-            -- step_spacing = 0,
-            -- color = '#434c5e'
-            -- })
+            getRamWidget(beautiful),
+            getCpuWidget(beautiful),
             mykeyboardlayout,
             -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
             toggleVpnButton,
