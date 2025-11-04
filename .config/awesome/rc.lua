@@ -44,7 +44,7 @@ local buildMenu = require("awesome_menu")
 local setWallpaper = require("awesome_wallpaper")
 local applicationsCore = require("wm_applications")
 local awesomeApplications = applicationsCore.applications
-local layouts = require("layouts_mapper").loadLayouts({ awful = awful })
+local layouts = require("layouts_mapper")
 
 -- AwesomeWM-related args to pass to external widgets. 
 local awesomeArgs = ({
@@ -71,7 +71,16 @@ modkey = applicationsCore.modkey -- Default modkey.
 
 -- {{{ Layouts
 -- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = layouts
+-- layouts.loadLayouts will load an array of objects with the layout and the 
+-- tags where it is the default
+local layoutTagsArray = layouts.loadLayouts({ awful = awful })
+local loadedLayouts = { }
+for _, entry in ipairs(layoutTagsArray) do
+    table.insert(loadedLayouts, entry.layout)
+end
+awful.layout.layouts = loadedLayouts
+
+--awful.layout.layouts = layouts.loadLayouts({ awful = awful })
 -- }}}
 
 -- {{{ Menu
@@ -92,12 +101,10 @@ screen.connect_signal("property::geometry", function(s)
 end)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
     setWallpaper(s, awesomeArgs)
-
-    -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-
+    awful.tag(layouts.tags, s, awful.layout.layouts[1])  -- Each screen has its own tag table.
+    
+    -- bar
     require("awesome_bar").createAwesomeBar(awesomeArgs, s, awesomeApplications.lockScreen.command.command)
 end)
 -- }}}

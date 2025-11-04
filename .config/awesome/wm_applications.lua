@@ -20,7 +20,6 @@
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 
-
 local icons = require("themes.luci4.application_icons")
 local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
@@ -225,7 +224,9 @@ local subGroup = {
     multimedia = "Multimedia",
     music = "Music",
     utils = "Utils",
-    terminals = "Terminals"
+    terminals = "Terminals",
+    documents = "Documents",
+    graphics = "Graphics"
 }
 
 -- Default property for floating window.
@@ -589,7 +590,7 @@ local applications = {
             shell = true
         },
         icon = icons.freeTube,
-        subGroup = "Multimedia"
+        subGroup = subGroup.multimedia
     },
     transmission = {
         label = "Transmission",
@@ -615,7 +616,7 @@ local applications = {
             shell = true
         },
         icon = icons.calibre,
-        subGroup = subGroup.internet
+        subGroup = subGroup.documents
     },
     upscayl = {
         label= "UpScayl",
@@ -628,7 +629,7 @@ local applications = {
             shell = true
         },
         icon = icons.superTux,
-        subGroup = "Graphics"
+        subGroup = subGroup.graphics
     },
     gimp = {
         label = "Gimp",
@@ -641,7 +642,7 @@ local applications = {
             shell = false
         },
         icon = icons.gimp,
-        subGroup = "Graphics"
+        subGroup = subGroup.graphics
     },
     gimpDev = {
         label = "Gimp Dev",
@@ -654,7 +655,7 @@ local applications = {
             shell = true
         },
         icon = icons.gimp,
-        subGroup = "Graphics"
+        subGroup = subGroup.graphics
     },
     torBrowser = {
         label = "Tor Browser",
@@ -743,6 +744,58 @@ local applications = {
         -- icon = ,
         subGroup = subGroup.internet,
         properties = propertiesFloatingCentered
+    },
+    libreOffice = {
+        label = "LibreOffice",
+        class = "",
+        favourite = false,
+        command = {
+            command = "libreoffice",
+            description = "LibreOffice office suite",
+            group = "",
+            shell = false
+        },
+        -- icon = ,
+        subGroup = subGroup.documents,
+    },
+    nextcloud = {
+        label = "Nextcloud",
+        class = "Nextcloud",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/nextcloud.appimage",
+            description = "Nextcloud cloud",
+            group = "",
+            shell = false
+        },
+        -- icon = ,
+        subGroup = subGroup.internet,
+    },
+    joplin = {
+        label = "Joplin",
+        class = "Joplin",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/Joplin/Joplin.AppImage",
+            description = "Joplin markdown editor",
+            group = "",
+            shell = false
+        },
+        -- icon = ,
+        subGroup = subGroup.documents,
+    },
+    redshift = {
+        label = "Redshift",
+        class = "",
+        favourite = false,
+        command = {
+            command = "redshift-gtk",
+            description = "Redshift blue light filter",
+            group = "",
+            shell = false
+        },
+        -- icon = ,
+        subGroup = subGroup.utils,
     }
 }
 

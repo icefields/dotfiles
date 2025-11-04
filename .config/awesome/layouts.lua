@@ -12,7 +12,8 @@
 --   variant        – Optional subcategory ("left", "dwindle", etc.)
 --   icon           – Icon path or theme variable (shared)
 --   comment        – Description / documentation
---   default_tag    – Default tag(s) for AwesomeWM (or workspace(s) elsewhere)
+--   defaultTags    – Default tag(s) for AwesomeWM (or workspace(s) elsewhere). 
+--                    Specify the index of the tags defined in the tags object.
 --   shortcut       – Suggested keybinding mnemonic
 --   map            – WM-specific identifiers (awesome / qtile / hyprland)
 --   modifier       – Optional runtime config function
@@ -25,6 +26,8 @@
 -- TODO: provide icons.
 local icons = {}
 
+local tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+
 local layouts = {
     tile = {
         enabled  = true,
@@ -34,7 +37,7 @@ local layouts = {
         variant  = "default",
         icon     = icons.layout_tile,
         comment  = "Standard tiling layout with master window on the left.",
-        default_tag = { "1", "2" },
+        defaultTags = { 1, 2, 3, 4, 5, 6, 7, 8 },
         shortcut = "t",
         gaps     = 5,
         map = {
@@ -137,6 +140,7 @@ local layouts = {
         label    = "Spiral",
         group    = "spiral",
         comment  = "Arranges windows in a spiral pattern.",
+        defaultTags = { 9 },
         icon     = icons.layout_spiral,
         map = {
             awesome  = "spiral",
@@ -263,5 +267,8 @@ local layouts = {
     },
 }
 
-return layouts
+return {
+    layouts = layouts,
+    tags = tags
+}
 

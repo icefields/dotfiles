@@ -12,8 +12,10 @@
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
 
-local gfs = require("gears.filesystem")
-local baseDir = gfs.get_configuration_dir() .. "/themes/luci4/icons/"
+--local gfs = require("gears.filesystem")
+-- local baseDir = gfs.get_configuration_dir() .. "/themes/luci4/icons/"
+local config = require("config")
+local baseDir = os.getenv("HOME") .. "/.config/awesome" .. config.chosenThemeDir ..  "icons/"
 
 -- application icons
 local powerampache2speaker_icon = baseDir .. "ic_speaker_colored_432px.svg"

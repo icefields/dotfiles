@@ -29,7 +29,7 @@ local function getWorldTimes()
       -- build and return string for tooltip
       times = times .. (string.format("%-" .. longest .. "s %s", loc.name, time)) .. "\n"
     end
-    return times
+    return times:gsub("%s+$", "")
 end
 
 local function createWorldTimeTooltip(widget, awful, beautiful)
@@ -46,8 +46,15 @@ local function createWorldTimeTooltip(widget, awful, beautiful)
     }
 
     widget:connect_signal("mouse::enter", function(c)
-        worldTimeTooltip.text = getWorldTimes():gsub("%s+$", "")
+        worldTimeTooltip.text = getWorldTimes()
     end)
+    
+    -- show tooltip on right click
+    --widget:connect_signal("button::press", function(_, _, _, button)
+    --    if button == 3 then
+    --        worldTimeTooltip.text = getWorldTimes()
+    --    end
+    --end)
 
     return worldTimeTooltip
 end

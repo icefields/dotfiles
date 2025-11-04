@@ -4,7 +4,8 @@
 -- Dynamically maps layout_defs to the active window manager.
 ----------------------------------------------------------------------
 
-local layoutDefs = require("layouts")
+local layoutsCore = require("layouts")
+local layoutDefs = layoutsCore.layouts
 
 ----------------------------------------------------------------------
 -- Detect current WM
@@ -25,6 +26,8 @@ local currentWm = detectWm()
 local mappers = {}
 
 --  AwesomeWM mapper
+--  returns an array with the awesome layout and the tags where it's default.
+--  ie. array entry: { layout = awful.layout.suit.tile tags = { 1, 2, 3 } }
 mappers.awesome = function(layout_defs, args)
     local awful = args.awful
 
@@ -54,7 +57,9 @@ mappers.awesome = function(layout_defs, args)
     for _, entry in ipairs(ordered) do
         local map_path = layout_defs[entry.name].map.awesome
         if map_path then
-            table.insert(layouts, resolve_layout(map_path))
+            local layoutEntry = { layout = resolve_layout(map_path), tags = entry.defaultTags }
+            table.insert(layouts, layoutEntry)
+            --table.insert(layouts, resolve_layout(map_path))
         end
     end
 
@@ -107,5 +112,6 @@ end
 return {
     currentWm = currentWm,
     loadLayouts = loadLayouts,
+    tags = layoutsCore.tags
 }
 
