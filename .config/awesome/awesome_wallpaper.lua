@@ -49,7 +49,7 @@ local function setWallpaper(s, args)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, false)
+        gears.wallpaper.maximized(wallpaper, s, true)
     else
         local wallpaper = getRandomWallpaper(beautiful.wallpapersPath)
         if wallpaper and gears.filesystem.file_readable(wallpaper) then

@@ -26,8 +26,7 @@ local currentWm = detectWm()
 local mappers = {}
 
 --  AwesomeWM mapper
---  returns an array with the awesome layout and the tags where it's default.
---  ie. array entry: { layout = awful.layout.suit.tile tags = { 1, 2, 3 } }
+--  returns an array with the awesome layout and the layout object.
 mappers.awesome = function(layout_defs, args)
     local awful = args.awful
 
@@ -57,7 +56,7 @@ mappers.awesome = function(layout_defs, args)
     for _, entry in ipairs(ordered) do
         local map_path = layout_defs[entry.name].map.awesome
         if map_path then
-            local layoutEntry = { layout = resolve_layout(map_path), tags = entry.defaultTags }
+            local layoutEntry = { awesomeLayout = resolve_layout(map_path), layout = entry }
             table.insert(layouts, layoutEntry)
             --table.insert(layouts, resolve_layout(map_path))
         end

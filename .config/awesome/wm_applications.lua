@@ -221,12 +221,14 @@ local placement = {
 
 local subGroup = {
     internet = "Internet",
+    messaging = "Messaging",
     multimedia = "Multimedia",
     music = "Music",
     utils = "Utils",
     terminals = "Terminals",
     documents = "Documents",
-    graphics = "Graphics"
+    graphics = "Graphics",
+    games = "Games"
 }
 
 -- Default property for floating window.
@@ -482,7 +484,7 @@ local applications = {
             group = "",
             shell = true
         },
-        subGroup = subGroup.internet,
+        subGroup = subGroup.messaging,
         icon = icons.signal,
         properties = {
             tag = "8"
@@ -498,7 +500,7 @@ local applications = {
             group = "",
             shell = true
         },
-        subGroup = subGroup.internet,
+        subGroup = subGroup.messaging,
         icon = icons.telegram,
         properties = {
             tag = "8"
@@ -514,13 +516,33 @@ local applications = {
             group = "",
             shell = false
         },
-        subGroup = subGroup.internet,
+        subGroup = subGroup.messaging,
         -- icon = icons.telegram,
         properties = {
             tag = "8",
             floating = true,
             width = 1200,
             height = 900,
+            windowPlacement = placement.centered
+        }
+    }, 
+    nheko = {
+        class = "nheko",
+        label = "Nheko",
+        favourite = true,
+        command = {
+            command = "flatpak run im.nheko.Nheko",
+            description = "Nheko messenger",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.messaging,
+        -- icon = icons.telegram,
+        properties = {
+            tag = "8",
+            floating = true,
+            width = 1000,
+            height = 800,
             windowPlacement = placement.centered
         }
     },
@@ -682,7 +704,7 @@ local applications = {
             shell = false
         },
         icon = icons.steam,
-        subGroup = "Games"
+        subGroup = subGroup.games
     },
     mumble = {
         label = "Mumble",
@@ -695,7 +717,7 @@ local applications = {
             shell = false
         },
         icon = icons.mumble,
-        subGroup = subGroup.internet,
+        subGroup = subGroup.messaging,
         properties = propertiesFloatingCentered
     },
     mpv = {
@@ -796,6 +818,31 @@ local applications = {
         },
         -- icon = ,
         subGroup = subGroup.utils,
+    },
+    geforcenow = {
+        label = "GeForce Now",
+        class = "",
+        favourite = true,
+        command = {
+            command = homeDir .. "/apps/geforcenow-electron.AppImage",
+            description = "GeForce Now (Electron application)",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.games
+    },
+    soundsettings = {
+        label = "Sound Settings",
+        class = "", -- "cinnamon-settings sound"
+        favourite = false,
+        command = {
+            command = homeDir .. "/scripts/sound-settings.sh",
+            description = "Linux audio settings",
+            group = "",
+            shell = true
+        },
+        icon = icons.sound,
+        subGroup = subGroup.utils
     }
 }
 

@@ -71,12 +71,12 @@ modkey = applicationsCore.modkey -- Default modkey.
 
 -- {{{ Layouts
 -- Table of layouts to cover with awful.layout.inc, order matters.
--- layouts.loadLayouts will load an array of objects with the layout and the 
--- tags where it is the default
+-- layouts.loadLayouts will load an array of objects with the awesome layout and
+-- the layout object which includes default tags and other useful attributes.
 local layoutTagsArray = layouts.loadLayouts({ awful = awful })
 local loadedLayouts = { }
 for _, entry in ipairs(layoutTagsArray) do
-    table.insert(loadedLayouts, entry.layout)
+    table.insert(loadedLayouts, entry.awesomeLayout)
 end
 awful.layout.layouts = loadedLayouts
 
