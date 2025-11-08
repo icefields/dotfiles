@@ -111,7 +111,7 @@ local function getButton(args)
         setWeatherText(awful, beautiful, gears, fetchWeatherIconScript, iconWidget, fallbackIcon, false)
     end)
 
-    return wibox.container.margin(button, 10, 5, 0, 0) -- with added padding
+    return wibox.container.margin(button, 1, 1, 0, 0) -- with added padding
 end
 
 return getButton

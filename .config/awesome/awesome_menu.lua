@@ -18,9 +18,9 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 local icons = require("wm_applications").icons
 local debian = require("debian.menu") -- Load Debian menu entries
 
-local function getFavourites(awful, favouriteApps, configDir)
-    local favourites = { }
-    for _, app in ipairs(favouriteApps) do
+local function getAwesomeMenu(awful, applications, configDir)
+    local appsTable = { }
+    for _, app in ipairs(applications) do
         local item = {
             app.label,
             function()
@@ -32,9 +32,9 @@ local function getFavourites(awful, favouriteApps, configDir)
             end,
             app.icon or get_icon_for_application(configDir, app.label)
         }
-        table.insert(favourites, item)
+        table.insert(appsTable, item)
     end
-    return favourites
+    return appsTable
 end
 
 local function buildMenu(args, awesomeApplications)
@@ -107,7 +107,7 @@ local function buildMenu(args, awesomeApplications)
     local menu_apps = { "Apps", appsMenu, icons.defaultIcon }
 
     local favourites = awesomeApplications:getFavourites()
-    local flaggedmenu = getFavourites(awful, favourites, configDir)
+    local flaggedmenu = getAwesomeMenu(awful, favourites, configDir)
     local menu_flagged = { "Favourites", flaggedmenu, icons.favourite }
 
     local customMenu = { }
@@ -118,15 +118,15 @@ local function buildMenu(args, awesomeApplications)
         if type(appsGroup) == "table" then
             local menu_custom = {
                 groupName,
-                getFavourites(awful, appsGroup, configDir),
+                getAwesomeMenu(awful, appsGroup, configDir),
                 get_icon_for_application(configDir, groupName)
             }
             table.insert(customMenu, menu_custom)
         end
     end
 
-    local menu_fdo = { "Debian", debian.menu.Debian_menu.Debian, 
-        get_icon_for_application(configDir, "debian") 
+    local menu_fdo = { "Debian", debian.menu.Debian_menu.Debian,
+        get_icon_for_application(configDir, "debian")
     }
     local menu_terminal = { awesomeApplications.terminal.label, terminal, awesomeApplications.terminal.icon }
 

@@ -56,7 +56,8 @@ local awesomeArgs = ({
     hotkeys_popup = hotkeys_popup,
     menubar = menubar,
     client = client,
-    screen = screen
+    screen = screen,
+    naughty = naughty
 })
 
 -- {{{ Error handling

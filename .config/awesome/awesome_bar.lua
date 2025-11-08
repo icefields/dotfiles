@@ -153,6 +153,26 @@ local function getRamWidget(beautiful)
     })
 end
 
+local function separator(beautiful, wibox, args)
+    -- if not args passed init an empty table 
+    args = args or { }
+    local margins = args.margins or { }
+    local showSeparator = args.showSeparator
+    local separatorText = "│"
+    if showSeparator == false then separatorText = "" end
+
+    local separatorWidget = wibox.widget.textbox()
+    separatorWidget.markup = "<span foreground='" .. beautiful.topBar_separator_fg .."'>" .. separatorText .. "</span>"  -- Custom color
+    separatorWidget.font = beautiful.topBar_button_font
+    separatorWidget.align = "center"
+    separatorWidget.valign = "center"
+    local marginTop = margins.top or 0
+    local marginBottom = margins.bottom or 0
+    local marginLeft = margins.left or 5
+    local marginRight = margins.right or 5
+    return wibox.container.margin(separatorWidget, marginLeft, marginRight, marginTop, marginBottom)
+end
+
 -----------------------------------------
 -- Main function to create the system bar.
 local function createAwesomeBar(args, s, lockScreenCommand)
@@ -161,6 +181,9 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local client = args.client
     local gears = args.gears
     local wibox = args.wibox
+
+    -- Battery widget
+    local batteryWidget = require("battery.battery_widget")
 
     -- VPN buttons
     local toggleVpnButton = require("vpn-buttons.vpn_toggle_button")(args)
@@ -242,7 +265,9 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     })
     -- ORIG s.mywibox = awful.wibar({ position = "top", screen = s })
 
-     -- Add widgets to the wibox
+    local separatorW = separator(beautiful, wibox)
+
+    -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
@@ -259,10 +284,16 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             getCpuWidget(beautiful),
             mykeyboardlayout,
             -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
+            separator(beautiful, wibox, { showSeparator = true, margins = { left = 0, right = 0 } }),
             toggleVpnButton,
             vpnReconnectButton,
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
             getSystemTray(wibox, beautiful, gears),
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = 10, right = 0 } }),
+            batteryWidget(args),
+            separatorW,
             weatherButton,
+            separator(beautiful, wibox, { margins = { right = 0 } }),
             clockWidget,
             getVolumeWidget(beautiful),
             s.mylayoutbox,

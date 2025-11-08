@@ -52,6 +52,7 @@ theme.topBar_buttonSize = 24
 theme.topBar_button_font = "Symbols Nerd Font Mono 9"
 theme.topBar_buttonTooltip_font = "DejaVu Sans Mono 9"
 theme.topBar_fg = colour2.tint7
+theme.topBar_separator_fg = colour2.shade2
 -- theme.clock_bg = colour2.shade4
 
 theme.bg_normal     = colour1.shade9
@@ -59,6 +60,8 @@ theme.bg_focus      = colour1.shade7 -- "#224442"
 theme.bg_urgent     = colour2.main
 theme.bg_minimize   = colour2.black-- shade8 --theme.bg_normal
 theme.bg_systray    = colour2.shade4 -- "#4a5722" --theme.bg_normal
+theme.errorColour   = colours.red
+theme.warningColour = colour1.main
 theme.systray_icon_spacing_dpi = 4
 theme.systray_margin_dpi = 3
 

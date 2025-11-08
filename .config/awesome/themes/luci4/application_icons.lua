@@ -27,11 +27,11 @@ local signal_icon = baseDir .. "signal-desktop.svg"
 local notepadqq_icon = baseDir .. "notepadqq-candy.svg"
 local kdenlive_icon = baseDir .. "kdenlive.svg"
 local neovim_icon = baseDir .. "org.daa.NeovimGtk.svg"
-local androidStudio_icon = baseDir .. "studio.svg"
+local androidStudio_icon = baseDir .. "androidstudio.svg" --  "studio.svg"
 local calibre_icon = baseDir .. "accessories-ebook-reader.svg"
 local gimp_icon = baseDir .. "gimp.svg"
 local vivaldi_icon = baseDir .. "vivaldi.svg"
-local reaper_icon = baseDir .. "reaper.png"
+local reaper_icon = baseDir .. "cockos-reaper.svg" -- "reaper.png"
 local arch_icon = baseDir .. "distributor-logo-archlinux.svg"
 local arcolinux_icon = baseDir .. "arcolinux-hello.svg"
 local supertux_icon = baseDir .. "supertux.svg"
@@ -47,6 +47,8 @@ local archive_icon = baseDir .. "archive.svg"
 local file_manager_icon = baseDir .. "file-manager.svg"
 local tutanota_icon = baseDir .. "tutanota-desktop.svg"
 local sound_icon = baseDir .. "sound.svg"
+local guitarPro_icon = baseDir .. "GuitarPro.svg"
+local powerSettings_icon = baseDir .. "preferences-system-power.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -79,7 +81,9 @@ local icons = {
     archiveManager = archive_icon,
     fileManager = file_manager_icon,
     tutanota = tutanota_icon,
-    sound = sound_icon
+    sound = sound_icon,
+    guitarPro = guitarPro_icon,
+    powerSettings = powerSettings_icon
 }
 -- END LUCI4 Icon Theme
 return icons

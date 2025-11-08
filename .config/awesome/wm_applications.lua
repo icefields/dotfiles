@@ -291,7 +291,7 @@ local applications = {
         label = "NeoVim",
         class = "",
         command = editor,
-        subGroup = subGroup.terminals,
+        subGroup = { subGroup.terminals, subGroup.documents },
         icon = icons.neoVim,
         favourite = true
     },
@@ -309,7 +309,7 @@ local applications = {
         command = kittyArchDistroboxIsolated,
         subGroup = subGroup.terminals,
         icon = icons.arcoLinux,
-        favourite = true
+        favourite = false
     },
     browser = {
         label = "LibreWolf",
@@ -343,7 +343,7 @@ local applications = {
             group = "",
             shell = false
         },
-        subGroup = subGroup.multimedia,
+        subGroup = { subGroup.music, subGroup.multimedia },
         icon = icons.vlc,
         properties = {
             floating = true,
@@ -398,7 +398,7 @@ local applications = {
     androidStudio = {
         label = "Android Studio",
         class = "jetbrains-studio",
-        favourite = true,
+        favourite = false,
         command = androidStudio,
         subGroup = "Development",
         icon = icons.androidStudio,
@@ -509,7 +509,7 @@ local applications = {
     element = {
         class = "Element",
         label = "Element",
-        favourite = true,
+        favourite = false,
         command = {
             command = "flatpak run im.riot.Riot",
             description = "Element messenger",
@@ -541,7 +541,7 @@ local applications = {
         properties = {
             tag = "8",
             floating = true,
-            width = 1000,
+            width = 1100,
             height = 800,
             windowPlacement = placement.centered
         }
@@ -598,8 +598,21 @@ local applications = {
             shell = false
         },
         icon = icons.jack,
-        subGroup = "Music",
+        subGroup = { subGroup.music, subGroup.utils },
         properties = propertiesFloatingCentered
+    },
+    guitarPro = {
+        label = "Guitar Pro",
+        class = "guitarpro.exe",
+        favourite = false,
+        command = {
+            command = "wine " .. homeDir .."\"/.wine/drive_c/Program Files/Arobas Music/Guitar Pro 8/GuitarPro.exe\"",
+            description = "Arobas Guitar Pro, guitar tabs editor",
+            group = "",
+            shell = false
+        },
+        icon = icons.guitarPro,
+        subGroup = subGroup.music
     },
     freetube = {
         label = "Freetube",
@@ -612,7 +625,7 @@ local applications = {
             shell = true
         },
         icon = icons.freeTube,
-        subGroup = subGroup.multimedia
+        subGroup = { subGroup.multimedia, subGroup.internet }
     },
     transmission = {
         label = "Transmission",
@@ -643,7 +656,7 @@ local applications = {
     upscayl = {
         label= "UpScayl",
         class = "",
-        favourite = true,
+        favourite = false,
         command = {
             command = homeDir .. "/apps/Upscayl",
             description = "Use AI to upscale images",
@@ -669,7 +682,7 @@ local applications = {
     gimpDev = {
         label = "Gimp Dev",
         class = "",
-        favourite = true,
+        favourite = false,
         command = {
             command = homeDir .. "/apps/Gimp3",
             description = "Gimp image editor",
@@ -682,7 +695,7 @@ local applications = {
     torBrowser = {
         label = "Tor Browser",
         class = "Tor Browser",
-        favourite = true,
+        favourite = false,
         command = {
             command = homeDir .. "/apps/tor-browser/Tor Browser",
             description = "Tor web browser",
@@ -709,7 +722,7 @@ local applications = {
     mumble = {
         label = "Mumble",
         class = "Mumble",
-        favourite = true,
+        favourite = false,
         command = {
             command = "mumble",
             description = "Mumble messenger",
@@ -842,23 +855,45 @@ local applications = {
             shell = true
         },
         icon = icons.sound,
-        subGroup = subGroup.utils
+        subGroup = { subGroup.utils, subGroup.music }
+    },
+    powerSettings = {
+        label = "Power Settings",
+        class = "Xfce4-power-manager-settings",
+        favourite = false,
+        command = {
+            command = "xfce4-power-manager-settings",
+            description = "Linux power settings",
+            group = "",
+            shell = false
+        },
+        icon = icons.powerSettings,
+        subGroup = { subGroup.utils },
+        properties = propertiesFloatingCentered
     }
 }
 
 function applications:bySubGroup()
     local grouped = {}
 
+    local function insertItemToGroup(group, app)
+        -- Only create the group if we need to insert an app
+        if not grouped[group] then
+            grouped[group] = { }
+        end
+        table.insert(grouped[group], app)
+    end
+
     for _, app in pairs(self) do
         if type(app) == "table" and app.label then
             local group = app.subGroup or "Ungrouped"
-
-            -- Only create the group if we need to insert an app
-            if not grouped[group] then
-                grouped[group] = { }
+            if type(group) == "table" then
+                for _, groupNameItem in ipairs(group) do
+                    insertItemToGroup(groupNameItem, app)
+                end
+            else
+                insertItemToGroup(group, app)
             end
-
-            table.insert(grouped[group], app)
         end
     end
 

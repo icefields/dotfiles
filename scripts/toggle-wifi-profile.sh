@@ -25,7 +25,7 @@ get_status() {
 }
 
 get_mullvad_status() {
-    mullstatus="$(mullvad status)"
+    mullstatus="$(mullvad status -v)"
     lockdown=$( [[ $(mullvad lockdown-mode get | xargs) == "Block traffic when the VPN is disconnected: on" ]] && echo "on" || echo "off" )    
     autoconnect=$( [[ $(mullvad auto-connect get | xargs) == "Autoconnect: on" ]] && echo "on" || echo "off" ) 
     vpnstatus="$(get_status)"
@@ -56,7 +56,7 @@ toggle_vpn() {
 
 
 if [[ -z $1 ]]; then
-    echo "$(mullvad status)"
+    echo "$(mullvad status -v)"
     exit 0
 fi
 
