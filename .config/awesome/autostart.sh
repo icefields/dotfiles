@@ -15,7 +15,7 @@ run blueman-applet
 run nm-applet
 run redshift-gtk
 run xfce4-clipman
-run "xfce4-power-manager --daemon --no-tray-icon" #xfce4-power-manager
+run "$HOME/scripts/applaunch/power-management.sh" # "xfce4-power-manager --daemon --no-tray-icon" #xfce4-power-manager
 run keepassxc
 run "$HOME/.config/awesome/scripts/start_filemanager.sh"
 run "$HOME/apps/Joplin/Joplin.AppImage"
