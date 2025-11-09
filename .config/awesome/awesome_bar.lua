@@ -11,6 +11,8 @@
 -- -------- Luci4 config for Awesome WM  --------- --
 -- -------- https://github.com/icefields --------- --
 -----------------------------------------------------
+-- @author Luci4
+-- @copyright 2025 Antonio Tari
 -- awesome_bar.lua
 
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
@@ -182,14 +184,13 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local gears = args.gears
     local wibox = args.wibox
 
-    -- Battery widget
     local batteryWidget = require("battery.battery_widget")
+    local weatherButton = require("weather.weather_button")(args)
+    local redshiftButton = require("redshift.redshift_widget")(args)
 
     -- VPN buttons
     local toggleVpnButton = require("vpn-buttons.vpn_toggle_button")(args)
     local vpnReconnectButton = require("vpn-buttons.vpn_reconnect_button")(args)
-
-    local weatherButton = require("weather.weather_button")(args)
 
     -- Keyboard map indicator and switcher
     local mykeyboardlayout = awful.widget.keyboardlayout()
@@ -289,8 +290,10 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             vpnReconnectButton,
             separator(beautiful, wibox, { showSeparator = false, margins = { left = 2, right = 2 } }),
             getSystemTray(wibox, beautiful, gears),
-            separator(beautiful, wibox, { showSeparator = false, margins = { left = 7, right = 0 } }),
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = 4, right = 4 } }),
             batteryWidget(args),
+            separatorW,
+            redshiftButton,
             separatorW,
             weatherButton,
             separator(beautiful, wibox, { margins = { right = 0 } }),

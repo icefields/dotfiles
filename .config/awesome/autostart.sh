@@ -13,7 +13,6 @@ run "$HOME/.config/awesome/scripts/picom_delayed.sh"
 run lxqt-policykit-agent
 run blueman-applet
 run nm-applet
-run redshift-gtk
 run xfce4-clipman
 run "$HOME/scripts/applaunch/power-management.sh" # "xfce4-power-manager --daemon --no-tray-icon" #xfce4-power-manager
 run keepassxc
@@ -23,3 +22,8 @@ run "$HOME/.config/awesome/scripts/start_nextcloud.sh"
 run "$HOME/.config/awesome/scripts/start_tuta.sh"
 $HOME/.config/awesome/autostart-custom.sh &
 
+sleep 5
+if ! pgrep -x "redshift" > /dev/null
+then
+    # run redshift #run redshift-gtk
+fi
