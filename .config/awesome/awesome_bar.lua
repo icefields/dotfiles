@@ -21,6 +21,7 @@ local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local worldtimeTooltip = require("worldtime_tooltip")
+local todoWidget = require("todo-widget.todo")
 
 local function getTagListButtons(client, gears, awful)
     local taglist_buttons = gears.table.join(
@@ -89,7 +90,7 @@ end
 -- Luci4 volume widget configuration
 local function getVolumeWidget(beautiful)
     return volume_widget {
-        widget_type = 'horizontal_bar',
+        widget_type = 'arc', -- horizontal_bar, vertical_bar, icon, icon_and_text, arc
         size = 36,
         width = 100,
         -- shape = 'powerline',
@@ -284,6 +285,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             getRamWidget(beautiful),
             getCpuWidget(beautiful),
             mykeyboardlayout,
+            separator(beautiful, wibox, { showSeparator = true, margins = { left = 0, right = 0 } }),
+            todoWidget(),
             -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
             separator(beautiful, wibox, { showSeparator = true, margins = { left = 0, right = 0 } }),
             toggleVpnButton,

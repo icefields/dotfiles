@@ -216,7 +216,17 @@ local resetTor = {
 }
 
 local placement = {
-    centered = "centered"
+    centered = "centered",
+    bottom_right = "bottom_right",
+    top_left = "top_left",
+    top_right = "top_right",
+    bottom_left = "bottom_left",
+    top = "top",
+    bottom = "bottom",
+    left = "left",
+    right = "right",
+    under_mouse = "under_mouse",
+    next_to_mouse = "next_to_mouse",
 }
 
 local subGroup = {
@@ -503,7 +513,11 @@ local applications = {
         subGroup = subGroup.messaging,
         icon = icons.telegram,
         properties = {
-            tag = "8"
+            tag = "8",
+            floating = true,
+            width = 900,
+            height = 800,
+            windowPlacement = placement.bottom_right
         }
     },
     element = {
@@ -525,7 +539,7 @@ local applications = {
             height = 900,
             windowPlacement = placement.centered
         }
-    }, 
+    },
     nheko = {
         class = "nheko",
         label = "Nheko",

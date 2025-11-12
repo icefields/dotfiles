@@ -1,6 +1,22 @@
+-----------------------------------------------------
+-- ----------------------------------------------- --
+--   ▄        ▄     ▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄     ▄   --
+--  ▐░▌      ▐░▌   ▐░▌▐░█▀▀▀▀▀  ▀▀█░█▀▀ ▐░▌   ▐░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░█   █░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░░░░░░░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌    ▀▀▀▀▀█░▌  --
+--  ▐░█▄▄▄▄▄ ▐░█▄▄▄█░▌▐░█▄▄▄▄▄  ▄▄█░█▄▄       ▐░▌  --
+--   ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀        ▀   --
+-- ----------------------------------------------- --
+-- -------- Luci4 config for Awesome WM  --------- --
+-- -------- https://github.com/icefields --------- --
+-----------------------------------------------------
+
+local homeDir = os.getenv("HOME")
+
 local statusCmd = "redshift -p"
-local toggleCmd = "$HOME/scripts/applaunch/redshift_toggle.sh" 
-local getIconCmd = "$HOME/scripts/applaunch/redshift_get.sh"
+local toggleCmd = homeDir .. "/scripts/applaunch/redshift_toggle.sh" 
+local getIconCmd = homeDir .. "/scripts/applaunch/redshift_get.sh"
 
 local function createRedshiftTooltip(button, args)
     local awful = args.awful
