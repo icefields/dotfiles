@@ -20,9 +20,19 @@ local gfs = require("gears.filesystem")
 
 local HOME_DIR = os.getenv("HOME")
 local WIDGET_DIR = HOME_DIR .. '/.config/awesome/todo-widget'
-local STORAGE = HOME_DIR .. '/.cache/awmw/todo-widget/todos.json'
+local STORAGE = HOME_DIR .. '/.cache/awesome-todo.json'
+-- local STORAGE = HOME_DIR .. '/.cache/awmw/todo-widget/todos.json'
 
 local GET_TODO_ITEMS = 'bash -c "cat ' .. STORAGE .. '"'
+
+local function nfIcon(symbol, color, font)
+    return string.format(
+        "<span font='%s' foreground='%s'>%s</span>",
+        font or beautiful.topBar_button_font,
+        color or beautiful.topBar_fg,
+        symbol
+    )
+end
 
 local rows  = { layout = wibox.layout.fixed.vertical }
 local todo_widget = {}
@@ -33,9 +43,12 @@ todo_widget.widget = wibox.widget {
             {
                 {
                     id = "icon",
-                    forced_height = 16,
-                    forced_width = 16,
-                    widget = wibox.widget.imagebox
+                    align  = 'center',
+                    valign = 'center',
+                    widget = wibox.widget.textbox
+                    --forced_height = 16,
+                    --forced_width = 16,
+                    --widget = wibox.widget.imagebox
                 },
                 valign = 'center',
                 layout = wibox.container.place
@@ -44,7 +57,7 @@ todo_widget.widget = wibox.widget {
                 id = "txt",
                 widget = wibox.widget.textbox
             },
-            spacing = 4,
+            spacing = 4, -- space between the checkbox icon and the counter, on the top bar.
             layout = wibox.layout.fixed.horizontal,
         },
         margins = 4,
@@ -55,10 +68,15 @@ todo_widget.widget = wibox.widget {
     end,
     widget = wibox.container.background,
     set_text = function(self, new_value)
-        self:get_children_by_id("txt")[1].text = new_value
+        -- self:get_children_by_id("txt")[1].text = new_value
+        self:get_children_by_id("txt")[1].markup = nfIcon(new_value)
     end,
-    set_icon = function(self, new_value)
-        self:get_children_by_id("icon")[1].image = new_value
+    --set_icon = function(self, new_value)
+    --    self:get_children_by_id("icon")[1].image = new_value
+    --end
+    setIcon = function(self, new_symbol)
+        local icon_widget = self:get_children_by_id("icon")[1]
+        icon_widget.markup =  nfIcon(new_symbol)
     end
 }
 
@@ -77,9 +95,11 @@ local popup = awful.popup{
     bg = beautiful.topBar_bg,
     ontop = true,
     visible = false,
-    shape = gears.shape.rounded_rect,
+    shape = function(cr, w, h)
+        gears.shape.rounded_rect(cr, w, h, beautiful.rect_radius or 4)
+    end,
     border_width = 1,
-    border_color = beautiful.bg_focus,
+    border_color = beautiful.tooltip_border_color,
     maximum_width = 400,
     offset = { y = 5 },
     widget = {}
@@ -87,14 +107,27 @@ local popup = awful.popup{
 
 local add_button = wibox.widget {
     {
-        {
-            image = WIDGET_DIR .. '/list-add-symbolic.svg',
-            resize = false,
-            widget = wibox.widget.imagebox
+        {   --   󰐖 󰐗   󱇬
+            markup = nfIcon("󰐖", beautiful.fg_normal, beautiful.topBar_button_font ),
+            align  = 'center',
+            valign = 'center',
+            widget = wibox.widget.textbox
         },
-        top = 11,
-        left = 8,
-        right = 8,
+
+        --{               
+        --    image = WIDGET_DIR .. '/list-add-symbolic.svg',
+        --    -- resize = false means the image keeps its natural size
+        --    -- it won’t stretch to fit its container.
+        --    resize = false,
+        --    widget = wibox.widget.imagebox
+        --},
+
+        -- Adds padding around the image to make the button larger and balanced.
+        -- Without margins, the icon would sit tightly against the circular border.
+        top = 6,
+        bottom = 6,
+        left = 6,
+        right = 6,
         layout = wibox.container.margin
     },
     shape = function(cr, width, height)
@@ -144,9 +177,9 @@ local function worker(user_args)
 
     local args = user_args or {}
 
-    local icon = args.icon or WIDGET_DIR .. '/checkbox-checked-symbolic.svg'
+    local icon = args.icon or "󰄵" --󰱒 -- WIDGET_DIR .. '/checkbox-checked-symbolic.svg'
 
-    todo_widget.widget:set_icon(icon)
+    todo_widget.widget:setIcon(icon)
 
     function update_widget(stdout)
         local result = json.decode(stdout)
@@ -160,7 +193,7 @@ local function worker(user_args)
             {
                 {widget = wibox.widget.textbox},
                 {
-                    markup = '<span size="large" font_weight="bold" color="' .. beautiful.topBar_fg .. '">ToDo</span>',
+                    markup = nfIcon("ToDo", beautiful.fg_normal, beautiful.font), -- '<span size="large" font_weight="bold" color="' .. beautiful.topBar_fg .. '">ToDo</span>',
                     align = 'center',
                     forced_width = 350, -- for horizontal alignment
                     forced_height = 40,
@@ -200,7 +233,8 @@ local function worker(user_args)
 
             local trash_button = wibox.widget {
                 {
-                    {    image = WIDGET_DIR .. '/window-close-symbolic.svg',
+                    {    
+                        image = WIDGET_DIR .. '/window-close-symbolic.svg',
                         resize = false,
                         widget = wibox.widget.imagebox
                     },
@@ -276,7 +310,9 @@ local function worker(user_args)
                         },
                         {
                             {
-                                text = todo_item.todo_item,
+                                markup = nfIcon(todo_item.todo_item, beautiful.topBar_fg, beautiful.tooltip_font),  
+                                --"<span color='" .. beautiful.topBar_fg .. "' font='" .. beautiful.tooltip_font .. "'>" .. todo_item.todo_item ..  "</span>",
+                                -- text = todo_item.todo_item,
                                 align = 'left',
                                 widget = wibox.widget.textbox
                             },
@@ -317,17 +353,17 @@ local function worker(user_args)
     end
 
     todo_widget.widget:buttons(
-            gears.table.join(
-                    awful.button({}, 1, function()
-                        if popup.visible then
-                            todo_widget.widget:set_bg('#00000000')
-                            popup.visible = not popup.visible
-                        else
-                            todo_widget.widget:set_bg(beautiful.bg_focus)
-                            popup:move_next_to(mouse.current_widget_geometry)
-                        end
-                    end)
-            )
+        gears.table.join(
+            awful.button({}, 1, function()
+                if popup.visible then
+                    todo_widget.widget:set_bg('#00000000')
+                    popup.visible = not popup.visible
+                else
+                    todo_widget.widget:set_bg(beautiful.bg_focus)
+                    popup:move_next_to(mouse.current_widget_geometry)
+                end
+            end)
+        )
     )
 
     spawn.easy_async(GET_TODO_ITEMS, function(stdout) update_widget(stdout) end)
