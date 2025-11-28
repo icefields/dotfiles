@@ -80,7 +80,7 @@ local function getButton(args)
     local awful = args.awful
     local beautiful = args.beautiful
     local wibox = args.wibox
-    local fallbackIcon = "w"
+    local fallbackIcon = "⸸"
 
     -- Button with an icon (font-based or symbol).
     local button = wibox.widget {

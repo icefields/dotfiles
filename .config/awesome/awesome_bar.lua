@@ -26,9 +26,8 @@ local todoWidget = require("todo-widget.todo")
 local function getTagListButtons(client, gears, awful)
     local taglist_buttons = gears.table.join(
         awful.button( { }, 1, function(t)
-                t:view_only()
-            end
-        ),
+            t:view_only()
+        end),
         awful.button( { modkey }, 1, function(t)
             if client.focus then
                 client.focus:move_to_tag(t)
@@ -46,7 +45,7 @@ local function getTagListButtons(client, gears, awful)
             awful.tag.viewnext(t.screen)
         end),
         awful.button( { }, 5, function(t)
-                awful.tag.viewprev(t.screen)
+            awful.tag.viewprev(t.screen)
         end)
     )
     return taglist_buttons
@@ -103,7 +102,7 @@ end
 
 -- system tray
 local function getSystemTray(wibox, beautiful, gears)
-     local systray = wibox.widget.systray()
+    local systray = wibox.widget.systray()
     -- systray.opacity = 0.95
 
     local luciSysTrayColour = wibox.container.background()
@@ -194,8 +193,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local vpnReconnectButton = require("vpn-buttons.vpn_reconnect_button")(args)
 
     -- Keyboard map indicator and switcher
-    local mykeyboardlayout = awful.widget.keyboardlayout()
-    mykeyboardlayout.widget:set_font(beautiful.font)
+    -- local mykeyboardlayout = awful.widget.keyboardlayout()
+    -- mykeyboardlayout.widget:set_font(beautiful.font)
 
     -- clock and calendar
     local calendarWidget = getCalendarWidget(beautiful)
@@ -278,29 +277,29 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             -- mylauncher,
             s.mytaglist,
             s.mypromptbox,
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
+            getCpuWidget(beautiful),
+            getRamWidget(beautiful),
+            --mykeyboardlayout
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            getRamWidget(beautiful),
-            getCpuWidget(beautiful),
-            mykeyboardlayout,
-            separator(beautiful, wibox, { showSeparator = true, margins = { left = 0, right = 0 } }),
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = 2, right = 2 } }),
             todoWidget(),
             -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
             separator(beautiful, wibox, { showSeparator = true, margins = { left = 0, right = 0 } }),
             toggleVpnButton,
             vpnReconnectButton,
-            separator(beautiful, wibox, { showSeparator = false, margins = { left = 2, right = 2 } }),
-            getSystemTray(wibox, beautiful, gears),
-            separator(beautiful, wibox, { showSeparator = false, margins = { left = 4, right = 4 } }),
+            separator(beautiful, wibox, { showSeparator = true, margins = { left = 1, right = 5 } }),
             batteryWidget(args),
-            separatorW,
+            separator(beautiful, wibox, { margins = { left = 3 } }),
             redshiftButton,
             separatorW,
             weatherButton,
             separator(beautiful, wibox, { margins = { right = 0 } }),
             clockWidget,
+            getSystemTray(wibox, beautiful, gears),
             getVolumeWidget(beautiful),
             s.mylayoutbox,
             -- default logout widget

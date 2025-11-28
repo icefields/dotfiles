@@ -238,7 +238,8 @@ local subGroup = {
     terminals = "Terminals",
     documents = "Documents",
     graphics = "Graphics",
-    games = "Games"
+    games = "Games",
+    development = "Development"
 }
 
 -- Default property for floating window.
@@ -410,7 +411,7 @@ local applications = {
         class = "jetbrains-studio",
         favourite = false,
         command = androidStudio,
-        subGroup = "Development",
+        subGroup = subGroup.development,
         icon = icons.androidStudio,
         properties = {
             tag = "4",
@@ -517,7 +518,7 @@ local applications = {
             floating = true,
             width = 900,
             height = 800,
-            windowPlacement = placement.bottom_right
+            windowPlacement = placement.bottom_left
         }
     },
     element = {
@@ -884,6 +885,43 @@ local applications = {
         icon = icons.powerSettings,
         subGroup = { subGroup.utils },
         properties = propertiesFloatingCentered
+    },
+    picard = {
+        label = "Picard",
+        class = "",
+        favourite = true,
+        command = {
+            command = homeDir .. "/apps/Picard",
+            description = "MusicBrainz Picard, music tagging and organization",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.multimedia, subGroup.music }
+    },
+    qtcreator = {
+        label = "QtCreator",
+        class = "",
+        favourite = true,
+        command = {
+            command = homeDir .. "/apps/QtCreator",
+            description = "QT Creator IDE",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.development
+    },
+    kdenlive = {
+        label = "Kdenlive",
+        class = "",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/kdenlive.AppImage",
+            description = "Kdenlive video editing",
+            group = "",
+            shell = false
+        },
+        -- icon = ,
+        subGroup = subGroup.multimedia,
     }
 }
 
