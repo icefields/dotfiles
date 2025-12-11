@@ -1,9 +1,17 @@
 # ToDo Widget
 
+### This widget is work in progress, for now to generate the list of tasks:
+Run from this directory
+```
+lua5.1 fetchTasks.lua  
+```
+*Before running* Rename `nextcloud_config_example.lua` to `nextcloud_config.lua` and edit with personal server info.
+
 This widget displays a list of todo items and allows marking item as done/undone, delete an item and create new ones:
 
 ![screenshot](./todo.gif)
 
+## the following info might be outdate. TODO:update!
 # Installation
 
 Widget persists todo items as a JSON, so in order to simplify JSON serialisation/deserialisation download a **json.lua** from this repository: https://github.com/rxi/json.lua under `~/.config/awesone` folder. And don't forget to star a repo :)

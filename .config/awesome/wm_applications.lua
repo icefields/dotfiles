@@ -417,11 +417,11 @@ local applications = {
             tag = "4",
             size_hints_honor = false, -- no gaps on full screen
             titlebars_enabled = false,
-            fullscreen = true,
+            --fullscreen = true,
             floating = false,
             border_width = 0,
             --border_color = 0,
-            --maximized = true,
+            maximized = true,
             --maximized_vertical = true,
             --maximized_horizontal = true
         }
