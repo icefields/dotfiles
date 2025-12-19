@@ -2,6 +2,21 @@
 # Dot Files Luci4
 ![image](https://github.com/user-attachments/assets/b33396c0-0abd-46b7-9db8-9aa6e87789fb)
 
+## Env Variables
+This example is for Fish, but any shell would need those, to run some of the scripts.<br>
+In Fish create the following env vars (ie. `.config/fish/conf.d/api_keys.fish`)
+```
+# 
+set -gx PATH $PATH /usr/local/bin
+set -gx TOR_PASSWORD "torPasswordForTheResetTorScript"
+set -gx GOOGLE_API_KEY "yourGoogleApiKey"
+
+# share-link application variables
+set -gx SHARE_LINK_AUTH "headerAuthCodeForTheShareScripts"
+set -gx SHARE_LINK_URL "https://share.url/upload"
+set -gx SHARE_LINK_NOTIFICATION_URL " https://ntfy.url/topic"
+```
+
 ## Fish
 Fish configuration files and functions.
 <br>
