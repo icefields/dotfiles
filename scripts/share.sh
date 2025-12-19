@@ -63,9 +63,20 @@ file=$(find -L $HOME "${extra_paths[@]}" \( \
     | showmenu) #wofi --dmenu -i -l 25)
 
 # curl -F"file=@$file" 0x0.st | copyClipboard
-curl -k -X POST \
+shareUrl=$(curl -k -X POST \
   -H "X-Auth-Token: $SHARE_LINK_AUTH" \
-  -F "file=@$file" $SHARE_LINK_URL | jq -r .public_url | copyClipboard
+  -F "file=@$file" $SHARE_LINK_URL | jq -r .public_url)
+echo $shareUrl | copyClipboard
+
+echo $shareUrl
+
+# ntfy notification
+curl \
+    -H "Title: Upload Complete" \
+    -H "Priority: low" \
+    -H "Tags: skull" \
+    -d "$shareUrl" \
+    $SHARE_LINK_NOTIFICATION_URL
 
 notify-send "Link Copied for $file"
 

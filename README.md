@@ -4,6 +4,8 @@
 
 ## Fish
 Fish configuration files and functions.
+<br>
+Call `set -U fish_color_autosuggestion brblack` once to restore transparency in the suggestion.
 
 ### Functions:
 <b>tari</b> - Compresses files and directories <br>
