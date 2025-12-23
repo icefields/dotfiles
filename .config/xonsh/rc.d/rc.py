@@ -5,6 +5,14 @@ import subprocess
 from xonsh.built_ins import XSH
 from xonsh.xontribs import xontribs_load
 import xontrib
+import warnings
+
+# xontrib-kitty has some deprecations in the code
+warnings.filterwarnings(
+    "ignore",
+    category=DeprecationWarning,
+    module=r"xontrib_kitty.*",
+)
 
 # ------------------------------------------------------------
 # Interactive guard
@@ -19,8 +27,9 @@ else:
     abbrevs = XSH.ctx["abbrevs"]
     aliases = XSH.aliases
     xontribs_load(["fish_completer"])
+    xontribs_load(["kitty"])
     #__xonsh__.execer.exec("xontrib load fish_completer")
-    
+
     # --------------------------------------------------------
     # Helpers
     # --------------------------------------------------------
@@ -31,12 +40,17 @@ else:
             stderr=subprocess.DEVNULL,
         ) == 0
 
-
     # Enable autosuggestions
     __xonsh__.env['XONSH_AUTOSUGGESTION'] = 'prompt_toolkit' #'readline'
     __xonsh__.env['XONSH_COMPLETIONS_DISPLAY'] = 'multi'
     __xonsh__.env['XONSH_COMPLETIONS_IGNORE_CASE'] = True
     __xonsh__.env['XONSH_COMPLETIONS_MENU_COMPLETION'] = True
+
+    # Carapace auto-complete suggestions
+    XSH.env["CARAPACE_BRIDGES"] = "zsh,fish,bash"  # inshellisense
+    XSH.env["COMPLETIONS_CONFIRM"] = True
+    # Execute carapace initialization
+    exec(__xonsh__.subproc_captured_stdout(["carapace", "_carapace", "xonsh"]))
 
     # history settings
     __xonsh__.env['XONSH_HISTORY_FILE'] = '.xonsh_history'
