@@ -1,0 +1,33 @@
+from xonsh.built_ins import XSH
+import os
+import re
+
+shell_env_path = os.path.expanduser("~/.shell_env")
+
+def load_shell_env():
+    if os.path.exists(shell_env_path):
+        with open(shell_env_path) as file:
+            for line in file:
+                line = line.strip()  # Remove any leading/trailing whitespace
+                
+                # Skip empty lines or comments
+                if not line or line.startswith("#"):
+                    continue
+                
+                # Regular expression to match KEY="quoted value"
+                match = re.match(r'(\S+)\s*=\s*"([^"]*)"', line)
+                if match:
+                    key = match.group(1)  # This is the key (left side of `=`)
+                    value = match.group(2)  # This is the value inside the quotes
+                    
+                    # Assign the variable to Xonsh environment
+                    XSH.env[key] = value
+                else:
+                    print(f"Warning: Invalid line skipped (unquoted value or bad format): {line}")
+
+load_shell_env()
+
+#print("Loaded environment variables:")
+#for key in XSH.env:
+#    print(f"{key} = {XSH.env[key]}")
+

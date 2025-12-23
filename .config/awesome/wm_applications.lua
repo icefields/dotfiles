@@ -205,7 +205,8 @@ local askOllama = {
     }
 }
 local resetTor = {
-    command = "fish -c '$HOME/scripts/tor_relay_reset.sh'",
+    -- '$HOME/scripts/tor_relay_reset.sh'
+    command = "fish -c '" .. homeDir .. "/scripts/tor_relay_reset.sh'",
     description = "Reset tor relay, change ip address",
     group = groupLuci4,
     shell = true,

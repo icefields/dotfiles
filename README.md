@@ -3,26 +3,25 @@
 ![image](https://github.com/user-attachments/assets/b33396c0-0abd-46b7-9db8-9aa6e87789fb)
 
 ## Env Variables
-This example is for Fish, but any shell would need those, to run some of the scripts.<br>
-In Fish create the following env vars (ie. `.config/fish/conf.d/api_keys.fish`)
+The env variables are stored in `~/.shell_env`, in a key="value" format. Different shells (currently parsers for `xonsh`, `fish` and `bash` are present) will parse that file into their own format. The shell would need those, to run some of the scripts.<br>
+Create `~/.shell_env`, and add the following variables.<br>
 ```
-# 
-set -gx PATH $PATH /usr/local/bin
-set -gx TOR_PASSWORD "torPasswordForTheResetTorScript"
-set -gx GOOGLE_API_KEY "yourGoogleApiKey"
+TOR_PASSWORD="torPasswordForTheResetTorScript"
+GOOGLE_API_KEY="yourGoogleApiKey"
 
 # share-link application variables
-set -gx SHARE_LINK_AUTH "headerAuthCodeForTheShareScripts"
-set -gx SHARE_LINK_URL "https://share.url/upload"
-set -gx SHARE_LINK_NOTIFICATION_URL " https://ntfy.url/topic"
+SHARE_LINK_AUTH="headerAuthCodeForTheShareScripts"
+SHARE_LINK_URL="https://share.url/upload"
+SHARE_LINK_NOTIFICATION_URL="https://ntfy.url/topic"
 ```
 
-## Fish
+Also add in your shell config: `set -gx PATH $PATH /usr/local/bin` .
+
+### Xonsh and Fish Functions:
+
 Fish configuration files and functions.
 <br>
-Call `set -U fish_color_autosuggestion brblack` once to restore transparency in the suggestion.
 
-### Functions:
 <b>tari</b> - Compresses files and directories <br>
 examples: <br>
 `tari file.txt`<br>
@@ -60,6 +59,9 @@ Result: shows a tree view of the current directory, of depth 2 <br>
 
 ## Bash
 Bash config files (`.bashrc`)
+
+## Fish
+Call `set -U fish_color_autosuggestion brblack` once to restore transparency in the suggestion.
 
 ## Awesome WM
 Requires all the autostarting apps to be installed, comment out, in `autorun.sh`, the apps that are not installed.<br>
