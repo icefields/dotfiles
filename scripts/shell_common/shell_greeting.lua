@@ -1,4 +1,6 @@
--- xonsh_greeting.lua
+local function colorText(color, text)
+    return "\27[" .. color .. "m" .. text .. "\27[0m"
+end
 
 math.randomseed(os.time())
 
@@ -32,6 +34,6 @@ local chosen_ascii = ascii_intros[math.random(#ascii_intros)]
 -- Print the greeting
 os.execute("fastfetch --disable-linewrap --logo " .. chosen_ascii)
 
-print("Welcome! This terminal session is powered by " .. chosen_msg)
-print("Satanic rule of the session: " .. chosen_rule)
+print(colorText(93, "Welcome! This terminal session is powered by " .. chosen_msg))
+print(colorText(32,"Satanic rule of the session: ") .. colorText(35, chosen_rule))
 

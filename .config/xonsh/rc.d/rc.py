@@ -1,5 +1,3 @@
-# Requires: xontrib-abbrevs
-
 import os
 import sys
 import platform
@@ -14,26 +12,6 @@ import xontrib
 if not XSH.env.get("XONSH_INTERACTIVE", False):
     pass
 else:
-    # Enable autosuggestions
-    __xonsh__.env['XONSH_AUTOSUGGESTION'] = 'prompt_toolkit' #'readline'
-    __xonsh__.env['XONSH_COMPLETIONS_DISPLAY'] = 'multi'
-    __xonsh__.env['XONSH_COMPLETIONS_IGNORE_CASE'] = True
-    __xonsh__.env['XONSH_COMPLETIONS_MENU_COMPLETION'] = True
-
-    # history settings
-    __xonsh__.env['XONSH_HISTORY_FILE'] = '.xonsh_history'
-    __xonsh__.env['XONSH_HISTORY_SIZE'] = 10000
-    __xonsh__.env['HISTCONTROL'] = 'ignoredups'
-
-    scriptsDir = os.path.expanduser("~/scripts/shell_common")
-
-    # --------------------------------------------------------
-    # Greeting
-    # --------------------------------------------------------
-    #subprocess.run(["lua", os.path.join(scriptsDir, "luci_greeting.lua")])
-    subprocess.run([os.path.join(scriptsDir, "luci_greeting.sh")])
-    subprocess.run(["lua", os.path.join(scriptsDir, "shell_greeting.lua")])
-
     # --------------------------------------------------------
     # Load xontribs
     # --------------------------------------------------------
@@ -53,14 +31,37 @@ else:
             stderr=subprocess.DEVNULL,
         ) == 0
 
+
+    # Enable autosuggestions
+    __xonsh__.env['XONSH_AUTOSUGGESTION'] = 'prompt_toolkit' #'readline'
+    __xonsh__.env['XONSH_COMPLETIONS_DISPLAY'] = 'multi'
+    __xonsh__.env['XONSH_COMPLETIONS_IGNORE_CASE'] = True
+    __xonsh__.env['XONSH_COMPLETIONS_MENU_COMPLETION'] = True
+
+    # history settings
+    __xonsh__.env['XONSH_HISTORY_FILE'] = '.xonsh_history'
+    __xonsh__.env['XONSH_HISTORY_SIZE'] = 10000
+    __xonsh__.env['HISTCONTROL'] = 'ignoredups'
+
+    # theme
+    __xonsh__.env['XONSH_COLOR_STYLE'] = 'nord-darker'
+
+
+    scriptsDir = os.path.expanduser("~/scripts/shell_common")
+
+    # --------------------------------------------------------
+    # Greeting
+    # --------------------------------------------------------
+    #subprocess.run(["lua", os.path.join(scriptsDir, "luci_greeting.lua")])
+    subprocess.run([os.path.join(scriptsDir, "luci_greeting.sh")])
+    subprocess.run(["lua", os.path.join(scriptsDir, "shell_greeting.lua")])
+ 
     # --------------------------------------------------------
     # Environment variables
     # --------------------------------------------------------
     XSH.env["EDITOR"] = "nvim"
     XSH.env["MANPAGER"] = "nvim +Man!"
-
-    __xonsh__.env['XONSH_COLOR_STYLE'] = 'nord-darker'
-    
+ 
     # --------------------------------------------------------
     # Abbreviations — Git
     # --------------------------------------------------------
