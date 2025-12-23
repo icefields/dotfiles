@@ -19,7 +19,7 @@ Also add in your shell config: `set -gx PATH $PATH /usr/local/bin` .
 
 ### Xonsh and Fish Functions:
 
-Fish configuration files and functions.
+Xonsh and Fish functions.
 <br>
 
 <b>tari</b> - Compresses files and directories <br>

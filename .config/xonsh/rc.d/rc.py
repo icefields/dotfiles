@@ -1,5 +1,3 @@
-# ~/.xonshrc.py
-# Translated from Fish to Xonsh (Python rc)
 # Requires: xontrib-abbrevs
 
 import os

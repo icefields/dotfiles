@@ -3,7 +3,6 @@ set shell_env_path ~/.shell_env
 function load_shell_env
     # Check if the file exists
     if test -f $shell_env_path
-        sleep 1
         # Read the file line by line
         for line in (cat $shell_env_path)
             # Trim whitespace from the line
@@ -29,7 +28,7 @@ function load_shell_env
                 set value (string trim $value)
 
                 # Debug: Print the key and value being set (to check trimming)
-                echo "Setting: $key = $value"
+                # echo "Setting: $key = $value"
 
                 # Set the variable globally in Fish
                 set -gx $key $value
