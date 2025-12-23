@@ -60,9 +60,9 @@ function fish_greeting
 	set chosen_msg $powered_msgs[(math $chosen_msg"+1")]
 
 	# Output it to the console
-	printf (set_color F90)"Welcome! This terminal session is powered by %s\n" $chosen_msg
-	set_color $fish_color_autosuggestion 
+    printf (set_color F90)"Welcome! This terminal session is powered by %s\n" $chosen_msg
+    set_color $fish_color_autosuggestion 
     echo "Satanic rule of the session: " (set_color blue; echo $chosen_rule;)
-  	set_color normal
-	echo The time is (set_color yellow; date +%T; set_color normal). The OS is $OS_NAME on $hostname
+    set_color normal
+    echo The time is (set_color yellow; date +%T; set_color normal). The OS is $OS_NAME on $hostname
 end

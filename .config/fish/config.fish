@@ -45,6 +45,9 @@ if status is-interactive
     # set -x MANPAGER "less"
     # export MANPAGER="/bin/sh -c \"col -b | vim --not-a-term -c 'set ft=man ts=8 nomod nolist noma' -\""
 
+    # Set semi-transparent autocomplete suggestions
+    set -g fish_color_autosuggestion brblack
+
     ### ABBREVIATIONS ###
     # git
     abbr --add ad git add .

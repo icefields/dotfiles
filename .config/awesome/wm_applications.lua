@@ -682,7 +682,7 @@ local applications = {
         subGroup = subGroup.graphics
     },
     gimp = {
-        label = "Gimp",
+        label = "Gimp 2",
         class = "",
         favourite = true,
         command = {
@@ -695,7 +695,7 @@ local applications = {
         subGroup = subGroup.graphics
     },
     gimpDev = {
-        label = "Gimp Dev",
+        label = "Gimp 3",
         class = "",
         favourite = false,
         command = {

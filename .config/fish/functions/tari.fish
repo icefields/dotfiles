@@ -6,8 +6,9 @@
 # extract files in particular directory, for example in /tmp:
 # tar -zxvf prog-1-jan-2005.tar.gz -C /tmp
 function tari --argument filename
-    # tar -zcvf "(string replace -a '/' '' $filename).tar.gz" $filename
-    set output_filename (string replace -a '/' '' $filename).tar.gz
-    tar -zcvf $output_filename $filename
+    ~/scripts/shell_common/tari.sh $filename
+    ## tar -zcvf "(string replace -a '/' '' $filename).tar.gz" $filename
+    #set output_filename (string replace -a '/' '' $filename).tar.gz
+    #tar -zcvf $output_filename $filename
 end
 
