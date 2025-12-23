@@ -21,16 +21,6 @@ if not XSH.env.get("XONSH_INTERACTIVE", False):
     pass
 else:
     # --------------------------------------------------------
-    # Load xontribs
-    # --------------------------------------------------------
-    xontribs_load(["abbrevs"])
-    abbrevs = XSH.ctx["abbrevs"]
-    aliases = XSH.aliases
-    xontribs_load(["fish_completer"])
-    xontribs_load(["kitty"])
-    #__xonsh__.execer.exec("xontrib load fish_completer")
-
-    # --------------------------------------------------------
     # Helpers
     # --------------------------------------------------------
     def command_exists(cmd):
@@ -40,6 +30,16 @@ else:
             stderr=subprocess.DEVNULL,
         ) == 0
 
+    # --------------------------------------------------------
+    # Load xontribs
+    # --------------------------------------------------------
+    xontribs_load(["abbrevs"])
+    abbrevs = XSH.ctx["abbrevs"]
+    aliases = XSH.aliases
+    xontribs_load(["fish_completer"])
+    xontribs_load(["kitty"])
+    #__xonsh__.execer.exec("xontrib load fish_completer")
+ 
     # Enable autosuggestions
     __xonsh__.env['XONSH_AUTOSUGGESTION'] = 'prompt_toolkit' #'readline'
     __xonsh__.env['XONSH_COMPLETIONS_DISPLAY'] = 'multi'
@@ -222,6 +222,8 @@ else:
             ).strip()
         except Exception:
             OS_NAME = system
+    
+    __xonsh__.env['OS_NAME'] = OS_NAME
 
     # --------------------------------------------------------
     # Distrobox container handling
@@ -278,4 +280,4 @@ else:
 
     else:
         print("CANNOT DETECT OS, CHECK xonshrc.py FILE")
- 
+

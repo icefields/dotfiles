@@ -3,29 +3,29 @@ import subprocess
 from xonsh.built_ins import XSH
 from pathlib import Path
 
-ls_color_files = [
-    Path.home() / "scripts/shell_common/colour_schemes/one-dark",
-    Path.home() / "scripts/shell_common/colour_schemes/dracula",
-    Path.home() / "scripts/shell_common/colour_schemes/nord",
-    Path.home() / "scripts/shell_common/colour_schemes/gruvbox-dark",
-    Path.home() / "scripts/shell_common/colour_schemes/alabaster_dark",
+basePath = Path.home() / "scripts/shell_common/colour_schemes"
+schemes = [
+    "one-dark",
+    "dracula",
+    "nord",
+    "gruvbox-dark",
+    "alabaster_dark",
 ]
+lsColour = random.choice(schemes)
+chosenFile = basePath / lsColour
+XSH.env["LS_COLORS"] = chosenFile.read_text().strip()
 
-chosen_file = random.choice(ls_color_files)
-XSH.env["LS_COLORS"] = chosen_file.read_text().strip()
 
+def printColour(colour, text, end="\n"):
+    print(f"\033[{colour}m{text}\033[0m", end = end)
 
-# requires vivid installed
+printColour("32", "LS_COLORS", end = "")
+printColour("35", lsColour, end = "")
+print(",", end = "")
+printColour("32", "OS_NAME", end = "")
+printColour("35", XSH.env["OS_NAME"])
 
-#schemes = [
-#    "alabaster_dark", 
-#    "gruvbox-dark", 
-#    "nord", 
-#    "one-dark"
-#]
-
-#lsColor = random.choice(schemes)
-
+# Alternate solution, requires vivid installed
 #XSH.env["LS_COLORS"] = __xonsh__.subproc_captured_stdout(
 #    ["vivid", "generate", lsColor]
 #).strip()
