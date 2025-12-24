@@ -1,7 +1,7 @@
 # Installation
 ```
 python -m venv ~/.xonsh-env
-~/.xonsh-env/bin/pip install xonsh prompt-toolkit pygments xontrib-abbrevs xontrib-kitty
+~/.xonsh-env/bin/pip install xonsh prompt-toolkit pygments xontrib-abbrevs xontrib-kitty xontrib-fish-completer
 ```
 
 The shell executable will be in
