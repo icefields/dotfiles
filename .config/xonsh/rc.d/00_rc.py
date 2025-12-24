@@ -58,24 +58,7 @@ else:
     __xonsh__.env['XONSH_HISTORY_SIZE'] = 10000
     __xonsh__.env['HISTCONTROL'] = 'ignoredups'
 
-    # theme
-    # TODO: move to another file
-    styles = [
-	    "rrt",
-	    "monokai",
-	    "github-dark",
-	    "material",
-	    "nord",
-	    "one-dark",
-	    "nord-darker",
-	    "paraiso-dark",
-	    "native",
-	    "fruity",
-	    "vim",
-    ]
-
-    __xonsh__.env['XONSH_COLOR_STYLE'] = random.choice(styles)
-
+ 
     # --------------------------------------------------------
     # Environment variables
     # --------------------------------------------------------

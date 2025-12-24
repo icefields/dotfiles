@@ -24,6 +24,9 @@ def load_shell_env():
                     XSH.env[key] = value
                 else:
                     print(f"Warning: Invalid line skipped (unquoted value or bad format): {line}")
+    else:
+        print(f"The file or directory does not exist at {shell_env_path}. You must create the file for env variables, please consult the README")
+
 
 load_shell_env()
 

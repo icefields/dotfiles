@@ -1,14 +1,5 @@
-# ~/.config/xonsh/rc.py
 import os
 import socket
-
-# ANSI colors
-RESET = "\033[0m"
-DARK_GREEN = "\033[32m"
-BLUE = "\033[34m"
-CYAN = "\033[36m"
-MAGENTA = "\033[35m"
-YELLOW = "\033[33m"
 
 def git_branch():
     """Return current git branch, or empty string if not in git repo"""
@@ -24,15 +15,22 @@ def git_branch():
         return ""
 
 def my_prompt():
+    RESET = ColourAnsi.RESET.value
+    userCol = ColourAnsi.YELLOW.value
+    hostCol = ColourAnsi.BRIGHT_WHITE.value
+    cwdCol = ColourAnsi.CYAN.value
+    branchCol = ColourAnsi.MAGENTA.value
+    promptCol = ColourAnsi.DARK_GREEN.value
+
     user = os.environ.get("USER", "user")
     host = socket.gethostname().split(".")[0]
     cwd = os.getcwd()
     branch = git_branch()
     return (
-        f"{YELLOW}{user}{RESET}@{BLUE}{host}{RESET}:"
-        f"{CYAN}{cwd}{RESET}"
-        f"{MAGENTA}{branch}{RESET}\n "
-        f"{DARK_GREEN}  {RESET} "
+        f"{userCol}{user}{RESET}@{hostCol}{host}{RESET}:"
+        f"{cwdCol}{cwd}{RESET}"
+        f"{branchCol}{branch}{RESET}\n "
+        f"{promptCol}  {RESET} "
     )
 
 __xonsh__.env['PROMPT'] = my_prompt
