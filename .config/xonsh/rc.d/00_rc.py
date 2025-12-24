@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 import platform
 import subprocess
@@ -58,18 +59,23 @@ else:
     __xonsh__.env['HISTCONTROL'] = 'ignoredups'
 
     # theme
-    __xonsh__.env['XONSH_COLOR_STYLE'] = 'nord-darker'
+    # TODO: move to another file
+    styles = [
+	    "rrt",
+	    "monokai",
+	    "github-dark",
+	    "material",
+	    "nord",
+	    "one-dark",
+	    "nord-darker",
+	    "paraiso-dark",
+	    "native",
+	    "fruity",
+	    "vim",
+    ]
 
+    __xonsh__.env['XONSH_COLOR_STYLE'] = random.choice(styles)
 
-    scriptsDir = os.path.expanduser("~/scripts/shell_common")
-
-    # --------------------------------------------------------
-    # Greeting
-    # --------------------------------------------------------
-    #subprocess.run(["lua", os.path.join(scriptsDir, "luci_greeting.lua")])
-    subprocess.run([os.path.join(scriptsDir, "luci_greeting.sh")])
-    subprocess.run(["lua", os.path.join(scriptsDir, "shell_greeting.lua")])
- 
     # --------------------------------------------------------
     # Environment variables
     # --------------------------------------------------------
@@ -186,7 +192,7 @@ else:
     # --------------------------------------------------------
     # vim → nvim fallback
     # --------------------------------------------------------
-    if not command_exists("vim") and command_exists("nvim"):
+    if command_exists("nvim"):
         aliases["vim"] = "nvim"
 
     # --------------------------------------------------------
