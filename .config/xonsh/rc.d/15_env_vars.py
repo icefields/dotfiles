@@ -2,11 +2,11 @@ from xonsh.built_ins import XSH
 import os
 import re
 
-shell_env_path = os.path.expanduser("~/.shell_env")
+shell_env_path = Paths.ENV_VARS
 
 def load_shell_env():
-    if os.path.exists(shell_env_path):
-        with open(shell_env_path) as file:
+    if shell_env_path.exists():  # Path method
+        with shell_env_path.open() as file:
             for line in file:
                 line = line.strip()  # Remove any leading/trailing whitespace
                 

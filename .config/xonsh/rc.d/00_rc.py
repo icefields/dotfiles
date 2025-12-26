@@ -8,6 +8,18 @@ from xonsh.xontribs import xontribs_load
 import xontrib
 import warnings
 from pathlib import Path
+from enum import Enum
+
+class Paths:
+    HOME = Path.home()
+    LOG_DIR = HOME / '.xonsh-env'
+    SCRIPTS_DIR = HOME / 'scripts'
+    SHELL_COMMON_SCRIPTS_DIR = HOME / 'scripts/shell_common'
+    COLOUR_SCHEMES_DIR = SHELL_COMMON_SCRIPTS_DIR / 'colour_schemes'
+    LOG_FILE = LOG_DIR / 'xonsh_traceback.log'
+    ENV_VARS = HOME / '.shell_env'
+    HISTORY_FILE = HOME / '.xonsh_history'
+    HISTORY_DB = HOME / '.xonsh_history.db'
 
 # xontrib-kitty has some deprecations in the code
 warnings.filterwarnings(
@@ -17,11 +29,10 @@ warnings.filterwarnings(
 )
 
 # Enable full traceback of errors
-logdir = Path.home() / '.xonsh-env'
 # create log dir if not exists, comment out to just generate an error at startup.
-# logdir.mkdir(parents=True, exist_ok=True)
+# Paths.LOG_DIR.mkdir(parents=True, exist_ok=True)
 __xonsh__.env['XONSH_SHOW_TRACEBACK'] = True
-__xonsh__.env['XONSH_TRACEBACK_LOGFILE'] = str(logdir / 'xonsh_traceback.log')
+__xonsh__.env['XONSH_TRACEBACK_LOGFILE'] = str(Paths.LOG_FILE)
 
 # ------------------------------------------------------------
 # Interactive guard
@@ -74,11 +85,13 @@ else:
     # XONSH_AUTOPAIR - Whether Xonsh will auto-insert matching parentheses, brackets, and quotes (prompt-toolkit shell only)
     # CASE_SENSITIVE_COMPLETIONS - completions should be case sensitive or case insensitive
     # COMPLETION_IN_THREAD - controls whether tab completions run in a separate thread. If true the prompt will not freeze waiting for the auto-complete suggestion.
+    # ----------------------------------------------------------------
     __xonsh__.env['PROMPT_TOOLKIT_COLOR_DEPTH'] = 'DEPTH_24_BIT'
     __xonsh__.env['XONSH_AUTOSUGGESTION'] = 'prompt_toolkit' #'readline'
     __xonsh__.env['XONSH_COMPLETIONS_DISPLAY'] = 'multi'
     __xonsh__.env['COMPLETIONS_DISPLAY'] = 'multi'
     __xonsh__.env['XONSH_COMPLETIONS_IGNORE_CASE'] = True
+    __xonsh__.env['CASE_SENSITIVE_COMPLETIONS'] = False
     __xonsh__.env['XONSH_COMPLETIONS_MENU_COMPLETION'] = True
     __xonsh__.env['COMPLETION_MODE'] = 'menu-complete'
     __xonsh__.env['UPDATE_COMPLETIONS_ON_KEYPRESS'] = False
@@ -89,7 +102,6 @@ else:
     __xonsh__.env['XONSH_HISTORY_MATCH_ANYWHERE'] = True
     __xonsh__.env['UPDATE_PROMPT_ON_KEYPRESS'] = True
     __xonsh__.env['XONSH_AUTOPAIR'] = True
-    __xonsh__.env['CASE_SENSITIVE_COMPLETIONS'] = False
     __xonsh__.env['COMPLETION_IN_THREAD'] = True
 
     # Carapace auto-complete suggestions
@@ -101,11 +113,11 @@ else:
     # history settings
     # HISTCONTROL - ignoredups  will not save the command if it matches the previous command, erasedups  will remove all previous commands that matches and updates the frequency (only supported in sqlite)
     if isDistrobox():
-        __xonsh__.env['XONSH_HISTORY_FILE'] = str(Path.home() / '.xonsh_history')
+        __xonsh__.env['XONSH_HISTORY_FILE'] = str(Paths.HISTORY_FILE)
         __xonsh__.env['XONSH_HISTORY_SIZE'] = 10000
         __xonsh__.env['HISTCONTROL'] = 'ignoredups'
     else:
-        __xonsh__.env['XONSH_HISTORY_FILE'] = str(Path.home() / '.xonsh_history.db')
+        __xonsh__.env['XONSH_HISTORY_FILE'] = str(Paths.HISTORY_DB)
         __xonsh__.env['XONSH_HISTORY_BACKEND'] = 'sqlite'
         __xonsh__.env['XONSH_HISTORY_SIZE'] = 100000
         __xonsh__.env['HISTCONTROL'] = 'erasedups'
@@ -209,9 +221,6 @@ else:
     # --------------------------------------------------------
     aliases.update({
         ":q": "exit",
-        "toreset": f"{os.environ['HOME']}/scripts/tor_relay_reset.sh",
-        "toripify": "torsocks wget -qO - https://api.ipify.org; echo",
-        "rebootToMac": "sudo sh -c 'echo 1 | asahi-bless; reboot'",
         "df": "df -h",
         "free": "free -m",
     })
@@ -220,8 +229,8 @@ else:
     # Dotfiles bare repo
     # --------------------------------------------------------
     aliases["gitdots"] = (
-        f"/usr/bin/git --git-dir={os.environ['HOME']}/.git-dotfiles/ "
-        f"--work-tree={os.environ['HOME']}"
+        f"/usr/bin/git --git-dir={Paths.HOME}/.git-dotfiles/ "
+        f"--work-tree={Paths.HOME}"
     )
 
     # --------------------------------------------------------
@@ -271,8 +280,8 @@ else:
     # --------------------------------------------------------
     if isDistrobox():
         XSH.env.pop("SESSION_MANAGER", None)
-        if os.getcwd() != os.environ["HOME"]:
-            os.chdir(os.environ["HOME"])
+        if Path.cwd() != Paths.HOME:
+            os.chdir(Paths.HOME)
 
     # --------------------------------------------------------
     # OS-specific configuration

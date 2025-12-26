@@ -57,7 +57,6 @@ styles = [
 __xonsh__.env['XONSH_COLOR_STYLE'] = random.choice(styles)
 
 ## ls colours
-basePath = Path.home() / "scripts/shell_common/colour_schemes"
 schemes = [
     "one-dark",
     "dracula",
@@ -66,7 +65,7 @@ schemes = [
     "alabaster_dark",
 ]
 lsColour = random.choice(schemes)
-chosenFile = basePath / lsColour
+chosenFile = Paths.COLOUR_SCHEMES_DIR / lsColour
 XSH.env["LS_COLORS"] = chosenFile.read_text().strip()
 
 # Alternate solution, requires vivid installed

@@ -6,7 +6,8 @@ import os
 # Call this after all the env vars are set
 # --------------------------------------------------------
 
-scriptsDir = os.path.expanduser("~/scripts/shell_common")
+scriptsDir = str(Paths.SHELL_COMMON_SCRIPTS_DIR) 
+# os.path.expanduser("~/scripts/shell_common")
 
 #subprocess.run(["lua", os.path.join(scriptsDir, "luci_greeting.lua")])
 subprocess.run([os.path.join(scriptsDir, "luci_greeting.sh")])
