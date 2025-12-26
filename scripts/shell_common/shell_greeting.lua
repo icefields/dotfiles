@@ -4,10 +4,10 @@ end
 
 math.randomseed(os.time())
 
-local powered_msgs = {
-    "candy!", "rubber bands", "a black hole", "logic",
-    "electromagnetic cheese", "cats", "kitties", "Tessy!"
-}
+-- local powered_msgs = {
+--     "candy!", "rubber bands", "a black hole", "logic",
+--     "electromagnetic cheese", "cats", "kitties", "Tessy!"
+-- }
 
 local satanic_rules = {
     "Do not give opinions or advice unless you are asked.",
@@ -27,13 +27,13 @@ local ascii_intros = {
     "DarkOs", "Anarchy", "DragonFly", "GNOME", "GNU", "Kali"
 }
 
-local chosen_msg = powered_msgs[math.random(#powered_msgs)]
+-- local chosen_msg = powered_msgs[math.random(#powered_msgs)]
 local chosen_rule = satanic_rules[math.random(#satanic_rules)]
 local chosen_ascii = ascii_intros[math.random(#ascii_intros)]
 
 -- Print the greeting
 os.execute("fastfetch --disable-linewrap --logo " .. chosen_ascii)
 
-print(colorText(93, "Welcome! This terminal session is powered by " .. chosen_msg))
-print(colorText(32,"Satanic rule of the session: ") .. colorText(35, chosen_rule))
+-- print(colorText(93, "Welcome! This terminal session is powered by " .. chosen_msg))
+print(colorText(35,"Satanic rule of the session: ") .. colorText(32, chosen_rule))
 

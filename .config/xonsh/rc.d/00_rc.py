@@ -17,7 +17,11 @@ warnings.filterwarnings(
 )
 
 # Enable full traceback of errors
+logdir = Path.home() / '.xonsh-env'
+# create log dir if not exists, comment out to just generate an error at startup.
+# logdir.mkdir(parents=True, exist_ok=True)
 __xonsh__.env['XONSH_SHOW_TRACEBACK'] = True
+__xonsh__.env['XONSH_TRACEBACK_LOGFILE'] = str(logdir / 'xonsh_traceback.log')
 
 # ------------------------------------------------------------
 # Interactive guard
@@ -53,11 +57,40 @@ else:
     xontribs_load(["kitty"])
     #__xonsh__.execer.exec("xontrib load fish_completer")
  
-    # Enable autosuggestions
+    # --------------------------------------------------------
+    # Autosuggestions
+    # --------------------------------------------------------
+    # COMPLETION_MODE - How TAB completion behaves: 'default', 'menu-complete', 'reverse-menu-complete', 'readline'
+    # UPDATE_COMPLETIONS_ON_KEYPRESS - Show completions automatically while typing (without TAB)
+    # FUZZY_PATH_COMPLETION - Enable fallback fuzzy path matching
+    # SUBSEQUENCE_PATH_COMPLETION - Allow matching subsequences in paths
+    # XONSH_COMPLETIONS_DISPLAY - completion display style, override for PTK: 'single', 'multi', 'readline'
+    # COMPLETIONS_DISPLAY - completion display style, same as XONSH_COMPLETIONS_DISPLAY
+    # COMPLETIONS_MENU_ROWS - Number of rows visible in menu
+    # COMPLETIONS_CONFIRM - Ask confirmation when many completions exist
+    # PROMPT_TOOLKIT_COLOR_DEPTH - controls how many colors the terminal can use when xonsh is running under prompt_toolkit.
+    # XONSH_HISTORY_MATCH_ANYWHERE - fish-like fuzzy autocomplete from history
+    # UPDATE_PROMPT_ON_KEYPRESS - live update prompt on every keypress instead of only after hitting enter. This is a bit more resource intensive.
+    # XONSH_AUTOPAIR - Whether Xonsh will auto-insert matching parentheses, brackets, and quotes (prompt-toolkit shell only)
+    # CASE_SENSITIVE_COMPLETIONS - completions should be case sensitive or case insensitive
+    # COMPLETION_IN_THREAD - controls whether tab completions run in a separate thread. If true the prompt will not freeze waiting for the auto-complete suggestion.
+    __xonsh__.env['PROMPT_TOOLKIT_COLOR_DEPTH'] = 'DEPTH_24_BIT'
     __xonsh__.env['XONSH_AUTOSUGGESTION'] = 'prompt_toolkit' #'readline'
     __xonsh__.env['XONSH_COMPLETIONS_DISPLAY'] = 'multi'
+    __xonsh__.env['COMPLETIONS_DISPLAY'] = 'multi'
     __xonsh__.env['XONSH_COMPLETIONS_IGNORE_CASE'] = True
     __xonsh__.env['XONSH_COMPLETIONS_MENU_COMPLETION'] = True
+    __xonsh__.env['COMPLETION_MODE'] = 'menu-complete'
+    __xonsh__.env['UPDATE_COMPLETIONS_ON_KEYPRESS'] = False
+    __xonsh__.env['FUZZY_PATH_COMPLETION'] = True       # default True
+    __xonsh__.env['SUBSEQUENCE_PATH_COMPLETION'] = True # default True
+    __xonsh__.env['COMPLETIONS_MENU_ROWS'] = 6          # default 5
+    __xonsh__.env['COMPLETIONS_CONFIRM'] = False        # default True
+    __xonsh__.env['XONSH_HISTORY_MATCH_ANYWHERE'] = True
+    __xonsh__.env['UPDATE_PROMPT_ON_KEYPRESS'] = True
+    __xonsh__.env['XONSH_AUTOPAIR'] = True
+    __xonsh__.env['CASE_SENSITIVE_COMPLETIONS'] = False
+    __xonsh__.env['COMPLETION_IN_THREAD'] = True
 
     # Carapace auto-complete suggestions
     XSH.env["CARAPACE_BRIDGES"] = "zsh,fish,bash"  # inshellisense
@@ -66,14 +99,16 @@ else:
     exec(__xonsh__.subproc_captured_stdout(["carapace", "_carapace", "xonsh"]))
 
     # history settings
+    # HISTCONTROL - ignoredups  will not save the command if it matches the previous command, erasedups  will remove all previous commands that matches and updates the frequency (only supported in sqlite)
     if isDistrobox():
         __xonsh__.env['XONSH_HISTORY_FILE'] = str(Path.home() / '.xonsh_history')
         __xonsh__.env['XONSH_HISTORY_SIZE'] = 10000
+        __xonsh__.env['HISTCONTROL'] = 'ignoredups'
     else:
         __xonsh__.env['XONSH_HISTORY_FILE'] = str(Path.home() / '.xonsh_history.db')
         __xonsh__.env['XONSH_HISTORY_BACKEND'] = 'sqlite'
         __xonsh__.env['XONSH_HISTORY_SIZE'] = 100000
-    __xonsh__.env['HISTCONTROL'] = 'ignoredups'
+        __xonsh__.env['HISTCONTROL'] = 'erasedups'
 
  
     # --------------------------------------------------------
