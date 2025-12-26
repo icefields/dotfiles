@@ -7,6 +7,7 @@ from xonsh.built_ins import XSH
 from xonsh.xontribs import xontribs_load
 import xontrib
 import warnings
+from pathlib import Path
 
 # xontrib-kitty has some deprecations in the code
 warnings.filterwarnings(
@@ -14,6 +15,9 @@ warnings.filterwarnings(
     category=DeprecationWarning,
     module=r"xontrib_kitty.*",
 )
+
+# Enable full traceback of errors
+__xonsh__.env['XONSH_SHOW_TRACEBACK'] = True
 
 # ------------------------------------------------------------
 # Interactive guard
@@ -30,6 +34,14 @@ else:
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         ) == 0
+
+    # empty CONTAINER_ID will return true
+    def isDistrobox():
+        return "CONTAINER_ID" in os.environ
+    
+    # empty CONTAINER_ID will return false
+    # def is_distrobox():
+    #     return bool(os.environ.get("CONTAINER_ID"))
 
     # --------------------------------------------------------
     # Load xontribs
@@ -54,8 +66,13 @@ else:
     exec(__xonsh__.subproc_captured_stdout(["carapace", "_carapace", "xonsh"]))
 
     # history settings
-    __xonsh__.env['XONSH_HISTORY_FILE'] = '.xonsh_history'
-    __xonsh__.env['XONSH_HISTORY_SIZE'] = 10000
+    if isDistrobox():
+        __xonsh__.env['XONSH_HISTORY_FILE'] = str(Path.home() / '.xonsh_history')
+        __xonsh__.env['XONSH_HISTORY_SIZE'] = 10000
+    else:
+        __xonsh__.env['XONSH_HISTORY_FILE'] = str(Path.home() / '.xonsh_history.db')
+        __xonsh__.env['XONSH_HISTORY_BACKEND'] = 'sqlite'
+        __xonsh__.env['XONSH_HISTORY_SIZE'] = 100000
     __xonsh__.env['HISTCONTROL'] = 'ignoredups'
 
  
@@ -217,7 +234,7 @@ else:
     # --------------------------------------------------------
     # Distrobox container handling
     # --------------------------------------------------------
-    if os.environ.get("CONTAINER_ID"):
+    if isDistrobox():
         XSH.env.pop("SESSION_MANAGER", None)
         if os.getcwd() != os.environ["HOME"]:
             os.chdir(os.environ["HOME"])

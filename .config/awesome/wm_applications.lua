@@ -649,7 +649,7 @@ local applications = {
         favourite = true,
         command = {
             command = homeDir .. "/apps/Transmission",
-            description = "Freetube YouTube Invidious client",
+            description = "Torrent client",
             group = "",
             shell = true
         },
