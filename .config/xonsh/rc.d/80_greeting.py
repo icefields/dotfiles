@@ -16,7 +16,7 @@ subprocess.run(["lua", os.path.join(scriptsDir, "shell_greeting.lua")])
 keyCol = ColourAnsi.BRIGHT_BLACK
 valCol = ColourAnsi.BRIGHT_GREEN
 
-if os.environ.get("CONTAINER_ID"):
+if isDistrobox():
     printColour(keyCol, "CONTAINER_ID", end = "")
     printColour(valCol, XSH.env["CONTAINER_ID"], end = "")
     print(" ", end = "")
