@@ -26,11 +26,16 @@ def my_prompt():
     host = socket.gethostname().split(".")[0]
     cwd = os.getcwd()
     branch = git_branch()
+    
+    spacing = "\n"
+    if len(cwd) < 22:
+        spacing = ""
+
     return (
         f"{userCol}{user}{RESET}@{hostCol}{host}{RESET}:"
         f"{cwdCol}{cwd}{RESET}"
-        f"{branchCol}{branch}{RESET}\n "
-        f"{promptCol}  {RESET} "
+        f"{branchCol}{branch}{RESET}{spacing}"
+        f"{promptCol}  {RESET}"
     )
 
 __xonsh__.env['PROMPT'] = my_prompt
