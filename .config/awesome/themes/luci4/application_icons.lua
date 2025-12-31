@@ -49,6 +49,7 @@ local tutanota_icon = baseDir .. "tutanota-desktop.svg"
 local sound_icon = baseDir .. "sound.svg"
 local guitarPro_icon = baseDir .. "GuitarPro.svg"
 local powerSettings_icon = baseDir .. "preferences-system-power.svg"
+local cakeWallet_icon = baseDir .. "cake_wallet.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -83,7 +84,8 @@ local icons = {
     tutanota = tutanota_icon,
     sound = sound_icon,
     guitarPro = guitarPro_icon,
-    powerSettings = powerSettings_icon
+    powerSettings = powerSettings_icon,
+    cakeWallet = cakeWallet_icon
 }
 -- END LUCI4 Icon Theme
 return icons

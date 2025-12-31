@@ -130,7 +130,8 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
    
     -- Insert rules from applications object
     for _, appl in pairs(awesomeApps) do
-        if type(appl) == "table" and appl.properties ~= nil then
+        -- Rules cannot be applied without a class
+        if type(appl) == "table" and appl.properties ~= nil and appl.class ~= nil and appl.class ~= "" then
             table.insert(rules, getRule(awful, appl))
         end
     end

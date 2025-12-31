@@ -286,8 +286,10 @@ else:
     # --------------------------------------------------------
     # OS-specific configuration
     # --------------------------------------------------------
+    debUpdateCmd = "sudo apt update && sudo apt upgrade -y && sudo flatpak update --assumeyes && sudo apt autoremove -y"
     if OS_NAME == "Arch":
         abbrevs["ca"] = "bat --color=always"
+        abbrevs["upd"] = "yay -Syu --noconfirm"
         aliases["cat"] = "bat -p --color=always"
 
         aliases.update({
@@ -305,7 +307,7 @@ else:
 
     elif OS_NAME == "Ubuntu":
         abbrevs["ca"] = "batcat --color=always"
-        abbrevs["upd"] = "sudo apt update && sudo apt upgrade -y"
+        abbrevs["upd"] = debUpdateCmd        
         aliases["cat"] = "batcat -p --color=always"
 
     elif OS_NAME == "Fedora":
@@ -325,7 +327,7 @@ else:
 
     elif OS_NAME == "Linuxmint":
         abbrevs["ca"] = "batcat --color=always"
-        abbrevs["upd"] = "sudo apt update && sudo apt upgrade -y"
+        abbrevs["upd"] = debUpdateCmd
         aliases["cat"] = "batcat -p --color=always"
 
     else:

@@ -911,6 +911,26 @@ local applications = {
         },
         subGroup = subGroup.development
     },
+    cakewallet = {
+        class = "Cake_wallet",
+        label = "Cake Wallet",
+        favourite = false,
+        command = {
+            command = "flatpak run com.cakewallet.CakeWallet",
+            description = "Crypto (Bitcoin, Monero, etc) Wallet",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.utils,
+        icon = icons.cakeWallet,
+        properties = {
+            -- tag = "8",
+            floating = true,
+            width = 1200,
+            height = 900,
+            windowPlacement = placement.centered
+        }
+    },
     kdenlive = {
         label = "Kdenlive",
         class = "",
@@ -923,7 +943,7 @@ local applications = {
         },
         -- icon = ,
         subGroup = subGroup.multimedia,
-    }
+    },
 }
 
 function applications:bySubGroup()
