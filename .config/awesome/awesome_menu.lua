@@ -114,15 +114,27 @@ local function buildMenu(args, awesomeApplications)
     table.insert(customMenu, menu_flagged)
     table.insert(customMenu, menu_apps)
 
+    -- first insert all the subgroups into a table (array), then sort it
+    -- and insert its items one by one in the main table customMenu.
+    local allAppsMenu = { }
     for groupName, appsGroup in pairs(awesomeApplications:bySubGroup()) do
         if type(appsGroup) == "table" then
-            local menu_custom = {
+            local appMenuSubgroup = {
                 groupName,
                 getAwesomeMenu(awful, appsGroup, configDir),
                 get_icon_for_application(configDir, groupName)
             }
-            table.insert(customMenu, menu_custom)
+            table.insert(allAppsMenu, appMenuSubgroup)
+            --table.insert(customMenu, appMenuSubgroup)
         end
+    end
+    -- sort all apps menu
+    table.sort(allAppsMenu, function(a, b)
+        return a[1]:lower() < b[1]:lower()
+    end)
+    -- insert the sorted apps menu in the main menu
+    for _, sortedMenuGroup in ipairs(allAppsMenu) do
+        table.insert(customMenu, sortedMenuGroup)
     end
 
     local menu_fdo = { "Debian", debian.menu.Debian_menu.Debian,

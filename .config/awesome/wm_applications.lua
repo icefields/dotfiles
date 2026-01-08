@@ -499,7 +499,11 @@ local applications = {
         subGroup = subGroup.messaging,
         icon = icons.signal,
         properties = {
-            tag = "8"
+            tag = "8",
+            floating = true,
+            width = 900,
+            height = 800,
+            windowPlacement = placement.bottom_right
         }
     },
     telegram = {
@@ -921,10 +925,9 @@ local applications = {
             group = "",
             shell = false
         },
-        subGroup = subGroup.utils,
+        subGroup = { subGroup.internet, subGroup.utils },
         icon = icons.cakeWallet,
         properties = {
-            -- tag = "8",
             floating = true,
             width = 1200,
             height = 900,
@@ -943,6 +946,78 @@ local applications = {
         },
         -- icon = ,
         subGroup = subGroup.multimedia,
+    },
+    audacity = {
+        label = "Audacity",
+        class = "",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/Audacity.AppImage",
+            description = "Audacity audio editor",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.music, subGroup.multimedia }
+    },
+    digikam = {
+        label = "DigiKam",
+        class = "",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/digiKam-8.7.0-Qt6-x86-64.appimage",
+            description = "DigiKam Photo Collections util",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.graphics }
+    },
+    ahm5050 = {
+        label = "AHM 5050",
+        class = "",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/AHM 5050 v3 Standalone",
+            description = "Audio Assault AHM 5050 amp",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.music }
+    },
+    hellbeast = {
+        label = "Hellbeast",
+        class = "",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/Hellbeast v2 Standalone",
+            description = "Audio Assault Hellbeast amp",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.music }
+    },
+    flatseal = {
+        label = "Flatseal",
+        class = "",
+        favourite = false,
+        command = {
+            command = "flatpak run com.github.tchx84.Flatseal",
+            description = "Flatpak util",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.utils }
+    },
+    sqlitebrowser = {
+        label = "SQLite Browser",
+        class = "",
+        favourite = false,
+        command = {
+            command = homeDir .. "/SQLite-Browser.AppImage",
+            description = "SQLite Browser",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.utils, subGroup.development }
     },
 }
 
