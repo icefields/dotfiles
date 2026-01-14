@@ -166,8 +166,14 @@ echo "  $ASSET_URL"
 echo "→ $TARGET_PATH"
 
 curl -L "$ASSET_URL" -o "$TARGET_PATH"
-
 chmod +x "$TARGET_PATH" 2>/dev/null || true
+#if curl -fL -z "$TARGET_PATH" "$ASSET_URL" -o "$TARGET_PATH"; then
+#    echo "Up to date or downloaded successfully"
+#    chmod +x "$TARGET_PATH" 2>/dev/null || true
+#else
+#    echo "Not Downloaded, existing file already newer version"
+#    exit 1
+#fi
 
 echo "Done."
 

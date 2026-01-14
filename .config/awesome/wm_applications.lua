@@ -1012,13 +1012,44 @@ local applications = {
         class = "",
         favourite = false,
         command = {
-            command = homeDir .. "/SQLite-Browser.AppImage",
+            command = homeDir .. "/apps/SQLite-Browser.AppImage",
             description = "SQLite Browser",
             group = "",
             shell = false
         },
         subGroup = { subGroup.utils, subGroup.development }
     },
+    turtl = {
+        label = "Turtl notes",
+        class = "",
+        favourite = false,
+        command = {
+            command = "/opt/turtl/turtl",
+            description = "Turtle secret notes",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.utils, subGroup.documents }
+    },
+    koreader = {
+        label = "KOReader",
+        class = "KOReader",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/koreader.AppImage",
+            description = "e-book reader",
+            group = "",
+            shell = false
+        },
+        icon = icons.koreader,
+        properties = {
+            floating = true,
+            -- width = 1200,
+            -- height = 900,
+            windowPlacement = placement.centered
+        },
+        subGroup = { subGroup.utils, subGroup.documents }
+    }
 }
 
 function applications:bySubGroup()
