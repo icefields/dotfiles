@@ -63,6 +63,10 @@ update_github_app \
   "Audacity.AppImage" \
   "https://github.com/audacity/audacity/releases"
 
+update_github_app \
+  "koreader.AppImage" \
+  "https://github.com/koreader/koreader/releases"
+
 # Balena Etcher
 # TODO: the Linux version seems to be a zip file
 
@@ -73,6 +77,12 @@ update_github_app \
 update_github_app \
   "geforcenow-electron.AppImage" \
   "https://github.com/hmlendea/gfn-electron/releases"
+
+update_github_app \
+    "Nextcloud-NEW.AppImage" \
+    "https://github.com/nextcloud-releases/desktop/releases"
+
+echo "\n\nATTENTION: Cannot replace Nextcloud.AppImage because it's in use.\nMUST STOP AND RENAME Nextcloud manually!\n\n"
 
 # KDEnlive
 # No releases on github? https://invent.kde.org/multimedia/kdenlive
