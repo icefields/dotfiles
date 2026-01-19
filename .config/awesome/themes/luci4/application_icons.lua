@@ -50,7 +50,7 @@ local sound_icon = baseDir .. "sound.svg"
 local guitarPro_icon = baseDir .. "GuitarPro.svg"
 local powerSettings_icon = baseDir .. "preferences-system-power.svg"
 local cakeWallet_icon = baseDir .. "cake_wallet.svg"
-local koreader_icon = baseDir .. "koreader.ico"
+local koreader_icon = baseDir .. "koreader.svg"
 
 -- LUCI4 ICON THEME
 local icons = {

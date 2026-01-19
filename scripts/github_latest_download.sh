@@ -144,6 +144,7 @@ fi
 ORIGINAL_NAME=$(basename "$ASSET_URL")
 FINAL_NAME="${RENAME:-$ORIGINAL_NAME}"
 TARGET_PATH="$DEST_DIR/$FINAL_NAME"
+LOG_FILE="$HOME/scripts/github_latest_download.log"
 
 #######################################
 # Dry run
@@ -159,6 +160,11 @@ fi
 #######################################
 # Download
 #######################################
+if tr -d '\r' < $LOG_FILE | grep -qF "$ORIGINAL_NAME"; then
+    echo "APPLICATION $ORIGINAL_NAME ALREADY EXISTS"
+    exit 0
+fi
+
 mkdir -p "$DEST_DIR"
 
 echo "Downloading:"
@@ -175,5 +181,6 @@ chmod +x "$TARGET_PATH" 2>/dev/null || true
 #    exit 1
 #fi
 
+echo $ORIGINAL_NAME >> $LOG_FILE
 echo "Done."
 
