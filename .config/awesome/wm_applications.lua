@@ -673,6 +673,19 @@ local applications = {
         icon = icons.calibre,
         subGroup = subGroup.documents
     },
+    inkscape = {
+        label = "Inkscape",
+        class = "",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/Inkscape.AppImage",
+            description = "Inkscape vector image editor",
+            group = "",
+            shell = false
+        },
+        -- icon = icons.,
+        subGroup = subGroup.graphics
+    },
     upscayl = {
         label= "UpScayl",
         class = "",
@@ -783,7 +796,7 @@ local applications = {
             shell = false
         },
         -- icon = icons.,
-        subGroup = subGroup.multimedia,
+        subGroup = { subGroup.multimedia, subGroup.internet },
         properties = propertiesFloatingCentered
     },
     tigerVnc = {
