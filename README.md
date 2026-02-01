@@ -13,6 +13,15 @@ GOOGLE_API_KEY="yourGoogleApiKey"
 SHARE_LINK_AUTH="headerAuthCodeForTheShareScripts"
 SHARE_LINK_URL="https://share.url/upload"
 SHARE_LINK_NOTIFICATION_URL="https://ntfy.url/topic"
+
+# home vpn
+VPN_HOME_USER="user"
+VPN_HOME_PASS="pass"
+OVPN_HOME_CONFIG="/ovpn/config/location/on/disk/home.ovpn"
+
+# currency conversion API
+CURRENCY_API = "https://currency.api.url"
+
 ```
 
 Also add in your shell config: `set -gx PATH $PATH /usr/local/bin` .
@@ -56,6 +65,11 @@ examples: <br>
 `tree 2`<br>
 Result: shows a tree view of the current directory, of depth 2 <br>
 
+<b>currency_convert</b> - Currency conversion, must define CURRENCY_API env var to use this <br>
+examples: <br>
+`currency_convert(202, "USD/CAD")`<br>
+Result: converts 202 CAD to USD <br>
+This is Xonsh only. <br>
 
 ## Bash
 Bash config files (`.bashrc`)

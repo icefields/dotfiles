@@ -1,16 +1,21 @@
-local http = require("socket.http")
+--local http = require("socket.http")
+local https = require("ssl.https")
 local json = require("dkjson")
+local config = require("currency.api_config")
+-- rename api_config_example to api_config and edit with your server info
 
 local function fetchCurrencyRates()
-    -- TODO: put url in the config
-    local url = "http://192.168.50.161:36661/get?coin=CAD"
+    local url = config.baseUrl
 
     -- fetch the API response
-    local response, status = http.request(url)
+--    local response, status = http.request(url)
+    local response, status = https.request(config.baseUrl)
     if status ~= 200 then
         -- return nil, "Error fetching data, status code: " .. status
         return "Error fetching data, status code: " .. status
     end
+
+
 
     -- parse the JSON
     local data, pos, err = json.decode(response, 1, nil)
@@ -37,8 +42,7 @@ local function getWidget(args)
     local beautiful = args.beautiful
     local gears = args.gears
 
-    -- TODO: put symbols in the config
-    local currencySymbols = { "󰆬", "󰞺", "󰞻", "󰆭", "󰆮", "󰞼", "󰇁" }
+    local currencySymbols = config.symbols    
     local randomSymbol = currencySymbols[math.random(#currencySymbols)]
 
     local widget = wibox.widget {

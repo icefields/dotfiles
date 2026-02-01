@@ -14,3 +14,9 @@ aliases.update({
     "toripify": "torsocks wget -qO - https://api.ipify.org; echo",
 })
 
+def currency_convert(multiplier = 1, pair = "USD/CAD"):
+    api_url = __xonsh__.env['CURRENCY_API']
+    cmd = f'curl -s {api_url} | jq -r \'.result["{pair}"]\''
+    rate_str = subprocess.check_output(cmd, shell=True, text=True).strip()
+    return float(rate_str) * multiplier
+
