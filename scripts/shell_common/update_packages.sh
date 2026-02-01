@@ -20,12 +20,15 @@ update_github_app() {
     echo "From: $github_url"
 
     # Backup current version (if it exists)
-    if [[ -f "$APP_PATH" ]]; then
-        "$HOME/scripts/shell_common/backup.sh" "$APP_PATH"
-    fi
+    #if [[ -f "$APP_PATH" ]]; then
+    #    # "$HOME/scripts/shell_common/backup.sh" "$APP_PATH"
+    #fi
 
     # Ensure OLD-VERSIONS directory exists
     mkdir -p "$OLD_DIR"
+
+    # Backup old version.
+    cp "$APP_PATH" "$OLD_DIR/$appname".bck
 
     # Move old backups if any exist
     shopt -s nullglob
@@ -47,16 +50,23 @@ update_github_app() {
     echo "Update complete: $APP_PATH"
 }
 
-update_github_app \
-  "SQLite-Browser.AppImage" \
-  "https://github.com/sqlitebrowser/sqlitebrowser/releases"
-
 # SQLite-Browser
 #sqlitebrowser='SQLite-Browser.AppImage'
 #~/scripts/shell_common/backup.sh ~/apps/$sqlitebrowser
 #mv ~/apps/$sqlitebrowser.*.bck ~/apps/OLD-VERSIONS/
 #scripts/github_latest_download.sh --rename $sqlitebrowser https://github.com/sqlitebrowser/sqlitebrowser/releases ~/apps/
 #chmod +x $HOME/apps/$sqlitebrowser
+
+
+# Joplin
+update_github_app \
+  "Joplin.AppImage" \
+  "https://github.com/laurent22/joplin/releases"
+
+# SQLite-Browser
+update_github_app \
+  "SQLite-Browser.AppImage" \
+  "https://github.com/sqlitebrowser/sqlitebrowser/releases"
 
 # Audacity
 update_github_app \
@@ -78,16 +88,22 @@ update_github_app \
   "geforcenow-electron.AppImage" \
   "https://github.com/hmlendea/gfn-electron/releases"
 
+# Nextcloud
 update_github_app \
     "Nextcloud-NEW.AppImage" \
     "https://github.com/nextcloud-releases/desktop/releases"
+echo "---------------------------------------"
+echo "ATTENTION: Cannot replace Nextcloud.AppImage because it's in use."
+echo "MUST STOP AND RENAME Nextcloud manually!"
+echo "---------------------------------------"
 
-echo "\n\nATTENTION: Cannot replace Nextcloud.AppImage because it's in use.\nMUST STOP AND RENAME Nextcloud manually!\n\n"
+# FreeTube
+update_github_app \
+    "FreeTube.AppImage" \
+    "https://github.com/FreeTubeApp/FreeTube/releases"
 
 # KDEnlive
 # No releases on github? https://invent.kde.org/multimedia/kdenlive
-
-# Nextcloud
 
 # Unetbootin
 
@@ -98,5 +114,12 @@ echo "\n\nATTENTION: Cannot replace Nextcloud.AppImage because it's in use.\nMUS
 #  "https://github.com/microsoft/edit/releases"
 
 # Tutanota
-~/scripts/shell_common/get-tuta.sh &
+#~/scripts/shell_common/get-tuta.sh &
 
+# -------------------------------
+# TODO:
+#
+# check file before chmod
+# chmod: cannot access '/home/lucifer/apps/Nextcloud-NEW.AppImage': No such file or directory
+#
+# Fix backup created regardless if one is already present. Must first check if the new version has been downloaded 

@@ -21,6 +21,7 @@ local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local worldtimeTooltip = require("worldtime_tooltip")
+local currencyWidget = require("currency.currency_widget")
 local todoWidget = require("todo-widget.todo")
 
 local function getTagListButtons(client, gears, awful)
@@ -297,6 +298,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             redshiftButton,
             separatorW,
             weatherButton,
+            separator(beautiful, wibox),
+            currencyWidget.getWidget(args),
             separator(beautiful, wibox, { margins = { right = 0 } }),
             clockWidget,
             getSystemTray(wibox, beautiful, gears),

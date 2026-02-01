@@ -566,6 +566,26 @@ local applications = {
             windowPlacement = placement.centered
         }
     },
+    discord = {
+        label = "Discord",
+        class = "vesktop",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/Discord",
+            description = "Discord messenger",
+            group = "",
+            shell = true
+        },
+        subGroup = subGroup.messaging,
+        -- icon = icons.telegram,
+        properties = {
+            tag = "8",
+            floating = true,
+            width = 900,
+            height = 800,
+            windowPlacement = placement.top_left
+        }
+    },
     ampLocker = {
         label = "Audio Assault Amp Locker",
         class = "Amp Locker",
@@ -635,14 +655,14 @@ local applications = {
         subGroup = subGroup.music
     },
     freetube = {
-        label = "Freetube",
+        label = "FreeTube",
         class = "",
         favourite = true,
         command = {
-            command = homeDir .. "/apps/FreeTube",
+            command = homeDir .. "/apps/FreeTube.AppImage",
             description = "Freetube YouTube Invidious client",
             group = "",
-            shell = true
+            shell = false
         },
         icon = icons.freeTube,
         subGroup = { subGroup.multimedia, subGroup.internet }

@@ -9,6 +9,7 @@ import xontrib
 import warnings
 from pathlib import Path
 from enum import Enum
+import shutil
 
 class Paths:
     HOME = Path.home()
@@ -286,10 +287,30 @@ else:
     # --------------------------------------------------------
     # OS-specific configuration
     # --------------------------------------------------------
-    debUpdateCmd = "sudo apt update && sudo apt upgrade -y && sudo flatpak update --assumeyes && sudo apt autoremove -y"
+    # simple: debUpdateCmd = "sudo apt update && sudo apt upgrade -y && sudo flatpak update --assumeyes && sudo apt autoremove -y"
+
+    debUpdateCmd = (
+        "sudo apt update && "
+        "sudo apt upgrade -y && "
+        # "sudo flatpak update --assumeyes && "
+        "sudo apt autoremove -y"
+    )
+
+    archUpdateCmd = "yay -Syu --noconfirm"
+
+    # TODO: if Distrobox installed, append "distrobox upgrade --all"
+    if shutil.which("distrobox"):
+        debUpdateCmd += " && distrobox upgrade --all"
+        archUpdateCmd += " && distrobox upgrade --all"
+
+    if shutil.which("flatpak"):
+        debUpdateCmd += " && sudo flatpak update --assumeyes"
+        archUpdateCmd += " && sudo flatpak update --assumeyes"
+
+
     if OS_NAME == "Arch":
         abbrevs["ca"] = "bat --color=always"
-        abbrevs["upd"] = "yay -Syu --noconfirm"
+        abbrevs["upd"] = archUpdateCmd
         aliases["cat"] = "bat -p --color=always"
 
         aliases.update({
