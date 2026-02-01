@@ -21,6 +21,8 @@ local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 
+-- always load env vars before anything else because custom widgets and configs might use them.
+HomeEnv = require("home_env")  -- global ??should I pass it around instead??
 local config = require("config")
 
 -- Theme handling library
@@ -57,7 +59,8 @@ local awesomeArgs = ({
     menubar = menubar,
     client = client,
     screen = screen,
-    naughty = naughty
+    naughty = naughty,
+    homeEnv = HomeEnv
 })
 
 -- {{{ Error handling

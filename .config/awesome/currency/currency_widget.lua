@@ -15,8 +15,6 @@ local function fetchCurrencyRates()
         return "Error fetching data, status code: " .. status
     end
 
-
-
     -- parse the JSON
     local data, pos, err = json.decode(response, 1, nil)
     if err then

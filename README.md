@@ -95,9 +95,15 @@ Everything else included in the awesome config `rc.lua`, in the scripts in the s
 ***scriy/sharesec.sh*** will allow the selection of multiple files, zip them, encrypt them if a password is passed, upload them and return a link (ie. for sharing) <br><br>
 Add to (or create if it doesn't exist) `~/.config/awesome/autostart-custom.sh` applications to run at startup, on top of the ones that are already running by default (defined in `~/.config/awesome/autostart.sh` ).<br><br>
 <b>Screen Resolution and scaling</b><br>
-To customize the <b>screen resolution</b> add this line to `autostart-custom.sh`: `xrandr -s 1920x1080` .<br>
-For scaling, create or edit `~/.Xresources` and add `Xft.dpi:148` (check https://dpi.lv for the right dpi value, you can use a multiple or fraction of that number) .
+Screens should be autodetected and loaded automatically using the values in `config.lua`, used in `screens.sh`.<br>
+To manually customize the <b>screen resolution</b> add this line to `autostart-custom.sh`: `xrandr -s 1920x1080` .<br>
+For manual scaling, create or edit `~/.Xresources` and add `Xft.dpi:148` (check https://dpi.lv for the right dpi value, you can use a multiple or fraction of that number) .
 <br><br>
+<b>Shell env variables</b><br>
+Shell env vars defined in `~/.shell_env` are loaded and usable inside Awesome using `env.lua`.
+<br><br>
+
+
 #### TODO: add external repos as submodules:
 
 | sub-dir | repo remote |

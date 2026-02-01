@@ -1,8 +1,6 @@
 -- === CONFIG ===
 local config = { }
-config.baseUrl = "https://your.currency.api.url" -- use env.CURRENCY_API for consistency and DRY code.
-
--- random symbols to use as button icon
+config.baseUrl = HomeEnv.CURRENCY_API --"http://192.168.50.161:36661/get?coin=CAD"
 config.symbols = { "󰆬", "󰞺", "󰞻", "󰆭", "󰆮", "󰞼", "󰇁" }
 config.cacheDir = os.getenv("HOME") .. "/.cache"
 config.filePath = config.cacheDir .. "/awesome-currency.json"

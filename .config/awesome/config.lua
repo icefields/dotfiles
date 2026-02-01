@@ -3,7 +3,7 @@ local config = {}
 
 config.chosenThemeDir = "/themes/luci4/"
 config.chosenThemePath = config.chosenThemeDir .. "awesome_theme.lua"
-config.location = "43.6426,-79.3871"
+config.location = HomeEnv.LOCATION_COORDINATES or "43.6426,-79.3871" --fallback to Toronto
 
 local hdmi1Display = {
     primary = true,
