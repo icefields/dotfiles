@@ -83,6 +83,14 @@ Add to (or create if it doesn't exist) `~/.config/awesome/autostart-custom.sh` a
 <b>Screen Resolution and scaling</b><br>
 To customize the <b>screen resolution</b> add this line to `autostart-custom.sh`: `xrandr -s 1920x1080` .<br>
 For scaling, create or edit `~/.Xresources` and add `Xft.dpi:148` (check https://dpi.lv for the right dpi value, you can use a multiple or fraction of that number) .
+<br><br>
+#### TODO:
+add external repos as submodules:
+| sub-dir | repo remote |
+| --- | --- |
+| json-library | https://github.com/icefields/json.lua |
+| awesome-wm-widgets | https://github.com/streetturtle/awesome-wm-widgets.git |
+| collision | https://github.com/elv13/collision | 
 
 ## Picom
 This shouldn't have any requirements other than installing `picom`.
