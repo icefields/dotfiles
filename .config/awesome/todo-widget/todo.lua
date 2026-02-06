@@ -191,7 +191,9 @@ local function worker(user_args)
         -- header, title
         local first_row = wibox.widget {
             {
-                {widget = wibox.widget.textbox},
+                {
+                    widget = wibox.widget.textbox
+                },
                 {
                     markup = nfIcon("ToDo", beautiful.fg_normal, beautiful.font), -- '<span size="large" font_weight="bold" color="' .. beautiful.topBar_fg .. '">ToDo</span>',
                     align = 'center',
@@ -212,12 +214,12 @@ local function worker(user_args)
         for i, todo_item in ipairs(result.todo_items) do
             local checkbox = wibox.widget {
                 checked       = todo_item.status,
-                color         = beautiful.topBar_fg,
+                color         = beautiful.colour2.shade4,
                 paddings      = 2,
                 shape         = gears.shape.circle,
                 forced_width = 20,
                 forced_height = 20,
-                check_color = beautiful.topBar_fg,
+                check_color = beautiful.colour2.shade3,
                 widget        = wibox.widget.checkbox
             }
 
@@ -233,11 +235,17 @@ local function worker(user_args)
 
             local trash_button = wibox.widget {
                 {
-                    {    
-                        image = WIDGET_DIR .. '/window-close-symbolic.svg',
-                        resize = false,
-                        widget = wibox.widget.imagebox
+                    {   --  
+                        markup = nfIcon("", beautiful.errorColour, beautiful.topBar_button_font ),
+                        align  = 'center',
+                        valign = 'center',
+                        widget = wibox.widget.textbox
                     },
+                    --{    
+                    --    image = WIDGET_DIR .. '/window-close-symbolic.svg',
+                    --    resize = false,
+                    --    widget = wibox.widget.imagebox
+                    --},
                     margins = 5,
                     layout = wibox.container.margin
                 },
@@ -255,12 +263,18 @@ local function worker(user_args)
                 end)
             end)
 
-
             local move_up = wibox.widget {
-                image = WIDGET_DIR .. '/chevron-up.svg',
-                resize = false,
-                widget = wibox.widget.imagebox
+                markup = nfIcon("", beautiful.fg_focus, beautiful.topBar_button_font ),
+                align  = 'center',
+                valign = 'center',
+                widget = wibox.widget.textbox
             }
+
+            -- local move_up = wibox.widget {
+            --    image = WIDGET_DIR .. '/chevron-up.svg',
+            --    resize = false,
+            --    widget = wibox.widget.imagebox
+            -- }
 
             move_up:connect_signal("button::press", function()
                 local temp = result.todo_items[i]
@@ -272,10 +286,17 @@ local function worker(user_args)
             end)
 
             local move_down = wibox.widget {
-                image = WIDGET_DIR .. '/chevron-down.svg',
-                resize = false,
-                widget = wibox.widget.imagebox
+                markup = nfIcon("", beautiful.fg_focus, beautiful.topBar_button_font ),
+                align  = 'center',
+                valign = 'center',
+                widget = wibox.widget.textbox
             }
+
+            --local move_down = wibox.widget {
+            --    image = WIDGET_DIR .. '/chevron-down.svg',
+            --    resize = false,
+            --    widget = wibox.widget.imagebox
+            --}
 
             move_down:connect_signal("button::press", function()
                 local temp = result.todo_items[i]
@@ -323,12 +344,12 @@ local function worker(user_args)
                             {
                                 move_buttons,
                                 valign = 'center',
-                                layout = wibox.container.place,
+                                layout = wibox.container.place
                             },
                             {
                                 trash_button,
                                 valign = 'center',
-                                layout = wibox.container.place,
+                                layout = wibox.container.place
                             },
                             spacing = 8,
                             layout = wibox.layout.align.horizontal
@@ -336,7 +357,11 @@ local function worker(user_args)
                         spacing = 8,
                         layout = wibox.layout.align.horizontal
                     },
-                    margins = 8,
+                    left = 8,
+                    right = 8,
+                    top = 2,
+                    bottom = 2,
+                    -- margins = 8,
                     layout = wibox.container.margin
                 },
                 bg = beautiful.topBar_bg,

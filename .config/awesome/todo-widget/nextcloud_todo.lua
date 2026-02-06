@@ -9,7 +9,7 @@ local config = require("nextcloud_config")
 -- rename nextcloud_config_example to called nextcloud_config and edit with your server info
 
 -- Fetch tasks using curl
-local function fetchTasksCurl()
+local function fetchTasksCurl(tasklistName)
     local curl_cmd = string.format([[
       curl  -s -u "%s:%s"  -X REPORT \
               -H "Content-Type: application/xml" \
@@ -27,7 +27,7 @@ local function fetchTasksCurl()
        </filter>
      </calendar-query>' \
            "%s"
-    ]], config.username, config.appPassword, config.baseUrl)
+    ]], config.username, config.appPassword, config.baseUrl .. "/" .. tasklistName .. "/")
 
 
     local handle = io.popen(curl_cmd)
@@ -94,20 +94,29 @@ local function parse_vcalendar(content)
     return todos
 end
 
--- Main
-local function fetchTasks()
-    local xml_text = fetchTasksCurl()
+local function parseTasksXml(xml_text, todo_items)
     local root = xml.eval(xml_text)  -- use LuaXML eval
     local calendar_data_nodes = find_calendar_data(root)
 
-    local todo_items = {}
+    --local todo_items = {}
     for _, cal_data in ipairs(calendar_data_nodes) do
         local todos = parse_vcalendar(cal_data)
         for _, t in ipairs(todos) do
             table.insert(todo_items, t)
         end
     end
+end
 
+-- Main
+local function fetchTasks()
+    local todo_items = {}
+    for i, task in ipairs(config.tasklists) do
+        local xml_text = fetchTasksCurl(task)
+        local partialItems = parseTasksXml(xml_text, todo_items)
+    end
+    
+    --local xml_text = fetchTasksCurl()
+    --local todo_items = parseTasksXml(xml_text)
     local result = { todo_items = todo_items }
 
     -- Save to ~/.cache/awesome-todo.json

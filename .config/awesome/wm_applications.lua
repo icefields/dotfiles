@@ -591,7 +591,7 @@ local applications = {
         class = "Amp Locker",
         favourite = true,
         command = {
-            command = "\"$HOME/apps/Amp Locker Standalone\" &",
+            command = homeDir .. "/apps/'Amp Locker Standalone'",
             description = "Audio Assault Amp Locker standalone amp sim",
             group = "",
             shell = false
@@ -605,7 +605,7 @@ local applications = {
         class = "Berry Amp - Charles Caswell",
         favourite = true,
         command = {
-            command = "\"$HOME/apps/BerryAmpCharlesCaswell Standalone\" &",
+            command = homeDir .."/apps/'BerryAmpCharlesCaswell Standalone'",
             description = "Audio Assault Berry Amp standalone amp sim",
             group = "",
             shell = false
@@ -666,6 +666,19 @@ local applications = {
         },
         icon = icons.freeTube,
         subGroup = { subGroup.multimedia, subGroup.internet }
+    },
+    soulseek = {
+        label = "Soulseek",
+        class = "",
+        favourite = true,
+        command = {
+            command = homeDir .. "/apps/Soulseek",
+            description = "Soulseek share music",
+            group = "",
+            shell = true
+        },
+        --icon = icons.transmission,
+        subGroup = { subGroup.internet, subGroup.music }
     },
     transmission = {
         label = "Transmission",
