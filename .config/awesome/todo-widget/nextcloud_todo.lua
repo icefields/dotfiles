@@ -108,7 +108,8 @@ local function parseTasksXml(xml_text, todo_items)
 end
 
 -- Main
-local function fetchTasks()
+-- this old version completely replaces the old file. The new version will merge missing tasks
+local function fetchTasksOld()
     local todo_items = {}
     for i, task in ipairs(config.tasklists) do
         local xml_text = fetchTasksCurl(task)
@@ -132,6 +133,71 @@ local function fetchTasks()
 
     print(#todo_items .. " tasks saved to " .. config.filePath)
 end
+
+
+
+local function mergeNewTasks(newTasks)
+    -- Read existing file
+    local current = { todo_items = {} }
+    local f = io.open(config.filePath, "r")
+    if f then
+        local content = f:read("*a")
+        f:close()
+        local ok, parsed = pcall(json.decode, content)
+        if ok and parsed and parsed.todo_items then
+            current = parsed
+        end
+    end
+
+    -- Build a set of existing UUIDs
+    local existingUIDs = {}
+    for _, task in ipairs(current.todo_items) do
+        existingUIDs[task.UID] = true
+    end
+
+    -- Add only new tasks
+    for _, newTask in ipairs(newTasks) do
+        if not existingUIDs[newTask.UID] then
+            table.insert(current.todo_items, newTask)
+        end
+    end
+
+    -- Ensure directory exists
+    os.execute("mkdir -p " .. config.cacheDir)
+
+    -- Write back the updated JSON
+    local fOut = assert(io.open(config.filePath, "w"))
+    fOut:write(json.encode(current, { indent = true }))
+    fOut:close()
+
+    print(#current.todo_items .. " tasks saved to " .. config.filePath)
+    return current
+end
+
+
+-- Main
+local function fetchTasks()
+    local todo_items = {}
+    for i, task in ipairs(config.tasklists) do
+        local xml_text = fetchTasksCurl(task)
+        local partialItems = parseTasksXml(xml_text, todo_items)
+    end
+
+    -- Only add new items
+    local merged = mergeNewTasks(todo_items)
+
+    return merged
+end
+
+
+
+
+
+
+
+
+
+
 
 -- uncomment to run the script directly from command line
 --fetchTasks()
