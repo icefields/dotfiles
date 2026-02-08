@@ -500,8 +500,7 @@ local function worker(user_args)
 
             row:connect_signal("mouse::enter", function(c) c:set_bg(beautiful.bg_focus) end)
             row:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.topBar_bg) end)
-            local itemText = row:get_children_by_id('item_text_widget')[1]
-            itemText:connect_signal("button::press", function()
+            row:get_children_by_id('item_text_widget')[1]:connect_signal("button::press", function()
                 todoItemWindow.getTodoItemWindow(todo_item)
             end) 
             table.insert(rows, row)
