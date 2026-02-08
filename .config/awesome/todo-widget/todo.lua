@@ -9,7 +9,8 @@
 -- if not running from awesome, ie. for testing, add json.lua to the path at runtime
 -- package.path = package.path .. ";../json-library/?.lua"
 
-local todoItemHelper = require("todo-widget.todo_item")
+local todoItemHelper = require("todo-widget.todo_item_helper")
+local todoItemWindow = require("todo-widget.todo_item_window")
 local awful = require("awful")
 local wibox = require("wibox")
 local json = require("json-library.json")
@@ -459,6 +460,7 @@ local function worker(user_args)
                         },
                         {
                             {
+                                id = "item_text_widget",
                                 markup = nfIcon(todo_item.todo_item, beautiful.topBar_fg, beautiful.tooltip_font),  
                                 --"<span color='" .. beautiful.topBar_fg .. "' font='" .. beautiful.tooltip_font .. "'>" .. todo_item.todo_item ..  "</span>",
                                 -- text = todo_item.todo_item,
@@ -498,7 +500,10 @@ local function worker(user_args)
 
             row:connect_signal("mouse::enter", function(c) c:set_bg(beautiful.bg_focus) end)
             row:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.topBar_bg) end)
-
+            local itemText = row:get_children_by_id('item_text_widget')[1]
+            itemText:connect_signal("button::press", function()
+                todoItemWindow.getTodoItemWindow(todo_item)
+            end) 
             table.insert(rows, row)
         end
 
