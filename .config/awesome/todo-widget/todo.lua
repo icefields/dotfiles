@@ -390,7 +390,7 @@ local function worker(user_args)
             end)
 
             local move_up = wibox.widget {
-                markup = nfIcon("", beautiful.fg_focus, beautiful.topBar_button_font ),
+                markup = nfIcon("", beautiful.fg_focus, beautiful.topBar_button_font),
                 align  = 'center',
                 valign = 'center',
                 widget = wibox.widget.textbox

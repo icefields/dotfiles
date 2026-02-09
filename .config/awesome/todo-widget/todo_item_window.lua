@@ -21,7 +21,7 @@ function parseUtcTimestamp(ts)
     }
 
     -- format as a readable string (still UTC)
-    return os.date("!%b %d %Y at %H:%M:%S UTC", os.time(timeTable))
+    return os.date("!%b %d %Y at %H:%M UTC", os.time(timeTable))
     -- return os.date("!%Y-%m-%d %H:%M:%S UTC", os.time(timeTable))
 end
 
@@ -70,6 +70,15 @@ function markdownToPango(markdown)
     return markdown
 end
 
+local function taskText(text, color, font)
+    return string.format(
+        "<span font='%s' foreground='%s'>%s</span>",
+        font or beautiful.topBar_button_font,
+        color or beautiful.topBar_fg,
+        text
+    )
+end
+
 -- Function to create the Todo Item window
 local function getTodoItemWindow(data)
     local created = formatDate(data.created)
@@ -78,24 +87,29 @@ local function getTodoItemWindow(data)
     local modified = formatDate(data.modified)
 
     local todoItemWindow = wibox({
-        width  = 400,
-        height = 400,
+        width  = 300,
+        height = 300,
         visible = true,
         ontop = true,
         type = "normal",     -- IMPORTANT: makes it a real window
         bg = "#1e1e2e"
     })
     awful.placement.centered(todoItemWindow)
-    todoItemWindow.shape = gears.shape.rounded_rect -- Rounded corners
-
+    -- todoItemWindow.shape = gears.shape.rounded_rect -- Rounded corners
+    todoItemWindow.border_width = 0.5
+    todoItemWindow.border_color = "#89b4fa"
+    todoItemWindow.shape = function(cr, width, height)
+        gears.shape.rounded_rect(cr, width, height, 4)
+    end
+    
     -- Close button
     local close_button = wibox.widget {
-        text = "",
-        font = "FontAwesome 16",
+        text = "󰅘",
+        font = beautiful.symbolFont,
         widget = wibox.widget.textbox,
         align = "center",
         valign = "center",
-        markup = '<span foreground="#ff0000"></span>'
+        markup = taskText("", beautiful.errorColour, beautiful.symbolFont) 
     }
 
     close_button:buttons(gears.table.join(
@@ -106,9 +120,9 @@ local function getTodoItemWindow(data)
 
     -- Title widget
     local title_widget = wibox.widget {
-        text = data.todo_item,
-        font = "Monospace 14",
-        align = "center",
+        markup = taskText(data.todo_item, beautiful.topBar_fg, beautiful.titleFont),
+        font = beautiful.titleFont,
+        align = "left",
         valign = "center",
         widget = wibox.widget.textbox
     }
@@ -116,8 +130,10 @@ local function getTodoItemWindow(data)
     -- Description widget
     local taskDescription = data.description or ""
     local description_widget = wibox.widget {
-        text = markdownToPango(taskDescription),
-        font = "Monospace 11",
+        -- text = markdownToPango(taskDescription),
+        markup = taskText(markdownToPango(taskDescription), beautiful.topBar_fg, beautiful.descriptionFont),
+        --font = "Monospace 11",
+        font = beautiful.descriptionFont,
         align = "left",
         valign = "top",
         widget = wibox.widget.textbox
@@ -147,8 +163,8 @@ local function getTodoItemWindow(data)
     validateInsert(metadata, "created", created)
     validateInsert(metadata, "modified", modified)
     validateInsert(metadata, "dtstamp", dtstamp)
-    table.insert(metadata, "------------------------")
-    table.insert(metadata, "uuid: " .. data.UID)
+    --table.insert(metadata, "------------------------")
+    --table.insert(metadata, "uuid: " .. data.UID)
 
     -- Container for metadata section
     local metadata_widget = wibox.widget {
@@ -161,7 +177,7 @@ local function getTodoItemWindow(data)
     for _, line in ipairs(metadata) do
         local line_widget = wibox.widget {
             text = line,
-            font = "Monospace 8",
+            font = "Monospace 9", -- beautiful.colour2.shade3
             align = "left",
             valign = "top",
             widget = wibox.widget.textbox
@@ -176,18 +192,27 @@ local function getTodoItemWindow(data)
     layout:set_middle(description_widget)  -- Description in the middle
     layout:set_bottom(metadata_widget)     -- Metadata at the bottom
 
-    -- Create a container for the close button
     local header = wibox.widget {
-        close_button,
-        layout = wibox.layout.fixed.horizontal
+        nil,                -- left
+        nil,                -- center
+        close_button,       -- right
+        layout = wibox.layout.align.horizontal
     }
 
     -- Wrap everything in a vertical container with a fixed header (the close button)
     local final_layout = wibox.layout.align.vertical()
     final_layout:set_top(header)
     final_layout:set_middle(layout)
-
-    todoItemWindow:set_widget(final_layout)
+    todoItemWindow:set_widget(
+        wibox.widget {
+            final_layout,
+            left = 8,
+            bottom = 8,
+            --margins = 8,
+            widget  = wibox.container.margin
+        }
+    )
+    -- todoItemWindow:set_widget(final_layout)
 end
 
 local function getTodoItemWindowSimple(title, description)

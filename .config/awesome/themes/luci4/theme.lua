@@ -35,7 +35,14 @@ local mainFont = "Terminess Nerd Font"  -- "UbuntuSansMono Nerd Font Mono Medium
 local sansFont = "UbuntuSans Nerd Font"
 local heavyFont = "HeavyData Nerd Font" -- "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
-theme.font          = mainFont .. " SemiBold 12.5"
+local titleFont = mainFont .. " SemiBold 12.5"
+local symbolFont = "Symbols Nerd Font Mono 9"
+local descriptionFont = mainFont .. " 11"
+
+theme.titleFont = titleFont
+theme.descriptionFont = descriptionFont
+theme.symbolFont = symbolFont
+theme.font          = titleFont
 theme.tasklist_font = sansFont .. " 11"
 theme.taglist_font  = heavyFont .. " 14"
 theme.tooltip_font  = mainFont .. " 12"
@@ -49,7 +56,7 @@ theme.topBar_height = 24
 theme.topBar_border_dpi = 0
 theme.topBar_position = "top"
 theme.topBar_buttonSize = 24
-theme.topBar_button_font = "Symbols Nerd Font Mono 9"
+theme.topBar_button_font = symbolFont
 theme.topBar_buttonTooltip_font = "DejaVu Sans Mono 9"
 theme.topBar_fg = colour2.tint7
 theme.topBar_separator_fg = colour2.shade2
