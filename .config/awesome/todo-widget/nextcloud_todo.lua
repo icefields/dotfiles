@@ -5,8 +5,17 @@ local ltn12 = require("ltn12")
 require("LuaXML")  -- https://github.com/hishamhm/lua-xml
 local mime = require("mime")
 local json = require("dkjson")
-local config = require("nextcloud_config")
--- rename nextcloud_config_example to called nextcloud_config and edit with your server info
+local config = require("todo_config")
+-- rename todo_config_example.lua to todo_config.lua and edit with your server info
+
+local STORAGE_DIR = (config.cacheDir ~= nil and config.cacheDir ~= "") 
+    and config.cacheDir 
+    or (HOME_DIR .. '/.cache')
+
+local TODO_FILE = (config.filePath ~= nil and config.filePath ~= "") 
+    and config.filePath 
+    or (HOME_DIR .. '/.cache/awesome-todo.json')
+
 
 -- Fetch tasks using curl
 local function fetchTasksCurl(tasklistName)
@@ -28,7 +37,6 @@ local function fetchTasksCurl(tasklistName)
      </calendar-query>' \
            "%s"
     ]], config.username, config.appPassword, config.baseUrl .. "/" .. tasklistName .. "/")
-
 
     local handle = io.popen(curl_cmd)
     local xml_text = handle:read("*a")
@@ -122,16 +130,16 @@ local function fetchTasksOld()
 
     -- Save to ~/.cache/awesome-todo.json
     --local cache_dir = os.getenv("HOME") .. "/.cache"
-    os.execute("mkdir -p " .. config.cacheDir)
+    os.execute("mkdir -p " .. STORAGE_DIR)
     --local file_path = cache_dir .. "/awesome-todo.json"
-    local f = io.open(config.filePath, "w")
+    local f = io.open(TODO_FILE, "w")
     if not f then
-        error("Failed to open file for writing: " .. config.filePath)
+        error("Failed to open file for writing: " .. TODO_FILE)
     end
     f:write(json.encode(result, { indent = true }))
     f:close()
 
-    print(#todo_items .. " tasks saved to " .. config.filePath)
+    print(#todo_items .. " tasks saved to " .. TODO_FILE)
 end
 
 
@@ -139,7 +147,7 @@ end
 local function mergeNewTasks(newTasks)
     -- Read existing file
     local current = { todo_items = {} }
-    local f = io.open(config.filePath, "r")
+    local f = io.open(TODO_FILE, "r")
     if f then
         local content = f:read("*a")
         f:close()
@@ -163,14 +171,14 @@ local function mergeNewTasks(newTasks)
     end
 
     -- Ensure directory exists
-    os.execute("mkdir -p " .. config.cacheDir)
+    os.execute("mkdir -p " .. STORAGE_DIR)
 
     -- Write back the updated JSON
-    local fOut = assert(io.open(config.filePath, "w"))
+    local fOut = assert(io.open(TODO_FILE, "w"))
     fOut:write(json.encode(current, { indent = true }))
     fOut:close()
 
-    print(#current.todo_items .. " tasks saved to " .. config.filePath)
+    print(#current.todo_items .. " tasks saved to " .. TODO_FILE)
     return current
 end
 

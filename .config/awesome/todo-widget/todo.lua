@@ -5,12 +5,12 @@
 -- @copyright 2026 Antonio Tari 
 -- initially forked from Pavel Makhov (https://github.com/streetturtle/awesome-wm-widgets/tree/master/todo-widget)
 -------------------------------------------------
-
+-- CONFIG:
+-- rename todo_config_example.lua to todo_config.lua and edit with your server info
+-------------------------------------------------
 -- if not running from awesome, ie. for testing, add json.lua to the path at runtime
 -- package.path = package.path .. ";../json-library/?.lua"
-
-local todoItemHelper = require("todo-widget.todo_item_helper")
-local todoItemWindow = require("todo-widget.todo_item_window")
+-------------------------------------------------
 local awful = require("awful")
 local wibox = require("wibox")
 local json = require("json-library.json")
@@ -20,15 +20,19 @@ local beautiful = require("beautiful")
 local gfs = require("gears.filesystem")
 local naughty = require("naughty")
 local lfs = require("lfs")
+local config = require("todo-widget.todo_config")
+local todoItemHelper = require("todo-widget.todo_item_helper")
+local todoItemWindow = require("todo-widget.todo_item_window")
 
 local HOME_DIR = os.getenv("HOME")
--- local WIDGET_DIR = debug.getinfo(1, "S").source:match("@(.*/)")
 local WIDGET_DIR = HOME_DIR .. '/.config/awesome/todo-widget'
-local STORAGE = HOME_DIR .. '/.cache/awesome-todo.json'
-
+local STORAGE = (config.filePath ~= nil and config.filePath ~= "") 
+    and config.filePath 
+    or (HOME_DIR .. '/.cache/awesome-todo.json')
+-- local WIDGET_DIR = debug.getinfo(1, "S").source:match("@(.*/)")
 -- local GET_TODO_ITEMS = 'bash -c "cat ' .. STORAGE .. '"'
 
--- Nerd Font icon.
+-- Nerd Font icon/text.
 local function nfIcon(symbol, color, font)
     return string.format(
         "<span font='%s' foreground='%s'>%s</span>",

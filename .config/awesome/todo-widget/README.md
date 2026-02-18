@@ -5,7 +5,7 @@ Run from this directory
 ```
 lua5.1 fetchTasks.lua  
 ```
-*Before running* Rename `nextcloud_config_example.lua` to `nextcloud_config.lua` and edit with personal server info.
+*Before running* Rename `todo_config_example.lua` to `todo_config.lua` and edit with personal server info.
 
 This widget displays a list of todo items and allows marking item as done/undone, delete an item and create new ones:
 

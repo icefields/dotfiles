@@ -92,12 +92,11 @@ local function getTodoItemWindow(data)
         visible = true,
         ontop = true,
         type = "normal",     -- IMPORTANT: makes it a real window
-        bg = "#1e1e2e"
+        bg = beautiful.colour2.shade7, -- "#1e1e2e"
+        border_width = 1,
+        border_color = beautiful.tooltip_border_color
     })
     awful.placement.centered(todoItemWindow)
-    -- todoItemWindow.shape = gears.shape.rounded_rect -- Rounded corners
-    todoItemWindow.border_width = 0.5
-    todoItemWindow.border_color = "#89b4fa"
     todoItemWindow.shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 4)
     end
@@ -109,7 +108,7 @@ local function getTodoItemWindow(data)
         widget = wibox.widget.textbox,
         align = "center",
         valign = "center",
-        markup = taskText("", beautiful.errorColour, beautiful.symbolFont) 
+        markup = taskText("", beautiful.tooltip_border_color, beautiful.symbolFont) 
     }
 
     close_button:buttons(gears.table.join(
