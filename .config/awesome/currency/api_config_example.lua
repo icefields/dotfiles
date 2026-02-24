@@ -6,6 +6,7 @@ config.baseUrl = "https://your.currency.api.url" -- use env.CURRENCY_API for con
 config.symbols = { "󰆬", "󰞺", "󰞻", "󰆭", "󰆮", "󰞼", "󰇁" }
 config.cacheDir = os.getenv("HOME") .. "/.cache"
 config.filePath = config.cacheDir .. "/awesome-currency.json"
+config.dbPath = "/yout/custom/path/to/currency.db"
 
 -- symbols to exclude from the widget
 config.exclude = { "ADM/CAD", "CAD/ADM", "CAD/BTC", "CAD/ETH" }

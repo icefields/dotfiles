@@ -44,9 +44,21 @@ local DB = {}
 DB.__index = DB
 
 -- Create / open database
-function DB.new(dbName)
+function DB.new_OLD(dbName, useConfigDir)
     local self = setmetatable({}, DB)
     self.db = sqlite3.open(configDir .. dbName)
+    return self
+end
+
+function DB.new(dbName, useConfigDir)
+    local self = setmetatable({}, DB)
+    if useConfigDir ~= false then
+        self.db = sqlite3.open(configDir .. dbName)
+    else
+        -- useConfigDir is false, so use the absolute path provided in dbName
+        self.db = sqlite3.open(dbName)
+    end
+    
     return self
 end
 

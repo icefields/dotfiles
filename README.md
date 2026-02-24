@@ -22,6 +22,12 @@ OVPN_HOME_CONFIG="/ovpn/config/location/on/disk/home.ovpn"
 # currency conversion API
 CURRENCY_API = "https://currency.api.url"
 
+# location variables, for weather, red filter, etc...
+LOCATION_COORDINATES="43.6426,-79.3871"
+
+# Ollama
+OLLAMA_API_BASE="http://localhost:11434"
+
 ```
 
 Also add in your shell config: `set -gx PATH $PATH /usr/local/bin` .

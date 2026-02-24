@@ -5,7 +5,8 @@ local config = require("currency.api_config")
 -- rename api_config_example to api_config and edit with your server info
 local DB = require("sqlite_helper")
 
-local db = DB.new("currency.db")
+--local db = DB.new("currency.db")
+local db = DB.new(config.dbPath, false)
 
 db:execute([[
     CREATE TABLE IF NOT EXISTS currency (
@@ -76,7 +77,6 @@ local function isLatestDateOlderThan1Hour()
     return diff > 3600000
 end
 
-
 local function getWidgetText()
     local data = readDbData()
     local lines = {}
@@ -96,14 +96,14 @@ local function fetchCurrencyRates()
         local response, status = https.request(config.baseUrl)
         if status ~= 200 then
             -- return nil, "Error fetching data, status code: " .. status
-            return "Error fetching data, status code: " .. status
+            return "Error fetching data, status code: " .. status .. "\n" .. getWidgetText()
         end
 
         -- parse the JSON
         local data, pos, err = json.decode(response, 1, nil)
         if err then
             --return nil, "JSON parsing error: " .. err
-            return "JSON parsing error: " .. err
+            return "JSON parsing error: " .. err .. "\n" .. getWidgetText()
         end
         
         local date = data.date
