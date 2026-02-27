@@ -39,6 +39,7 @@ instructions: https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
 ```
 
 <br>
+
 #### To enable copy/paste in ssh
 Add this at the bottom of init.vim or init.lua
 ```
