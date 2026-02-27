@@ -37,3 +37,59 @@ instructions: https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
 :CocInstall coc-snippets
 :CocCommand snippets.edit... FOR EACH FILE TYPE
 ```
+
+<br>
+#### To enable copy/paste in ssh
+Add this at the bottom of init.vim or init.lua
+```
+set nocompatible
+
+if exists('$SSH_TTY') || exists('$SSH_CONNECTION')
+  lua << trim EOF
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+      },
+      paste = {
+        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+      },
+    }
+  EOF
+endif
+
+set clipboard=unnamedplus
+```
+
+Or, this worked on Ubuntu Server
+
+```
+" === PLUGINS ===
+call plug#begin()
+Plug 'ojroques/nvim-osc52'
+call plug#end()
+
+" === OSC 52 CLIPBOARD FOR SSH ===
+if exists('$SSH_CONNECTION')
+  lua << EOF
+local function copy(lines, _)
+  require('osc52').copy(table.concat(lines, '\n'))
+end
+
+local function paste()
+  return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
+end
+
+vim.g.clipboard = {
+  name = 'osc52',
+  copy = {['+'] = copy, ['*'] = copy},
+  paste = {['+'] = paste, ['*'] = paste},
+}
+EOF
+endif
+
+set clipboard=unnamedplus
+```
+
