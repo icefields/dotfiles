@@ -150,8 +150,10 @@ source $HOME/.config/fish/conf.d/fnm.fish
 fnm install --lts
 ```
 <br>
+
 #### To enable copy/paste in ssh
 Add this at the bottom of init.vim or init.lua
+
 ```
 set nocompatible
 
