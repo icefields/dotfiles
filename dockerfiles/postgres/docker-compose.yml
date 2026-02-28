@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: pg_lyrics
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: lyricsdb
+
+    ports:
+      - "5432:5432"
+
+    # Recommended tuning for huge COPY operations
+    command:
+      [
+        "postgres",
+        "-c", "shared_buffers=1GB",
+        "-c", "maintenance_work_mem=2GB",
+        "-c", "work_mem=64MB",
+        "-c", "effective_cache_size=3GB"
+      ]
+
+    volumes:
+      - pgdata:/var/lib/postgresql/data     # Database persistent storage
+      - ./init:/docker-entrypoint-initdb.d  # Initial SQL setup (first run)
+
+volumes:
+  pgdata:
+

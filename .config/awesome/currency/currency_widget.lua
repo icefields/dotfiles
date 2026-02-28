@@ -60,6 +60,7 @@ local function readDbData2()
     return rows
 end
 
+-- TODO: this function is not working correctly. Returning always true until fixed.
 local function isLatestDateOlderThan1Hour()
     -- Get the latest timestamp from the DB
     local rows = db:query([[
@@ -74,7 +75,8 @@ local function isLatestDateOlderThan1Hour()
 
     local now = os.time() * 1000 -- Current time in milliseconds (UTC)
     local diff = now - latest
-    return diff > 3600000
+    -- TODO: always returning true now, there is an issue with this fucntion.
+    return true --diff > 3600000
 end
 
 local function getWidgetText()
