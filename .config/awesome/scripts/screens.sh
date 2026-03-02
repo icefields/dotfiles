@@ -11,6 +11,9 @@ get_lua_value() {
 # Get only physically connected displays
 connected_displays=($(xrandr --query | awk '/ connected/{print $1}'))
 
+# Build command - start by turning OFF mirroring for all connected displays
+CMD=""
+
 # Loop over connected displays only
 for display in "${connected_displays[@]}"; do
     MODE=$(get_lua_value "$display" "mode")
@@ -19,11 +22,21 @@ for display in "${connected_displays[@]}"; do
     PRIMARY=$(get_lua_value "$display" "primary")
 
     if [ -n "$MODE" ]; then
+        # Explicitly set mode and position - this breaks any existing mirror
         CMD="$CMD --output $display --mode $MODE --pos $POS --rotate $ROT"
         [ "$PRIMARY" = "true" ] && CMD="$CMD --primary"
-            else
-        echo "No config found for $display — skipping"
+    else
+        # No config? Use --auto to enable it properly
+        echo "No config for $display — using auto"
+        CMD="$CMD --output $display --auto"
     fi
+
+    #if [ -n "$MODE" ]; then
+    #    CMD="$CMD --output $display --mode $MODE --pos $POS --rotate $ROT"
+    #    [ "$PRIMARY" = "true" ] && CMD="$CMD --primary"
+    #        else
+    #    echo "No config found for $display — skipping"
+    #fi
 done
 
 echo "Running: xrandr $CMD"

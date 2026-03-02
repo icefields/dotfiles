@@ -14,7 +14,7 @@
 -----------------------------------------------------
 
 local config = require("config")
-local apiBase = "https://wttr.in/" .. config.location
+local apiBase = "https://wttr.in/" .. config.env.LOCATION_COORDINATES
 local cachedWeatherFile = os.getenv("HOME") .. "/.cache/current_weather"
 local cachedWeatherScript = "cat " .. cachedWeatherFile
 local fetchSaveWeatherScript = "curl -s '" .. apiBase .. "?Tm' -o tmpWtr && [ -s tmpWtr ] && mv tmpWtr ".. cachedWeatherFile .. " || rm -f tmpWtr"
