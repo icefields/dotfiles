@@ -22,6 +22,8 @@ end
 
 local config = {}
 config.home = os.getenv("HOME")
+config.wallpaperRotationInterval = 100
+config.garbageCollectionInterval = 1800
 config.chosenThemeDir = "/themes/luci4/"
 config.chosenThemePath = config.chosenThemeDir .. "awesome_theme.lua"
 config.env = HomeEnv

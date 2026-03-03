@@ -21,15 +21,19 @@ local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 
--- config will also load shell env vars.
+-- init config. This will also load shell env vars, keep at the top of rc.lua
 local config = require("config")
+
+-- Load and start garbage collection module. This must stay at the top right after require(gears)
+local gc = require("garbage_collection")
+gc.tuneGc(110, 400)  -- Optional: tune GC parameters
+gc.start(gears, { timeout = config.garbageCollectionInterval, mode = "incremental" })
 
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_configuration_dir() .. config.chosenThemePath)
 
--- Luci4 custom
 -- Collision
 require("collision")()
 
@@ -42,7 +46,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local buildMenu = require("awesome_menu")
-local setWallpaper = require("awesome_wallpaper")
+local wallpaper = require("awesome_wallpaper")
 local applicationsCore = require("wm_applications")
 local awesomeApplications = applicationsCore.applications
 local layouts = require("layouts_mapper")
@@ -95,21 +99,27 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 --                                     menu = luci4MainMenu })
 -- }}}
 
--- {{{ Wibar
+-- {{{ Wibar and Wallpapers
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 -- screen.connect_signal("property::geometry", set_wallpaper)
-screen.connect_signal("property::geometry", function(s)
-    setWallpaper(s, awesomeArgs)
+screen.connect_signal("request::wallpaper", function(s)
+    wallpaper.setWallpaper(s, awesomeArgs)
 end)
+-- DEPRECATED, remove after testing "request::wallpaper"
+--screen.connect_signal("property::geometry", function(s)
+--    wallpaper.setWallpaper(s, awesomeArgs)
+--end)
 
 awful.screen.connect_for_each_screen(function(s)
-    setWallpaper(s, awesomeArgs)
+--  REMOVED:  wallpaper.setWallpaper(s, awesomeArgs)
     awful.tag(layouts.tags, s, awful.layout.layouts[1])  -- Each screen has its own tag table.
     
     -- bar
     require("awesome_bar").createAwesomeBar(awesomeArgs, s, awesomeApplications.lockScreen.command.command)
 end)
+
+wallpaper.startRotationTimer(awesomeArgs, config.wallpaperRotationInterval)
 -- }}}
 
 -- {{{ Mouse bindings

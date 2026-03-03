@@ -19,6 +19,36 @@ math.randomseed(os.time())
 
 -- Function to pick a random wallpaper from a directory
 local function getRandomWallpaper(dir)
+    local files = {}
+    local p, err = io.popen('ls -1 "' .. dir .. '" 2>/dev/null')
+    if not p then
+        return nil
+    end
+    
+    local ok, iter = pcall(function()
+        return p:lines()
+    end)
+    
+    if ok then
+        for file in iter do
+            if file:match("%.png$") or file:match("%.jpg$") or file:match("%.jpeg$") or file:match("%.webp$") then
+                table.insert(files, string.format("%s/%s", dir, file))
+            end
+        end
+    end
+    
+    p:close()
+    
+    if #files > 0 then
+        local chosen = files[math.random(#files)]
+        files = nil
+        return chosen
+    end
+    return nil
+end
+
+-- DEPRECATED
+local function deprecated_getRandomWallpaper(dir)
     local files = { }
 
     -- List files in the directory
@@ -53,15 +83,59 @@ local function setWallpaper(s, args)
     else
         local wallpaper = getRandomWallpaper(beautiful.wallpapersPath)
         if wallpaper and gears.filesystem.file_readable(wallpaper) then
+            -- NOTE: gears.wallpaper is deprecated in favor of awful.wallpaper, but
+            -- using gears.wallpaper.maximized() because awful.wallpaper has a known issue
+            -- with maximizing wallpapers, they appear centered with borders instead of
+            -- properly filling the screen. See: https://github.com/awesomeWM/awesome/issues/3547
+            -- TODO: Migrate to awful.wallpaper once the maximize issue is resolved or when
+            -- gears.wallpaper is removed in a future major version.
             gears.wallpaper.maximized(wallpaper, s, true)
         else
+            gears.wallpaper.set("#000000") -- fallback color
             -- FALLBACK to nitrogen
             --local wallpaperScript = "nitrogen --set-zoom-fill --random " .. beautiful.wallpapersPath .. " --head=" .. (s.index-1) -- .. " > /dev/null 2>&1"
             --awful.spawn.with_shell(wallpaperScript)
-            gears.wallpaper.set("#000000") -- fallback color
         end
     end
 end
 
-return setWallpaper
+-- Start the wallpaper rotation timer
+-- @param args table - Arguments passed to setWallpaper (contains beautiful, gears)
+-- @param interval number - Interval in seconds (default: 7200 = 2 hours)
+local function startRotationTimer(args, interval)
+    interval = interval or 7200
+    local gears = args.gears
+   
+    gears.timer {
+        timeout = interval,
+        autostart = true,
+        call_now = false,
+        callback = function()
+            for s in screen do
+                -- emit a signal captured by rc.lua, which will set the wallpaper:
+                -- screen.connect_signal("request::wallpaper", function(s)
+                --      wallpaper.setWallpaper(s, awesomeArgs)
+                -- end)
+                s:emit_signal("request::wallpaper")
+            end
+        end
+    }
+
+    --gears.timer {
+    --    timeout = interval,
+    --    autostart = true,
+    --    call_now = false,
+    --    callback = function()
+    --        for s in screen do
+    --            setWallpaper(s, args)
+    --        end
+    --    end
+    -- }
+    return timer  -- Allows caller to stop it if needed
+end
+
+return {
+    setWallpaper = setWallpaper,
+    startRotationTimer = startRotationTimer
+}
 
