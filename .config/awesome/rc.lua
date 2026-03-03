@@ -101,20 +101,21 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibar and Wallpapers
 
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
--- screen.connect_signal("property::geometry", set_wallpaper)
+-- listen to wallpaper signal (functions in `wallpaper` will trigger this signal, see `wallpaper.startRotationTimer`)
 screen.connect_signal("request::wallpaper", function(s)
     wallpaper.setWallpaper(s, awesomeArgs)
 end)
 -- DEPRECATED, remove after testing "request::wallpaper"
+-- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 --screen.connect_signal("property::geometry", function(s)
 --    wallpaper.setWallpaper(s, awesomeArgs)
 --end)
 
 awful.screen.connect_for_each_screen(function(s)
---  REMOVED:  wallpaper.setWallpaper(s, awesomeArgs)
-    awful.tag(layouts.tags, s, awful.layout.layouts[1])  -- Each screen has its own tag table.
+    -- wallpaper.setWallpaper(s, awesomeArgs)   -- DEPRECATED, already calling in startRotationTimer
     
+    -- Each screen has its own tag table.
+    awful.tag(layouts.tags, s, awful.layout.layouts[1])    
     -- bar
     require("awesome_bar").createAwesomeBar(awesomeArgs, s, awesomeApplications.lockScreen.command.command)
 end)

@@ -102,11 +102,25 @@ end
 -- Start the wallpaper rotation timer
 -- @param args table - Arguments passed to setWallpaper (contains beautiful, gears)
 -- @param interval number - Interval in seconds (default: 7200 = 2 hours)
+-- Returns the timer, to allow the caller to stop it if needed
 local function startRotationTimer(args, interval)
     interval = interval or 7200
     local gears = args.gears
-   
-    gears.timer {
+  
+    -- Initial wallpaper set with delay (fixes startup sizing issue)
+    local initialTimer = gears.timer {
+        timeout = 0.666,  -- 666ms delay for screen geometry to settle
+        autostart = true,
+        single_shot = true,
+        callback = function()
+            for s in screen do
+                s:emit_signal("request::wallpaper")
+            end
+            initialTimer = nil  -- cleanup
+        end
+    }
+
+    local timer = gears.timer {
         timeout = interval,
         autostart = true,
         call_now = false,
@@ -120,18 +134,8 @@ local function startRotationTimer(args, interval)
             end
         end
     }
-
-    --gears.timer {
-    --    timeout = interval,
-    --    autostart = true,
-    --    call_now = false,
-    --    callback = function()
-    --        for s in screen do
-    --            setWallpaper(s, args)
-    --        end
-    --    end
-    -- }
-    return timer  -- Allows caller to stop it if needed
+    
+    return timer
 end
 
 return {
