@@ -28,6 +28,10 @@ LOCATION_COORDINATES="43.6426,-79.3871"
 # Ollama
 OLLAMA_API_BASE="http://localhost:11434"
 
+# Mega (for share.py and scripts that use mega upload)
+MEGA_EMAIL="your@email.org"
+MEGA_PASSWORD="your.password"
+
 ```
 
 Also add in your shell config: `set -gx PATH $PATH /usr/local/bin` .
@@ -419,3 +423,28 @@ ILoveCandy
 
 ParallelDownloads = 5
 ```
+
+### Currency Info API (needed for currency widget):
+
+Clone into `~/dockerfiles/currency/` and follow instructions from the README:<br>
+[Fork](https://github.com/icefields/currencyinfo)
+<br>
+[Original Repo](https://github.com/Adamant-im/currencyinfo)
+<br>
+Please follow the documentation at [Github Wiki](https://github.com/Adamant-im/currencyinfo/wiki/Installation).
+<br>TLDR
+
+Edit the compose file, and launch:
+
+```
+docker compose -f docker-compose.prod.yaml build
+docker compose -f docker-compose.prod.yaml up -d
+```
+
+add currency API url to `.shell_env`. Define Sqlite DB path in the Awesome currency widget `config.lua`.
+
+### Share Util setup
+
+see: https://github.com/icefields/self-hosted-sharelink
+<br>
+
