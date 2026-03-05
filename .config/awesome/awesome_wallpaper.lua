@@ -100,13 +100,13 @@ local function setWallpaper(s, args)
 end
 
 -- Start the wallpaper rotation timer
--- @param args table - Arguments passed to setWallpaper (contains beautiful, gears)
--- @param interval number - Interval in seconds (default: 7200 = 2 hours)
+-- @param args table - Arguments passed to setWallpaper (contains interval, isRotateWallpapers)
+-- @param gears - Awesome Gears
 -- Returns the timer, to allow the caller to stop it if needed
-local function startRotationTimer(args, interval)
-    interval = interval or 7200
-    local gears = args.gears
-  
+local function initWallpaper(gears, args)
+    interval = args.interval or 7200
+    isRotateWallpapers = args.isRotateWallpapers or true
+
     -- Initial wallpaper set with delay (fixes startup sizing issue)
     local initialTimer = gears.timer {
         timeout = 0.666,  -- 666ms delay for screen geometry to settle
@@ -120,26 +120,28 @@ local function startRotationTimer(args, interval)
         end
     }
 
-    local timer = gears.timer {
-        timeout = interval,
-        autostart = true,
-        call_now = false,
-        callback = function()
-            for s in screen do
-                -- emit a signal captured by rc.lua, which will set the wallpaper:
-                -- screen.connect_signal("request::wallpaper", function(s)
-                --      wallpaper.setWallpaper(s, awesomeArgs)
-                -- end)
-                s:emit_signal("request::wallpaper")
+    local timer = nil
+    if isRotateWallpapers then
+        timer = gears.timer {
+            timeout = interval,
+            autostart = true,
+            call_now = false,
+            callback = function()
+                for s in screen do
+                    -- emit a signal captured by rc.lua, which will set the wallpaper:
+                    -- screen.connect_signal("request::wallpaper", function(s)
+                    --      wallpaper.setWallpaper(s, awesomeArgs)
+                    -- end)
+                    s:emit_signal("request::wallpaper")
+                end
             end
-        end
-    }
-    
+        }
+    end
     return timer
 end
 
 return {
     setWallpaper = setWallpaper,
-    startRotationTimer = startRotationTimer
+    initWallpaper = initWallpaper
 }
 

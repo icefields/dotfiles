@@ -120,7 +120,10 @@ awful.screen.connect_for_each_screen(function(s)
     require("awesome_bar").createAwesomeBar(awesomeArgs, s, awesomeApplications.lockScreen.command.command)
 end)
 
-wallpaper.startRotationTimer(awesomeArgs, config.wallpaperRotationInterval)
+wallpaper.initWallpaper(gears, { 
+    interval = config.wallpaperRotationInterval, 
+    isRotateWallpapers = config.isRotateWallpapers
+})
 -- }}}
 
 -- {{{ Mouse bindings

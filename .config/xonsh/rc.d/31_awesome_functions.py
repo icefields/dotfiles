@@ -2,7 +2,7 @@ import subprocess
 import time
 from datetime import datetime
 
-def log_awesome_memory(logfile="memlog.txt", interval=60):
+def log_awesome_memory(logfile = str(Paths.HOME / '.cache/memlog.txt'), interval = 60):
     """
     Log Awesome WM Lua memory and RSS memory (VmRSS) in MB with timestamps.
     Prints the same info to the console.
@@ -50,8 +50,9 @@ def log_awesome_memory(logfile="memlog.txt", interval=60):
 
         time.sleep(interval)
 
+# --------------------------------------------------------------------
 
-def force_awesome_gc(verbose=True):
+def force_awesome_gc(verbose = True):
     """
     Force garbage collection for Awesome WM Lua memory.
 

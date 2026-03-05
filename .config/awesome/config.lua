@@ -1,3 +1,16 @@
+-----------------------------------------------------
+-- ----------------------------------------------- --
+--   ▄        ▄     ▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄     ▄   --
+--  ▐░▌      ▐░▌   ▐░▌▐░█▀▀▀▀▀  ▀▀█░█▀▀ ▐░▌   ▐░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░█   █░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌   ▐░░░░░░░▌  --
+--  ▐░▌      ▐░▌   ▐░▌▐░▌         ▐░▌    ▀▀▀▀▀█░▌  --
+--  ▐░█▄▄▄▄▄ ▐░█▄▄▄█░▌▐░█▄▄▄▄▄  ▄▄█░█▄▄       ▐░▌  --
+--   ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀        ▀   --
+-- ----------------------------------------------- --
+-- -------- Luci4 config for Awesome WM  --------- --
+-- -------- https://github.com/icefields --------- --
+-----------------------------------------------------
 -- WARNING:
 -- removed `config.location`, access location with `HomeEnv.LOCATION_COORDINATES` or `config.env.LOCATION_COORDINATES`
 -- config.location = HomeEnv.LOCATION_COORDINATES or os.getenv("LOCATION_COORDINATES") or "43.6426,-79.3871" --fallback to Toronto
@@ -20,14 +33,6 @@ else
     -- HomeEnv = { }
 end
 
-local config = {}
-config.home = os.getenv("HOME")
-config.wallpaperRotationInterval = 666 --3600
-config.garbageCollectionInterval = 1800
-config.chosenThemeDir = "/themes/luci4/"
-config.chosenThemePath = config.chosenThemeDir .. "awesome_theme.lua"
-config.env = HomeEnv
-
 local hdmi1Display = {
     primary = true,
     mode = "2560x1440",
@@ -35,7 +40,7 @@ local hdmi1Display = {
     rotate = "normal",
 }
 
-config.displays = {
+local displays = {
     ["HDMI-1-0"] = hdmi1Display,
     ["HDMI-1"] = hdmi1Display,
     ["eDP-1"] = {
@@ -51,6 +56,17 @@ config.displays = {
         rotate = "normal",
     }
 }
+
+local config = {}
+config.home = os.getenv("HOME")
+config.isRotateWallpapers = true
+config.wallpaperRotationInterval = 3600
+tationInterval = 3600
+config.garbageCollectionInterval = 1800
+config.chosenThemeDir = "/themes/luci4/"
+config.chosenThemePath = config.chosenThemeDir .. "awesome_theme.lua"
+config.env = HomeEnv
+config.displays = displays
 
 return config
 
