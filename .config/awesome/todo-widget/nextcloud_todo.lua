@@ -198,15 +198,6 @@ local function fetchTasks()
 end
 
 
-
-
-
-
-
-
-
-
-
 -- uncomment to run the script directly from command line
 --fetchTasks()
 -- there is a script in the dir, call lua5.1 fetchTasks.lua

@@ -345,6 +345,28 @@ local applications = {
             floating = false
         }
     },
+    timeshift = {
+        label = "Timeshift",
+        class = "Timeshift-gtk",
+        favourite = false,
+        command = {
+            command = "timeshift-launcher",
+            description = "Timeshift Backup",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.utils,
+        -- icon = icons.fileManager,
+        properties = {
+            floating = true,
+            width = 800,
+            height = 600,
+            maximized_vertical = false,
+            maximized_horizontal = false,
+            maximized = false,
+            windowPlacement = placement.centered
+        }
+    },
     vlc = {
         label = "Vlc",
         class = "vlc",

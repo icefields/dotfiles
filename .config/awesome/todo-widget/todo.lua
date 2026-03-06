@@ -13,24 +13,24 @@
 -------------------------------------------------
 local awful = require("awful")
 local wibox = require("wibox")
-local json = require("json-library.json")
-local spawn = require("awful.spawn")
 local gears = require("gears")
 local beautiful = require("beautiful")
-local gfs = require("gears.filesystem")
-local naughty = require("naughty")
-local lfs = require("lfs")
 local config = require("todo-widget.todo_config")
 local todoItemHelper = require("todo-widget.todo_item_helper")
 local todoItemWindow = require("todo-widget.todo_item_window")
+local refreshNextcloud = require("todo-widget.nextcloud_refresh")
 
+-- Json Helper
+local JsonHelper = require("todo-widget.json_helper")
 local HOME_DIR = os.getenv("HOME")
-local WIDGET_DIR = HOME_DIR .. '/.config/awesome/todo-widget'
 local STORAGE = (config.filePath ~= nil and config.filePath ~= "") 
     and config.filePath 
     or (HOME_DIR .. '/.cache/awesome-todo.json')
--- local WIDGET_DIR = debug.getinfo(1, "S").source:match("@(.*/)")
--- local GET_TODO_ITEMS = 'bash -c "cat ' .. STORAGE .. '"'
+local jsonHelper = JsonHelper.new(STORAGE, '{"todo_items":{}}')
+local function getItems() return jsonHelper:getItems() end
+local function writeItems(result, onDone) return jsonHelper:writeItems(result, onDone) end
+
+local icons = config.icons
 
 -- Nerd Font icon/text.
 local function nfIcon(symbol, color, font)
@@ -40,67 +40,6 @@ local function nfIcon(symbol, color, font)
         color or beautiful.topBar_fg,
         symbol
     )
-end
-
-local function getItems()
-    local content
-    local readSuccess, readErr = pcall(function()
-    local f = assert(io.open(STORAGE, "r"))
-    content = f:read("*a")
-        f:close()
-    end)
-
-    if not readSuccess then
-        naughty.notify({
-            title  = "Failed to read todo items",
-            text   = readErr or "Could not read file",
-            preset = naughty.config.presets.critical,
-        })
-        content = nil
-    end
-    return content
-end
-
-local function writeItems(result, onDone)
-    if not result then return end
-
-    local success, err = pcall(function()
-        local tmpPath = STORAGE .. ".tmp"
-        local bckPath = STORAGE .. ".bck"
-
-        -- Backup the old file if it exists
-        local oldFile = io.open(STORAGE, "r")
-        if oldFile then
-            oldFile:close()
-            os.rename(STORAGE, bckPath)  -- move original to backup
-        end
-
-        -- Write new JSON to temp file
-        local file = assert(io.open(tmpPath, "w"))
-        file:write(json.encode(result))
-        file:close()
-
-        -- Atomically replace the original file
-        os.rename(tmpPath, STORAGE)
-    end)
-
-    if not success then
-        naughty.notify({
-            title  = "Failed to write todo items",
-            text   = err,
-            preset = naughty.config.presets.critical,
-        })
-        return
-    end
-
-    if onDone then
-        onDone(getItems())
-    end
-    --if onDone then
-    --    spawn.easy_async(GET_TODO_ITEMS, 
-    --        function(items) onDone(items) end
-    --    )
-    --end
 end
 
 local rows  = { layout = wibox.layout.fixed.vertical }
@@ -177,12 +116,11 @@ local popup = awful.popup{
 local refreshButton = wibox.widget {
     {
         {
-            markup = nfIcon("󱍷", beautiful.fg_normal, beautiful.topBar_button_font),
+            markup = nfIcon(icons.refresh, beautiful.fg_normal, beautiful.topBar_button_font),
             align  = 'center',
             valign = 'center',
             widget = wibox.widget.textbox
         },
-
         top = 6,
         bottom = 6,
         left = 6,
@@ -196,51 +134,21 @@ local refreshButton = wibox.widget {
 }
 
 refreshButton:connect_signal("button::press", function()
-    local fetchScript = WIDGET_DIR .. "/fetchTasks.lua"
-    spawn.easy_async_with_shell(
-        string.format(
-            "bash -c 'cd %s && exec lua5.1 %s'",
-            WIDGET_DIR,
-            fetchScript
-        ),
-        function(stdout, stderr, reason, exit_code)
-            if exit_code ~= 0 then
-                naughty.notify({
-                    title = "Failed to fetch tasks",
-                    text = stderr or "Unknown error",
-                    preset = naughty.config.presets.critical,
-                })
-            else
-                update_widget(getItems())
-                naughty.notify({
-                    title  = "Tasks Refreshed",
-                    text   = "Nextcloud tasks have been refreshed",
-                    preset = naughty.config.presets.normal,
-                })
-            end
-        end
-    )
+    refreshNextcloud.refreshNextcloud(function(items) 
+        update_widget(getItems())
+    end)
 end)
 refreshButton:connect_signal("mouse::enter", function(c) c:set_bg(beautiful.bg_focus) end)
 refreshButton:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.topBar_bg) end)
 
-local add_button = wibox.widget {
+local addButton = wibox.widget {
     {
-        {   --   󰐖 󰐗   󱇬
-            markup = nfIcon("󰐖", beautiful.fg_normal, beautiful.topBar_button_font ),
+        {
+            markup = nfIcon(icons.add, beautiful.fg_normal, beautiful.topBar_button_font ),
             align  = 'center',
             valign = 'center',
             widget = wibox.widget.textbox
         },
-
-        --{               
-        --    image = WIDGET_DIR .. '/list-add-symbolic.svg',
-        --    -- resize = false means the image keeps its natural size
-        --    -- it won’t stretch to fit its container.
-        --    resize = false,
-        --    widget = wibox.widget.imagebox
-        --},
-
         -- Adds padding around the image to make the button larger and balanced.
         -- Without margins, the icon would sit tightly against the circular border.
         top = 6,
@@ -255,7 +163,7 @@ local add_button = wibox.widget {
     widget = wibox.container.background
 }
 
-add_button:connect_signal("button::press", function()
+addButton:connect_signal("button::press", function()
     local pr = awful.widget.prompt()
 
     table.insert(rows, wibox.widget {
@@ -278,33 +186,24 @@ add_button:connect_signal("button::press", function()
         textbox = pr.widget,
         exe_callback = function(input_text)
             if not input_text or #input_text == 0 then return end
-            --spawn.easy_async(GET_TODO_ITEMS, function(stdout)
-            local res = json.decode(getItems())
-            -- table.insert(res.todo_items, {todo_item = input_text, status = false}) 
+            -- local res = json.decode(getItems())
+            local res = getItems()
             table.insert(res.todo_items, todoItemHelper.newTodoItem(input_text)) 
             writeItems(res, function(items) update_widget(items) end)
-
-                --spawn.easy_async_with_shell("echo '" .. json.encode(res) .. "' > " .. STORAGE, function()
-                --    spawn.easy_async(GET_TODO_ITEMS, function(items) update_widget(items) end)
-                --end)
-            --end)
         end
     }
     popup:setup(rows)
 end)
-add_button:connect_signal("mouse::enter", function(c) c:set_bg(beautiful.bg_focus) end)
-add_button:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.topBar_bg) end)
+addButton:connect_signal("mouse::enter", function(c) c:set_bg(beautiful.bg_focus) end)
+addButton:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.topBar_bg) end)
 
 local function worker(user_args)
-
     local args = user_args or {}
-
-    local icon = args.icon or "󰄵" --󰱒 -- WIDGET_DIR .. '/checkbox-checked-symbolic.svg'
-
+    local icon = args.icon or "󰄵" --󰱒 
     todo_widget.widget:setIcon(icon)
 
-    function update_widget(stdout)
-        local result = json.decode(stdout)
+    function update_widget(result)
+        -- local result = json.decode(stdout)
         if result == nil or result == '' then result = {} end
         todo_widget:update_counter(result.todo_items)
 
@@ -318,13 +217,13 @@ local function worker(user_args)
                 },
                 refreshButton,
                 {
-                    markup = nfIcon("ToDo", beautiful.fg_normal, beautiful.font), -- '<span size="large" font_weight="bold" color="' .. beautiful.topBar_fg .. '">ToDo</span>',
+                    markup = nfIcon("ToDo", beautiful.fg_normal, beautiful.font),
                     align = 'center',
                     forced_width = 320, -- for horizontal alignment
                     forced_height = 40,
                     widget = wibox.widget.textbox
                 },
-                add_button,
+                addButton,
                 spacing = 8,
                 layout = wibox.layout.fixed.horizontal
             },
@@ -354,92 +253,72 @@ local function worker(user_args)
                 writeItems(result, function(items) 
                     todo_widget:update_counter(result.todo_items)
                 end)
-
-                --spawn.easy_async_with_shell("echo '" .. json.encode(result) .. "' > " .. STORAGE, function ()
-                --    todo_widget:update_counter(result.todo_items)
-                --end)
             end)
-
 
             local trash_button = wibox.widget {
                 {
-                    {   --  
-                        markup = nfIcon("", beautiful.errorColour, beautiful.topBar_button_font ),
+                    {
+                        markup = nfIcon(icons.trash, beautiful.errorColour, beautiful.topBar_button_font ),
                         align  = 'center',
                         valign = 'center',
                         widget = wibox.widget.textbox
                     },
-                    --{    
-                    --    image = WIDGET_DIR .. '/window-close-symbolic.svg',
-                    --    resize = false,
-                    --    widget = wibox.widget.imagebox
-                    --},
-                    margins = 5,
+                    margins = 4,
                     layout = wibox.container.margin
                 },
                 border_width = 1,
-                shape = function(cr, width, height)
-                    gears.shape.circle(cr, width, height, 10)
-                end,
+                shape = gears.shape.circle,
+                shape_border_color = beautiful.errorColour,
+                shape_border_width = 0,
+                --shape = function(cr, width, height)
+                --    gears.shape.circle(cr, width, height, 10)
+                --end,
                 widget = wibox.container.background
+            }
+
+            local trashButtonPadding = wibox.widget {
+                trash_button,
+                left = 10,
+                right = 1,
+                top = 1,
+                bottom = 1,
+                widget = wibox.container.margin
             }
 
             trash_button:connect_signal("button::press", function()
                 table.remove(result.todo_items, i)
                 writeItems(result, function(items) update_widget(items) end)
-                -- -- spawn.easy_async_with_shell("printf '" .. json.encode(result) .. "' > " .. STORAGE, function ()
-                --spawn.easy_async_with_shell("echo '" .. json.encode(result) .. "' | jq > " .. STORAGE, function ()
-                --    spawn.easy_async(GET_TODO_ITEMS, function(items) update_widget(items) end)
-                --end)
             end)
+            trash_button:connect_signal("mouse::enter", function(c) c:set_bg(beautiful.topBar_bg) end)
+            trash_button:connect_signal("mouse::leave", function(c) c:set_bg(nil) end)
 
             local move_up = wibox.widget {
-                markup = nfIcon("", beautiful.fg_focus, beautiful.topBar_button_font),
+                markup = nfIcon(icons.moveUp, beautiful.fg_focus, beautiful.topBar_button_font),
                 align  = 'center',
                 valign = 'center',
                 widget = wibox.widget.textbox
             }
-
-            -- local move_up = wibox.widget {
-            --    image = WIDGET_DIR .. '/chevron-up.svg',
-            --    resize = false,
-            --    widget = wibox.widget.imagebox
-            -- }
 
             move_up:connect_signal("button::press", function()
                 local temp = result.todo_items[i]
                 result.todo_items[i] = result.todo_items[i-1]
                 result.todo_items[i-1] = temp
                 writeItems(result, function(items) update_widget(items) end)
-
-                --spawn.easy_async_with_shell("printf '" .. json.encode(result) .. "' > " .. STORAGE, function ()
-                --    spawn.easy_async(GET_TODO_ITEMS, function(items) update_widget(items) end)
-                --end)
             end)
 
             local move_down = wibox.widget {
-                markup = nfIcon("", beautiful.fg_focus, beautiful.topBar_button_font ),
+                markup = nfIcon(icons.moveDown, beautiful.fg_focus, beautiful.topBar_button_font ),
                 align  = 'center',
                 valign = 'center',
                 widget = wibox.widget.textbox
             }
-
-            --local move_down = wibox.widget {
-            --    image = WIDGET_DIR .. '/chevron-down.svg',
-            --    resize = false,
-            --    widget = wibox.widget.imagebox
-            --}
 
             move_down:connect_signal("button::press", function()
                 local temp = result.todo_items[i]
                 result.todo_items[i] = result.todo_items[i+1]
                 result.todo_items[i+1] = temp
                 writeItems(result, function(items) update_widget(items) end)
-                --spawn.easy_async_with_shell("printf '" .. json.encode(result) .. "' > " .. STORAGE, function ()
-                --    spawn.easy_async(GET_TODO_ITEMS, function(items) update_widget(items) end)
-                --end)
             end)
-
 
             local move_buttons = {
                 layout = wibox.layout.fixed.vertical
@@ -466,8 +345,6 @@ local function worker(user_args)
                             {
                                 id = "item_text_widget",
                                 markup = nfIcon(todo_item.todo_item, beautiful.topBar_fg, beautiful.tooltip_font),  
-                                --"<span color='" .. beautiful.topBar_fg .. "' font='" .. beautiful.tooltip_font .. "'>" .. todo_item.todo_item ..  "</span>",
-                                -- text = todo_item.todo_item,
                                 align = 'left',
                                 widget = wibox.widget.textbox
                             },
@@ -481,7 +358,7 @@ local function worker(user_args)
                                 layout = wibox.container.place
                             },
                             {
-                                trash_button,
+                                trashButtonPadding,
                                 valign = 'center',
                                 layout = wibox.container.place
                             },
@@ -528,40 +405,8 @@ local function worker(user_args)
     )
 
     update_widget(getItems())
-    -- spawn.easy_async(GET_TODO_ITEMS, function(stdout) update_widget(stdout) end)
 
     return todo_widget.widget
 end
-
--- Ensure the directory exists
-local function ensureDir(path)
-    local dir = path:match("(.*/)")
-    if dir then
-        local attr = lfs.attributes(dir)
-        if not attr then
-            -- Recursively create directories
-            local current = ""
-            for part in dir:gmatch("[^/]+") do
-                current = current .. part .. "/"
-                if not lfs.attributes(current) then
-                    lfs.mkdir(current)
-                end
-            end
-        end
-    end
-end
-
--- Ensure STORAGE exists and has initial content
-if not gfs.file_readable(STORAGE) then
-    ensureDir(STORAGE)
-    local f = assert(io.open(STORAGE, "w"))
-    f:write('{"todo_items":{}}')
-    f:close()
-end
-
---if not gfs.file_readable(STORAGE) then
---    spawn.easy_async(string.format([[bash -c "dirname %s | xargs mkdir -p && echo '{\"todo_items\":{}}' > %s"]],
---    STORAGE, STORAGE))
---end
 
 return setmetatable(todo_widget, { __call = function(_, ...) return worker(...) end })
