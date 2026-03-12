@@ -38,29 +38,60 @@ copyClipboard() {
 
 }
 
-# File containing additional paths (one per line)
-extra_paths_file="$HOME/scripts/share-additional-paths.txt"
+secretFlag=false
+pathValue=""
 
-# Read paths from the file into an array, ignoring empty lines
-mapfile -t extra_paths < <(grep -v '^$' "$extra_paths_file")
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -s|--secret)
+            secretFlag=true
+            shift
+            ;;
+        -p|--path)
+            pathValue="$2"
+            shift 2
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
 
-#file=$(find -L $HOME \( \
-file=$(find -L $HOME "${extra_paths[@]}" \( \
-    -path $HOME/Music/DevilplanServerMusic -o \
-    -path $HOME/Music/lyghtersMusic -o \
-    -path $HOME/Music/UbuntuServerMusicCollections -o \
-    -path $HOME/apps -o \
-    -path $HOME/go -o \
-    -path $HOME/Android -o \
-    -path $HOME/.cache -o \
-    -path $HOME/.local -o \
-    -path $HOME/.wine -o \
-    -path $HOME/.steam -o \
-    -path $HOME/Code -o \
-    -path '*/.*' \) -prune -o \
-    -type f \( \
-    -iname "*.png" -o -iname "*.jpg" -o -iname "*.mpg" -o -iname "*.mpeg" -o -iname "*.webp" -o -iname "*.pdf" -o -iname "*.jpeg" -o -iname "*.zip" -o -iname "*.txt" -o -iname "*.mp3" -o -iname "*.flac" -o -iname "*.wav" -o -iname "*.apk" -o -iname "*.m4a" -o -iname "*.gpt" -o -iname "*.gp3" -o -iname "*.gp4" -o -iname "*.gp5" -o -iname "*.gp" -o -iname "*.gpx" -o -iname "*.svg" -o -iname "*.mov" -o -iname "*.mp4" -o -iname "*.opus" -o -iname "*.tar.xz" -o -iname "*.tar.gz" -o -iname "*.webm" -o -iname "*.gif" \) \
-    | showmenu) #wofi --dmenu -i -l 25)
+if [[ "$secretFlag" == true ]]; then
+    source ~/scripts/zip_and_cloak.sh
+    dir=$(uuidgen | cut -d'-' -f1)
+    mkdir /tmp/$dir
+fi
+
+if [[ -n "$pathValue" ]]; then
+    # file=$pathValue
+    # case pathvalue present, and encryption true
+    if [[ "$secretFlag" == true ]]; then
+        cp "$pathValue" /tmp/$dir
+        file=$(zipAndCloak "/tmp/$dir")
+        if [[ -z "$file" ]]; then
+            echo "Encryption failed, porcodio!"
+            rm -rf "/tmp/$dir"
+            exit 1
+        fi
+        file=$(echo "$file" | tr -d '\n' | xargs)
+    else
+        # case pathvalue present, and encryption false
+        file=$pathValue
+    fi
+else
+    file=$(~/scripts/share_find.sh | showmenu)
+    if [[ "$secretFlag" == true ]]; then
+        cp "$file" /tmp/$dir
+        file=$(zipAndCloak "/tmp/$dir")
+        if [[ -z "$file" ]]; then
+            echo "Encryption failed, porcodio!"
+            rm -rf "/tmp/$dir"
+            exit 1
+        fi
+    fi
+fi
 
 # curl -F"file=@$file" 0x0.st | copyClipboard
 shareUrl=$(curl -k -X POST \

@@ -20,20 +20,19 @@ local todoItemHelper = require("todo-widget.todo_item_helper")
 local todoItemWindow = require("todo-widget.todo_item_window")
 local refreshNextcloud = require("todo-widget.nextcloud_refresh")
 
--- Json Helper
-local JsonHelper = require("todo-widget.json_helper")
-local HOME_DIR = os.getenv("HOME")
-local STORAGE = (config.filePath ~= nil and config.filePath ~= "") 
+-- Storage Helper
+local StorageHelper = require("todo-widget.storage_helper")
+local storagePath = (config.filePath ~= nil and config.filePath ~= "") 
     and config.filePath 
-    or (HOME_DIR .. '/.cache/awesome-todo.json')
-local jsonHelper = JsonHelper.new(STORAGE, '{"todo_items":{}}')
+    or (os.getenv("HOME") .. '/.cache/awesome-todo.json')
+local jsonHelper = StorageHelper.new(storagePath, '{"todo_items":{}}')
 local function getItems() return jsonHelper:getItems() end
 local function writeItems(result, onDone) return jsonHelper:writeItems(result, onDone) end
-
+---- text/symbol icon string.
 local icons = config.icons
 
--- Nerd Font icon/text.
-local function nfIcon(symbol, color, font)
+-- Nerd Font icon/text with font and colour.
+local function spannedText(symbol, color, font)
     return string.format(
         "<span font='%s' foreground='%s'>%s</span>",
         font or beautiful.topBar_button_font,
@@ -77,14 +76,14 @@ todo_widget.widget = wibox.widget {
     widget = wibox.container.background,
     set_text = function(self, new_value)
         -- self:get_children_by_id("txt")[1].text = new_value
-        self:get_children_by_id("txt")[1].markup = nfIcon(new_value)
+        self:get_children_by_id("txt")[1].markup = spannedText(new_value)
     end,
     --set_icon = function(self, new_value)
     --    self:get_children_by_id("icon")[1].image = new_value
     --end
     setIcon = function(self, new_symbol)
         local icon_widget = self:get_children_by_id("icon")[1]
-        icon_widget.markup =  nfIcon(new_symbol)
+        icon_widget.markup =  spannedText(new_symbol)
     end
 }
 
@@ -116,7 +115,7 @@ local popup = awful.popup{
 local refreshButton = wibox.widget {
     {
         {
-            markup = nfIcon(icons.refresh, beautiful.fg_normal, beautiful.topBar_button_font),
+            markup = spannedText(icons.refresh, beautiful.fg_normal, beautiful.topBar_button_font),
             align  = 'center',
             valign = 'center',
             widget = wibox.widget.textbox
@@ -144,7 +143,7 @@ refreshButton:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.topB
 local addButton = wibox.widget {
     {
         {
-            markup = nfIcon(icons.add, beautiful.fg_normal, beautiful.topBar_button_font ),
+            markup = spannedText(icons.add, beautiful.fg_normal, beautiful.topBar_button_font ),
             align  = 'center',
             valign = 'center',
             widget = wibox.widget.textbox
@@ -217,7 +216,7 @@ local function worker(user_args)
                 },
                 refreshButton,
                 {
-                    markup = nfIcon("ToDo", beautiful.fg_normal, beautiful.font),
+                    markup = spannedText("ToDo", beautiful.fg_normal, beautiful.font),
                     align = 'center',
                     forced_width = 320, -- for horizontal alignment
                     forced_height = 40,
@@ -258,7 +257,7 @@ local function worker(user_args)
             local trash_button = wibox.widget {
                 {
                     {
-                        markup = nfIcon(icons.trash, beautiful.errorColour, beautiful.topBar_button_font ),
+                        markup = spannedText(icons.trash, beautiful.errorColour, beautiful.topBar_button_font ),
                         align  = 'center',
                         valign = 'center',
                         widget = wibox.widget.textbox
@@ -293,7 +292,7 @@ local function worker(user_args)
             trash_button:connect_signal("mouse::leave", function(c) c:set_bg(nil) end)
 
             local move_up = wibox.widget {
-                markup = nfIcon(icons.moveUp, beautiful.fg_focus, beautiful.topBar_button_font),
+                markup = spannedText(icons.moveUp, beautiful.fg_focus, beautiful.topBar_button_font),
                 align  = 'center',
                 valign = 'center',
                 widget = wibox.widget.textbox
@@ -307,7 +306,7 @@ local function worker(user_args)
             end)
 
             local move_down = wibox.widget {
-                markup = nfIcon(icons.moveDown, beautiful.fg_focus, beautiful.topBar_button_font ),
+                markup = spannedText(icons.moveDown, beautiful.fg_focus, beautiful.topBar_button_font ),
                 align  = 'center',
                 valign = 'center',
                 widget = wibox.widget.textbox
@@ -344,7 +343,7 @@ local function worker(user_args)
                         {
                             {
                                 id = "item_text_widget",
-                                markup = nfIcon(todo_item.todo_item, beautiful.topBar_fg, beautiful.tooltip_font),  
+                                markup = spannedText(todo_item.todo_item, beautiful.topBar_fg, beautiful.tooltip_font),  
                                 align = 'left',
                                 widget = wibox.widget.textbox
                             },

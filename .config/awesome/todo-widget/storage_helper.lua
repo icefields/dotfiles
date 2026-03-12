@@ -2,8 +2,8 @@ local json = require("json-library.json")
 local gfs = require("gears.filesystem")
 local lfs = require("lfs")
 
-local JsonHelper = {}
-JsonHelper.__index = JsonHelper
+local StorageHelper = {}
+StorageHelper.__index = StorageHelper
 
 -- Ensure the directory exists
 local function ensureDir(path)
@@ -23,8 +23,8 @@ local function ensureDir(path)
     end
 end
 
-function JsonHelper.new(storage, emptyJsonStr)
-    local self = setmetatable({}, JsonHelper)
+function StorageHelper.new(storage, emptyJsonStr)
+    local self = setmetatable({}, StorageHelper)
     self.storage = storage
     
     -- Ensure STORAGE exists and has initial content
@@ -43,7 +43,7 @@ function JsonHelper.new(storage, emptyJsonStr)
     return self
 end
 
-function JsonHelper:getItems()
+function StorageHelper:getItems()
     local content
     local readSuccess, readErr = pcall(function()
     local f = assert(io.open(self.storage, "r"))
@@ -63,7 +63,7 @@ function JsonHelper:getItems()
     --return content
 end
 
-function JsonHelper:writeItems(result, onDone)
+function StorageHelper:writeItems(result, onDone)
     if not result then return end
     local STORAGE = self.storage
 
@@ -104,5 +104,5 @@ end
 
 
 
-return JsonHelper
+return StorageHelper
 

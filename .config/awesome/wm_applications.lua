@@ -175,7 +175,8 @@ local shareMenu = {
     }
 }
 local shareMenuEncrypted = {
-    command = "kitty " .. homeDir .. "/scripts/sharesec.sh",
+    -- launching with kitty is not a good idea, switch to something more compatible like bash
+    command = "kitty " .. homeDir .. "/scripts/share.sh -s &",
     description = "Zip, encrypt, get a share link and copy to clipboard",
     group = groupLuci4,
     shell = true,
