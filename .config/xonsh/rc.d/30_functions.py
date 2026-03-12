@@ -4,7 +4,9 @@ aliases["tari"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'tari.sh')
 aliases["tarx"] = "tar -zxvf"
 aliases["pushb"] = ["lua", str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'pushb.lua')]
 aliases["backup"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'backup.sh')
-aliases["share"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy')
+aliases["share"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy -p')
+aliases["sharesec"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy --secret -p')
+aliases["sharemega"] = str(Paths.SCRIPTS_DIR / 'share.sh -m --ntfy --secret -p')
 aliases["passgen"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'passgen_wrapper.sh')
 aliases["getpath"] = "find -type f | fzf | sed 's/^..//' | tr -d '\\n' | xclip -selection c"
 
