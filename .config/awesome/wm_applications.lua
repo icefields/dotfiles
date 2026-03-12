@@ -165,7 +165,7 @@ local dmenu = {
     }
 }
 local shareMenu = {
-    command = "fish -c " .. homeDir .. "/scripts/share.sh &",
+    command = "fish -c " .. homeDir .. "/.config/awesome/scripts/launch_share.sh", --"fish -c " .. homeDir .. "/scripts/share.sh --ntfy",
     description = "Get a share-link, copy to clipboard",
     group = groupLuci4,
     shell = true,
@@ -176,7 +176,7 @@ local shareMenu = {
 }
 local shareMenuEncrypted = {
     -- launching with kitty is not a good idea, switch to something more compatible like bash
-    command = "kitty " .. homeDir .. "/scripts/share.sh -s &",
+    command = terminalCmd .. " " .. homeDir .. "/scripts/launch_share_encrypted.sh", -- "kitty " .. homeDir .. "/scripts/share.sh --secret --ntfy &",
     description = "Zip, encrypt, get a share link and copy to clipboard",
     group = groupLuci4,
     shell = true,
