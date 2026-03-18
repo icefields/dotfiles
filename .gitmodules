@@ -4,3 +4,9 @@
 [submodule "/home/lucifer/.config/awesome/collision"]
 	path = /home/lucifer/.config/awesome/collision
 	url = https://github.com/icefields/collision.git
+[submodule ".config/awesome/collision"]
+	path = .config/awesome/collision
+	url = https://github.com/icefields/collision.git
+[submodule ".config/awesome/json-library"]
+	path = .config/awesome/json-library
+	url = https://github.com/icefields/json.lua
