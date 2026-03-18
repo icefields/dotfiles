@@ -20,6 +20,39 @@ If you pull new changes later, also run:
 git submodule update --init --recursive
 ```
 
+#### Update the submodule
+
+Go inside and pull:
+
+```
+cd path/to/submodule
+git pull
+```
+
+Go back to parent repo and record the new commit
+<br>
+This is the crucial step:
+
+```
+gitdots add path/to/submodule
+gitdots commit -m "Update submodule to latest commit"
+```
+
+What this does: records the new commit hash of the submodule, and updates the gitlink entry (mode 160000)
+<br>
+Push (if needed)
+gitdots push
+<br>
+How to confirm
+<br>
+Run:
+
+```
+gitdots ls-tree HEAD
+```
+
+You’ll see the submodule now points to a new commit hash.
+
 ---
 
 ## Env Variables
