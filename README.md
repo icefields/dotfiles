@@ -12,8 +12,8 @@ This project uses Git submodules. Clone everything (including submodules) with:
 git clone --recurse-submodules <repo-url>
 ```
 
-*After pulling updates*<br>
-
+**After pulling updates**
+<br>
 If you pull new changes later, also run:
 
 ```bash
@@ -22,7 +22,7 @@ git submodule update --init --recursive
 
 #### Update the submodule
 
-Go inside and pull:
+Navigate to the submodule directory and pull:
 
 ```
 cd path/to/submodule
@@ -30,28 +30,25 @@ git pull
 ```
 
 Go back to parent repo and record the new commit
-<br>
-This is the crucial step:
 
 ```
 gitdots add path/to/submodule
 gitdots commit -m "Update submodule to latest commit"
 ```
 
-What this does: records the new commit hash of the submodule, and updates the gitlink entry (mode 160000)
+This records the new commit hash of the submodule, and updates the gitlink entry (mode 160000).
 <br>
 Push (if needed)
-gitdots push
 <br>
-How to confirm
+`gitdots push`
 <br>
-Run:
+To confirm run:
 
 ```
 gitdots ls-tree HEAD
 ```
 
-You’ll see the submodule now points to a new commit hash.
+Verify the submodule now points to a new commit hash.
 
 ---
 
