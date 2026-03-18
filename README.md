@@ -2,6 +2,26 @@
 # Dot Files Luci4
 ![image](https://github.com/user-attachments/assets/b33396c0-0abd-46b7-9db8-9aa6e87789fb)
 
+---
+
+## Clone the repository
+
+This project uses Git submodules. Clone everything (including submodules) with:
+
+```bash
+git clone --recurse-submodules <repo-url>
+```
+
+## After pulling updates
+
+If you pull new changes later, also run:
+
+```bash
+git submodule update --init --recursive
+```
+
+---
+
 ## Env Variables
 The env variables are stored in `~/.shell_env`, in a key="value" format. Different shells (currently parsers for `xonsh`, `fish` and `bash` are present) will parse that file into their own format. The shell would need those, to run some of the scripts.<br>
 Create `~/.shell_env`, and add the following variables.<br>
