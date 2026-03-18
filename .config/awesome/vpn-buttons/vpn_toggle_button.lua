@@ -45,6 +45,7 @@ local function getButton(args)
     local wifiTooltip = createVpnTooltip(wifiButton, awful, beautiful)
 
     wifiButton:connect_signal("button::press", function()
+        wifiButton.bg = nil
         awful.spawn.easy_async_with_shell(toggleScript, function()
             gears.timer.start_new(5, function()
                 updateWifiIcon(awful, wifiButton)
@@ -52,6 +53,8 @@ local function getButton(args)
             end)
         end)
     end)
+
+    wifiButton:connect_signal("button::release", function(c) c.bg = beautiful.bg_focus end)
 
     wifiButton:connect_signal("mouse::leave", function(c)
         -- c.bg = "#00000000"

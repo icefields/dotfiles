@@ -18,7 +18,6 @@ local apiBase = "https://wttr.in/" .. config.env.LOCATION_COORDINATES
 local cachedWeatherFile = os.getenv("HOME") .. "/.cache/current_weather"
 local cachedWeatherScript = "cat " .. cachedWeatherFile
 local fetchSaveWeatherScript = "curl -s '" .. apiBase .. "?Tm' -o tmpWtr && [ -s tmpWtr ] && mv tmpWtr ".. cachedWeatherFile .. " || rm -f tmpWtr"
--- "curl -s 'https://wttr.in/43.6426,-79.3871?Tm' > /home/lucifer/.cache/current_weather"
 local fetchWeatherIconScript = "curl -s '" .. apiBase .. "?m&format=%c+%t+%h'" -- "?format=%c'"
 local fallbackLoadingText = "Loading weather ..."
 local fallbackErrorText = "Error fetching weather"
@@ -61,7 +60,6 @@ local function createWeatherTooltip(button, args)
     }
 
     button:connect_signal("mouse::enter", function(c)
-        c.bg = beautiful.bg_focus
         -- If cached version available, show it first
         setWeatherText(awful, beautiful, gears, cachedWeatherScript, weatherTooltip, fallbackLoadingText, true, function(stdout)
             local fallback = stdout
@@ -70,8 +68,6 @@ local function createWeatherTooltip(button, args)
         end)
     end)
 
-    -- Clear background on mouse leave.
-    button:connect_signal("mouse::leave", function(c) c.bg = nil end)
     return weatherTooltip
 end
 
@@ -83,7 +79,7 @@ local function getButton(args)
     local fallbackIcon = "⸸"
 
     -- Button with an icon (font-based or symbol).
-    local button = wibox.widget {
+    local bgWidget = wibox.widget {
         {
             id = "icon",
             text = fallbackIcon,
@@ -93,23 +89,34 @@ local function getButton(args)
             font = beautiful.topBar_button_font
         },
         widget = wibox.container.background,
-        bg = "#00000000",  -- Transparent background
+        bg = "#00000000",
         fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
-        -- forced_width = beautiful.topBar_buttonSize * 4, -- Omit to make the button wrap around the text
         forced_height = beautiful.topBar_buttonSize
     }
+    local button = wibox.widget {
+        bgWidget,
+        widget = wibox.container.constraint,
+        max_width = 200,
+        strategy = "max"
+    }
+
+    -- background highlight on mouse enter, clear on mouse leave.
+    button:connect_signal("mouse::enter", function(c) bgWidget.bg = beautiful.bg_focus end)
+    button:connect_signal("mouse::leave", function(c) bgWidget.bg = nil end)
 
     local weatherTooltip = createWeatherTooltip(button, args)
     local iconWidget = button:get_children_by_id("icon")[1]
-
     setWeatherText(awful, beautiful, gears, fetchWeatherIconScript, iconWidget, fallbackIcon, false)
 
     -- Refresh on button press.
-    button:connect_signal("button::press", function()
+    button:connect_signal("button::press", function(c)
+        bgWidget.bg = nil
         setWeatherText(awful, beautiful, gears, fetchSaveWeatherScript .. " && " .. cachedWeatherScript, weatherTooltip, fallbackErrorText, true)
         setWeatherText(awful, beautiful, gears, fetchWeatherIconScript, iconWidget, fallbackIcon, false)
     end)
+    -- Clear background on button release.
+    button:connect_signal("button::release", function(c) bgWidget.bg = beautiful.bg_focus end)
 
     return wibox.container.margin(button, 1, 1, 0, 0) -- with added padding
 end

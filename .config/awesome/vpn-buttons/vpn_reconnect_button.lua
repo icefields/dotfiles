@@ -27,12 +27,15 @@ local function getButton(args)
     local wifiTooltip = createVpnTooltip(vpnReconnectButton, awful, beautiful)
 
     vpnReconnectButton:connect_signal("button::press", function()
+        vpnReconnectButton.bg = nil
         awful.spawn.easy_async_with_shell(config.reconnectScript, function()
             gears.timer.start_new(5, function()
                 return false
             end)
         end)
     end)
+
+    vpnReconnectButton:connect_signal("button::release", function(c) c.bg = beautiful.bg_focus end)
 
     return  vpnReconnectButton
 end

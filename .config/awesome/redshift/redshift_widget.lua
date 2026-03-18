@@ -80,6 +80,7 @@ local function getButton(args)
 
     -- Toggle on button press.
     button:connect_signal("button::press", function()
+        button.bg = nil
         awful.spawn.easy_async_with_shell(toggleCmd, function(stdout)
             local icon = stdout:gsub("\n", ""):gsub("\r", "")
             if icon == "" then icon = fallbackIcon end
@@ -95,8 +96,9 @@ local function getButton(args)
         end)
     end)
 
-    -- Clear background on mouse leave.
+    -- Clear background on mouse leave and restore on button release.
     button:connect_signal("mouse::leave", function(c) c.bg = nil end)
+    button:connect_signal("button::release", function(c) c.bg = beautiful.bg_focus end)
 
     return wibox.container.margin(button, 1, 1, 0, 0) -- with added padding
 end
