@@ -141,9 +141,6 @@ Call `set -U fish_color_autosuggestion brblack` once to restore transparency in 
 Requires all the autostarting apps to be installed, comment out, in `autorun.sh`, the apps that are not installed.<br>
 <i>(incomplete) list of apps required by awesome scripts:</i> `i3lock nitrogen picom lxqt-policykit redshift-gtk xfce4-clipman xfce4-clipman xfce4-power-manager` <br>
 `blueman-applet` comes with `blueman` package. `nm-applet` comes with `network-manager` <br><br>
-Some of the widges from `awesome-wm-widgets` (https://github.com/streetturtle/awesome-wm-widgets) are used in the config.<br>
-Requires Collision (https://github.com/Elv13/collision) for extended functionalities and shortcuts.<br>
-Collision and awesome-wm-widgets to be cloned in the root awesome directory (`~/.config/awesome`)<br><br>
 The directory `$HOME/apps` will be scanned for AppImages, which will be added to the menu. Keep your ***Standalone Applications and AppImages*** there, or edit the location in rc.lua.<br><br>
 i3lock is used as the screensaver, `rc.lua` contains a shortcut to lock the screen that references to `lockscreen.sh` in the same directory.<br>
 For new Arch installation install Blueman (double check the [Arch Wiki](https://wiki.archlinux.org/title/bluetooth) in case this info is outdated)<br>
@@ -162,6 +159,14 @@ For manual scaling, create or edit `~/.Xresources` and add `Xft.dpi:148` (check 
 <b>Shell env variables</b><br>
 Shell env vars defined in `~/.shell_env` are loaded and usable inside Awesome using `env.lua`.
 <br><br>
+Submodules used:
+Some of the widges from `awesome-wm-widgets` (https://github.com/streetturtle/awesome-wm-widgets) are used in the config.<br>
+Requires Collision (https://github.com/Icefields/collision) for extended functionalities and shortcuts.<br>
+Collision and awesome-wm-widgets to be cloned in the root awesome directory automatically by submodule init (`~/.config/awesome`)
+<br>
+Lua Json library.
+<br><br>
+
 
 
 #### TODO: add external repos as submodules:
