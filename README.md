@@ -12,7 +12,7 @@ This project uses Git submodules. Clone everything (including submodules) with:
 git clone --recurse-submodules <repo-url>
 ```
 
-## After pulling updates
+*After pulling updates*<br>
 
 If you pull new changes later, also run:
 
