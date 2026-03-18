@@ -1,6 +1,3 @@
 [submodule "/home/lucifer/.config/awesome/json-library"]
 	path = /home/lucifer/.config/awesome/json-library
 	url = https://github.com/icefields/json.lua
-[submodule "/home/lucifer/.config/awesome/collision"]
-	path = /home/lucifer/.config/awesome/collision
-	url = git@github.com:icefields/collision.git
