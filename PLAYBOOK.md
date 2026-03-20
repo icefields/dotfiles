@@ -16,6 +16,7 @@ Use this when a **Cursor** (or similar) agent edits, deploys, or documents dotfi
 | **AeroSpace PRD / backlog** | [`macos/aerospace/PRD-aerospace-extensions.md`](macos/aerospace/PRD-aerospace-extensions.md) | What’s done vs pending |
 | **Leader Key JSON** | [`macos/leaderkey/config.json`](macos/leaderkey/config.json) | Action tree |
 | **Leader Key docs** | [`macos/leaderkey/leaderkey.README.md`](macos/leaderkey/leaderkey.README.md) | Chords, Accessibility, `defaults` |
+| **Scripts index (all platforms)** | [`scripts/README.md`](scripts/README.md) | Catalog of `macos/scripts/` + `linux/scripts/`; agent sync rules |
 
 **@ mentions in Cursor:** e.g. `@macos/aerospace/.aerospace.toml` + `@macos/aerospace/aerospace.readme.md` so structure and documented chords stay aligned.
 
@@ -133,12 +134,23 @@ Skip **`cp` to Application Support** when the user only wanted a draft, paths ar
 
 ---
 
-## 6. When to update this playbook
+## 6. Scripts (`macos/scripts/`, `linux/scripts/`)
+
+**Index:** **[`scripts/README.md`](scripts/README.md)** lists every tracked script under **`macos/scripts/`** and **`linux/scripts/`** with a one-line summary.
+
+**macOS detail:** **[`macos/scripts/README.md`](macos/scripts/README.md)** holds runnable examples for Swift tools (`xdg.swift`, `dock-no-animation.swift`).
+
+**Agent workflow:** When adding, removing, renaming, or materially changing behaviour of a script in those trees, update **`scripts/README.md`** in the same change; for **`macos/scripts/`**, also update **`macos/scripts/README.md`**. Full rules are in the **“Instructions for AI agents”** section of **`scripts/README.md`**.
+
+---
+
+## 7. When to update this playbook
 
 Update **[`PLAYBOOK.md`](PLAYBOOK.md)** when:
 
 - A new **top-level dotfile area** gets a stable repo path and live deploy path.
 - **XDG** or **AeroSpace** filename / location rules change upstream.
 - Another agent adds a **repeatable workflow** that should stay consistent across sessions.
+- **Scripts:** a new **canonical script directory** or **deploy rule** appears that belongs in the repo map (see §6 and [`scripts/README.md`](scripts/README.md)).
 
 Also bump **[`PRD-aerospace-extensions.md`](macos/aerospace/PRD-aerospace-extensions.md)** §4 / §9 when AeroSpace backlog or completed work changes materially.
