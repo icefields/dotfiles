@@ -1,0 +1,37 @@
+### Bun — new install (under `~/.config`)
+
+1. Before the official install:
+   - `export BUN_INSTALL="$XDG_CONFIG_HOME/bun"`
+   - `export BUN_INSTALL_CACHE_DIR="$BUN_INSTALL/install/cache"`
+2. Put `$BUN_INSTALL/bin` on `PATH` (e.g. source `~/.config/xdg-env-macos.sh` after migrate).
+3. Run the installer; confirm `which bun` is under `$BUN_INSTALL/bin`.
+
+### Bun — existing `~/.bun`
+
+`swift xdg.swift migrate --apply` (dry-run without `--apply`). No symlinks.
+
+### LM Studio — new install
+
+1. Before first launch: `export LM_STUDIO_HOME="$XDG_CONFIG_HOME/lm-studio"`.
+2. Models: `LM_STUDIO_MODELS_DIR="$HOME/Desktop/LMStudio-Models"` and set **My models** in the app.
+3. If the app ignores `LM_STUDIO_HOME`, note the version and track upstream.
+
+### LM Studio — existing `~/.lmstudio`
+
+Quit the app; `swift xdg.swift migrate --apply`.
+
+### Cursor
+
+`export CURSOR_CONFIG_DIR="$XDG_CONFIG_HOME/cursor"`. **Quit Cursor**; `swift xdg.swift migrate --apply`. Some versions may still touch `~/.cursor`.
+
+### npm (optional)
+
+`swift xdg.swift migrate --apply --with-npm` then `npm config set cache "$XDG_CACHE_HOME/npm"`.
+
+### Docker CLI (optional)
+
+`--with-docker` sets `DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"`. Validate with your Docker Desktop version.
+
+### `.cargo` / `.rustup` / `.kube` / `.steam`
+
+Listed as extended relocatables when present under `$HOME`. **Not auto-migrated** in `xdg.swift` — add migration + env strategy when you confirm layout (`CARGO_HOME`, `RUSTUP_HOME`, etc.).

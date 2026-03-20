@@ -1,0 +1,184 @@
+# My personal AeroSpace configuration — window tiling, workspaces, and keybindings for macOS.
+#
+# Name: shahzebqazi
+# GitHub: https://github.com/shahzebqazi
+# Email: code@sqazi.sh
+#
+# --- AI agents: sync contract (do not strip; follow on every edit) -----------------
+# Hotkey / settings docs: macos/aerospace/aerospace.readme.md (see also README.md there).
+# When you change bindings, modes, gaps, or any key documented in the markdown tables,
+# update THIS file AND aerospace.readme.md AND README.md in the same change so tables
+# and TOML stay identical in meaning.
+# Live Mac path: ~/.config/aerospace/aerospace.toml (real file). After editing this repo
+# file, run:  cp macos/aerospace/.aerospace.toml ~/.config/aerospace/aerospace.toml
+#            aerospace reload-config
+# Never keep ~/.aerospace.toml if ~/.config/aerospace/aerospace.toml exists (ambiguity).
+# -----------------------------------------------------------------------------------
+
+config-version = 2
+
+after-startup-command = []
+
+start-at-login = true
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+
+default-root-container-layout = 'tiles'
+
+default-root-container-orientation = 'auto'
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+automatically-unhide-macos-hidden-apps = true
+
+persistent-workspaces = ["1", "2", "3"]
+
+on-mode-changed = []
+
+[key-mapping]
+    preset = 'qwerty'
+
+[gaps]
+    inner.horizontal = 10
+    inner.vertical =   10
+    outer.left =       10
+    outer.bottom =     10
+    outer.top =        10
+    outer.right =      10
+
+[mode.main.binding]
+
+    # Layout (root container)
+    alt-slash = 'layout tiles horizontal vertical'
+    alt-comma = 'layout accordion horizontal vertical'
+
+    # Focus (window / tree)
+    alt-h = 'focus left'
+    alt-left = 'focus left'
+    alt-j = 'focus down'
+    alt-down = 'focus down'
+    alt-k = 'focus up'
+    alt-up = 'focus up'
+    alt-l = 'focus right'
+    alt-right = 'focus right'
+
+    # Move window in tree
+    alt-shift-h = 'move left'
+    alt-shift-left = 'move left'
+    alt-shift-j = 'move down'
+    alt-shift-down = 'move down'
+    alt-shift-k = 'move up'
+    alt-shift-up = 'move up'
+    alt-shift-l = 'move right'
+    alt-shift-right = 'move right'
+
+    # Fullscreen, flatten, split sizing, resizing
+    alt-f = 'fullscreen'
+    alt-x = 'flatten-workspace-tree'
+    alt-minus = 'resize smart -50'
+    alt-equal = 'resize smart +50'
+    alt-leftSquareBracket = 'resize smart 50'
+    alt-rightSquareBracket = 'resize smart -50'
+
+    # macOS window
+    alt-m = 'macos-native-minimize'
+
+    # Workspace — switch (alt + key). H–L omitted: same chords as focus / in-tree move above.
+    alt-1 = 'workspace 1'
+    alt-2 = 'workspace 2'
+    alt-3 = 'workspace 3'
+    alt-4 = 'workspace 4'
+    alt-5 = 'workspace 5'
+    alt-6 = 'workspace 6'
+    alt-7 = 'workspace 7'
+    alt-8 = 'workspace 8'
+    alt-9 = 'workspace 9'
+    alt-a = 'workspace A'
+    alt-b = 'workspace B'
+    alt-c = 'workspace C'
+    alt-d = 'workspace D'
+    alt-e = 'workspace E'
+    # alt-f = 'workspace F'
+    alt-g = 'workspace G'
+    # alt-h = 'workspace H'
+    alt-i = 'workspace I'
+    # alt-j = 'workspace J'
+    # alt-k = 'workspace K'
+    # alt-l = 'workspace L'
+    # alt-m = 'workspace M'
+    # alt-n = 'workspace N'
+    # alt-o = 'workspace O'  # commented: reserve ⌥O for other bindings (e.g. smart-open)
+    alt-p = 'workspace P'
+    alt-q = 'workspace Q'
+    # alt-r = 'workspace R'
+    alt-s = 'workspace S'
+    alt-t = 'workspace T'
+    alt-u = 'workspace U'
+    alt-v = 'workspace V'
+    alt-w = 'workspace W'
+    # alt-x = 'workspace X'  # ⌥ X = flatten-workspace-tree
+    alt-y = 'workspace Y'
+    alt-z = 'workspace Z'
+
+    # Workspace — move focused window (alt-shift + key). H–L omitted: same chords as move above.
+    alt-shift-1 = 'move-node-to-workspace 1'
+    alt-shift-2 = 'move-node-to-workspace 2'
+    alt-shift-3 = 'move-node-to-workspace 3'
+    alt-shift-4 = 'move-node-to-workspace 4'
+    alt-shift-5 = 'move-node-to-workspace 5'
+    alt-shift-6 = 'move-node-to-workspace 6'
+    alt-shift-7 = 'move-node-to-workspace 7'
+    alt-shift-8 = 'move-node-to-workspace 8'
+    alt-shift-9 = 'move-node-to-workspace 9'
+    alt-shift-a = 'move-node-to-workspace A'
+    alt-shift-b = 'move-node-to-workspace B'
+    alt-shift-c = 'move-node-to-workspace C'
+    alt-shift-d = 'move-node-to-workspace D'
+    alt-shift-e = 'move-node-to-workspace E'
+    # alt-shift-f = 'move-node-to-workspace F'
+    alt-shift-g = 'move-node-to-workspace G'
+    # alt-shift-h = 'move-node-to-workspace H'
+    alt-shift-i = 'move-node-to-workspace I'
+    # alt-shift-j = 'move-node-to-workspace J'
+    # alt-shift-k = 'move-node-to-workspace K'
+    # alt-shift-l = 'move-node-to-workspace L'
+    # alt-shift-m = 'move-node-to-workspace M'
+    # alt-shift-n = 'move-node-to-workspace N'
+    # alt-shift-o = 'move-node-to-workspace O'
+    alt-shift-p = 'move-node-to-workspace P'
+    alt-shift-q = 'move-node-to-workspace Q'
+    # alt-shift-r = 'move-node-to-workspace R'
+    alt-shift-s = 'move-node-to-workspace S'
+    alt-shift-t = 'move-node-to-workspace T'
+    alt-shift-u = 'move-node-to-workspace U'
+    alt-shift-v = 'move-node-to-workspace V'
+    alt-shift-w = 'move-node-to-workspace W'
+    # alt-shift-x = 'move-node-to-workspace X'
+    alt-shift-y = 'move-node-to-workspace Y'
+    alt-shift-z = 'move-node-to-workspace Z'
+
+    # Workspace / monitor navigation
+    alt-tab = 'workspace-back-and-forth'
+    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+    # Modes
+    alt-semicolon = 'mode service'
+
+[mode.service.binding]
+
+    # Exit service mode / reload config
+    esc = ['reload-config', 'mode main']
+
+    # Layout & windows
+    r = ['flatten-workspace-tree', 'mode main']
+    f = ['layout floating tiling', 'mode main']
+    backspace = ['close-all-windows-but-current', 'mode main']
+
+    # Join with adjacent container
+    alt-h = ['join-with left', 'mode main']
+    alt-j = ['join-with down', 'mode main']
+    alt-k = ['join-with up', 'mode main']
+    alt-l = ['join-with right', 'mode main']

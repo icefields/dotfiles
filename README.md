@@ -431,7 +431,7 @@ Inter
 ```
 
 # Wallpapers
-Wallpapers are in `Pictures/wallpapers`. <br>
+Wallpapers are in `pictures/wallpapers`. <br>
 There are scripts in place to automate the process. Follow this initial setup to get started.
 ### Hyprland Instructions
 create the following symlinks: <br>

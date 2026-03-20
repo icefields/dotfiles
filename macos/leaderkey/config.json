@@ -1,0 +1,90 @@
+{
+  "actions": [
+    {
+      "key": "t",
+      "label": "Ghostty (~/my-dot-files)",
+      "type": "command",
+      "value": "open -na Ghostty.app --args --working-directory=\"$HOME/my-dot-files\""
+    },
+    {
+      "key": "b",
+      "label": "Firefox",
+      "type": "application",
+      "value": "/Applications/Firefox.app"
+    },
+    {
+      "key": "f",
+      "label": "Finder",
+      "type": "application",
+      "value": "/System/Library/CoreServices/Finder.app"
+    },
+    {
+      "key": "c",
+      "label": "Cursor (~/my-dot-files)",
+      "type": "command",
+      "value": "/usr/local/bin/cursor -n \"$HOME/my-dot-files\""
+    },
+    {
+      "key": "n",
+      "label": "Ableton Live",
+      "type": "application",
+      "value": "/Applications/Ableton Live 12 Suite.app"
+    },
+    {
+      "key": "w",
+      "label": "Next window (⌘`)",
+      "type": "command",
+      "value": "osascript -e 'tell application \"System Events\" to keystroke \"`\" using command down'"
+    },
+    {
+      "key": "8",
+      "label": "Emoji & symbols (⌃⌘Space)",
+      "type": "command",
+      "value": "osascript -e 'tell application \"System Events\" to keystroke space using {control down, command down}'"
+    },
+    {
+      "key": "a",
+      "label": "Apps",
+      "type": "group",
+      "actions": [
+        {
+          "key": "s",
+          "label": "Safari",
+          "type": "application",
+          "value": "/System/Applications/Safari.app"
+        },
+        {
+          "key": "m",
+          "label": "Messages",
+          "type": "application",
+          "value": "/System/Applications/Messages.app"
+        },
+        {
+          "key": "e",
+          "label": "Mail",
+          "type": "application",
+          "value": "/System/Applications/Mail.app"
+        }
+      ]
+    },
+    {
+      "key": "d",
+      "label": "Downloads",
+      "type": "folder",
+      "value": "~/Downloads"
+    },
+    {
+      "key": "g",
+      "label": "Dotfiles repo",
+      "type": "folder",
+      "value": "~/my-dot-files"
+    },
+    {
+      "key": "r",
+      "label": "Reload Leader Key",
+      "type": "url",
+      "value": "leaderkey://config-reload"
+    }
+  ],
+  "type": "group"
+}

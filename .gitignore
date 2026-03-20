@@ -1,1 +1,150 @@
+# Repo-local tooling (keep first if you use a bootstrap script name)
 .git-dotfiles
+
+# Cursor — ignore only at repository root (subtree `.cursor/` can still be tracked if needed)
+/.cursor/
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors / swap
+*~
+*.swp
+*.swo
+.#*
+
+# Environment & secrets (common local overrides)
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+!*.key.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+.eggs/
+*.egg-info/
+*.egg
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+htmlcov/
+.tox/
+.nox/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Node / npm / pnpm / yarn / Bun
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.npm
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+package-lock.json.bak
+
+# TypeScript / JavaScript build artifacts
+*.tsbuildinfo
+.next/
+.nuxt/
+.svelte-kit/
+.turbo/
+.parcel-cache/
+.cache/
+
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock.bak
+
+# Haskell / Cabal / Stack
+dist/
+dist-newstyle/
+cabal.project.local
+cabal.project.local~
+*.hi
+*.o
+*.dyn_o
+*.p_o
+.stack-work/
+stack.yaml.lock.bak
+
+# Elixir / Erlang
+_build/
+deps/
+.elixir_ls/
+erl_crash.dump
+*.ez
+
+# Go
+vendor/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work.sum
+
+# Java / Kotlin / Gradle
+.gradle/
+build/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# Ruby
+.bundle/
+vendor/bundle/
+*.gem
+
+# Terraform / Packer
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.packer.d/
+
+# Docker (local overrides)
+docker-compose.override.yml
+
+# Logs & temp
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.temp

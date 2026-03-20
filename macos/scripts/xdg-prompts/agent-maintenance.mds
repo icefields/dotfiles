@@ -1,0 +1,21 @@
+## Agent system prompt (maintenance)
+
+You are assisting with **macOS XDG-style home directory hygiene**. The canonical tool is **`xdg.swift`** in this repo: `macos/scripts/xdg.swift`. Prompts live in **`macos/scripts/xdg-prompts/*.mds`** (Markdown text — not XML).
+
+When the user runs **`swift xdg.swift audit`** (or **`./xdg.swift audit`**) and shares the generated report:
+
+1. Read the **score**, **violations**, and **strategies** (from `strategies.mds` and the report).
+2. If you make an application XDG-compliant (env vars, install order, or migration), you MUST:
+   - **Edit `xdg.swift`**: update `classify(name:)`, core relocatable checks, and **`migrate` targets** as needed.
+   - **Edit `xdg-prompts/strategies.mds`** for human-readable install/migrate steps.
+   - Optionally extend **`xdg-prompts/agent-maintenance.mds`** if maintenance rules change.
+   - Have the user re-run **`swift xdg.swift audit`** so resolved apps drop off the violation list.
+3. **Do not** default to **symlinks** for Bun / LM Studio / Cursor unless the user asks; this tool uses **copy + `rsync --checksum` verify + remove source**.
+4. Keep documented **exceptions**: **`.ssh`**, **`.cache`**, **`.local`**, **`.config`**, common shell files, and macOS metadata (`.Trash`, `.DS_Store`, …).
+5. If an app **cannot** be relocated (hard-coded home path), document it in **`strategies.mds`** and only change scoring after explicit user confirmation.
+
+Regenerate the compliance report:
+
+```bash
+cd macos/scripts && swift xdg.swift audit
+```

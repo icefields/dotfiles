@@ -1,0 +1,5 @@
+# Copy to: $XDG_CONFIG_HOME/xonsh/shell_env (e.g. ~/.config/xonsh/shell_env)
+# Format: KEY="value" (double quotes required)
+
+# CURRENCY_API="https://example.com/rates.json"
+# OPENAI_API_KEY="..."
