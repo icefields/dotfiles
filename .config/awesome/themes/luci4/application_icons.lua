@@ -51,6 +51,7 @@ local guitarPro_icon = baseDir .. "GuitarPro.svg"
 local powerSettings_icon = baseDir .. "preferences-system-power.svg"
 local cakeWallet_icon = baseDir .. "cake_wallet.svg"
 local koreader_icon = baseDir .. "koreader.svg"
+local sonobus_icon = baseDir .. "sonobus.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -87,7 +88,8 @@ local icons = {
     guitarPro = guitarPro_icon,
     powerSettings = powerSettings_icon,
     cakeWallet = cakeWallet_icon,
-    koreader = koreader_icon
+    koreader = koreader_icon,
+    sonobus = sonobus_icon
 }
 -- END LUCI4 Icon Theme
 return icons

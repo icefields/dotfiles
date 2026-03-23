@@ -24,6 +24,15 @@ local worldtimeTooltip = require("worldtime_tooltip")
 local currencyWidget = require("currency.currency_widget")
 local todoWidget = require("todo-widget.todo")
 
+-- Add library to path (football_widget is inside .config/awesome/) 
+local awesome_dir = os.getenv("HOME") .. "/.config/awesome"
+package.path = awesome_dir .. "/football_widget/?.lua;" .. awesome_dir .. "/football_widget/?/init.lua;" .. package.path
+-- Load the football library
+local FootballData = require("football")
+--local team_widget = require("awesome.team_widget")
+--local standings_widget = require("awesome.standings_widget")
+local matchWindow = require("awesome.match_window")
+
 local function getTagListButtons(client, gears, awful)
     local taglist_buttons = gears.table.join(
         awful.button( { }, 1, function(t)
@@ -207,6 +216,15 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     -- Create and connect the world time tooltip to mouse-enter
     worldtimeTooltip.createWorldTimeTooltip(clockWidget, awful, beautiful)
 
+    local interWidget = matchWindow.create({
+    team_id = 108,  -- Inter Milan
+    match_count = 10,
+    show_scheduled = false,
+    awful = awful,
+    beautiful = beautiful,
+    wibox = wibox,
+    gears = gears,
+})
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
 
@@ -301,6 +319,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             separator(beautiful, wibox),
             currencyWidget.getWidget(args),
             separator(beautiful, wibox, { margins = { right = 0 } }),
+            interWidget,
+            separator(beautiful, wibox, { margins = { left = 0, right = 0 } }),
             clockWidget,
             getSystemTray(wibox, beautiful, gears),
             getVolumeWidget(beautiful),

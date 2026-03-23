@@ -637,6 +637,19 @@ local applications = {
         subGroup = "Music",
         properties = propertiesFloatingCentered
     },
+    sonobus = {
+        label = "SonoBus",
+        class = "SonoBus",
+        favourite = false,
+        command = {
+            command = "sonobus",
+            description = "SonoBus music collab",
+            group = "",
+            shell = false
+        },
+        icon = icons.sonobus,
+        subGroup = "Music"
+    },
     reaper = {
         label = "Reaper",
         class = "",
@@ -915,6 +928,32 @@ local applications = {
         command = {
             command = "redshift-gtk",
             description = "Redshift blue light filter",
+            group = "",
+            shell = false
+        },
+        -- icon = ,
+        subGroup = subGroup.utils,
+    },
+    qt6ct = {
+        label = "qt6ct",
+        class = "qt6ct",
+        favourite = false,
+        command = {
+            command = "qt6ct",
+            description = "Qt6 Configuration Utility",
+            group = "",
+            shell = false
+        },
+        -- icon = ,
+        subGroup = subGroup.utils,
+    },
+    qt5ct = {
+        label = "qt5ct",
+        class = "qt5ct",
+        favourite = false,
+        command = {
+            command = "qt5ct",
+            description = "Qt5 Configuration Utility",
             group = "",
             shell = false
         },

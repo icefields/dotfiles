@@ -37,9 +37,14 @@ local heavyFont = "HeavyData Nerd Font" -- "UbuntuSansMono Nerd Font Mono SemiBo
 
 local titleFont = mainFont .. " SemiBold 12.5"
 local symbolFont = "Symbols Nerd Font Mono 9"
+local labelFontSans = sansFont .. " 11.5"
+local labelFontSansSmall = sansFont .. " 10"
+
 local descriptionFont = mainFont .. " 11"
 
 theme.titleFont = titleFont
+theme.labelFontSans = labelFontSans
+theme.labelFontSansSmall = labelFontSansSmall
 theme.descriptionFont = descriptionFont
 theme.symbolFont = symbolFont
 theme.font          = titleFont
