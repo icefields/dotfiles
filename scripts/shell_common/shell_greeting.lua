@@ -1,13 +1,21 @@
+local scriptPath = debug.getinfo(1, "S").source:match("^@(.+)/")
+if scriptPath then
+    package.path = package.path .. ";" .. scriptPath .. "/midori-fetch/midorifetch_lib.lua"
+end
+
+local midoriFetch = require("midorifetch_lib")
+
 local function colorText(color, text)
     return "\27[" .. color .. "m" .. text .. "\27[0m"
 end
 
-math.randomseed(os.time())
+-- Function to check if a command exists
+local function commandExists(cmd)
+    local result = os.execute("which " .. cmd .. " >/dev/null 2>&1")
+    return result == 0 or result == true
+end
 
--- local powered_msgs = {
---     "candy!", "rubber bands", "a black hole", "logic",
---     "electromagnetic cheese", "cats", "kitties", "Tessy!"
--- }
+math.randomseed(os.time())
 
 local satanic_rules = {
     "Do not give opinions or advice unless you are asked.",
@@ -23,17 +31,19 @@ local satanic_rules = {
     "When walking in open territory, bother no one. If someone bothers you, ask him to stop. If he does not stop, destroy him."
 }
 
-local ascii_intros = {
-    "DarkOs", "Anarchy", "DragonFly", "GNOME", "GNU", "Kali"
-}
-
 -- local chosen_msg = powered_msgs[math.random(#powered_msgs)]
 local chosen_rule = satanic_rules[math.random(#satanic_rules)]
-local chosen_ascii = ascii_intros[math.random(#ascii_intros)]
 
 -- Print the greeting
-os.execute("fastfetch --disable-linewrap --logo " .. chosen_ascii)
+if commandExists("fastfetch") then
+    local ascii_intros = {
+        "DarkOs", "Anarchy", "DragonFly", "GNOME", "GNU", "Kali"
+    }
+    local chosen_ascii = ascii_intros[math.random(#ascii_intros)]
+    os.execute("fastfetch --disable-linewrap --logo " .. chosen_ascii)
+else
+    midoriFetch.display(scriptPath .. "/midori-fetch/hypno.txt")
+end
 
--- print(colorText(93, "Welcome! This terminal session is powered by " .. chosen_msg))
 print(colorText(35,"Satanic rule of the session: ") .. colorText(32, chosen_rule))
 
