@@ -368,6 +368,28 @@ local applications = {
             windowPlacement = placement.centered
         }
     },
+    gparted = {
+        label = "GParted",
+        class = "GParted",
+        favourite = false,
+        command = {
+            command = "gparted",
+            description = "GParted partitioning util",
+            group = "",
+            shell = false
+        },
+        subGroup = subGroup.utils,
+        -- icon = icons.fileManager,
+        properties = {
+            floating = true,
+            width = 800,
+            height = 600,
+            maximized_vertical = false,
+            maximized_horizontal = false,
+            maximized = false,
+            windowPlacement = placement.centered
+        }
+    },
     vlc = {
         label = "Vlc",
         class = "vlc",

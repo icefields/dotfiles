@@ -22,3 +22,12 @@ def currency_convert(multiplier = 1, pair = "USD/CAD"):
     rate_str = subprocess.check_output(cmd, shell=True, text=True).strip()
     return float(rate_str) * multiplier
 
+def disktree(args=None):
+    """Run the disktree.py script as a Python module in-process."""
+    import importlib.util
+    script_path = Paths.SHELL_COMMON_SCRIPTS_DIR / "disktree.py"
+    spec = importlib.util.spec_from_file_location("disktree", script_path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    mod.run()
+
