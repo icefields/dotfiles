@@ -31,3 +31,9 @@ def disktree(args=None):
     spec.loader.exec_module(mod)
     mod.run()
 
+def dusize(maxDepth=1, tailSize=40, path="."):
+    """Disk chaos (usage) analyzer."""
+    import subprocess
+    cmd = f"du -h '{path}' --max-depth={maxDepth} 2>/dev/null | sort -hr | head -n {tailSize}"
+    subprocess.run(cmd, shell=True)
+
