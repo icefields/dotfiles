@@ -33,7 +33,16 @@ def disktree(args=None):
 
 def dusize(maxDepth=1, tailSize=40, path="."):
     """Disk chaos (usage) analyzer."""
-    import subprocess
-    cmd = f"du -h '{path}' --max-depth={maxDepth} 2>/dev/null | sort -hr | head -n {tailSize}"
-    subprocess.run(cmd, shell=True)
+    # import subprocess # already imported
+    import shlex
+
+    du = subprocess.Popen(
+        ["du", "-h", path, f"--max-depth={maxDepth}"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL
+    )
+    sort = subprocess.Popen(["sort", "-hr"], stdin=du.stdout, stdout=subprocess.PIPE)
+    head = subprocess.Popen(["head", "-n", str(tailSize)], stdin=sort.stdout)
+    head.communicate()
+    du.communicate()
 

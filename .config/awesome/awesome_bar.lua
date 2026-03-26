@@ -193,7 +193,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local client = args.client
     local gears = args.gears
     local wibox = args.wibox
-
+    
+    local docker_widget = require("docker-widget.docker")
     local batteryWidget = require("battery.battery_widget")
     local weatherButton = require("weather.weather_button")(args)
     local redshiftButton = require("redshift.redshift_widget")(args)
@@ -217,14 +218,14 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     worldtimeTooltip.createWorldTimeTooltip(clockWidget, awful, beautiful)
 
     local interWidget = matchWindow.create({
-    team_id = 108,  -- Inter Milan
-    match_count = 10,
-    show_scheduled = false,
-    awful = awful,
-    beautiful = beautiful,
-    wibox = wibox,
-    gears = gears,
-})
+        team_id = 108,  -- Inter Milan
+        match_count = 10,
+        show_scheduled = false,
+        awful = awful,
+        beautiful = beautiful,
+        wibox = wibox,
+        gears = gears,
+    })
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
 
@@ -286,6 +287,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     -- ORIG s.mywibox = awful.wibar({ position = "top", screen = s })
 
     local separatorW = separator(beautiful, wibox)
+    local spacer = separator(beautiful, wibox, { showSeparator = false, margins = { left = 2, right = 2 } }),
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -299,20 +301,20 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
             getCpuWidget(beautiful),
             getRamWidget(beautiful),
+            docker_widget()
             --mykeyboardlayout
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            separator(beautiful, wibox, { showSeparator = false, margins = { left = 2, right = 2 } }),
+            spacer,
             todoWidget(),
-            -- wibox.layout.margin(wibox.widget.systray(), 4,4,4,4),
             separator(beautiful, wibox, { showSeparator = true, margins = { left = 0, right = 0 } }),
             toggleVpnButton,
             vpnReconnectButton,
             separator(beautiful, wibox, { showSeparator = true, margins = { left = 1, right = 5 } }),
             batteryWidget(args),
-            separator(beautiful, wibox, { margins = { left = 3 } }),
+            separator(beautiful, wibox, { margins = { left = 2 } }),
             redshiftButton,
             separatorW,
             weatherButton,

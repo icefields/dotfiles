@@ -114,6 +114,46 @@ local screenshotFull = {
         key2 = "Print"
     }
 }
+local playPauseMedia = {
+    command = "playerctl play-pause",
+    description = "Play/Pause media playback",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 = { },
+        key2 = "XF86AudioPlay"
+    }
+}
+local stopMedia = {
+    command = "playerctl stop",
+    description = "Stop media playback",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 = { },
+        key2 = "XF86AudioStop"
+    }
+}
+local nextMedia = {
+    command = "playerctl position 5+", --"playerctl next",
+    description = "FastForward Media playback", --"Media playback. Next",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 = { },
+        key2 = "XF86AudioNext"
+    }
+}
+local prevMedia = {
+    command = "playerctl position 5-", --"playerctl previous",
+    description = "Rewind Media playback", --"Media playback. Previous track",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 = { },
+        key2 = "XF86AudioPrev"
+    }
+}
 local raiseVolume = {
     command = "amixer -D pulse sset Master 2%+",
     description = "Raise audio volume",
@@ -256,6 +296,18 @@ local propertiesFloatingCentered = {
 -- add properties to make the application follow defined window rules.
 -- set favourite to true to add the application to the favourite menu.
 local applications = {
+    playPauseMedia = {
+        command = playPauseMedia
+    },
+    stopMedia = {
+        command = stopMedia
+    },
+    nextMedia = {
+        command = nextMedia
+    },
+    prevMedia = {
+        command = prevMedia
+    },
     raiseVolume = {
         command = raiseVolume
     },
