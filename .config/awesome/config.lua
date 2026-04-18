@@ -49,6 +49,13 @@ local displays = {
         pos = "0x360",
         rotate = "normal",
     },
+    ["eDP"] = {
+        primary = false,
+        dpi = 144,
+        mode = "2560x1600",
+        pos = "0x360",
+        rotate = "normal",
+    },
     ["VNC-0"] = {
         primary = false,
         mode = "1280x720",
@@ -61,7 +68,6 @@ local config = {}
 config.home = os.getenv("HOME")
 config.isRotateWallpapers = true
 config.wallpaperRotationInterval = 3600
-tationInterval = 3600
 config.garbageCollectionInterval = 1800
 config.chosenThemeDir = "/themes/luci4/"
 config.chosenThemePath = config.chosenThemeDir .. "awesome_theme.lua"

@@ -25,5 +25,5 @@ $HOME/.config/awesome/autostart-custom.sh &
 sleep 5
 if ! pgrep -x "redshift" > /dev/null
 then
-    # run redshift #run redshift-gtk
+    : # run redshift #run redshift-gtk
 fi

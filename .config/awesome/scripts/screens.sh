@@ -17,13 +17,20 @@ CMD=""
 # Loop over connected displays only
 for display in "${connected_displays[@]}"; do
     MODE=$(get_lua_value "$display" "mode")
+    DPI=$(get_lua_value "$display" "dpi")
     POS=$(get_lua_value "$display" "pos")
     ROT=$(get_lua_value "$display" "rotate")
     PRIMARY=$(get_lua_value "$display" "primary")
+ 
+    if [ -n "$DPI" ]; then
+        DPI="--dpi $DPI"
+    else
+        DPI=""
+    fi
 
     if [ -n "$MODE" ]; then
         # Explicitly set mode and position - this breaks any existing mirror
-        CMD="$CMD --output $display --mode $MODE --pos $POS --rotate $ROT"
+        CMD="$CMD --output $display --mode $MODE --scale 1x1 $DPI --pos $POS --rotate $ROT"
         [ "$PRIMARY" = "true" ] && CMD="$CMD --primary"
     else
         # No config? Use --auto to enable it properly

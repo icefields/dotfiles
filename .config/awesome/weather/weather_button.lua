@@ -78,16 +78,18 @@ local function getButton(args)
     local wibox = args.wibox
     local fallbackIcon = "⸸"
 
+    local iconWidget = {
+        id = "icon",
+        text = fallbackIcon,
+        widget = wibox.widget.textbox,
+        align = "center",
+        valign = "center",
+        font = beautiful.topBar_button_font
+    }
+
     -- Button with an icon (font-based or symbol).
     local bgWidget = wibox.widget {
-        {
-            id = "icon",
-            text = fallbackIcon,
-            widget = wibox.widget.textbox,
-            align = "center",
-            valign = "center",
-            font = beautiful.topBar_button_font
-        },
+        iconWidget,
         widget = wibox.container.background,
         bg = "#00000000",
         fg = beautiful.topBar_fg,
@@ -106,9 +108,18 @@ local function getButton(args)
     button:connect_signal("mouse::leave", function(c) bgWidget.bg = nil end)
 
     local weatherTooltip = createWeatherTooltip(button, args)
-    local iconWidget = button:get_children_by_id("icon")[1]
-    setWeatherText(awful, beautiful, gears, fetchWeatherIconScript, iconWidget, fallbackIcon, false)
+    --local iconWidget = button:get_children_by_id("icon")[1]
 
+    if iconWidget == nil then
+        local naughty = args.naughty
+        naughty.notify({
+            preset = naughty.config.presets.normal, -- critical, normal, low
+            title = "⚠️ iconWidget NIL", 
+            timeout = notificationTimeout
+        })
+    end
+    setWeatherText(awful, beautiful, gears, fetchWeatherIconScript, iconWidget, fallbackIcon, false)
+    
     -- Refresh on button press.
     button:connect_signal("button::press", function(c)
         bgWidget.bg = nil

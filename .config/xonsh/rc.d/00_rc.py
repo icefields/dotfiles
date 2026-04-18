@@ -13,7 +13,7 @@ import shutil
 
 class Paths:
     HOME = Path.home()
-    LOG_DIR = HOME / '.xonsh-env'
+    LOG_DIR = HOME / '.pyvenvs/xonsh-env'
     SCRIPTS_DIR = HOME / 'scripts'
     SHELL_COMMON_SCRIPTS_DIR = HOME / 'scripts/shell_common'
     COLOUR_SCHEMES_DIR = SHELL_COMMON_SCRIPTS_DIR / 'colour_schemes'

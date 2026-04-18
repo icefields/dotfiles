@@ -47,6 +47,27 @@ local popup = awful.popup{
 local docker_widget = wibox.widget {
     {
         {
+            {
+                id = 'icon',
+                widget = wibox.widget.imagebox
+            },
+            margins = 4,
+            layout = wibox.container.margin
+        },
+        shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 4)
+        end,
+        widget = wibox.container.background
+    },
+    widget = wibox.container.background,
+    set_icon = function(self, new_icon)
+        self:get_children_by_id("icon")[1].image = new_icon
+    end
+}
+
+local docker_widget2 = wibox.widget {
+    {
+        {
             id = 'icon',
             widget = wibox.widget.imagebox
         },
@@ -379,23 +400,38 @@ local function worker(user_args)
         popup:setup(rows)
     end
 
-    docker_widget:buttons(
-        gears.table.join(
-                awful.button({}, 1, function()
-                    if popup.visible then
-                        docker_widget:set_bg('#00000000')
-                        popup.visible = not popup.visible
-                    else
-                        docker_widget:set_bg(beautiful.bg_focus)
-                        spawn.easy_async(string.format(LIST_CONTAINERS_CMD, executable_name, number_of_containers),
-                            function(stdout, stderr)
-                                rebuild_widget(stdout, stderr)
-                                popup:move_next_to(mouse.current_widget_geometry)
-                            end)
-                    end
-                end)
-        )
-    )
+    docker_widget:connect_signal("button::press", function(self, lx, ly, button)
+        if button == 1 then
+            if popup.visible then
+                docker_widget:set_bg('#00000000')
+                popup.visible = not popup.visible
+            else
+                docker_widget:set_bg(beautiful.bg_focus)
+                spawn.easy_async(string.format(LIST_CONTAINERS_CMD, executable_name, number_of_containers),
+                    function(stdout, stderr)
+                        rebuild_widget(stdout, stderr)
+                        popup:move_next_to(mouse.current_widget_geometry)
+                    end)
+            end
+        end
+    end)
+    --docker_widget:buttons(
+    --    gears.table.join(
+    --            awful.button({}, 1, function()
+    --                if popup.visible then
+    --                    docker_widget:set_bg('#00000000')
+    --                    popup.visible = not popup.visible
+    --                else
+    --                     docker_widget:set_bg(beautiful.bg_focus)
+    --                    spawn.easy_async(string.format(LIST_CONTAINERS_CMD, executable_name, number_of_containers),
+    --                        function(stdout, stderr)
+    --                            rebuild_widget(stdout, stderr)
+    --                            popup:move_next_to(mouse.current_widget_geometry)
+    --                        end)
+    --                end
+    --            end)
+    --    )
+    --)
 
     return docker_widget
 end

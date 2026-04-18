@@ -64,6 +64,8 @@ local function updateBatteryStatus(awful, beautiful, naughty, gears, batteryWidg
             color = beautiful.colour2.tint2
         elseif batteryStatus == "Full" then
             batterySymbol = ""
+        elseif batteryStatus == "Not charging" then
+            batterySymbol = ""
         elseif batteryStatus == "Discharging" then
             batterySymbol = (percent > 75 and "") or
                             (percent > 50 and "") or

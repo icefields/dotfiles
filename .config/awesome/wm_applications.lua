@@ -155,7 +155,7 @@ local prevMedia = {
     }
 }
 local raiseVolume = {
-    command = "amixer -D pulse sset Master 2%+",
+    command = homeDir .. "/scripts/applaunch/volumectl.sh -r",
     description = "Raise audio volume",
     group = groupLuci4,
     shell = false,
@@ -165,7 +165,7 @@ local raiseVolume = {
     }
 }
 local lowerVolume = {
-    command = "amixer -D pulse sset Master 2%-",
+    command = homeDir .. "/scripts/applaunch/volumectl.sh -l",
     description = "Lower audio volume",
     group = groupLuci4,
     shell = false,
@@ -175,7 +175,7 @@ local lowerVolume = {
     }
 }
 local  muteVolume = {
-    command = "amixer -D pulse sset Master toggle",
+    command = homeDir .. "/scripts/applaunch/volumectl.sh -m",
     description = "Mute/Unmute audio volume",
     group = groupLuci4,
     shell = false,
