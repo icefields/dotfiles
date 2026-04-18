@@ -909,6 +909,20 @@ local applications = {
         subGroup = subGroup.messaging,
         properties = propertiesFloatingCentered
     },
+    deltachat = {
+        label= "Delta",
+        class = "DeltaChat",
+        favourite = false,
+        command = {
+            command = homeDir .. "/apps/DeltaChat",
+            description = "Delta Chat",
+            group = "",
+            shell = true
+        },
+        icon = icons.deltaChat,
+        subGroup = subGroup.messaging,
+        properties = propertiesFloatingCentered
+    },
     mpv = {
         -- omit from menu. label = "Mpv",
         class = "mpv",
