@@ -77,6 +77,7 @@ local function getButton(args)
     local beautiful = args.beautiful
     local wibox = args.wibox
     local fallbackIcon = "⸸"
+    local applyDpi = args.applyDpi
 
     local iconWidget = {
         id = "icon",
@@ -94,7 +95,7 @@ local function getButton(args)
         bg = "#00000000",
         fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
-        forced_height = beautiful.topBar_buttonSize
+        forced_height = applyDpi(beautiful.topBar_buttonSize)
     }
     local button = wibox.widget {
         bgWidget,

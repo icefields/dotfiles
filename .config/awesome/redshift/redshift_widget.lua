@@ -43,6 +43,7 @@ local function getButton(args)
     local awful = args.awful
     local beautiful = args.beautiful
     local wibox = args.wibox
+    local applyDpi = args.applyDpi
     local fallbackIcon = ""  --      
 
     local button = wibox.widget {
@@ -58,7 +59,7 @@ local function getButton(args)
         bg = "#00000000",  -- Transparent background
         fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
-        forced_height = beautiful.topBar_buttonSize
+        forced_height = applyDpi(beautiful.topBar_buttonSize)
     }
 
     local filterTooltip = createRedshiftTooltip(button, args)

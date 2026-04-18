@@ -50,6 +50,7 @@ local wallpaper = require("awesome_wallpaper")
 local applicationsCore = require("wm_applications")
 local awesomeApplications = applicationsCore.applications
 local layouts = require("layouts_mapper")
+local applyDpi = require("beautiful.xresources").apply_dpi
 
 -- AwesomeWM-related args to pass to external widgets. 
 local awesomeArgs = ({
@@ -63,7 +64,8 @@ local awesomeArgs = ({
     client = client,
     screen = screen,
     naughty = naughty,
-    config = config
+    config = config,
+    applyDpi = applyDpi
 })
 
 -- {{{ Error handling

@@ -193,7 +193,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local client = args.client
     local gears = args.gears
     local wibox = args.wibox
-    
+    local dpi = args.applyDpi
+
     local docker_widget = require("docker-widget.docker")
     local batteryWidget = require("battery.battery_widget")
     local weatherButton = require("weather.weather_button")(args)
@@ -225,6 +226,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
         beautiful = beautiful,
         wibox = wibox,
         gears = gears,
+        applyDpi = dpi
     })
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -278,7 +280,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     s.mywibox = awful.wibox({
         screen = s,
         fg = beautiful.fg_normal,
-        height = beautiful.topBar_height,
+        height = dpi(beautiful.topBar_height),
         bg = beautiful.topBar_bg, -- bg_normal 
         position = beautiful.topBar_position,
         border_color = beautiful.border_focus,

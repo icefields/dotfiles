@@ -6,6 +6,7 @@ local function getButton(args)
     local awful = args.awful
     local beautiful = args.beautiful
     local wibox = args.wibox
+    local applyDpi = args.applyDpi
 
     local vpnReconnectButton = wibox.widget {
         {
@@ -20,8 +21,8 @@ local function getButton(args)
         bg = "#00000000",
         fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
-        forced_width = beautiful.topBar_buttonSize,
-        forced_height = beautiful.topBar_buttonSize,
+        forced_width = applyDpi(beautiful.topBar_buttonSize),
+        forced_height = applyDpi(beautiful.topBar_buttonSize),
     }
 
     local wifiTooltip = createVpnTooltip(vpnReconnectButton, awful, beautiful)
