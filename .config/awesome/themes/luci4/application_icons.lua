@@ -52,6 +52,7 @@ local powerSettings_icon = baseDir .. "preferences-system-power.svg"
 local cakeWallet_icon = baseDir .. "cake_wallet.svg"
 local koreader_icon = baseDir .. "koreader.svg"
 local sonobus_icon = baseDir .. "sonobus.svg"
+local deltaChat_icon = baseDir .. "delta-chat.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -89,7 +90,8 @@ local icons = {
     powerSettings = powerSettings_icon,
     cakeWallet = cakeWallet_icon,
     koreader = koreader_icon,
-    sonobus = sonobus_icon
+    sonobus = sonobus_icon,
+    deltaChat = deltaChat_icon
 }
 -- END LUCI4 Icon Theme
 return icons
