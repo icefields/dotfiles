@@ -122,8 +122,8 @@ end
 -- @param gears - Awesome Gears
 -- Returns the timer, to allow the caller to stop it if needed
 local function initWallpaper(gears, screen, args)
-    interval = args.interval or 7200
-    isRotateWallpapers = args.isRotateWallpapers or true
+    local interval = args.interval or 7200
+    local isRotateWallpapers = args.isRotateWallpapers ~= false
 
     local initialTimer = nil
     local timer = nil
