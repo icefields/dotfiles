@@ -51,6 +51,8 @@ local applicationsCore = require("wm_applications")
 local awesomeApplications = applicationsCore.applications
 local layouts = require("layouts_mapper")
 local applyDpi = require("beautiful.xresources").apply_dpi
+-- determine if the current Awesome is the Aur awesoome-git package
+local isAurGitVersion = awesome.version:match("-g%d+") ~= nil
 
 -- AwesomeWM-related args to pass to external widgets. 
 local awesomeArgs = ({
@@ -124,7 +126,8 @@ end)
 
 wallpaper.initWallpaper(gears, screen, {
     interval = config.wallpaperRotationInterval,
-    isRotateWallpapers = config.isRotateWallpapers
+    isRotateWallpapers = config.isRotateWallpapers,
+    isAurGitVersion = isAurGitVersion
 })
 -- }}}
 

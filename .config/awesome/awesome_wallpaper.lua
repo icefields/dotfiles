@@ -103,7 +103,7 @@ local function startRotation(gears, screen, interval)
     local timer =  gears.timer {
         timeout = interval,
         autostart = true,
-        -- call_now = false,
+        call_now = false,
         callback = function()
             for s in screen do
                 -- emit a signal captured by rc.lua, which will set the wallpaper:
@@ -124,25 +124,30 @@ end
 local function initWallpaper(gears, screen, args)
     local interval = args.interval or 7200
     local isRotateWallpapers = args.isRotateWallpapers ~= false
+    local isAurGitVersion = args.isAurGitVersion ~= false
 
-    local initialTimer = nil
-    local timer = nil
-    -- Initial wallpaper set with delay (fixes startup sizing issue)
-    initialTimer = gears.timer {
-        timeout = 0.666,  -- 666ms delay for screen geometry to settle
-        autostart = true,
-        single_shot = true,
-        callback = function()
-            if isRotateWallpapers then
-                timer = startRotation(gears, screen, interval)
-            else
+    -- newest AUR version awesome-git, sets the wallpaper automatically when it 
+    -- starts, for the older version wallpaper must be set manually, after a 
+    -- small delay, which fixes the startup sizing issue.
+    if isAurGitVersion == false then
+        local initialTimer = nil
+        initialTimer = gears.timer {
+            timeout = 0.666,  -- 666ms delay for screen geometry to settle
+            autostart = true,
+            single_shot = true,
+            callback = function()
                 for s in screen do
                     s:emit_signal("request::wallpaper")
                 end
+                initialTimer = nil  -- cleanup
             end
-            initialTimer = nil  -- cleanup
-        end
-    }
+        }
+    end
+
+    local timer = nil
+    if isRotateWallpapers then
+        timer = startRotation(gears, screen, interval)
+    end
     return timer
 end
 
