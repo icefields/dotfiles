@@ -239,6 +239,11 @@ else:
     # --------------------------------------------------------
     if command_exists("nvim"):
         aliases["vim"] = "nvim"
+    
+    # --------------------------------------------------------
+    # midorifetch
+    # --------------------------------------------------------
+    aliases["midorifetch"] = 'lua ' + str(Paths.HOME / 'scripts/shell_common/midori-fetch/midorifetch.lua')
 
     # --------------------------------------------------------
     # ls / tree (eza / exa)

@@ -117,6 +117,7 @@ if status is-interactive
     alias :q='exit'
     alias toreset="$HOME/scripts/tor_relay_reset.sh"
     alias toripify="torsocks wget -qO - https://api.ipify.org; echo" 
+    alias midorifetch="lua $HOME/scripts/shell_common/midori-fetch/midorifetch.lua"
 
     # Reboot to macOS on dual-boot with Asahi Linux.
     alias rebootToMac="sudo sh -c 'echo 1 | asahi-bless; reboot'"
