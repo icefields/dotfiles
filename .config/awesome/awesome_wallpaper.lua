@@ -103,7 +103,7 @@ local function startRotation(gears, screen, interval)
     local timer =  gears.timer {
         timeout = interval,
         autostart = true,
-        call_now = false,
+        -- call_now = false,
         callback = function()
             for s in screen do
                 -- emit a signal captured by rc.lua, which will set the wallpaper:
