@@ -7,3 +7,6 @@
 [submodule ".config/awesome/awesome-wm-widgets"]
 	path = .config/awesome/awesome-wm-widgets
 	url = https://github.com/streetturtle/awesome-wm-widgets.git
+[submodule "/home/lucie/scripts/shell_common/midori-fetch"]
+	path = /home/lucie/scripts/shell_common/midori-fetch
+	url = git@github.com:icefields/Midori-Fetch.git
