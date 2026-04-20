@@ -50,6 +50,8 @@ local wallpaper = require("awesome_wallpaper")
 local applicationsCore = require("wm_applications")
 local awesomeApplications = applicationsCore.applications
 local layouts = require("layouts_mapper")
+-- determine if the current Awesome is the Aur awesoome-git package
+local isAurGitVersion = awesome.version:match("-g%d+") ~= nil
 
 -- AwesomeWM-related args to pass to external widgets. 
 local awesomeArgs = ({
@@ -120,9 +122,10 @@ awful.screen.connect_for_each_screen(function(s)
     require("awesome_bar").createAwesomeBar(awesomeArgs, s, awesomeApplications.lockScreen.command.command)
 end)
 
-wallpaper.initWallpaper(gears, { 
+wallpaper.initWallpaper(gears, screen, { 
     interval = config.wallpaperRotationInterval, 
-    isRotateWallpapers = config.isRotateWallpapers
+    isRotateWallpapers = config.isRotateWallpapers,
+    isAurGitVersion = isAurGitVersion
 })
 -- }}}
 
