@@ -115,15 +115,15 @@ end)
 
 awful.screen.connect_for_each_screen(function(s)
     -- wallpaper.setWallpaper(s, awesomeArgs)   -- DEPRECATED, already calling in startRotationTimer
-    
+
     -- Each screen has its own tag table.
-    awful.tag(layouts.tags, s, awful.layout.layouts[1])    
+    awful.tag(layouts.tags, s, awful.layout.layouts[1])
     -- bar
     require("awesome_bar").createAwesomeBar(awesomeArgs, s, awesomeApplications.lockScreen.command.command)
 end)
 
-wallpaper.initWallpaper(gears, { 
-    interval = config.wallpaperRotationInterval, 
+wallpaper.initWallpaper(gears, screen, {
+    interval = config.wallpaperRotationInterval,
     isRotateWallpapers = config.isRotateWallpapers
 })
 -- }}}

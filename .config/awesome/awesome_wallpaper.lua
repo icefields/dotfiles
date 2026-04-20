@@ -24,11 +24,11 @@ local function getRandomWallpaper(dir)
     if not p then
         return nil
     end
-    
+
     local ok, iter = pcall(function()
         return p:lines()
     end)
-    
+
     if ok then
         for file in iter do
             if file:match("%.png$") or file:match("%.jpg$") or file:match("%.jpeg$") or file:match("%.webp$") then
@@ -36,9 +36,9 @@ local function getRandomWallpaper(dir)
             end
         end
     end
-    
+
     p:close()
-    
+
     if #files > 0 then
         local chosen = files[math.random(#files)]
         files = nil
@@ -99,44 +99,50 @@ local function setWallpaper(s, args)
     end
 end
 
+local function startRotation(gears, screen, interval)
+    local timer =  gears.timer {
+        timeout = interval,
+        autostart = true,
+        call_now = false,
+        callback = function()
+            for s in screen do
+                -- emit a signal captured by rc.lua, which will set the wallpaper:
+                -- screen.connect_signal("request::wallpaper", function(s)
+                --      wallpaper.setWallpaper(s, awesomeArgs)
+                -- end)
+                s:emit_signal("request::wallpaper")
+            end
+        end
+    }
+    return timer
+end
+
 -- Start the wallpaper rotation timer
 -- @param args table - Arguments passed to setWallpaper (contains interval, isRotateWallpapers)
 -- @param gears - Awesome Gears
 -- Returns the timer, to allow the caller to stop it if needed
-local function initWallpaper(gears, args)
+local function initWallpaper(gears, screen, args)
     interval = args.interval or 7200
     isRotateWallpapers = args.isRotateWallpapers or true
 
+    local initialTimer = nil
+    local timer = nil
     -- Initial wallpaper set with delay (fixes startup sizing issue)
-    local initialTimer = gears.timer {
+    initialTimer = gears.timer {
         timeout = 0.666,  -- 666ms delay for screen geometry to settle
         autostart = true,
         single_shot = true,
         callback = function()
-            for s in screen do
-                s:emit_signal("request::wallpaper")
+            if isRotateWallpapers then
+                timer = startRotation(gears, screen, interval)
+            else
+                for s in screen do
+                    s:emit_signal("request::wallpaper")
+                end
             end
             initialTimer = nil  -- cleanup
         end
     }
-
-    local timer = nil
-    if isRotateWallpapers then
-        timer = gears.timer {
-            timeout = interval,
-            autostart = true,
-            call_now = false,
-            callback = function()
-                for s in screen do
-                    -- emit a signal captured by rc.lua, which will set the wallpaper:
-                    -- screen.connect_signal("request::wallpaper", function(s)
-                    --      wallpaper.setWallpaper(s, awesomeArgs)
-                    -- end)
-                    s:emit_signal("request::wallpaper")
-                end
-            end
-        }
-    end
     return timer
 end
 
