@@ -155,7 +155,7 @@ local prevMedia = {
     }
 }
 local raiseVolume = {
-    command = homeDir .. "/scripts/applaunch/volumectl.sh -r",
+    command = homeDir .. "/scripts/shell_common/volumectl.sh -r",
     description = "Raise audio volume",
     group = groupLuci4,
     shell = false,
@@ -165,7 +165,7 @@ local raiseVolume = {
     }
 }
 local lowerVolume = {
-    command = homeDir .. "/scripts/applaunch/volumectl.sh -l",
+    command = homeDir .. "/scripts/shell_common/volumectl.sh -l",
     description = "Lower audio volume",
     group = groupLuci4,
     shell = false,
@@ -175,7 +175,7 @@ local lowerVolume = {
     }
 }
 local muteVolume = {
-    command = homeDir .. "/scripts/applaunch/volumectl.sh -m",
+    command = homeDir .. "/scripts/shell_common/volumectl.sh -m",
     description = "Mute/Unmute audio volume",
     group = groupLuci4,
     shell = false,
@@ -185,7 +185,7 @@ local muteVolume = {
     }
 }
 local brightnessUp = {
-    command = "brightnessctl set +5%",
+    command = homeDir .. "/scripts/shell_common/brightnessctl.sh --inc",
     description = "Increase screen brightness",
     group = groupLuci4,
     shell = false,
@@ -195,7 +195,7 @@ local brightnessUp = {
     }
 }
 local brightnessDown = {
-    command = "brightnessctl set 5%-",
+    command = homeDir .. "/scripts/shell_common/brightnessctl.sh --dec",
     description = "Decrease screen brightness",
     group = groupLuci4,
     shell = false,

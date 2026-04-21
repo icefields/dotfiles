@@ -38,8 +38,11 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. config.chosenThemePat
 require("collision")()
 
 local wibox = require("wibox")
+
 -- Notification library
 local naughty = require("naughty")
+require("naughty.dbus")  -- Registers on org.freedesktop.Notifications
+
 local menubar = require("menubar")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
