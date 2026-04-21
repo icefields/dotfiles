@@ -13,7 +13,7 @@ local function updateWifiIcon(awful, wifiButton)
             wifiButton:get_children_by_id("icon")[1].text = "󰍁" --"--"󱎚" --""
             -- wifiButton.bg = "#2ecc71"
         else
-            wifiButton:get_children_by_id("icon")[1].text = "🔴"
+            wifiButton:get_children_by_id("icon")[1].text = "" --"🔴"
             -- wifiButton.bg = "#e74c3c"
         end
     end)

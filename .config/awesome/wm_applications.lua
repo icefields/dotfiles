@@ -174,7 +174,7 @@ local lowerVolume = {
         key2 = "XF86AudioLowerVolume"
     }
 }
-local  muteVolume = {
+local muteVolume = {
     command = homeDir .. "/scripts/applaunch/volumectl.sh -m",
     description = "Mute/Unmute audio volume",
     group = groupLuci4,
@@ -182,6 +182,26 @@ local  muteVolume = {
     keyBinding = {
         key1 =  { },
         key2 = "XF86AudioMute"
+    }
+}
+local brightnessUp = {
+    command = "brightnessctl set +5%",
+    description = "Increase screen brightness",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 =  { },
+        key2 = "XF86MonBrightnessUp"
+    }
+}
+local brightnessDown = {
+    command = "brightnessctl set 5%-",
+    description = "Decrease screen brightness",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 =  { },
+        key2 = "XF86MonBrightnessDown"
     }
 }
 local lockScreen = {
@@ -316,6 +336,12 @@ local applications = {
     },
     muteVolume = {
         command = muteVolume
+    },
+    brightnessUp = {
+        command = brightnessUp
+    },
+    brightnessDown = {
+        command = brightnessDown
     },
     lockScreen = {
         command = lockScreen
