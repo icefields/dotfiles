@@ -1,1 +1,1 @@
-/home/lucifer/apps/Nextcloud.AppImage --background
+$HOME/apps/Nextcloud.AppImage --background

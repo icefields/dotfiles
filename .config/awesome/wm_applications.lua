@@ -205,7 +205,7 @@ local brightnessDown = {
     }
 }
 local lockScreen = {
-    command = homeDir .. "/.config/awesome/scripts/lockscreen.sh",
+    command = homeDir .. "/scripts/applaunch/lockscreen.sh",
     description = "Lock Screen",
     group = groupLuci4,
     shell = true,
