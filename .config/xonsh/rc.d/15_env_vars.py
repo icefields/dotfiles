@@ -30,6 +30,12 @@ def load_shell_env():
 
 load_shell_env()
 
+# --------------------------------------------------------
+# FALLBACK. ssh auth socket, used by keypass ssh agent.
+# --------------------------------------------------------
+XSH.env['SSH_AUTH_SOCK'] = f"/run/user/{os.getuid()}/ssh-agent.socket"
+
+
 #print("Loaded environment variables:")
 #for key in XSH.env:
 #    print(f"{key} = {XSH.env[key]}")
