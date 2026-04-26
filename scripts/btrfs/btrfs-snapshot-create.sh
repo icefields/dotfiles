@@ -13,7 +13,9 @@ create_snapshot() {
     local DESC="$3"
     
     local FULLNAME="${NAME}-${TIMESTAMP}"
-    
+   
+    echo "running btrfs subvolume snapshot -r $SOURCE ${SNAPSHOT_DIR}/${FULLNAME}"
+
     # Create read-only snapshot
     btrfs subvolume snapshot -r "$SOURCE" "${SNAPSHOT_DIR}/${FULLNAME}"
     
@@ -34,6 +36,9 @@ case "$1" in
         ;;
     home)
         create_snapshot "/home" "home" "$2"
+        ;;
+    dotfiles)
+        create_snapshot "/home/lucie/.config" "dotfiles" "$2"
         ;;
     both)
         create_snapshot "/" "root" "$2"

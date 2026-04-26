@@ -122,13 +122,6 @@ else:
         __xonsh__.env['XONSH_HISTORY_BACKEND'] = 'sqlite'
         __xonsh__.env['XONSH_HISTORY_SIZE'] = 100000
         __xonsh__.env['HISTCONTROL'] = 'erasedups'
-
- 
-    # --------------------------------------------------------
-    # Environment variables
-    # --------------------------------------------------------
-    XSH.env["EDITOR"] = "nvim"
-    XSH.env["MANPAGER"] = "nvim +Man!"
  
     # --------------------------------------------------------
     # Abbreviations — Git
@@ -167,7 +160,7 @@ else:
     # Aliases — grep
     # --------------------------------------------------------
     aliases.update({
-        "grep": "grep --color=auto",
+        "grep": ["grep", "--color=auto"],
         "egrep": "egrep --color=auto",
         "fgrep": "fgrep --color=auto",
     })

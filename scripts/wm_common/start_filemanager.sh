@@ -1,1 +1,4 @@
+#!/bin/bash
+
 nemo ~/Desktop/
+

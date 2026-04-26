@@ -4,7 +4,7 @@ local home = os.getenv("HOME")
 config.toggleScript     = home .. "/scripts/toggle-wifi-profile.sh toggle"
 config.getScript        = home .. "/scripts/toggle-wifi-profile.sh get"
 config.statusScript     = home .. "/scripts/toggle-wifi-profile.sh status"
-config.reconnectScript  = "mullvad reconnect"
+config.reconnectScript  = home .. "/scripts/toggle-wifi-profile.sh reconnect"
 --config.buttonSize = 24
 
 return config

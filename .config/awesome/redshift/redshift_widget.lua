@@ -15,8 +15,8 @@
 local homeDir = os.getenv("HOME")
 
 local statusCmd = "redshift -p"
-local toggleCmd = homeDir .. "/scripts/applaunch/redshift_toggle.sh" 
-local getIconCmd = homeDir .. "/scripts/applaunch/redshift_get.sh"
+local toggleCmd = homeDir .. "/scripts/wm_common/redshift_toggle.sh"
+local getIconCmd = homeDir .. "/scripts/wm_common/redshift_get.sh"
 
 local function createRedshiftTooltip(button, args)
     local awful = args.awful

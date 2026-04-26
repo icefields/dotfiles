@@ -15,13 +15,13 @@ run keepassxc
 #run blueman-applet
 run nm-applet
 run xfce4-clipman
-run "$HOME/scripts/applaunch/power-management.sh" # "xfce4-power-manager --daemon --no-tray-icon" #xfce4-power-manager
-run "$HOME/.config/awesome/scripts/start_filemanager.sh"
+run "$HOME/scripts/wm_common/power-management.sh" # "xfce4-power-manager --daemon --no-tray-icon" #xfce4-power-manager
+run "$HOME/scripts/wm_common/start_filemanager.sh"
 
 sleep 5
 run "$HOME/apps/Joplin/Joplin.AppImage"
-run "$HOME/.config/awesome/scripts/start_nextcloud.sh"
-run "$HOME/.config/awesome/scripts/start_tuta.sh"
+run "$HOME/scripts/wm_common/start_nextcloud.sh"
+run "$HOME/scripts/wm_common/start_tuta.sh"
 $HOME/.config/awesome/autostart-custom.sh &
 
 sleep 5

@@ -1,7 +1,19 @@
+# --------------------------------------------------------
+# Environment variables.
+# --------------------------------------------------------
 from xonsh.built_ins import XSH
 import os
 import re
 
+# --------------------------------------------------------
+# Editor.
+# --------------------------------------------------------
+XSH.env["EDITOR"] = "nvim"
+XSH.env["MANPAGER"] = "nvim +Man!"
+
+# --------------------------------------------------------
+# Shell Env file.
+# --------------------------------------------------------
 shell_env_path = Paths.ENV_VARS
 
 def load_shell_env():
@@ -32,8 +44,10 @@ load_shell_env()
 
 # --------------------------------------------------------
 # FALLBACK. ssh auth socket, used by keypass ssh agent.
+# this should be set in ~/.xprofile
 # --------------------------------------------------------
-XSH.env['SSH_AUTH_SOCK'] = f"/run/user/{os.getuid()}/ssh-agent.socket"
+if not os.environ.get("SSH_AUTH_SOCK"):
+    XSH.env['SSH_AUTH_SOCK'] = f"/run/user/{os.getuid()}/ssh-agent.socket"
 
 
 #print("Loaded environment variables:")

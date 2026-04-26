@@ -92,9 +92,6 @@ local function setWallpaper(s, args)
             gears.wallpaper.maximized(wallpaper, s, true)
         else
             gears.wallpaper.set("#000000") -- fallback color
-            -- FALLBACK to nitrogen
-            --local wallpaperScript = "nitrogen --set-zoom-fill --random " .. beautiful.wallpapersPath .. " --head=" .. (s.index-1) -- .. " > /dev/null 2>&1"
-            --awful.spawn.with_shell(wallpaperScript)
         end
     end
 end

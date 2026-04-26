@@ -25,7 +25,6 @@ local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
 
 local browserCmd = "librewolf"
-local fileBrowserCmd = "nemo ~/Desktop/"
 local terminalCmd = "kitty"
 local editorCmd = terminalCmd .. " -e " .. (os.getenv("EDITOR") or "nvim")
 local modkey = "Mod4"
@@ -43,7 +42,7 @@ local browser = {
     }
 }
 local fileBrowser = {
-    command = fileBrowserCmd,
+    command = homeDir .. "/scripts/wm_common/start_filemanager.sh",
     description = "Open file browser",
     group = groupLuci4,
     shell = true,
@@ -53,7 +52,7 @@ local fileBrowser = {
     }
 }
 local kittyArchDistrobox =  {
-    command = homeDir .. "/.config/awesome/scripts/open_kitty_arch.sh",
+    command = homeDir .. "/scripts/wm_common/start_kitty_distrobox.sh",
     description = "Open Kitty Terminal in Arch Distrobox container",
     group = groupLuci4,
     shell = true,
@@ -63,7 +62,7 @@ local kittyArchDistrobox =  {
     }
 }
 local kittyArchDistroboxIsolated =  {
-    command = homeDir .. "/.config/awesome/scripts/open_kitty_arch-isolated.sh",
+    command = homeDir .. "/scripts/wm_common/start_kitty_distrobox-isolated.sh",
     description = "Open Kitty Terminal in an isolated Arch Distrobox container",
     group = groupLuci4,
     shell = true
@@ -204,8 +203,28 @@ local brightnessDown = {
         key2 = "XF86MonBrightnessDown"
     }
 }
+local kbBrightnessUp = {
+    command = homeDir .. "/scripts/wm_common/kb-brightness.sh --inc",
+    description = "Increase keyboard brightness",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 =  { modkey },
+        key2 = "F4" -- "XF86KbdBrightnessUp"
+    }
+}
+local kbBrightnessDown = {
+    command = homeDir .. "/scripts/wm_common/kb-brightness.sh --dec",
+    description = "Decrease keyboard brightness",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 =  { modkey },
+        key2 = "F3" -- "XF86KbdBrightnessDown"
+    }
+}
 local lockScreen = {
-    command = homeDir .. "/scripts/applaunch/lockscreen.sh",
+    command = homeDir .. "/scripts/wm_common/lockscreen.sh",
     description = "Lock Screen",
     group = groupLuci4,
     shell = true,
@@ -225,7 +244,7 @@ local dmenu = {
     }
 }
 local shareMenu = {
-    command = "fish -c " .. homeDir .. "/.config/awesome/scripts/launch_share.sh", --"fish -c " .. homeDir .. "/scripts/share.sh --ntfy",
+    command = "fish -c " .. homeDir .. "/scripts/wm_common/launch_share.sh",
     description = "Get a share-link, copy to clipboard",
     group = groupLuci4,
     shell = true,
@@ -236,7 +255,7 @@ local shareMenu = {
 }
 local shareMenuEncrypted = {
     -- launching with kitty is not a good idea, switch to something more compatible like bash
-    command = terminalCmd .. " " .. homeDir .. "/scripts/launch_share_encrypted.sh", -- "kitty " .. homeDir .. "/scripts/share.sh --secret --ntfy &",
+    command = terminalCmd .. " " .. homeDir .. "/scripts/wm_common/launch_share_encrypted.sh",
     description = "Zip, encrypt, get a share link and copy to clipboard",
     group = groupLuci4,
     shell = true,
@@ -342,6 +361,12 @@ local applications = {
     },
     brightnessDown = {
         command = brightnessDown
+    },
+    kbBrightnessUp = {
+        command = kbBrightnessUp
+    },
+    kbBrightnessDown = {
+        command = kbBrightnessDown
     },
     lockScreen = {
         command = lockScreen
@@ -1091,7 +1116,7 @@ local applications = {
         class = "", -- "cinnamon-settings sound"
         favourite = false,
         command = {
-            command = homeDir .. "/scripts/applaunch/sound-settings.sh",
+            command = homeDir .. "/scripts/wm_common/sound-settings.sh",
             description = "Linux audio settings",
             group = "",
             shell = true

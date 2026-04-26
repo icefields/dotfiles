@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Kernel"
 uname -r
 echo "\nRelease info"
