@@ -1,70 +1,51 @@
 local config = require("vpn-buttons.vpn_common")
-local createVpnTooltip = require("vpn-buttons.vpn_tooltip")
+local buttonTooltip = require("common.button_tooltip")
 
 -- scripts
 local toggleScript = config.toggleScript
 local getScript = config.getScript
 local statusScript = config.statusScript
 
-local function updateWifiIcon(awful, wifiButton)
+local function updateWifiIcon(awful, wifiIcon)
     awful.spawn.easy_async_with_shell(getScript, function(stdout)
         local status = stdout:gsub("%s+", "")
         if status == "connected" then
-            wifiButton:get_children_by_id("icon")[1].text = "󰍁" --"--"󱎚" --""
+            wifiIcon.text = "󰍁" --"--"󱎚" --""
             -- wifiButton.bg = "#2ecc71"
         else
-            wifiButton:get_children_by_id("icon")[1].text = "" --"🔴"
+            wifiIcon.text = "" --"🔴"
             -- wifiButton.bg = "#e74c3c"
         end
     end)
 end
 
 local function getButton(args)
-    local gears = args.gears
     local awful = args.awful
-    local beautiful = args.beautiful
-    local wibox = args.wibox
-    local applyDpi = args.applyDpi
+    local gears = args.gears
 
-    local wifiButton = wibox.widget {
-        {
-            id = "icon",
-            text = "",
-            widget = wibox.widget.textbox,
-            align = "center",
-            valign = "center",
-            font = beautiful.topBar_button_font
-        },
-        widget = wibox.container.background,
-        bg = "#00000000",
-        fg = beautiful.topBar_fg,
-        shape = gears.shape.rounded_bar,
-        forced_width = applyDpi(beautiful.topBar_buttonSize),
-        forced_height = applyDpi(beautiful.topBar_buttonSize),
-    }
+    -- mouseLeaveCallback
+    local updateIcon = function (wifiButton, wifiIcon)
+        updateWifiIcon(awful, wifiIcon)
+    end
 
-    local wifiTooltip = createVpnTooltip(wifiButton, awful, beautiful)
-
-    wifiButton:connect_signal("button::press", function()
-        wifiButton.bg = nil
-        awful.spawn.easy_async_with_shell(toggleScript, function()
-            gears.timer.start_new(5, function()
-                updateWifiIcon(awful, wifiButton)
-                return false
+    local button = buttonTooltip(args, {
+        tooltipScript = statusScript,
+        buttonIconCallback = updateIcon,
+        mouseLeaveCallback = updateIcon,
+        clickResponseUpdateIconDelay = 5,
+        btnDefaultText = "",
+        tooltipDefaultText = "VPN Status ...",
+        buttonClickCallback = function(wifiButton, wifiIcon)
+            wifiButton.bg = nil
+            awful.spawn.easy_async_with_shell(toggleScript, function()
+                gears.timer.start_new(5, function()
+                    updateWifiIcon(awful, wifiIcon)
+                    return false
+                end)
             end)
-        end)
-    end)
-
-    wifiButton:connect_signal("button::release", function(c) c.bg = beautiful.bg_focus end)
-
-    wifiButton:connect_signal("mouse::leave", function(c)
-        -- c.bg = "#00000000"
-        updateWifiIcon(awful, wifiButton)
-    end)
-
-    updateWifiIcon(awful, wifiButton)
-
-    return wifiButton
+        end
+    })
+    return button
 end
 
 return getButton
