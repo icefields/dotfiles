@@ -1,50 +1,76 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Load images
 shopt -s nullglob
-images=( *.png *.jpg *.jpeg )
-shopt -u nullglob
 
-if [ ${#images[@]} -eq 0 ]; then
+exts=("*.png" "*.jpg" "*.jpeg" "*.webp" "*.gif")
+
+# ----------------------------
+# BUILD IMAGE LIST (IMPORTANT FIXED LOGIC)
+# ----------------------------
+if [ "$#" -gt 0 ]; then
+    if [ "$#" -eq 1 ]; then
+        input="$1"
+        dir="$(dirname "$input")"
+        base="$(basename "$input")"
+
+        images=()
+        for ext in "${exts[@]}"; do
+            images+=( "$dir"/$ext )
+        done
+
+        # sort safely
+        IFS=$'\n' images=($(printf '%s\n' "${images[@]}" | sort -V))
+        unset IFS
+
+        # find clicked image index
+        index=0
+        for i in "${!images[@]}"; do
+            [[ "$(basename "${images[$i]}")" == "$base" ]] && index=$i && break
+        done
+    else
+        images=("$@")
+        IFS=$'\n' images=($(printf '%s\n' "${images[@]}" | sort -V))
+        unset IFS
+        index=0
+    fi
+else
+    images=( "$PWD"/*.png "$PWD"/*.jpg "$PWD"/*.jpeg "$PWD"/*.webp "$PWD"/*.gif )
+    IFS=$'\n' images=($(printf '%s\n' "${images[@]}" | sort -V))
+    unset IFS
+    index=0
+fi
+
+total=${#images[@]}
+
+if [ "$total" -eq 0 ]; then
     echo "No images found."
     exit 1
 fi
 
-index=0
-total=${#images[@]}
-
-show_image() {
-    clear  # Clear the entire terminal screen
-    kitty +kitten icat "${images[$index]}"
-    echo
-    echo "[Image $((index + 1)) of $total]: ${images[$index]}"
-    echo "Use ← / → to navigate, q to quit"
-}
-
-# Main loop
+# ----------------------------
+# MAIN LOOP
+# ----------------------------
 while true; do
-    show_image
+    clear
+    kitty +kitten icat --clear "${images[$index]}"
 
-    # Read keypress
+    echo
+    echo "[ $((index+1)) / $total ] ${images[$index]}"
+    echo "←/→ navigate | q quit"
+
     IFS= read -rsn1 key
-    if [[ $key == $'\e' ]]; then
-        read -rsn2 key  # Get the full escape sequence for arrows
-    fi
 
     case "$key" in
-        '[C')  # Right arrow
-            if (( index < total - 1 )); then
-                ((index++))
-            fi
-            ;;
-        '[D')  # Left arrow
-            if (( index > 0 )); then
-                ((index--))
-            fi
-            ;;
         q|Q)
             clear
-            break
+            exit 0
+            ;;
+        $'\e')
+            read -rsn2 key
+            case "$key" in
+                "[C") ((index = (index + 1) % total)) ;;
+                "[D") ((index = (index - 1 + total) % total)) ;;
+            esac
             ;;
     esac
 done
