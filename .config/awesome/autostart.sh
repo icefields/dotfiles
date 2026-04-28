@@ -7,9 +7,9 @@ run() {
   fi
 }
 
-# run picom
 run "$HOME/.config/awesome/scripts/screens.sh"
 run "$HOME/.config/awesome/scripts/picom_delayed.sh"
+#sleep 5
 run lxqt-policykit-agent
 run keepassxc
 #run blueman-applet
@@ -18,7 +18,7 @@ run xfce4-clipman
 run "$HOME/scripts/wm_common/power-management.sh" # "xfce4-power-manager --daemon --no-tray-icon" #xfce4-power-manager
 run "$HOME/scripts/wm_common/start_filemanager.sh"
 
-sleep 5
+sleep 3
 run "$HOME/apps/Joplin/Joplin.AppImage"
 run "$HOME/scripts/wm_common/start_nextcloud.sh"
 run "$HOME/scripts/wm_common/start_tuta.sh"

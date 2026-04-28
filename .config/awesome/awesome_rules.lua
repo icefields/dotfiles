@@ -38,9 +38,17 @@ local function getProperty(awful, property)
     return property
 end
 
-local function getRule(awful, app, screenPos)
+local function getRule(awful, applyDpi, app, screenPos)
     local properties = getProperty(awful, app.properties)
     properties.screen = screenPos or awful.screen.preferred
+
+    if app.properties.width and app.properties.width ~= 0 then
+        properties.width = applyDpi(app.properties.width)
+    end
+    if app.properties.height and app.properties.height ~= 0 then
+        properties.height = applyDpi(app.properties.height)
+    end
+
     local rule = {
         rule = { class = app.class },
         properties = properties
@@ -52,6 +60,7 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
     local beautiful = args.beautiful
     local awful = args.awful
     local screen = args.screen
+    local applyDpi = args.applyDpi
 
     local rules = { }
     local allClientRules = {
@@ -115,7 +124,7 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
         }
     }
 
-    local titleBarsRule = { 
+    local titleBarsRule = {
         rule_any = {
             type = { "normal", "dialog" }
         },
@@ -127,17 +136,17 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
     }
 
     table.insert(rules, allClientRules)
-   
+
     -- Insert rules from applications object
     for _, appl in pairs(awesomeApps) do
         -- Rules cannot be applied without a class
         if type(appl) == "table" and appl.properties ~= nil and appl.class ~= nil and appl.class ~= "" then
-            table.insert(rules, getRule(awful, appl))
+            table.insert(rules, getRule(awful, applyDpi, appl))
         end
     end
     -- Insert file browser rule, will appear on last screen for multiscreen setup.
-    table.insert(rules, getRule(awful, awesomeApps.fileBrowser, screen.count()))
- 
+    table.insert(rules, getRule(awful, applyDpi, awesomeApps.fileBrowser, screen.count()))
+
     table.insert(rules, defaultFloatingRule)
     table.insert(rules, titleBarsRule)
     return rules
