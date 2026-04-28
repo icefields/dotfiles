@@ -1,2 +1,7 @@
-Xft.dpi: 144
-
+Xft.dpi: 160
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.rgba: none
+Xft.lcdfilter: lcddefault
+Xcursor.theme: Remus-Black
