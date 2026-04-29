@@ -35,7 +35,7 @@ local function getButton(args)
         -- clickResponseUpdateIconDelay = 5,
         btnDefaultText = "",
         tooltipDefaultText = "VPN Status ...",
-        buttonClickCallback = function(wifiButton, wifiIcon)
+        buttonClickCallback = function(wifiButton, wifiIcon, text)
             wifiButton.bg = nil
             awful.spawn.easy_async_with_shell(toggleScript, function()
                 gears.timer.start_new(5, function()

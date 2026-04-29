@@ -153,8 +153,18 @@ local prevMedia = {
         key2 = "XF86AudioPrev"
     }
 }
+local toggleMic = {
+    command = homeDir .. "/scripts/wm_common/volume.sh --toggle-mic",
+    description = "Toggle microphone on and off",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 = { },
+        key2 = "XF86AudioMicMute"
+    }
+}
 local raiseVolume = {
-    command = homeDir .. "/scripts/shell_common/volumectl.sh -r",
+    command = homeDir .. "/scripts/wm_common/volume.sh --inc",
     description = "Raise audio volume",
     group = groupLuci4,
     shell = false,
@@ -164,7 +174,7 @@ local raiseVolume = {
     }
 }
 local lowerVolume = {
-    command = homeDir .. "/scripts/shell_common/volumectl.sh -l",
+    command = homeDir .. "/scripts/wm_common/volume.sh --dec",
     description = "Lower audio volume",
     group = groupLuci4,
     shell = false,
@@ -174,7 +184,7 @@ local lowerVolume = {
     }
 }
 local muteVolume = {
-    command = homeDir .. "/scripts/shell_common/volumectl.sh -m",
+    command = homeDir .. "/scripts/wm_common/volume.sh --toggle",
     description = "Mute/Unmute audio volume",
     group = groupLuci4,
     shell = false,
@@ -346,6 +356,9 @@ local applications = {
     },
     prevMedia = {
         command = prevMedia
+    },
+    toggleMic = {
+        command = toggleMic
     },
     raiseVolume = {
         command = raiseVolume

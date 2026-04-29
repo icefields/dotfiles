@@ -34,7 +34,7 @@ get_icon() {
 }
 
 # Notify using dunstify
-notify_user() {
+notify_user_dunst() {
     current=$(get_brightness)
 
     dunstify -r 9991 \

@@ -2,6 +2,13 @@
 
 iDIR="$HOME/.config/mako/icons"
 
+# Detect notification method
+if command -v dunstify >/dev/null 2>&1; then
+    NOTIFY_CMD="dunstify"
+else
+    NOTIFY_CMD="notify-send"
+fi
+
 # Get Volume
 get_volume() {
 	volume=$(pamixer --get-volume)
@@ -22,28 +29,56 @@ get_icon() {
 	fi
 }
 
-# Notify
+# Notify (uses dunstify if available, otherwise notify-send)
 notify_user() {
-	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume : $(get_volume) %"
+    if [[ "$NOTIFY_CMD" == "dunstify" ]]; then
+        dunstify -r 9991 -u low -i "$(get_icon)" "Volume : $(get_volume) %"
+    else
+        notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume : $(get_volume) %"
+    fi
 }
 
 # Increase Volume
 inc_volume() {
-	pamixer -i 1 && notify_user
+	if command -v pamixer &>/dev/null; then
+        pamixer --increase 1 && notify_user
+    elif command -v amixer &>/dev/null; then
+        amixer -D pulse sset Master 2%+ && notify_user
+    else
+        echo "porcodio: no audio backend found" >&2
+        return 1
+    fi
+    #pamixer -i 1 && notify_user
 }
 
 # Decrease Volume
 dec_volume() {
-	pamixer -d 1 && notify_user
+	if command -v pamixer &>/dev/null; then
+        pamixer --decrease 1 && notify_user
+    elif command -v amixer &>/dev/null; then
+        amixer -D pulse sset Master 2%- && notify_user
+    else
+        echo "porcodio: no audio backend found" >&2
+        return 1
+    fi
+    notify_user
+    #pamixer -d 1 && notify_user
 }
 
 # Toggle Mute
 toggle_mute() {
-	if [ "$(pamixer --get-mute)" == "false" ]; then
-		pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
-	elif [ "$(pamixer --get-mute)" == "true" ]; then
-		pamixer -u && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume Switched ON"
-	fi
+	if command -v pamixer &>/dev/null; then
+        if [ "$(pamixer --get-mute)" == "false" ]; then
+		    pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
+	    elif [ "$(pamixer --get-mute)" == "true" ]; then
+		    pamixer -u && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume Switched ON"
+	    fi
+    elif command -v amixer &>/dev/null; then
+        amixer -D pulse sset Master toggle
+    else
+        echo "porcodio: no audio backend found" >&2
+        return 1
+    fi
 }
 
 # Toggle Mic

@@ -19,7 +19,7 @@ local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout
 local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
-local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+-- local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 local worldtimeTooltip = require("worldtime_tooltip")
 local currencyWidget = require("currency.currency_widget")
 local todoWidget = require("todo-widget.todo")
@@ -97,11 +97,11 @@ local function getCalendarWidget(beautiful)
 end
 
 -- Luci4 volume widget configuration
-local function getVolumeWidget(beautiful)
+local function getVolumeWidget(beautiful, dpi)
     return volume_widget {
         widget_type = 'arc', -- horizontal_bar, vertical_bar, icon, icon_and_text, arc
-        size = 36,
-        width = 100,
+        size = dpi(36),
+        width = dpi(100),
         -- shape = 'powerline',
         with_icon = true,
         main_color = beautiful.border_focus,
@@ -111,7 +111,7 @@ local function getVolumeWidget(beautiful)
 end
 
 -- system tray
-local function getSystemTray(wibox, beautiful, gears)
+local function getSystemTray(wibox, beautiful, gears, dpi)
     local systray = wibox.widget.systray()
     -- systray.opacity = 0.95
 
@@ -119,7 +119,7 @@ local function getSystemTray(wibox, beautiful, gears)
     luciSysTrayColour:set_fg(beautiful.fg_systray)
     luciSysTrayColour:set_bg(beautiful.bg_systray)
     luciSysTrayColour.shape = function(cr, width, height)
-        gears.shape.rounded_rect(cr, width, height, beautiful.rect_radius)
+        gears.shape.rounded_rect(cr, dpi(width), dpi(height), 0)  --dpi(beautiful.rect_radius))
     end
     local trayMargin = beautiful.systray_margin
     luciSysTrayColour:set_widget(wibox.layout.margin(systray, trayMargin, trayMargin, trayMargin, trayMargin))
@@ -132,11 +132,11 @@ local function getClockWidget(wibox, beautiful)
     return wibox.widget.textclock("<span color='"..beautiful.topBar_fg.."'> <b>%a</b> %b %d, %H:%M </span>")
 end
 
-local function getCpuWidget(beautiful)
+local function getCpuWidget(beautiful, dpi)
     return cpu_widget({
-        width = 44,         -- default: 50
-        step_width = 4,     -- default: 2
-        step_spacing = 1,   -- default: 1
+        width = dpi(44),         -- default: 50
+        step_width = dpi(4),     -- default: 2
+        step_spacing = dpi(1),   -- default: 1
         enable_kill_button = true,    -- default: false
         timeout = 2,                  -- default: 1
         process_info_max_length = -1, -- default: -1
@@ -153,13 +153,13 @@ end
 -- timeout 	        1           	How often in seconds the widget refreshes
 -- widget_show_buf 	false Whether to display buffers/cache separately in the 
 --              tray widget. If false, buffers/cache are considered free RAM.
-local function getRamWidget(beautiful)
+local function getRamWidget(beautiful, dpi)
     return ram_widget({
         color_used = beautiful.bg_urgent,
         color_free = beautiful.fg_normal,
         color_buf = beautiful.border_color_active,
-        widget_height = 25,
-        widget_width = 25,
+        widget_height = dpi(25),
+        widget_width = dpi(25),
         timeout = 4,
         widget_show_buf = true
     })
@@ -203,6 +203,10 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     -- VPN buttons
     local toggleVpnButton = require("vpn-buttons.vpn_toggle_button")(args)
     local vpnReconnectButton = require("vpn-buttons.vpn_reconnect_button")(args)
+    local wifiButton =  require("vpn-buttons.wifi_button")(args)
+
+    -- pipewire toggle
+    local togglePipewireButton = require("pipewire.toggle_profile_button")(args)
 
     -- Keyboard map indicator and switcher
     -- local mykeyboardlayout = awful.widget.keyboardlayout()
@@ -264,7 +268,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
         filter  = awful.widget.tasklist.filter.currenttags, -- minimizedcurrenttags, --alltags,
         buttons = getTaskListButtons(client, gears, awful),
         style    = {
-            spacing = 2,
+            spacing = dpi(2),
             shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, beautiful.rect_radius)
             end, -- gears.shape.octogon, -- powerline, --rounded_rect,
@@ -289,7 +293,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     -- ORIG s.mywibox = awful.wibar({ position = "top", screen = s })
 
     local separatorW = separator(beautiful, wibox)
-    local spacer = separator(beautiful, wibox, { showSeparator = false, margins = { left = 2, right = 2 } }),
+    local spacer = separator(beautiful, wibox, { showSeparator = false, margins = { left = dpi(2), right = dpi(2) } }),
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -300,23 +304,24 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             -- mylauncher,
             s.mytaglist,
             s.mypromptbox,
-            separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
-            getCpuWidget(beautiful),
-            getRamWidget(beautiful),
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = dpi(1), right = dpi(1) } }),
+            getCpuWidget(beautiful, dpi),
+            getRamWidget(beautiful, dpi),
             docker_widget()
             --mykeyboardlayout
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            spacer,
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = dpi(4), right = dpi(2) } }),
             todoWidget(),
             separator(beautiful, wibox, { showSeparator = true, margins = { left = 0, right = 0 } }),
+            wifiButton,
             toggleVpnButton,
             vpnReconnectButton,
-            separator(beautiful, wibox, { showSeparator = true, margins = { left = 1, right = 5 } }),
+            separator(beautiful, wibox, { showSeparator = true, margins = { left = dpi(1), right = dpi(5) } }),
             batteryWidget(args),
-            separator(beautiful, wibox, { margins = { left = 2 } }),
+            separator(beautiful, wibox, { margins = { left = dpi(2) } }),
             redshiftButton,
             separatorW,
             weatherButton,
@@ -326,8 +331,11 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             interWidget,
             separator(beautiful, wibox, { margins = { left = 0, right = 0 } }),
             clockWidget,
-            getSystemTray(wibox, beautiful, gears),
-            getVolumeWidget(beautiful),
+            getSystemTray(wibox, beautiful, gears, dpi),
+            --getVolumeWidget(beautiful, dpi),
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
+            togglePipewireButton,
+            separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
             s.mylayoutbox,
             -- default logout widget
             -- logout_menu_widget(),

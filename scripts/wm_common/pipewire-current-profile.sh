@@ -1,10 +1,10 @@
 #!/bin/bash
 
 if [ -f $HOME/.config/pipewire/pipewire.conf.d/normal.conf ]; then
-    echo "  "
+    echo " "
 elif [ -f $HOME/.config/pipewire/pipewire.conf.d/lowlatency.conf ]; then
-    echo "🎸 "
+    echo "󰋄"
 else
-    echo "⚠️ "
+    echo "⚠️"
 fi
 

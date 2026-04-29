@@ -59,8 +59,8 @@
 
     "custom/audio_profile": {
         "format": "{}",
-        "exec": "~/.config/waybar/current-pipewire-profile.sh",
-        "on-click": "~/scripts/toggle-pipewire-profile.sh",
+        "exec": "~/scripts/wm_common/pipewire-current-profile.sh",
+        "on-click": "~/scripts/wm_common/pipewire-toggle-profile.sh",
         "interval": 5,
         "tooltip": false
     },
@@ -158,10 +158,10 @@
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-muted": "",
-        "on-click": "~/.config/waybar/scripts/volume --toggle",
+        "on-click": "~/scripts/wm_common/volume.sh --toggle",
         "on-click-right": "pavucontrol",
-        "on-scroll-up": "~/.config/waybar/scripts/volume --inc",
-        "on-scroll-down": "~/.config/waybar/scripts/volume --dec",
+        "on-scroll-up": "~/scripts/wm_common/volume.sh --inc",
+        "on-scroll-down": "~/scripts/wm_common/volume.sh --dec",
         "scroll-step": 5,
         "format-icons": {
             "headphone": "",
@@ -178,10 +178,10 @@
         "format": "{format_source}",
         "format-source": " {volume}%",
         "format-source-muted": " ",
-        "on-click": "~/.config/waybar/scripts/volume --toggle-mic",
+        "on-click": "~/scripts/wm_common/volume.sh --toggle-mic",
         "on-click-right": "pavucontrol",
-        "on-scroll-up": "~/.config/waybar/scripts/volume --mic-inc",
-        "on-scroll-down": "~/.config/waybar/scripts/volume --mic-dec",
+        "on-scroll-up": "~/scripts/wm_common/volume.sh --mic-inc",
+        "on-scroll-down": "~/scripts/wm_common/volume.sh --mic-dec",
         "scroll-step": 5
     }
 }

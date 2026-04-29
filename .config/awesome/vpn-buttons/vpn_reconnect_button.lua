@@ -15,10 +15,10 @@ local function getButton(args)
         btnDefaultText = "󰝳",
         tooltipDefaultText = "VPN Status ...",
         buttonClickScript = reconnectScript,
-        buttonClickCallback = function (button, icon)
+        buttonClickCallback = function (button, icon, text)
             notif.send(naughty, beautiful, {
                 title = "VPN Reconnected",
-                text = "VPN restarted and reconnected",
+                text = "VPN restarted and reconnected ".. text,
                 icon = notifIcon,
                 timeout = 5,
                 position = notif.POSITION.TOP_MIDDLE,

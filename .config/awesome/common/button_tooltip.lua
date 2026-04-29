@@ -119,15 +119,17 @@ local function createTooltip(button, awful, beautiful, tooltipScript, text)
         fg = beautiful.tooltip_fg_color
     }
 
-    local tooltipSpawned = false
+    local tooltipSpawned = false -- avoid piling up requests
     button:connect_signal("mouse::enter", function(c)
         c.bg = beautiful.bg_focus
-        if not tooltipSpawned then
-            tooltipSpawned = true
-            awful.spawn.easy_async_with_shell(tooltipScript, function(stdout)
-                tooltip.text = stdout:gsub("%s+$", "")
-                tooltipSpawned = false
-            end)
+        if tooltipScript then
+            if not tooltipSpawned then
+                tooltipSpawned = true
+                awful.spawn.easy_async_with_shell(tooltipScript, function(stdout)
+                    tooltip.text = stdout:gsub("%s+$", "")
+                    tooltipSpawned = false
+                end)
+            end
         end
     end)
 
@@ -140,7 +142,7 @@ local function updateIcon(awful, button, icon, iconScript, iconCallback)
         awful.spawn.easy_async_with_shell(iconScript, function(stdout)
             local status = stdout:gsub("%s+", "")
             icon.text = status
-            if iconCallback then iconCallback(button, icon) end
+            if iconCallback then iconCallback(button, icon, status) end
         end)
     elseif iconCallback then
         iconCallback(button, icon)
@@ -182,10 +184,7 @@ local function getButton(args, buttonArgs)
         forced_height = applyDpi(beautiful.topBar_buttonSize),
     }
     local icon = button:get_children_by_id("icon")[1]
-
-    if tooltipScript then
-        local tooltip = createTooltip(button, awful, beautiful, tooltipScript, tooltipDefaultText)
-    end
+    local tooltip = createTooltip(button, awful, beautiful, tooltipScript, tooltipDefaultText)
 
     local clickTimer = nil
     -- If both script and callback exist, run the callback after receiving a
@@ -195,9 +194,9 @@ local function getButton(args, buttonArgs)
     button:connect_signal("button::press", function()
         button.bg = nil
         if buttonClickScript then
-            awful.spawn.easy_async_with_shell(buttonClickScript, function()
+            awful.spawn.easy_async_with_shell(buttonClickScript, function(stdout)
                 if buttonClickCallback then
-                    buttonClickCallback(button, icon)
+                    buttonClickCallback(button, icon, stdout)
                 end
                 if clickResponseUpdateIconDelay then
                     if clickTimer then clickTimer:stop() end

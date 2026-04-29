@@ -145,7 +145,9 @@ else:
         "dcom": "gitdots commit -m ",
         "dpus": "gitdots push -u origin main",
     })
-
+    # also dstatus alias
+    aliases["dstatus"] = "gitdots status"
+    
     # --------------------------------------------------------
     # Abbreviations — cp replacement
     # --------------------------------------------------------
