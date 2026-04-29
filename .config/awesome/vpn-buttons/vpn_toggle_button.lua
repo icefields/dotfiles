@@ -32,7 +32,7 @@ local function getButton(args)
         tooltipScript = statusScript,
         buttonIconCallback = updateIcon,
         mouseLeaveCallback = updateIcon,
-        clickResponseUpdateIconDelay = 5,
+        -- clickResponseUpdateIconDelay = 5,
         btnDefaultText = "",
         tooltipDefaultText = "VPN Status ...",
         buttonClickCallback = function(wifiButton, wifiIcon)

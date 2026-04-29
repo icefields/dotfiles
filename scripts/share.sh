@@ -29,8 +29,10 @@ EOF
 showmenu() {
     # Read input from standard input
     input=$(cat)
-   
-    if command -v wofi >/dev/null 2>&1; then
+  
+    if command -v rofi >/dev/null 2>&1; then
+        echo "$input" | rofi -dmenu -i -l 25
+    elif command -v wofi >/dev/null 2>&1; then
         echo "$input" | wofi --conf $HOME/.config/wofi/config-smenu --style $HOME/.config/wofi/styleS.css 
     elif command -v dmenu >/dev/null 2>&1; then
         echo "$input" | dmenu -i -l 25
@@ -67,7 +69,17 @@ megaShare() {
         echo "Error: share-mega.py not found" >&2
         return 1
     fi
-    python3 "$scriptPath" "${filename}"
+   
+    if command -v mega-login >/dev/null 2>&1; then
+        mega-login "$MEGA_EMAIL" "$MEGA_PASSWORD"
+        mega-put "${filename}" /
+        local fileOnly="${filename##/tmp/}"
+        LINK=$(mega-export -a "/${fileOnly}" | grep -o 'https://mega.nz/.*')
+        echo "$LINK"
+        echo "$LINK" | xclip -i -sel c -f #  xclip -selection clipboard
+    else
+        python3 "$scriptPath" "${filename}"
+    fi
 }
 
 secretFlag=false

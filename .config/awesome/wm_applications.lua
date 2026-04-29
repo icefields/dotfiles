@@ -234,7 +234,7 @@ local lockScreen = {
     }
 }
 local dmenu = {
-    command = "dmenu_run",
+    command = homeDir .. "/scripts/wm_common/dmenu_run.sh",
     description = "run prompt",
     group = groupLuci4,
     shell = false,

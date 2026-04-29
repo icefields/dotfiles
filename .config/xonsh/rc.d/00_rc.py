@@ -35,30 +35,28 @@ warnings.filterwarnings(
 __xonsh__.env['XONSH_SHOW_TRACEBACK'] = True
 __xonsh__.env['XONSH_TRACEBACK_LOGFILE'] = str(Paths.LOG_FILE)
 
-# ------------------------------------------------------------
+# --------------------------------------------------------
+# Helpers
+# --------------------------------------------------------
+def commandExists(cmd):
+    return subprocess.call(
+        ["which", cmd],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    ) == 0
+
+# empty CONTAINER_ID will return true
+def isDistrobox():
+    return "CONTAINER_ID" in os.environ
+
+# empty CONTAINER_ID will return false
+# def is_distrobox():
+#     return bool(os.environ.get("CONTAINER_ID"))
+
 # Interactive guard
-# ------------------------------------------------------------
 if not XSH.env.get("XONSH_INTERACTIVE", False):
     pass
-else:
-    # --------------------------------------------------------
-    # Helpers
-    # --------------------------------------------------------
-    def command_exists(cmd):
-        return subprocess.call(
-            ["which", cmd],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        ) == 0
-
-    # empty CONTAINER_ID will return true
-    def isDistrobox():
-        return "CONTAINER_ID" in os.environ
-    
-    # empty CONTAINER_ID will return false
-    # def is_distrobox():
-    #     return bool(os.environ.get("CONTAINER_ID"))
-
+else:    
     # --------------------------------------------------------
     # Load xontribs
     # --------------------------------------------------------
@@ -230,14 +228,19 @@ else:
     # --------------------------------------------------------
     # vim → nvim fallback
     # --------------------------------------------------------
-    if command_exists("nvim"):
+    if commandExists("nvim"):
         aliases["vim"] = "nvim"
 
     # --------------------------------------------------------
-    # dmenu, rofi
+    # dmenu, rofi, wofi.
     # --------------------------------------------------------
-    if command_exists("rofi") and not command_exists("dmenu"):
-        aliases["dmenu"] = ["rofi", "-dmenu"]
+    if not commandExists("dmenu"):
+        if commandExists("rofi"):
+            aliases["dmenu"] = ["rofi", "-dmenu"]
+            aliases["dmenu_run"] = ["rofi", "-show","drun"]
+            abbrevs["fb"] = "rofi -show filebrowser"
+        elif commandExists("wofi"):
+            aliases["dmenu"] = ["wofi", "--dmenu"] 
     
     # --------------------------------------------------------
     # midorifetch
@@ -247,14 +250,14 @@ else:
     # --------------------------------------------------------
     # ls / tree (eza / exa)
     # --------------------------------------------------------
-    if command_exists("eza"):
+    if commandExists("eza"):
         aliases.update({
             "ls": "eza -a --color=always --group-directories-first --icons=always --mounts --git --git-repos",
             "tree": "eza -alh@ --color=always --group-directories-first --tree --level",
         })
         abbrevs["l"] = "eza -al --color=always --group-directories-first --icons=always --mounts --git --git-repos"
 
-    elif command_exists("exa"):
+    elif commandExists("exa"):
         aliases.update({
             "ls": "exa -a --color=always --group-directories-first --icons",
             "tree": "exa -alh@ --color=always --group-directories-first --tree --level",
@@ -338,7 +341,6 @@ else:
     elif OS_NAME == "Fedora":
         abbrevs["vi"] = "nvim"
         abbrevs["upd"] = "sudo dnf upgrade"
-        aliases["dmenu"] = "wofi --dmenu"
 
         try:
             if os.ttyname(sys.stdin.fileno()) == "/dev/tty1":

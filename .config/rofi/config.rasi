@@ -1,7 +1,7 @@
 configuration {
  modi: "window,drun,ssh,combi";
  font: "Terminess Nerd Font 22";
- combi-modi: "window,drun,ssh,run";
+ combi-modi: "window,drun,ssh,run,filebrowser";
  }
 @theme "~/.config/rofi/themes/luci4-center.rasi"
 
