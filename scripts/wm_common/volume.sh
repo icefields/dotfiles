@@ -102,6 +102,21 @@ get_mic_icon() {
 		echo "$iDIR/microphone.png"
 	fi
 }
+get_mic_text_icon() {
+	current=$(pamixer --default-source --get-volume)
+    if [ "$(pamixer --default-source --get-mute)" == "true" ]; then
+	    echo ""
+    elif [[ "$current" -eq "0" ]]; then
+		echo ""
+	elif [[ ("$current" -ge "0") && ("$current" -le "30") ]]; then
+		echo ""
+	elif [[ ("$current" -ge "30") && ("$current" -le "60") ]]; then
+		echo ""
+	elif [[ ("$current" -ge "60") && ("$current" -le "100") ]]; then
+		echo ""
+	fi
+}
+
 # Notify
 notify_mic_user() {
 	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_mic_icon)" "Mic-Level : $(pamixer --default-source --get-volume) %"
@@ -132,6 +147,8 @@ elif [[ "$1" == "--get-icon" ]]; then
 	get_icon
 elif [[ "$1" == "--get-mic-icon" ]]; then
 	get_mic_icon
+elif [[ "$1" == "--get-mic-text-icon" ]]; then
+	get_mic_text_icon
 elif [[ "$1" == "--mic-inc" ]]; then
 	inc_mic_volume
 elif [[ "$1" == "--mic-dec" ]]; then

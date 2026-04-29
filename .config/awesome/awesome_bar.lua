@@ -205,8 +205,9 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local vpnReconnectButton = require("vpn-buttons.vpn_reconnect_button")(args)
     local wifiButton =  require("vpn-buttons.wifi_button")(args)
 
-    -- pipewire toggle
+    -- audio
     local togglePipewireButton = require("pipewire.toggle_profile_button")(args)
+    local toggleMicButton = require("pipewire.toggle_mic_button")(args)
 
     -- Keyboard map indicator and switcher
     -- local mykeyboardlayout = awful.widget.keyboardlayout()
@@ -334,6 +335,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             getSystemTray(wibox, beautiful, gears, dpi),
             --getVolumeWidget(beautiful, dpi),
             separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
+            toggleMicButton,
             togglePipewireButton,
             separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
             s.mylayoutbox,
