@@ -10,7 +10,7 @@
 # Block traffic when the VPN is disconnected: on
 #
 
-#get_status() {
+# get_status() {
 #    status=$(mullvad status 2>/dev/null)
 #    echo $([[ $? -eq 0 && "$status" == *Connected* ]] && echo "connected" || echo "disconnected")
 #}
@@ -53,6 +53,22 @@ mullvad_check_connection() {
     fi
 }
 
+get_current_wg() {
+    local wg_file="/tmp/wg_mullvad_current.txt"
+    if [[ -r "$wg_file" ]]; then
+        # Read file content safely
+        local current
+        current=$(< "$wg_file")
+
+        # Strip full path, keep only filename
+        current="${current##*/}"
+
+        echo "$current"
+    else
+        echo ""
+    fi
+}
+
 wg_check_connection() {
     if ip route get 1.1.1.1 2>/dev/null | grep -qE 'dev (wg|mullvad)'; then
         echo "connected"
@@ -76,10 +92,9 @@ get_wireguard_status() {
 
 get_wg_status() {
     vpnstatus="$(wg_check_connection)"
-
+    conf="$( [[ "$vpnstatus" == "connected" ]] && get_current_wg 2>/dev/null )"
     iface=$(ip link show type wireguard 2>/dev/null | awk -F': ' '/: / {print $2; exit}')
-
-    printf "VPN: %s\nInterface: %s\n\n" "$vpnstatus" "${iface:-none}"
+    printf "VPN: %s\nInterface: %s\n%s\n" "$vpnstatus" "${iface:-none}" "$conf"
 }
 
 get_mullvad_status() {
@@ -103,10 +118,10 @@ toggle_vpn() {
     status=$(get_status)
 
     if command -v wg >/dev/null 2>&1 && ip link show type wireguard >/dev/null 2>&1; then
-        if [[ $status == "connected" ]]; then
-            sudo systemctl stop wg-quick@mullvad.service
-        else
+        if [[ $status == "disconnected" ]]; then
             sudo systemctl start wg-quick@mullvad.service
+        else
+            sudo systemctl stop wg-quick@mullvad.service
         fi
     elif command -v mullvad >/dev/null 2>&1; then
         if [[ $status == "connected" ]]; then
@@ -137,6 +152,9 @@ fi
 case "$1" in
     status)
         echo "$(get_vpn_status)"
+        ;;
+    name)
+        get_current_wg
         ;;
     get)
         get_status
