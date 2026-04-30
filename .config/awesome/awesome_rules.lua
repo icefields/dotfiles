@@ -95,6 +95,7 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
                 "Calfjackhost", -- calf subwindow
                 "calfjackhost", -- main calf
                 "cinnamon-settings sound",
+                "Xdg-desktop-portal-gtk",
                 "Xviewer",
                 "Blueman-manager",
                 "Gpick",
@@ -120,7 +121,9 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
         },
         properties = {
             floating = true,
-            placement = awful.placement.centered
+            placement = awful.placement.centered,
+            width = applyDpi(800),
+            height = applyDpi(600)
         }
     }
 

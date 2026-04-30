@@ -209,6 +209,9 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local togglePipewireButton = require("pipewire.toggle_profile_button")(args)
     local toggleMicButton = require("pipewire.toggle_mic_button")(args)
 
+    -- updates 
+    local updatesButton = require("updates_widget.update_button")(args)
+
     -- Keyboard map indicator and switcher
     -- local mykeyboardlayout = awful.widget.keyboardlayout()
     -- mykeyboardlayout.widget:set_font(beautiful.font)
@@ -294,7 +297,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     -- ORIG s.mywibox = awful.wibar({ position = "top", screen = s })
 
     local separatorW = separator(beautiful, wibox)
-    local spacer = separator(beautiful, wibox, { showSeparator = false, margins = { left = dpi(2), right = dpi(2) } }),
+    local spacer = separator(beautiful, wibox, { showSeparator = false, margins = { left = dpi(2), right = dpi(2) } })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -308,7 +311,9 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             separator(beautiful, wibox, { showSeparator = false, margins = { left = dpi(1), right = dpi(1) } }),
             getCpuWidget(beautiful, dpi),
             getRamWidget(beautiful, dpi),
-            docker_widget()
+            docker_widget(),
+            updatesButton,
+            spacer,
             --mykeyboardlayout
         },
         s.mytasklist, -- Middle widget

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 run() {
   if ! pgrep -f "$1" ;
@@ -9,9 +9,10 @@ run() {
 
 run "$HOME/.config/awesome/scripts/screens.sh"
 run "$HOME/.config/awesome/scripts/picom_delayed.sh"
-#sleep 5
+#sleep 6
+run "$HOME/scripts/wm_common/start_keepass.sh"
+sleep 2
 run lxqt-policykit-agent
-run keepassxc
 #run blueman-applet
 #run nm-applet
 run xfce4-clipman

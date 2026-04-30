@@ -1,6 +1,7 @@
 #!/bin/bash
 
-iDIR="$HOME/.config/mako/icons"
+#iDIR="$HOME/.config/mako/icons"
+iDIR="$HOME/scripts/wm_common/icons/notifications"
 
 # Detect notification method
 if command -v dunstify >/dev/null 2>&1; then

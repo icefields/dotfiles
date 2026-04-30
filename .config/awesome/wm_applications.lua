@@ -682,8 +682,8 @@ local applications = {
         properties = {
             tag = "8",
             floating = true,
-            width = 900,
-            height = 800,
+            width = 500,
+            height = 400,
             windowPlacement = placement.bottom_left
         }
     },

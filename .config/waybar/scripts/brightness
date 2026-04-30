@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-iDIR="$HOME/.config/mako/icons"
+iDIR="$HOME/scripts/wm_common/icons/notifications"
+#iDIR="$HOME/.config/mako/icons"
 
 # Get brightness
 get_backlight() {
