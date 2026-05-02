@@ -307,7 +307,7 @@ else:
 
     archUpdateCmd = "yay -Syu --noconfirm"
 
-    # TODO: if Distrobox installed, append "distrobox upgrade --all"
+    # if Distrobox installed, append "distrobox upgrade --all"
     if shutil.which("distrobox"):
         debUpdateCmd += " && distrobox upgrade --all"
         archUpdateCmd += " && distrobox upgrade --all"

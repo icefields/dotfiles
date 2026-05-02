@@ -208,7 +208,6 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     -- audio
     local togglePipewireButton = require("pipewire.toggle_profile_button")(args)
     local toggleMicButton = require("pipewire.toggle_mic_button")(args)
-
     -- updates 
     local updatesButton = require("updates_widget.update_button")(args)
 

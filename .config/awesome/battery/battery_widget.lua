@@ -47,26 +47,49 @@ local function updateBatteryStatus(awful, beautiful, naughty, gears, batteryWidg
     awful.spawn.easy_async_with_shell(batteryCmd, function(stdout)
         tooltip.text = stdout:gsub("\n+$", "")
 
-        local batteryLine = stdout:match("Battery %d+:.-%%")
-        local batteryStatus, batteryPercentage = string.match(batteryLine or "", "Battery %d+: ([%a%s]+), (%d+)%%")
+        local totalPercent = 0
+        local batteryCount = 0
+        local activeStatus = nil
+        local statusPriority = {
+            ["Discharging"]    = 1,
+            ["Not charging"]   = 2,
+            ["Charging"]       = 3,
+            ["Full"]           = 4,
+            ["Unknown"]        = 5,
+        }
 
-        if not batteryStatus or not batteryPercentage then
+        for batteryLine in stdout:gmatch("Battery %d+:.-%%") do
+            local batteryStatus, batteryPercentage = string.match(batteryLine, "Battery %d+: ([%a%s]+), (%d+)%%")
+            if batteryStatus and batteryPercentage then
+                batteryStatus = batteryStatus:match("^%s*(.-)%s*$") -- trim whitespace
+                batteryCount = batteryCount + 1
+                totalPercent = totalPercent + tonumber(batteryPercentage)
+
+                if not activeStatus then
+                    activeStatus = batteryStatus
+                elseif (statusPriority[batteryStatus] or 99) < (statusPriority[activeStatus] or 99) then
+                    activeStatus = batteryStatus
+                end
+            end
+        end
+
+        if batteryCount == 0 then
             batteryWidget.markup = tooltipText(beautiful.topBar_buttonTooltip_font, "#888888", "", 0)
             return
         end
 
-        local percent = tonumber(batteryPercentage)
+        local percent = totalPercent -- / batteryCount  -- average; use totalPercent for the sum
         local batterySymbol, color, blink = "", beautiful.topBar_fg or "#FFFFFF", false
 
         -- Determine battery symbol
-        if batteryStatus == "Charging" then
+        if activeStatus == "Charging" then
             batterySymbol = ""
             color = beautiful.colour2.tint2
-        elseif batteryStatus == "Full" then
+        elseif activeStatus == "Full" then
             batterySymbol = ""
-        elseif batteryStatus == "Not charging" then
+        elseif activeStatus == "Not charging" then
             batterySymbol = ""
-        elseif batteryStatus == "Discharging" then
+        elseif activeStatus == "Discharging" then
             batterySymbol = (percent > 75 and "") or
                             (percent > 50 and "") or
                             (percent > 25 and "") or
@@ -86,7 +109,7 @@ local function updateBatteryStatus(awful, beautiful, naughty, gears, batteryWidg
         end
 
         -- Show low battery notification, this is crashing the widged , investigate!
-        showLowBatteryNotification(naughty, batteryWidget, percent, batteryStatus)
+        showLowBatteryNotification(naughty, batteryWidget, percent, activeStatus)
 
         if batteryWidget._visible == nil then
             batteryWidget._visible = true
@@ -96,7 +119,7 @@ local function updateBatteryStatus(awful, beautiful, naughty, gears, batteryWidg
         if blink then
             if batteryWidget._blink_timer then
                 batteryWidget._blink_timer:stop()
-                batteryWidget._blink_timer = nil 
+                batteryWidget._blink_timer = nil
             end
             --if not batteryWidget._blink_timer then
             batteryWidget._blink_timer = gears.timer {
