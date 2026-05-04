@@ -56,7 +56,7 @@ if [ "$1" = "" ]; then
         echo ""
     else
         # This Update symbol is RTL. So &#x202d; is left-to-right override.
-        echo " $COUNT"
+        echo " $COUNT"
     fi
     exit 0
 fi

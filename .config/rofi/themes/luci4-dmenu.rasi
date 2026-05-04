@@ -9,12 +9,12 @@
     background-color:           #282c34;
     border-color:               #282c34;
     text-color:                 #bbc2cf;
-    height:                     20px;
+    height:                     40px;
     font:                        "Terminess Nerd Font Medium 22";
     prompt-font:                 "UbuntuSans Nerd Font Bold 22";
     prompt-background:          #51afef;
     prompt-foreground:          #282c34;
-    prompt-padding:             2px;
+    prompt-padding:             4px;
     selected-normal-background: #ae3f3e;
     selected-normal-foreground: #ffffff;
 }
@@ -40,7 +40,7 @@
     lines: 100;
 }
 #entry {
-    padding: 2px;
+    padding: 4px;
     expand: false;
     width: 10em;
 }

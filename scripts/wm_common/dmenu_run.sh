@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if command -v rofi >/dev/null 2>&1; then
-    rofi -show drun
+    rofi -show drun -theme $HOME/.config/rofi/themes/luci4-dmenu.rasi
 elif command -v wofi >/dev/null 2>&1; then
     # TODO    
     wofi --conf $HOME/.config/wofi/config-smenu --style $HOME/.config/wofi/styleS.css 

@@ -239,7 +239,7 @@ else:
     if not commandExists("dmenu"):
         if commandExists("rofi"):
             aliases["dmenu"] = ["rofi", "-dmenu"]
-            aliases["dmenu_run"] = ["rofi", "-show","drun"]
+            aliases["dmenu_run"] = ["rofi", "-show","drun","-theme",str(Paths.HOME / '.config/rofi/themes/luci4-dmenu.rasi')] 
             abbrevs["fb"] = "rofi -show filebrowser"
         elif commandExists("wofi"):
             aliases["dmenu"] = ["wofi", "--dmenu"] 
