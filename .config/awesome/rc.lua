@@ -285,7 +285,9 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+-- generate themes for other components
 require("themes.rofi_theme_generator").generate()
+require("themes.i3lock_theme_generator").generate()
 
 local autostartCmd = gears.filesystem.get_configuration_dir() .. "/autostart.sh"
 -- local autostartCmd = os.getenv("HOME") .. "/.config/awesome/autostart.sh"
