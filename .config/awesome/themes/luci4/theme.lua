@@ -20,7 +20,7 @@ local theme = {}
 -- theme.icons = require("themes.luci4.application_icons")
 theme.wallpapersPath = os.getenv("HOME") .. "/.config/awesome/themes/luci4/wallpapers"
 
-local colour1 = colours.dead
+local colour1 = colours.ash
 local colour2 = colours.teal
 theme.colour1 = colour1
 theme.colour2 = colour2
@@ -42,6 +42,8 @@ local labelFontSansSmall = sansFont .. " 10"
 
 local descriptionFont = mainFont .. " 11"
 
+theme.fontFamily_main = mainFont
+theme.fontFamily_sans = sansFont
 theme.titleFont = titleFont
 theme.labelFontSans = labelFontSans
 theme.labelFontSansSmall = labelFontSansSmall

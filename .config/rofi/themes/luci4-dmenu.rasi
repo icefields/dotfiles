@@ -1,23 +1,24 @@
 /**
- * ROFI Color theme
- * NAME: dt-dmenu.rasi
- * DESCRIPTION: This is a horizontal prompt similar to dmenu.
- * AUTHOR: Derek Taylor (DT)
+ * ROFI Color theme (dmenu mode)
+ * NAME: luci4-dmenu.rasi
+ * DESCRIPTION: Auto-generated from AwesomeWM luci4 theme (dmenu layout).
+ * GENERATED: 2026-05-05T15:15:55Z
  */
 
 * {
-    background-color:           #282c34;
-    border-color:               #282c34;
-    text-color:                 #bbc2cf;
+    background-color:           #101112;
+    border-color:               #101112;
+    text-color:                 #d0d8da;
     height:                     40px;
     font:                        "Terminess Nerd Font Medium 22";
     prompt-font:                 "UbuntuSans Nerd Font Bold 22";
-    prompt-background:          #51afef;
-    prompt-foreground:          #282c34;
+    prompt-background:           #4980ac;
+    prompt-foreground:           #070c11;
     prompt-padding:             4px;
-    selected-normal-background: #ae3f3e;
-    selected-normal-foreground: #ffffff;
+    selected-normal-background:  #1d3344;
+    selected-normal-foreground:  #ffffff;
 }
+
 #window {
     anchor: north;
     location: north;
@@ -25,28 +26,34 @@
     padding: 0px;
     children: [ horibox ];
 }
+
 #horibox {
     orientation: horizontal;
     children: [ prompt, entry, listview ];
 }
+
 #prompt {
     padding:          @prompt-padding;
     background-color: @prompt-background;
     text-color:       @prompt-foreground;
     font:             @prompt-font;
 }
+
 #listview {
     layout: horizontal;
     lines: 100;
 }
+
 #entry {
     padding: 4px;
     expand: false;
     width: 10em;
 }
+
 #element {
     padding: 2px 8px;
 }
+
 #element selected {
     background-color: @selected-normal-background;
     text-color:       @selected-normal-foreground;
@@ -56,11 +63,3 @@ element-text {
     background-color: inherit;
     text-color:       inherit;
 }
-
-/* Not actually relevant for this configuration, but it might
-be useful to someone having issues with their icons' background color
-
-element-icon {
-    background-color: inherit;
-}
-*/

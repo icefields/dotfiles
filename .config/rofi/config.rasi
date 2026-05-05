@@ -3,5 +3,5 @@ configuration {
  font: "Terminess Nerd Font 22";
  combi-modi: "window,drun,ssh,run,filebrowser";
  }
-@theme "~/.config/rofi/themes/luci4-center.rasi"
+@theme "~/.config/rofi/themes/luci4.rasi"
 
