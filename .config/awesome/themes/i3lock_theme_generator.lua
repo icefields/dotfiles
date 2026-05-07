@@ -107,7 +107,7 @@ function M.generate()
 
     -- ============ FONT MAPPING ============
     local sansFontFamily = t.fontFamily_main or extractFontFamily(t.font)
-    local mainFontFamily = t.fontFamily_sans  or extractFontFamily(t.tasklist_font)
+    local clockFontFamily = t.heavyFont  or extractFontFamily(t.tasklist_font)
 
     -- ============ BUILD i3lock ARGUMENTS ============
     local args = {}
@@ -142,7 +142,7 @@ function M.generate()
     table.insert(args, string.format("--bshl-color=%s",  rgba(red, HIGH)))
 
     -- Fonts — QUOTED because font names with spaces get split by the shell
-    table.insert(args, string.format('--time-font="%s"',   mainFontFamily))
+    table.insert(args, string.format('--time-font="%s"',   clockFontFamily))
     table.insert(args, string.format("--time-size=%d",    cfg.timeSize))
     table.insert(args, string.format('--date-font="%s"',   sansFontFamily))
     table.insert(args, string.format("--date-size=%d",    cfg.dateSize))

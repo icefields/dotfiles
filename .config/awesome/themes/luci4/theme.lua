@@ -44,6 +44,7 @@ local descriptionFont = mainFont .. " 11"
 
 theme.fontFamily_main = mainFont
 theme.fontFamily_sans = sansFont
+theme.heavyFont = heavyFont
 theme.titleFont = titleFont
 theme.labelFontSans = labelFontSans
 theme.labelFontSansSmall = labelFontSansSmall

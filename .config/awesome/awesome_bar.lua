@@ -138,7 +138,7 @@ local function getCpuWidget(beautiful, dpi)
         step_width = dpi(4),     -- default: 2
         step_spacing = dpi(1),   -- default: 1
         enable_kill_button = true,    -- default: false
-        timeout = 2,                  -- default: 1
+        timeout = 4,                  -- default: 1
         process_info_max_length = -1, -- default: -1
         color = beautiful.fg_systray
     })
