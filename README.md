@@ -4,12 +4,85 @@
 
 ---
 
-## Clone the repository
+# Clone the repository
 
-This project uses Git submodules. Clone everything (including submodules) with:
+## Bare Repository Instructions
+
+### Initializing a bare repository for dot files
+Those are instructions about how to create a bare repo from scratch. Skip this if cloning the entire dotfiles repository as is.
+1 - init
+```
+git init --bare $HOME/.git-dotfiles
+alias gitdots='/usr/bin/git --git-dir=$HOME/.git-dotfiles/ --work-tree=$HOME'
+gitdots config --local status.showUntrackedFiles no
+```
+2 - Add the following aliases to the shell config (if cloning this repo, this is not necessary)
+```
+alias gitdots='/usr/bin/git --git-dir=$HOME/.git-dotfiles/ --work-tree=$HOME'
+```
+3 - Add files one by one to the repo and push. Other files in `$HOME` that are not tracked manually will not be tracked.
+```
+gitdots status
+gitdots add .vimrc
+gitdots commit -m "Add vimrc"
+gitdots add .bashrc
+gitdots commit -m "Add bashrc"
+gitdots push
+```
+
+## Pulling dot files / Migrating
+Source repository should ignore the folder where you'll clone it, so that you don't create weird recursion problems:
+```
+echo ".git-dotfiles" >> .gitignore
+```
+clone your dotfiles into a bare repository in a "dot" folder of your $HOME:
+```
+git clone --recurse-submodules  --bare git@github.com:icefields/dotfiles.git $HOME/.git-dotfiles
+gitdots submodule update --init --recursive
+```
+Define the alias in the current shell scope:
+*see step 2 - Add to `.bashrc` and `fish.config`*
+
+Checkout the actual content from the bare repository to your $HOME:
+```
+gitdots checkout
+```
+
+The step above might fail with a message like:
+```
+error: The following untracked working tree files would be overwritten by checkout:
+    .bashrc
+    .gitignore
+Please move or remove them before you can switch branches.
+Aborting
+```
+
+This is because your `$HOME` folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up the files if you care about them, remove them if you don't care. I provide you with a possible rough shortcut to move all the offending files automatically to a backup folder:
+
+```
+mkdir -p .config-backup && \
+gitdots checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
+xargs -I{} mv {} .config-backup/{}
+```
+
+Re-run the check out if you had problems:
+```
+gitdots checkout
+```
+
+Set the flag showUntrackedFiles to no on this specific (local) repository (same as ):
+```
+gitdots config --local status.showUntrackedFiles no
+```
+
+You're done, from now on you can now type config commands to add and update your dotfiles:
+*see step *3 - Add files one by one to the repo and push. Other files in `$HOME` that are not tracked manually will not be tracked.**
+
+## Git Submodules
+As shown in the previous instructions, his project uses Git submodules. Here are the instructions needed for syncing all the submodules. <br>Clone everything (including submodules) with:
 
 ```bash
-git clone --recurse-submodules <repo-url>
+gitdots clone --recurse-submodules <repo-url>
 ```
 
 **After pulling updates**
@@ -17,16 +90,16 @@ git clone --recurse-submodules <repo-url>
 If you pull new changes later, also run:
 
 ```bash
-git submodule update --init --recursive
+gitdots submodule update --init --recursive
 ```
 
-#### Update the submodule
+#### Update the submodule (in case changes to the submodule are made)
 
 Navigate to the submodule directory and pull:
 
 ```
 cd path/to/submodule
-git pull
+gitdots pull
 ```
 
 Go back to parent repo and record the new commit
@@ -56,6 +129,9 @@ Verify the submodule now points to a new commit hash.
 The env variables are stored in `~/.shell_env`, in a key="value" format. Different shells (currently parsers for `xonsh`, `fish` and `bash` are present) will parse that file into their own format. The shell would need those, to run some of the scripts.<br>
 Create `~/.shell_env`, and add the following variables.<br>
 ```
+# variable used to determine if the system is in dev. ie. xonsh errors will be more verbose
+IS_DEV_MODE="false"
+
 TOR_PASSWORD="torPasswordForTheResetTorScript"
 GOOGLE_API_KEY="yourGoogleApiKey"
 
@@ -82,6 +158,15 @@ OLLAMA_API_BASE="http://localhost:11434"
 MEGA_EMAIL="your@email.org"
 MEGA_PASSWORD="your.password"
 
+# KeepassXC secret service
+KEEPASS_SECRET_DB="/location/of/db/with/passwords.kdbx"
+KEEPASS_SECRET_KEYFILE="/file/to/unlock/secred-db/secrets.keyfile"
+
+# Android, Java vars. ANDROID_HOME is legacy
+ANDROID_SDK_ROOT="/opt/android-sdk"
+ANDROID_HOME="/opt/android-sdk"
+
+# UI related variables moved to .xprofile
 ```
 
 Also add in your shell config: `set -gx PATH $PATH /usr/local/bin` .
@@ -289,76 +374,6 @@ Use the test-fonts.sh script from the official nerd fonts repo to test<br>
 More on kitty fonts: https://erwin.co/kitty-and-nerd-fonts/
 <br>
 
-# Bare Repository Instructions
-
-## Initializing a bare repository for dot files
-1 - init
-```
-git init --bare $HOME/.git-dotfiles
-alias gitdots='/usr/bin/git --git-dir=$HOME/.git-dotfiles/ --work-tree=$HOME'
-gitdots config --local status.showUntrackedFiles no
-```
-2 - Add the following aliases to `.bashrc` and `fish.config`
-```
-alias gitdots='/usr/bin/git --git-dir=$HOME/.git-dotfiles/ --work-tree=$HOME'
-```
-3 - Add files one by one to the repo and push. Other files in `$HOME` that are not tracked manually will not be tracked.
-```
-gitdots status
-gitdots add .vimrc
-gitdots commit -m "Add vimrc"
-gitdots add .bashrc
-gitdots commit -m "Add bashrc"
-gitdots push
-```
-
-## Migrating/Restoring dot files
-Source repository should ignore the folder where you'll clone it, so that you don't create weird recursion problems:
-```
-echo ".git-dotfiles" >> .gitignore
-```
-clone your dotfiles into a bare repository in a "dot" folder of your $HOME:
-```
-git clone --bare git@github.com:icefields/dotfiles.git $HOME/.git-dotfiles
-```
-Define the alias in the current shell scope:
-*see step 2 - Add to `.bashrc` and `fish.config`*
-
-Checkout the actual content from the bare repository to your $HOME:
-```
-gitdots checkout
-```
-
-The step above might fail with a message like:
-```
-error: The following untracked working tree files would be overwritten by checkout:
-    .bashrc
-    .gitignore
-Please move or remove them before you can switch branches.
-Aborting
-```
-
-This is because your `$HOME` folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up the files if you care about them, remove them if you don't care. I provide you with a possible rough shortcut to move all the offending files automatically to a backup folder:
-
-```
-mkdir -p .config-backup && \
-gitdots checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
-xargs -I{} mv {} .config-backup/{}
-```
-
-Re-run the check out if you had problems:
-```
-gitdots checkout
-```
-
-Set the flag showUntrackedFiles to no on this specific (local) repository (same as ):
-```
-gitdots config --local status.showUntrackedFiles no
-```
-
-You're done, from now on you can now type config commands to add and update your dotfiles:
-*see step *3 - Add files one by one to the repo and push. Other files in `$HOME` that are not tracked manually will not be tracked.**
-
 # Power Management
 No power Management application is really required, just configure `/etc/systemd/logind.conf` appropriately
 <br>
@@ -502,4 +517,21 @@ add currency API url to `.shell_env`. Define Sqlite DB path in the Awesome curre
 
 see: https://github.com/icefields/self-hosted-sharelink
 <br>
+
+### Nemo actions
+enable file extraction with 7z. <br>
+this will add a dropdown menu item in nemo to decompress archives with 7z.
+`vim ~/.local/share/nemo/actions/extract-7z.nemo_action`
+```
+[Nemo Action]
+Active=true
+Name=Extract to EXTRACTED (7z)
+Comment=Silently extract archive into 0_EXTRACTED subdirectory
+Exec=/home/YOURUSER/scripts/shell_common/extract-7z.sh %F
+Icon-Name=archive-extract
+Selection=Any
+Extensions=7z;zip;rar;tar;gz;bz2;xz;zst;iso;deb;arj;ace;cab;
+Quote=double
+
+```
 
