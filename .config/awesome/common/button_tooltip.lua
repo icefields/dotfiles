@@ -106,7 +106,40 @@
 ---   button::release → restores bg to beautiful.bg_focus
 ---
 
-local function createTooltip(button, awful, beautiful, tooltipScript, text)
+local function getCacheFilename(cmd)
+    return HomeEnv.HOME .. '/.cache/' .. cmd:gsub("[^%w%-_]", "_") .. '.txt'
+end
+
+local function readCache(cacheFile, defaultText)
+    local f = io.open(cacheFile, "r")
+    local text = defaultText
+    if f then
+        local stdout = f:read("*a")
+        f:close()
+
+        text = stdout --:gsub("%s+$", "")
+    end
+    return text
+end
+
+local function writeToCache(cacheFile, text)
+    -- write to cache
+    if cacheFile ~= nil and text and #text > 0 then
+        local f = io.open(cacheFile, "w")
+        if f then
+            f:write(text)
+            f:close()
+        end
+    end
+end
+
+local function createTooltip(button, awful, beautiful, tooltipArgs)
+    local tooltipScript = tooltipArgs.tooltipScript
+    local text = tooltipArgs.text
+    local tooltipUseCache = tooltipArgs.tooltipUseCache or (tooltipScript ~= nil)
+    local cacheFile = nil
+    if tooltipUseCache then cacheFile = getCacheFilename(tooltipScript) end
+
     local tooltip = awful.tooltip {
         objects = { button },
         mode = "outside",
@@ -115,6 +148,7 @@ local function createTooltip(button, awful, beautiful, tooltipScript, text)
         margin_topbottom = 4,
         preferred_positions = { "top", "bottom" },
         text = text or "...",
+        font = beautiful.tooltip_font, -- "FiraCode Nerd Font Mono 11",
         bg = beautiful.tooltip_bg_color,
         fg = beautiful.tooltip_fg_color
     }
@@ -122,12 +156,24 @@ local function createTooltip(button, awful, beautiful, tooltipScript, text)
     local tooltipSpawned = false -- avoid piling up requests
     button:connect_signal("mouse::enter", function(c)
         c.bg = beautiful.bg_focus
+        if tooltipUseCache and not tooltipSpawned then
+            local tooltipText = readCache(cacheFile, text)
+            if tooltipText and #tooltipText > 0 and tooltipText ~= tooltip.text then
+                tooltip.text = "[" .. tooltipText .. "]"
+            end
+            tooltipSpawned = false
+            -- tooltip.text = stdout:gsub("%s+$", "") .. " *"
+        end
         if tooltipScript then
             if not tooltipSpawned then
                 tooltipSpawned = true
                 awful.spawn.easy_async_with_shell(tooltipScript, function(stdout)
                     tooltip.text = stdout:gsub("%s+$", "")
                     tooltipSpawned = false
+                    -- write to cache
+                    if tooltipUseCache then
+                        writeToCache(cacheFile, stdout)
+                    end
                 end)
             end
         end
@@ -137,12 +183,38 @@ local function createTooltip(button, awful, beautiful, tooltipScript, text)
     return tooltip
 end
 
-local function updateIcon(awful, button, icon, iconScript, iconCallback)
+local function updateIcon(beautiful, awful, button, icon, iconArgs)
+    local iconScript = iconArgs.buttonIconScript
+    local iconCallback = iconArgs.buttonIconCallback
+    local iconUseCache = iconArgs.iconUseCache -- or (iconScript ~= nil)
+    if (iconUseCache == nil) then iconUseCache = (iconScript ~= nil) end
+    local cacheFile = nil
+    if iconUseCache then cacheFile = getCacheFilename(iconScript) end
+
     if iconScript then
+        if iconUseCache then
+            local iconText = readCache(cacheFile, icon.text)
+            -- local iconText = stdout:gsub("%s+$", "")
+            if iconText and #iconText > 0 then
+                if iconText ~= icon.text then
+                    icon.text = iconText
+                    button.fg = beautiful.colour1.shade7
+                end
+            end
+        end
+
         awful.spawn.easy_async_with_shell(iconScript, function(stdout)
-            local status = stdout:gsub("%s+", "")
-            icon.text = status
-            if iconCallback then iconCallback(button, icon, status) end
+            local iconText = string.gsub(stdout, "%s+", " ")--:gsub("%s+", "")
+            if iconText and #iconText > 0 and iconText ~= icon.text then
+                icon.text = iconText
+            end
+            if (button.fg ~= beautiful.topBar_fg) then
+                button.fg = beautiful.topBar_fg
+            end
+            if iconCallback then iconCallback(button, icon, iconText) end
+            if iconUseCache then
+                writeToCache(cacheFile, iconText)
+            end
         end)
     elseif iconCallback then
         iconCallback(button, icon)
@@ -166,6 +238,15 @@ local function getButton(args, buttonArgs)
     local mouseLeaveCallback = buttonArgs.mouseLeaveCallback
     local clickResponseUpdateIconDelay = buttonArgs.clickResponseUpdateIconDelay
     local refreshIconOnMouseLeave = buttonArgs.refreshIconOnMouseLeave or (mouseLeaveCallback == nil)
+    local tooltipUseCache = buttonArgs.tooltipUseCache
+    local iconUseCache = buttonArgs.iconUseCache
+    local width = buttonArgs.buttonWidth or beautiful.topBar_buttonSize
+
+    local iconArgs = {
+        buttonIconScript = buttonIconScript,
+        buttonIconCallback = buttonIconCallback,
+        iconUseCache = iconUseCache
+    }
 
     local button = wibox.widget {
         {
@@ -180,11 +261,15 @@ local function getButton(args, buttonArgs)
         bg = "#00000000",
         fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
-        forced_width = applyDpi(beautiful.topBar_buttonSize),
+        forced_width = applyDpi(width),
         forced_height = applyDpi(beautiful.topBar_buttonSize),
     }
     local icon = button:get_children_by_id("icon")[1]
-    local tooltip = createTooltip(button, awful, beautiful, tooltipScript, tooltipDefaultText)
+    createTooltip(button, awful, beautiful, {
+        tooltipScript = tooltipScript,
+        text = tooltipDefaultText,
+        tooltipUseCache = tooltipUseCache
+    })
 
     local clickTimer = nil
     -- If both script and callback exist, run the callback after receiving a
@@ -201,12 +286,12 @@ local function getButton(args, buttonArgs)
                 if clickResponseUpdateIconDelay then
                     if clickTimer then clickTimer:stop() end
                     clickTimer = gears.timer.start_new(clickResponseUpdateIconDelay, function()
-                        updateIcon(awful, button, icon, buttonIconScript, buttonIconCallback)
+                        updateIcon(beautiful, awful, button, icon, iconArgs)
                         return false
                     end)
                     clickTimer:again()
                 else
-                    updateIcon(awful, button, icon, buttonIconScript, buttonIconCallback)
+                    updateIcon(beautiful, awful, button, icon, iconArgs)
                 end
             end)
         elseif buttonClickCallback then
@@ -219,14 +304,14 @@ local function getButton(args, buttonArgs)
 
     button:connect_signal("mouse::leave", function(c)
         if refreshIconOnMouseLeave then
-            updateIcon(awful, button, icon, buttonIconScript, buttonIconCallback)
+            updateIcon(beautiful, awful, button, icon, iconArgs)
         end
         -- c.bg = "#00000000"
         if mouseLeaveCallback then mouseLeaveCallback(button, icon) end
     end)
 
     -- Initial icon update
-    updateIcon(awful, button, icon, buttonIconScript, buttonIconCallback)
+    updateIcon(beautiful, awful, button, icon, iconArgs)
 
     return button
 end

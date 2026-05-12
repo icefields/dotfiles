@@ -11,6 +11,7 @@ local function getButton(args)
         tooltipDefaultText = "Toggle microphone",
         buttonClickScript = toggleScript,
         buttonIconScript = iconScript,
+        iconUseCache = false
     })
     return button
 end

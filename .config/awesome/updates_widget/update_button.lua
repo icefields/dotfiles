@@ -17,8 +17,9 @@ local function getButton(args)
         tooltipDefaultText = "Update System",
         buttonClickScript = toggleScript,
         buttonIconScript = iconScript,
+        iconUseCache = false,
         buttonIconCallback = function (buttonWidget, iconWidget, text)
-            if not text or text == "" then
+            if not text or text:gsub("%s+$", "") == "" then
                 iconWidget.text = placeholderIcon
             end
         end,
