@@ -31,12 +31,12 @@ local fgWidgetMain = colour2.tint7
 
 theme.rect_radius = 4
 
-local mainFont = "Terminess Nerd Font"  -- "UbuntuSansMono Nerd Font Mono Medium 11"
+local mainFont = "Terminess Nerd Font"  -- "IosevkaTerm Nerd Font" -- "UbuntuSansMono Nerd Font Mono Medium 11"
 local sansFont = "UbuntuSans Nerd Font"
 local monoFont = "FiraCode Nerd Font Mono"
 local heavyFont = "HeavyData Nerd Font" -- "UbuntuSansMono Nerd Font Mono SemiBold 14"
 
-local titleFont = mainFont .. " SemiBold 12.5"
+local titleFont = mainFont .. " SemiBold 11.5"
 local symbolFont = "Symbols Nerd Font Mono 9.5"
 local labelFontSans = sansFont .. " 11.5"
 local labelFontSansSmall = sansFont .. " 10"
@@ -53,7 +53,7 @@ theme.labelFontSansSmall = labelFontSansSmall
 theme.descriptionFont = descriptionFont
 theme.symbolFont = symbolFont
 theme.font          = titleFont
-theme.tasklist_font = sansFont .. " 11"
+theme.tasklist_font = "IosevkaTerm Nerd Font 10.5" -- sansFont .. " 11"
 theme.taglist_font  = heavyFont .. " 14"
 theme.tooltip_font  = monoFont .. " 10"
 theme.notification_font = sansFont .. " 10.5"
@@ -78,7 +78,7 @@ theme.bg_normal     = colour1.shade9
 theme.bg_focus      = colour1.shade7 -- "#224442"
 theme.bg_urgent     = colour2.main
 theme.bg_minimize   = colour2.black-- shade8 --theme.bg_normal
-theme.bg_systray    = colour2.shade4 -- "#4a5722" --theme.bg_normal
+theme.bg_systray    = colour1.shade7 --colour2.shade4 -- "#4a5722" --theme.bg_normal
 theme.errorColour   = colours.red
 theme.warningColour = colour1.main
 theme.systray_icon_spacing_dpi = 4
