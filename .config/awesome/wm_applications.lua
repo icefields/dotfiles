@@ -68,7 +68,7 @@ local kittyArchDistroboxIsolated =  {
     shell = true
 }
 local androidStudio = {
-    command = "/opt/android-studio/bin/studio",
+    command = "android-studio",
     description = "Open Android Studio",
     group = groupLuci4,
     shell = false,
@@ -94,7 +94,7 @@ local editor = {
     shell = true
 }
 local screenshotArea = {
-    command = "gnome-screenshot -a",
+    command = homeDir .. "/scripts/wm_common/screenshot_extra_features.sh",
     description = "Print area of the screen",
     group = groupLuci4,
     shell = false,
@@ -104,7 +104,7 @@ local screenshotArea = {
     }
 }
 local screenshotFull = {
-    command = "gnome-screenshot",
+    command = homeDir .. "/scripts/wm_common/screenshot.sh",
     description = "Print entire screen",
     group = groupLuci4,
     shell = false,

@@ -6,6 +6,9 @@ aliases["sharemega"] = str(Paths.SCRIPTS_DIR / 'share.sh -m --ntfy --secret -p')
 aliases["passgen"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'passgen_wrapper.sh')
 aliases["unzip"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'unzip.sh')
 aliases["reaper"] = str(Paths.WM_COMMON_SCRIPTS_DIR / 'start_reaper.sh')
+aliases["mlb-scores"] = 'python3 ' + str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'SportsFetch/sports.py') + ' mlb scores && python3 ' + str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'SportsFetch/sports.py') + ' mlb scores --last 2'
+aliases["mlb-standings"] = 'python3 ' + str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'SportsFetch/sports.py') + ' mlb standings'
+aliases["nhl-scores"] = 'python3 ' + str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'SportsFetch/sports.py') + ' nhl scores && python3 ' + str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'SportsFetch/sports.py') + ' nhl scores --last 2'
 
 aliases.update({
     "rebootToMac": "sudo sh -c 'echo 1 | asahi-bless; reboot'",

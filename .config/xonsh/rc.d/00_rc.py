@@ -20,8 +20,8 @@ class Paths:
     COLOUR_SCHEMES_DIR = SHELL_COMMON_SCRIPTS_DIR / 'colour_schemes'
     LOG_FILE = LOG_DIR / 'xonsh_traceback.log'
     ENV_VARS = HOME / '.shell_env'
-    HISTORY_FILE = HOME / '.xonsh_history'
-    HISTORY_DB = HOME / '.xonsh_history.db'
+    HISTORY_FILE = HOME / '.config/xonsh/history/.xonsh_history'
+    HISTORY_DB = HOME / '.config/xonsh/history/.xonsh_history.db'
 
 # xontrib-kitty has some deprecations in the code
 warnings.filterwarnings(

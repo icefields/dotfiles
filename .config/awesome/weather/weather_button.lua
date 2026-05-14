@@ -16,7 +16,7 @@ local function getButton(args)
         tooltipDefaultText = fallbackLoadingText,
         buttonIconScript = fetchWeatherIconScript,
         buttonClickScript = fetchWeatherIconScript,
-        buttonWidth = 85
+        buttonWidth = 88
     })
     return button
 end

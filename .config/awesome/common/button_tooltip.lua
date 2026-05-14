@@ -159,7 +159,7 @@ local function createTooltip(button, awful, beautiful, tooltipArgs)
         if tooltipUseCache and not tooltipSpawned then
             local tooltipText = readCache(cacheFile, text)
             if tooltipText and #tooltipText > 0 and tooltipText ~= tooltip.text then
-                tooltip.text = "[" .. tooltipText .. "]"
+                tooltip.text = "* " .. tooltipText
             end
             tooltipSpawned = false
             -- tooltip.text = stdout:gsub("%s+$", "") .. " *"
