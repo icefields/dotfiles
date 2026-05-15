@@ -25,13 +25,13 @@ local currencyWidget = require("currency.currency_widget")
 local todoWidget = require("todo-widget.todo")
 
 -- Add library to path (football_widget is inside .config/awesome/) 
-local awesome_dir = os.getenv("HOME") .. "/.config/awesome"
-package.path = awesome_dir .. "/football_widget/?.lua;" .. awesome_dir .. "/football_widget/?/init.lua;" .. package.path
--- Load the football library
-local FootballData = require("football")
---local team_widget = require("awesome.team_widget")
---local standings_widget = require("awesome.standings_widget")
-local matchWindow = require("awesome.match_window")
+--local awesome_dir = os.getenv("HOME") .. "/.config/awesome"
+--package.path = awesome_dir .. "/football_widget/?.lua;" .. awesome_dir .. "/football_widget/?/init.lua;" .. package.path
+---- Load the football library
+--local FootballData = require("football")
+----local team_widget = require("awesome.team_widget")
+----local standings_widget = require("awesome.standings_widget")
+--local matchWindow = require("awesome.match_window")
 
 local function getTagListButtons(client, gears, awful)
     local taglist_buttons = gears.table.join(
@@ -210,6 +210,9 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local toggleMicButton = require("pipewire.toggle_mic_button")(args)
     -- updates 
     local updatesButton = require("updates_widget.update_button")(args)
+    -- Sports widget 
+    local sportsWidget = require("sports.sports_widget")(args)
+
 
     -- Keyboard map indicator and switcher
     -- local mykeyboardlayout = awful.widget.keyboardlayout()
@@ -225,16 +228,16 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     -- Create and connect the world time tooltip to mouse-enter
     worldtimeTooltip.createWorldTimeTooltip(clockWidget, awful, beautiful)
 
-    local interWidget = matchWindow.create({
-        team_id = 108,  -- Inter Milan
-        match_count = 10,
-        show_scheduled = false,
-        awful = awful,
-        beautiful = beautiful,
-        wibox = wibox,
-        gears = gears,
-        applyDpi = dpi
-    })
+--    local interWidget = matchWindow.create({
+--        team_id = 108,  -- Inter Milan
+--        match_count = 10,
+--        show_scheduled = false,
+--        awful = awful,
+--        beautiful = beautiful,
+--        wibox = wibox,
+--        gears = gears,
+--        applyDpi = dpi
+--    })
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
 
@@ -331,7 +334,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             separatorW,
             currencyWidget.getWidget(args),
             separator(beautiful, wibox, { margins = { right = 0 } }),
-            interWidget,
+            sportsWidget,
+            --interWidget,
             separator(beautiful, wibox, { margins = { left = 0, right = 0 } }),
             weatherButton,
             separator(beautiful, wibox, { margins = { left = 0, right = 0 } }),

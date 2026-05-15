@@ -10,6 +10,9 @@
 [submodule "scripts/shell_common/midori-fetch"]
 	path = scripts/shell_common/midori-fetch
 	url = https://github.com/icefields/Midori-Fetch.git
-[submodule "/home/lucie/scripts/shell_common/SportsFetch"]
-	path = /home/lucie/scripts/shell_common/SportsFetch
+[submodule "scripts/wm_common/Lucifer-WM-GTK-Window"]
+	path = scripts/wm_common/Lucifer-WM-GTK-Window
+	url = https://github.com/icefields/Lucifer-WM-GTK-Window.git
+[submodule "scripts/shell_common/SportsFetch"]
+	path = scripts/shell_common/SportsFetch
 	url = https://github.com/icefields/SportsFetchLibrary.git
