@@ -105,7 +105,8 @@ local function awesomeRules(args, awesomeApps, clientkeys, clientbuttons)
                 "Wpa_gui",
                 "veromix",
                 "xtightvncviewer",
-                "Gnome-screenshot"
+                "Gnome-screenshot",
+                "Lucifer GTK Window"
             },
 
             -- Note that the name property shown in xprop might be set slightly after creation of the client

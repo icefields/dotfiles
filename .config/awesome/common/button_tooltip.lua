@@ -240,7 +240,22 @@ local function getButton(args, buttonArgs)
     local refreshIconOnMouseLeave = buttonArgs.refreshIconOnMouseLeave or (mouseLeaveCallback == nil)
     local tooltipUseCache = buttonArgs.tooltipUseCache
     local iconUseCache = buttonArgs.iconUseCache
-    local width = buttonArgs.buttonWidth or beautiful.topBar_buttonSize
+    local paddingL = buttonArgs.buttonPaddingLeft or 0 --beautiful.topBar_buttonSize
+    local paddingR = buttonArgs.buttonPaddingRight or 0 --beautiful.topBar_buttonSize
+
+    -- paddings can be negative, but not less than zero.
+    local defaultPadding = 3
+    if (defaultPadding + paddingL) < 0 then
+        paddingL = 0
+    else
+        paddingL = applyDpi(defaultPadding + paddingL)
+    end
+    if (defaultPadding + paddingR) < 0 then
+        paddingR = 0
+    else
+        paddingR = applyDpi(defaultPadding + paddingR)
+    end
+
 
     local iconArgs = {
         buttonIconScript = buttonIconScript,
@@ -250,20 +265,29 @@ local function getButton(args, buttonArgs)
 
     local button = wibox.widget {
         {
-            id = "icon",
-            text = btnDefaultText,
-            widget = wibox.widget.textbox,
-            align = "center",
-            valign = "center",
-            font = beautiful.topBar_button_font
+            {
+                {
+                    id = "icon",
+                    text = btnDefaultText,
+                    widget = wibox.widget.textbox,
+                    font = beautiful.topBar_button_font
+                },
+                widget = wibox.container.place,
+                halign = "center",
+                valign = "center",
+                max_content_width = applyDpi(200)
+            },
+            widget = wibox.container.margin,
+            left = paddingL,
+            right = paddingR
         },
         widget = wibox.container.background,
         bg = "#00000000",
         fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
-        forced_width = applyDpi(width),
         forced_height = applyDpi(beautiful.topBar_buttonSize),
     }
+
     local icon = button:get_children_by_id("icon")[1]
     createTooltip(button, awful, beautiful, {
         tooltipScript = tooltipScript,

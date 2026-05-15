@@ -18,7 +18,7 @@ local function getButton(args)
         buttonClickScript = toggleScript,
         buttonIconScript = iconScript,
         iconUseCache = false,
-        buttonWidth = 38,
+        --buttonWidth = 38,
         buttonIconCallback = function (buttonWidget, iconWidget, text)
             if not text or text:gsub("%s+$", "") == "" then
                 iconWidget.text = placeholderIcon

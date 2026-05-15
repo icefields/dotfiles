@@ -12,7 +12,9 @@ local function getButton(args)
         btnDefaultText = "",
         tooltipDefaultText = "Getting WiFi info ...",
         buttonClickScript = clickScript,
-        buttonIconScript = iconScript
+        buttonIconScript = iconScript,
+        buttonPaddingLeft = 0,
+        buttonPaddingRight = -3
     })
     return button
 end
