@@ -494,6 +494,45 @@ ILoveCandy
 ParallelDownloads = 5
 ```
 
+## pacman snapshot hook
+
+`vim /etc/pacman.d/hooks/50-btrfs-snapshot.hook`
+
+Add the snapshot script in `Exec`:
+
+```
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Creating pre-update Btrfs snapshot.
+When = PreTransaction
+Exec = /home/user/scripts/btrfs/btrfs-snapshot-create.sh both "pre pacman or yay"
+AbortOnFail = yes
+```
+optional: do the same for the snapshotcleanup script.
+
+`sudo vim /etc/pacman.d/hooks/51-btrfs-clean.hook`
+
+```
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Cleaning old BTRFS snapshots
+Depends = btrfs-progs
+When = PostTransaction
+Exec = /home/user/scripts/btrfs/btrfs-snapshot-clean.sh --type home,root
+```
+
 ### Currency Info API (needed for currency widget):
 
 Clone into `~/dockerfiles/currency/` and follow instructions from the README:<br>
@@ -535,3 +574,8 @@ Quote=double
 
 ```
 
+## Wireguard VPN 
+**Using wireguard with random mullvad VPN ip.**
+Instructions on how to create the systemd unit at the top of the `scripts/systemd/wg_mullvad_randomizer.sh` script itself.
+The wireguard service is called wg-quick@mullvad.service, and must be created.
+Since the name of the actual vpn is obfuscated by the `mullvad` name, the actual name is written in a temp file (again, check the script itself for exact location).
