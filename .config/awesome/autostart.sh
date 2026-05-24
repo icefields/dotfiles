@@ -7,9 +7,8 @@ run() {
   fi
 }
 
-run "$HOME/.config/awesome/scripts/screens.sh"
-run "$HOME/.config/awesome/scripts/picom_delayed.sh"
-#sleep 6
+# run "$HOME/scripts/wm_common/screens.sh"
+run "$HOME/scripts/wm_common/start_picom_delayed.sh"
 run "$HOME/scripts/wm_common/start_keepass.sh"
 sleep 2
 run lxqt-policykit-agent

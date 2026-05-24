@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
 CONFIG_PATH="$HOME/.config/awesome/config.lua"
+LOCKFILE="/tmp/.screen-setup.lock"
+
+if [ -f "$LOCKFILE" ]; then
+    echo "screens.sh lock file exists, exiting"
+    exit 0
+fi
+touch "$LOCKFILE"
 
 get_lua_value() {
     local display=$1
@@ -21,6 +28,7 @@ for display in "${connected_displays[@]}"; do
     POS=$(get_lua_value "$display" "pos")
     ROT=$(get_lua_value "$display" "rotate")
     PRIMARY=$(get_lua_value "$display" "primary")
+    SCALE=$(get_lua_value "$display" "scale")
  
     if [ -n "$DPI" ]; then
         DPI="--dpi $DPI"
@@ -28,9 +36,15 @@ for display in "${connected_displays[@]}"; do
         DPI=""
     fi
 
+    if [ -n "$SCALE" ]; then
+        SCALE="--scale $SCALE"
+    else
+        SCALE="--scale 1x1"
+    fi
+
     if [ -n "$MODE" ]; then
         # Explicitly set mode and position - this breaks any existing mirror
-        CMD="$CMD --output $display --mode $MODE --scale 1x1 $DPI --pos $POS --rotate $ROT"
+        CMD="$CMD --output $display --mode $MODE $SCALE $DPI --pos $POS --rotate $ROT"
         [ "$PRIMARY" = "true" ] && CMD="$CMD --primary"
     else
         # No config? Use --auto to enable it properly
@@ -46,8 +60,12 @@ for display in "${connected_displays[@]}"; do
     #fi
 done
 
-echo "Running: xrandr $CMD"
+echo "screens.sh: xrandr $CMD"
 xrandr $CMD
+
+# timeout before removing the lock.
+sleep 2
+rm -f "$LOCKFILE"
 
 #if xrandr | grep -q 'HDMI-1-0 connected' ; then
 #    EDP_MODE=$(get_lua_value "eDP-1" "mode")

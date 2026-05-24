@@ -40,9 +40,19 @@ local hdmi1Display = {
     rotate = "normal",
 }
 
+local hdmiDisplayScaled = {
+    primary = true,
+    mode = "2560x1440",
+    pos = "2560x0",
+    rotate = "normal",
+    --scale = "1.667x1.667"
+    scale = "1.75x1.75"
+}
+
 local displays = {
     ["HDMI-1-0"] = hdmi1Display,
     ["HDMI-1"] = hdmi1Display,
+    ["HDMI-A-0"] = hdmiDisplayScaled,
     ["eDP-1"] = {
         primary = false,
         mode = "1920x1080",
@@ -51,9 +61,9 @@ local displays = {
     },
     ["eDP"] = {
         primary = false,
-        dpi = 144,
+        --dpi = 144,
         mode = "2560x1600",
-        pos = "0x360",
+        pos = "0x280",--"0x360",
         rotate = "normal",
     },
     ["VNC-0"] = {
