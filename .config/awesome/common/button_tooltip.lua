@@ -242,6 +242,10 @@ local function getButton(args, buttonArgs)
     local iconUseCache = buttonArgs.iconUseCache
     local paddingL = buttonArgs.buttonPaddingLeft or 0 --beautiful.topBar_buttonSize
     local paddingR = buttonArgs.buttonPaddingRight or 0 --beautiful.topBar_buttonSize
+    local mouseScrollDownCallback = buttonArgs.mouseScrollDownCallback
+    local mouseScrollUpCallback = buttonArgs.mouseScrollUpCallback
+    local mouseScrollDownScript = buttonArgs.mouseScrollDownScript
+    local mouseScrollUpScript = buttonArgs.mouseScrollUpScript
 
     -- paddings can be negative, but not less than zero.
     local defaultPadding = 3
@@ -255,7 +259,6 @@ local function getButton(args, buttonArgs)
     else
         paddingR = applyDpi(defaultPadding + paddingR)
     end
-
 
     local iconArgs = {
         buttonIconScript = buttonIconScript,
@@ -286,6 +289,18 @@ local function getButton(args, buttonArgs)
         fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
         forced_height = applyDpi(beautiful.topBar_buttonSize),
+        buttons = {
+            -- This is redundant, check button:connect_signal("button::press",
+            -- Left click
+            awful.button({ }, 1, function()
+            end),
+            -- Scroll up
+            awful.button({ }, 4, function()
+            end),
+            -- Scroll down
+            awful.button({ }, 5, function()
+            end),
+        }
     }
 
     local icon = button:get_children_by_id("icon")[1]
@@ -300,26 +315,40 @@ local function getButton(args, buttonArgs)
     -- response from the script call.
     -- If only callback present, call it directly.
     -- A delay can be set before updating the icon after click callback.
-    button:connect_signal("button::press", function()
-        button.bg = nil
-        if buttonClickScript then
-            awful.spawn.easy_async_with_shell(buttonClickScript, function(stdout)
-                if buttonClickCallback then
-                    buttonClickCallback(button, icon, stdout)
-                end
-                if clickResponseUpdateIconDelay then
-                    if clickTimer then clickTimer:stop() end
-                    clickTimer = gears.timer.start_new(clickResponseUpdateIconDelay, function()
+    button:connect_signal("button::press", function(self, lx, ly, btn, mods)
+        if btn == 1 then
+            button.bg = nil
+            if buttonClickScript then
+                awful.spawn.easy_async_with_shell(buttonClickScript, function(stdout)
+                    if buttonClickCallback then
+                        buttonClickCallback(button, icon, stdout)
+                    end
+                    if clickResponseUpdateIconDelay then
+                        if clickTimer then clickTimer:stop() end
+                        clickTimer = gears.timer.start_new(clickResponseUpdateIconDelay, function()
+                            updateIcon(beautiful, awful, button, icon, iconArgs)
+                            return false
+                        end)
+                        clickTimer:again()
+                    else
                         updateIcon(beautiful, awful, button, icon, iconArgs)
-                        return false
-                    end)
-                    clickTimer:again()
-                else
-                    updateIcon(beautiful, awful, button, icon, iconArgs)
-                end
-            end)
-        elseif buttonClickCallback then
-            buttonClickCallback(button, icon)
+                    end
+                end)
+            elseif buttonClickCallback then
+                buttonClickCallback(button, icon)
+            end
+        elseif btn == 4 then
+            -- Scroll up
+            if mouseScrollUpScript then
+                awful.spawn.easy_async(mouseScrollUpScript, function() end)
+            end
+            if mouseScrollUpCallback then mouseScrollUpCallback() end
+        elseif btn == 5 then
+            -- Scroll down
+            if mouseScrollDownScript then
+                awful.spawn.easy_async(mouseScrollDownScript, function() end)
+            end
+            if mouseScrollDownCallback then mouseScrollDownCallback() end
         end
     end)
 
