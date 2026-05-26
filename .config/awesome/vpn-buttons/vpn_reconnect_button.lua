@@ -1,43 +1,32 @@
-local createVpnTooltip = require("vpn-buttons.vpn_tooltip")
 local config = require("vpn-buttons.vpn_common")
+local buttonTooltip = require("common.button_tooltip")
+local notif = require("common.notification")
+
+-- scripts
+local reconnectScript = config.reconnectScript
+local statusScript = config.statusScript
+local notifIcon = os.getenv("HOME") .. "/.config/awesome/themes/icons-global/mullvad-vpn.svg"
 
 local function getButton(args)
-    local gears = args.gears
-    local awful = args.awful
+    local naughty = args.naughty
     local beautiful = args.beautiful
-    local wibox = args.wibox
-
-    local vpnReconnectButton = wibox.widget {
-        {
-            id = "icon",
-            text = "󰝳", --"", --"", --"",
-            widget = wibox.widget.textbox,
-            align = "center",
-            valign = "center",
-            font = beautiful.topBar_button_font --"Symbols Nerd Font Mono 10"
-        },
-        widget = wibox.container.background,
-        bg = "#00000000",
-        fg = beautiful.topBar_fg,
-        shape = gears.shape.rounded_bar,
-        forced_width = beautiful.topBar_buttonSize,
-        forced_height = beautiful.topBar_buttonSize,
-    }
-
-    local wifiTooltip = createVpnTooltip(vpnReconnectButton, awful, beautiful)
-
-    vpnReconnectButton:connect_signal("button::press", function()
-        vpnReconnectButton.bg = nil
-        awful.spawn.easy_async_with_shell(config.reconnectScript, function()
-            gears.timer.start_new(5, function()
-                return false
-            end)
-        end)
-    end)
-
-    vpnReconnectButton:connect_signal("button::release", function(c) c.bg = beautiful.bg_focus end)
-
-    return  vpnReconnectButton
+    local button = buttonTooltip(args, {
+        tooltipScript = statusScript,
+        btnDefaultText = "󰝳",
+        tooltipDefaultText = "VPN Status ...",
+        buttonClickScript = reconnectScript,
+        buttonClickCallback = function (button, icon, text)
+            notif.send(naughty, beautiful, {
+                title = "VPN Reconnected",
+                text = "VPN restarted and reconnected ".. text,
+                icon = notifIcon,
+                timeout = 5,
+                position = notif.POSITION.TOP_MIDDLE,
+                preset = notif.PRESET.NORMAL,
+            })
+        end
+    })
+    return button
 end
 
 return getButton

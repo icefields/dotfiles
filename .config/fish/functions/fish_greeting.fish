@@ -51,8 +51,13 @@ function fish_greeting
     # Randomly pick a intro graphic
 	set chosen_ascii (random)"%"(count $ascii_intros)
 	set chosen_ascii $ascii_intros[(math $chosen_ascii"+1")]
-	fastfetch --disable-linewrap --logo $chosen_ascii
 	
+    if type -q fastfetch
+        fastfetch --disable-linewrap --logo $chosen_ascii
+    else 
+        midorifetch $HOME/scripts/shell_common/midori-fetch/hypno.txt
+    end
+
 	echo " "
 	
 	# Randomly pick a message

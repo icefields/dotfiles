@@ -129,8 +129,9 @@ local function getWidget(args)
     local wibox = args.wibox
     local beautiful = args.beautiful
     local gears = args.gears
+    local applyDpi = args.applyDpi
 
-    local currencySymbols = config.symbols    
+    local currencySymbols = config.symbols 
     local randomSymbol = currencySymbols[math.random(#currencySymbols)]
 
     local widget = wibox.widget {
@@ -146,7 +147,7 @@ local function getWidget(args)
         bg = "#00000000",  -- Transparent background
         fg = beautiful.topBar_fg,
         shape = gears.shape.rounded_bar,
-        forced_height = beautiful.topBar_buttonSize
+        forced_height = applyDpi(beautiful.topBar_buttonSize)
     }
 
     --local widget = wibox.widget {

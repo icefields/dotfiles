@@ -25,7 +25,6 @@ local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
 
 local browserCmd = "librewolf"
-local fileBrowserCmd = "nemo ~/Desktop/"
 local terminalCmd = "kitty"
 local editorCmd = terminalCmd .. " -e " .. (os.getenv("EDITOR") or "nvim")
 local modkey = "Mod4"
@@ -43,7 +42,7 @@ local browser = {
     }
 }
 local fileBrowser = {
-    command = fileBrowserCmd,
+    command = homeDir .. "/scripts/wm_common/start_filemanager.sh",
     description = "Open file browser",
     group = groupLuci4,
     shell = true,
@@ -53,7 +52,7 @@ local fileBrowser = {
     }
 }
 local kittyArchDistrobox =  {
-    command = homeDir .. "/.config/awesome/scripts/open_kitty_arch.sh",
+    command = homeDir .. "/scripts/wm_common/start_kitty_distrobox.sh",
     description = "Open Kitty Terminal in Arch Distrobox container",
     group = groupLuci4,
     shell = true,
@@ -63,13 +62,13 @@ local kittyArchDistrobox =  {
     }
 }
 local kittyArchDistroboxIsolated =  {
-    command = homeDir .. "/.config/awesome/scripts/open_kitty_arch-isolated.sh",
+    command = homeDir .. "/scripts/wm_common/start_kitty_distrobox-isolated.sh",
     description = "Open Kitty Terminal in an isolated Arch Distrobox container",
     group = groupLuci4,
     shell = true
 }
 local androidStudio = {
-    command = "/opt/android-studio/bin/studio",
+    command = "android-studio",
     description = "Open Android Studio",
     group = groupLuci4,
     shell = false,
@@ -95,7 +94,7 @@ local editor = {
     shell = true
 }
 local screenshotArea = {
-    command = "gnome-screenshot -a",
+    command = homeDir .. "/scripts/wm_common/screenshot_extra_features.sh",
     description = "Print area of the screen",
     group = groupLuci4,
     shell = false,
@@ -105,7 +104,7 @@ local screenshotArea = {
     }
 }
 local screenshotFull = {
-    command = "gnome-screenshot",
+    command = homeDir .. "/scripts/wm_common/screenshot.sh",
     description = "Print entire screen",
     group = groupLuci4,
     shell = false,
@@ -154,8 +153,18 @@ local prevMedia = {
         key2 = "XF86AudioPrev"
     }
 }
+local toggleMic = {
+    command = homeDir .. "/scripts/wm_common/volume.sh --toggle-mic",
+    description = "Toggle microphone on and off",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 = { },
+        key2 = "XF86AudioMicMute"
+    }
+}
 local raiseVolume = {
-    command = "amixer -D pulse sset Master 2%+",
+    command = homeDir .. "/scripts/wm_common/volume.sh --inc",
     description = "Raise audio volume",
     group = groupLuci4,
     shell = false,
@@ -165,7 +174,7 @@ local raiseVolume = {
     }
 }
 local lowerVolume = {
-    command = "amixer -D pulse sset Master 2%-",
+    command = homeDir .. "/scripts/wm_common/volume.sh --dec",
     description = "Lower audio volume",
     group = groupLuci4,
     shell = false,
@@ -174,8 +183,8 @@ local lowerVolume = {
         key2 = "XF86AudioLowerVolume"
     }
 }
-local  muteVolume = {
-    command = "amixer -D pulse sset Master toggle",
+local muteVolume = {
+    command = homeDir .. "/scripts/wm_common/volume.sh --toggle",
     description = "Mute/Unmute audio volume",
     group = groupLuci4,
     shell = false,
@@ -184,8 +193,48 @@ local  muteVolume = {
         key2 = "XF86AudioMute"
     }
 }
+local brightnessUp = {
+    command = homeDir .. "/scripts/shell_common/brightnessctl.sh --inc",
+    description = "Increase screen brightness",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 =  { },
+        key2 = "XF86MonBrightnessUp"
+    }
+}
+local brightnessDown = {
+    command = homeDir .. "/scripts/shell_common/brightnessctl.sh --dec",
+    description = "Decrease screen brightness",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 =  { },
+        key2 = "XF86MonBrightnessDown"
+    }
+}
+local kbBrightnessUp = {
+    command = homeDir .. "/scripts/wm_common/kb-brightness.sh --inc",
+    description = "Increase keyboard brightness",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 =  { modkey },
+        key2 = "F4" -- "XF86KbdBrightnessUp"
+    }
+}
+local kbBrightnessDown = {
+    command = homeDir .. "/scripts/wm_common/kb-brightness.sh --dec",
+    description = "Decrease keyboard brightness",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 =  { modkey },
+        key2 = "F3" -- "XF86KbdBrightnessDown"
+    }
+}
 local lockScreen = {
-    command = homeDir .. "/.config/awesome/scripts/lockscreen.sh",
+    command = homeDir .. "/scripts/wm_common/lockscreen.sh",
     description = "Lock Screen",
     group = groupLuci4,
     shell = true,
@@ -195,7 +244,7 @@ local lockScreen = {
     }
 }
 local dmenu = {
-    command = "dmenu_run",
+    command = homeDir .. "/scripts/wm_common/dmenu_run.sh",
     description = "run prompt",
     group = groupLuci4,
     shell = false,
@@ -205,7 +254,7 @@ local dmenu = {
     }
 }
 local shareMenu = {
-    command = "fish -c " .. homeDir .. "/.config/awesome/scripts/launch_share.sh", --"fish -c " .. homeDir .. "/scripts/share.sh --ntfy",
+    command = "fish -c " .. homeDir .. "/scripts/wm_common/launch_share.sh",
     description = "Get a share-link, copy to clipboard",
     group = groupLuci4,
     shell = true,
@@ -216,7 +265,7 @@ local shareMenu = {
 }
 local shareMenuEncrypted = {
     -- launching with kitty is not a good idea, switch to something more compatible like bash
-    command = terminalCmd .. " " .. homeDir .. "/scripts/launch_share_encrypted.sh", -- "kitty " .. homeDir .. "/scripts/share.sh --secret --ntfy &",
+    command = terminalCmd .. " " .. homeDir .. "/scripts/wm_common/launch_share_encrypted.sh",
     description = "Zip, encrypt, get a share link and copy to clipboard",
     group = groupLuci4,
     shell = true,
@@ -308,6 +357,9 @@ local applications = {
     prevMedia = {
         command = prevMedia
     },
+    toggleMic = {
+        command = toggleMic
+    },
     raiseVolume = {
         command = raiseVolume
     },
@@ -316,6 +368,18 @@ local applications = {
     },
     muteVolume = {
         command = muteVolume
+    },
+    brightnessUp = {
+        command = brightnessUp
+    },
+    brightnessDown = {
+        command = brightnessDown
+    },
+    kbBrightnessUp = {
+        command = kbBrightnessUp
+    },
+    kbBrightnessDown = {
+        command = kbBrightnessDown
     },
     lockScreen = {
         command = lockScreen
@@ -605,7 +669,7 @@ local applications = {
     },
     telegram = {
         label = "Telegram",
-        class = "TelegramDesktop",
+        class = "ForkgramDesktop",
         favourite = false,
         command = {
             command = homeDir .. "/apps/Telegram",
@@ -729,7 +793,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = homeDir .. "/apps/reaper_linux_x86_64/REAPER/reaper",
+            command = homeDir .. "/scripts/wm_common/start_reaper.sh",
             description = "Reaper",
             group = "",
             shell = false
@@ -756,7 +820,7 @@ local applications = {
         class = "guitarpro.exe",
         favourite = false,
         command = {
-            command = "wine " .. homeDir .."\"/.wine/drive_c/Program Files/Arobas Music/Guitar Pro 8/GuitarPro.exe\"",
+            command = homeDir .. "/scripts/wm_common/start_guitarpro8.sh ",
             description = "Arobas Guitar Pro, guitar tabs editor",
             group = "",
             shell = false
@@ -843,11 +907,11 @@ local applications = {
         subGroup = subGroup.graphics
     },
     gimp = {
-        label = "Gimp 2",
+        label = "Gimp",
         class = "",
         favourite = true,
         command = {
-            command = "gimp",
+            command = homeDir .. "/apps/Gimp.AppImage",
             description = "Gimp image editor",
             group = "",
             shell = false
@@ -856,7 +920,7 @@ local applications = {
         subGroup = subGroup.graphics
     },
     gimpDev = {
-        label = "Gimp 3",
+        label = "Gimp dev",
         class = "",
         favourite = false,
         command = {
@@ -988,7 +1052,7 @@ local applications = {
         class = "Nextcloud",
         favourite = false,
         command = {
-            command = homeDir .. "/apps/nextcloud.appimage",
+            command = homeDir .. "/apps/Nextcloud.AppImage",
             description = "Nextcloud cloud",
             group = "",
             shell = false
@@ -1065,7 +1129,7 @@ local applications = {
         class = "", -- "cinnamon-settings sound"
         favourite = false,
         command = {
-            command = homeDir .. "/scripts/applaunch/sound-settings.sh",
+            command = homeDir .. "/scripts/wm_common/sound-settings.sh",
             description = "Linux audio settings",
             group = "",
             shell = true

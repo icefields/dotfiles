@@ -5,6 +5,7 @@ local env = {}
 
 local home = os.getenv("HOME")
 local file = io.open(home .. "/.shell_env", "r")
+env["HOME"] = home
 
 if file then
     for line in file:lines() do

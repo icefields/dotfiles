@@ -1,7 +1,19 @@
+# --------------------------------------------------------
+# Environment variables.
+# --------------------------------------------------------
 from xonsh.built_ins import XSH
 import os
 import re
 
+# --------------------------------------------------------
+# Editor.
+# --------------------------------------------------------
+XSH.env["EDITOR"] = "nvim"
+XSH.env["MANPAGER"] = "nvim +Man!"
+
+# --------------------------------------------------------
+# Shell Env file.
+# --------------------------------------------------------
 shell_env_path = Paths.ENV_VARS
 
 def load_shell_env():
@@ -29,6 +41,21 @@ def load_shell_env():
 
 
 load_shell_env()
+
+# --------------------------------------------------------
+# FALLBACK. ssh auth socket, used by keypass ssh agent.
+# this should be set in ~/.xprofile
+# --------------------------------------------------------
+if not XSH.env.get('SSH_AUTH_SOCK'):
+    XSH.env['SSH_AUTH_SOCK'] = f"/run/user/{os.getuid()}/ssh-agent.socket"
+
+# Enable full traceback of errors
+# create log dir if not exists, comment out to just generate an error at startup.
+# Paths.LOG_DIR.mkdir(parents=True, exist_ok=True)
+# Defaults to False if IS_DEV_MODE is missing or empty
+__xonsh__.env['XONSH_SHOW_TRACEBACK'] = __xonsh__.env.get('IS_DEV_MODE', '').lower() in ("1", "true", "yes")
+#__xonsh__.env['XONSH_SHOW_TRACEBACK'] = __xonsh__.env['IS_DEV_MODE'].lower() in ("1", "true", "yes")
+__xonsh__.env['XONSH_TRACEBACK_LOGFILE'] = str(Paths.LOG_FILE)
 
 #print("Loaded environment variables:")
 #for key in XSH.env:

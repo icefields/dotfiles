@@ -422,6 +422,7 @@ local function worker(user_args)
     --                    docker_widget:set_bg('#00000000')
     --                    popup.visible = not popup.visible
     --                else
+    --                     docker_widget:set_bg(beautiful.bg_focus)
     --                    docker_widget:set_bg(beautiful.bg_focus)
     --                    spawn.easy_async(string.format(LIST_CONTAINERS_CMD, executable_name, number_of_containers),
     --                        function(stdout, stderr)
