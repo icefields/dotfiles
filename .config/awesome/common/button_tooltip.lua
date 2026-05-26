@@ -352,7 +352,6 @@ local function getButton(args, buttonArgs)
         end
     end)
 
-
     button:connect_signal("button::release", function(c) c.bg = beautiful.bg_focus end)
 
     button:connect_signal("mouse::leave", function(c)

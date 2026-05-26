@@ -1,3 +1,6 @@
+local lgi = require("lgi")
+local GLib = lgi.GLib
+
 local locations = {
   { name = "Toronto", tz = "America/Toronto" },
   { name = "UTC", tz = "UTC" },
@@ -9,27 +12,26 @@ local locations = {
 }
 
 local function getWorldTimes()
-    -- Find the longest city name for alignment
-    local longest = 0
-    for _, loc in ipairs(locations) do
-      if #loc.name > longest then
-        longest = #loc.name
-      end
+  local longest = 0
+  for _, loc in ipairs(locations) do
+    if #loc.name > longest then
+      longest = #loc.name
     end
+  end
 
-    local times = ""
-    -- Print times
-    for _, loc in ipairs(locations) do
-      -- Use the 'TZ' environment variable to get local time
-      local cmd = string.format("TZ=%s date '+%%H:%%M (%%b %%d)'", loc.tz)
-      local handle = io.popen(cmd)
-      local time = handle:read("*l")
-      handle:close()
+  local times = ""
+  -- Get current UTC time once, then convert per timezone
+  local nowUtc = GLib.DateTime.new_now_utc()
 
-      -- build and return string for tooltip
-      times = times .. (string.format("%-" .. longest .. "s %s", loc.name, time)) .. "\n"
-    end
-    return times:gsub("%s+$", "")
+  for _, loc in ipairs(locations) do
+    local tz = GLib.TimeZone.new(loc.tz)
+    local localTime = nowUtc:to_timezone(tz)
+    -- GLib format specifiers match date's: %H:%M (%b %d)
+    local time = localTime:format("%H:%M (%b %d)")
+    times = times .. string.format("%-" .. longest .. "s %s", loc.name, time) .. "\n"
+  end
+
+  return times:gsub("%s+$", "")
 end
 
 local function createWorldTimeTooltip(widget, awful, beautiful)
@@ -48,7 +50,7 @@ local function createWorldTimeTooltip(widget, awful, beautiful)
     widget:connect_signal("mouse::enter", function(c)
         worldTimeTooltip.text = getWorldTimes()
     end)
-    
+
     -- show tooltip on right click
     --widget:connect_signal("button::press", function(_, _, _, button)
     --    if button == 3 then
