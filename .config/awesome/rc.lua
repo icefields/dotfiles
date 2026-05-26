@@ -38,8 +38,11 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. config.chosenThemePat
 require("collision")()
 
 local wibox = require("wibox")
+
 -- Notification library
 local naughty = require("naughty")
+require("naughty.dbus")  -- Registers on org.freedesktop.Notifications
+
 local menubar = require("menubar")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -50,6 +53,7 @@ local wallpaper = require("awesome_wallpaper")
 local applicationsCore = require("wm_applications")
 local awesomeApplications = applicationsCore.applications
 local layouts = require("layouts_mapper")
+local applyDpi = require("beautiful.xresources").apply_dpi
 -- determine if the current Awesome is the Aur awesoome-git package
 local isAurGitVersion = awesome.version:match("-g%d+") ~= nil
 
@@ -65,7 +69,8 @@ local awesomeArgs = ({
     client = client,
     screen = screen,
     naughty = naughty,
-    config = config
+    config = config,
+    applyDpi = applyDpi
 })
 
 -- {{{ Error handling
@@ -115,15 +120,15 @@ end)
 
 awful.screen.connect_for_each_screen(function(s)
     -- wallpaper.setWallpaper(s, awesomeArgs)   -- DEPRECATED, already calling in startRotationTimer
-    
+
     -- Each screen has its own tag table.
-    awful.tag(layouts.tags, s, awful.layout.layouts[1])    
+    awful.tag(layouts.tags, s, awful.layout.layouts[1])
     -- bar
     require("awesome_bar").createAwesomeBar(awesomeArgs, s, awesomeApplications.lockScreen.command.command)
 end)
 
-wallpaper.initWallpaper(gears, screen, { 
-    interval = config.wallpaperRotationInterval, 
+wallpaper.initWallpaper(gears, screen, {
+    interval = config.wallpaperRotationInterval,
     isRotateWallpapers = config.isRotateWallpapers,
     isAurGitVersion = isAurGitVersion
 })
@@ -280,7 +285,10 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+-- generate themes for other components
+require("themes.rofi_theme_generator").generate()
+require("themes.i3lock_theme_generator").generate()
+
 local autostartCmd = gears.filesystem.get_configuration_dir() .. "/autostart.sh"
 -- local autostartCmd = os.getenv("HOME") .. "/.config/awesome/autostart.sh"
 awful.spawn.with_shell(autostartCmd)
-
