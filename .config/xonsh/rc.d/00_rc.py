@@ -125,8 +125,6 @@ else:
     # --------------------------------------------------------
     # OS detection
     # --------------------------------------------------------
-    import platform
-
     system = platform.system()
 
     if system == "Darwin":
