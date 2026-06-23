@@ -25,7 +25,7 @@ local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
 
 local browserCmd = "librewolf"
-local terminalCmd = "kitty"
+local terminalCmd = "kitty --single-instance"
 local editorCmd = terminalCmd .. " -e " .. (os.getenv("EDITOR") or "nvim")
 local modkey = "Mod4"
 
@@ -416,7 +416,24 @@ local applications = {
         icon = icons.kitty,
         favourite = true
     },
-    editor = {
+    terminalQuake = {
+        label = "Kitty Quake Terminal",
+        class = "kitty-quick-access",
+        command = {
+            command = "kitten quick-access-terminal",
+            description = "Open a Quake-style terminal",
+            group = groupLauncher,
+            shell = false,
+            keyBinding = {
+                key1 = { modkey, "Shift" },
+                key2 = "Return"
+            }
+        },
+        subGroup = subGroup.terminals,
+        icon = icons.kitty,
+        favourite = true
+    },
+        editor = {
         label = "NeoVim",
         class = "",
         command = editor,
@@ -555,8 +572,12 @@ local applications = {
         command = {
             command = "keepassxc",
             description = "Password manager",
-            group = "",
-            shell = false
+            group = groupLuci4,
+            shell = false,
+            keyBinding = {
+                key1 =  { modkey, "Shift" },
+                key2 = "x"
+            }
         },
         subGroup = subGroup.utils,
        -- icon = icons.keePass,
@@ -714,13 +735,17 @@ local applications = {
         command = {
             command = "flatpak run im.nheko.Nheko",
             description = "Nheko messenger",
-            group = "",
-            shell = false
+            group = groupLuci4,
+            shell = false,
+            keyBinding = {
+                key1 =  { modkey, "Shift" },
+                key2 = "z"
+            }
         },
         subGroup = subGroup.messaging,
         -- icon = icons.telegram,
         properties = {
-            tag = "8",
+            -- tag = "8",
             floating = true,
             width = 1100,
             height = 800,
