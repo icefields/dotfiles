@@ -1,0 +1,32 @@
+#!/bin/sh
+case "$1" in
+    "c")
+        # Copy file to directory
+        while read -r file; do
+            cp "$file" ~/Downloads/pictures
+        done
+        notify-send "Copied to ~/Downloads/pictures"
+        ;;
+    "y")
+        # Yank image data to clipboard
+        notify-send "Copied to clipboard"
+        while read -r file; do
+            xclip -selection clipboard -t image/png -i "$file" &
+        done
+        ;;
+    "e")
+        # Open in GIMP
+        while read -r file; do
+            $HOME/apps/Gimp.AppImage "$file" &
+            # gimp "$file" &
+        done
+        ;;
+    "m")
+        # Move file
+        notify-send "Moved to ~/Downloads/pictures"
+        while read -r file; do
+            mv "$file" ~/Downloads/pictures
+        done
+        ;;
+esac
+
