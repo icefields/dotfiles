@@ -5,3 +5,7 @@ Xft.hintstyle: hintslight
 Xft.rgba: none
 Xft.lcdfilter: lcddefault
 Xcursor.theme: Remus-Black
+
+Nsxiv.window.background: #000000
+Nsxiv.bar.background: #1c1c1c
+Nsxiv.bar.foreground: #d4d4d4
