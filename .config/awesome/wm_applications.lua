@@ -194,7 +194,7 @@ local muteVolume = {
     }
 }
 local brightnessUp = {
-    command = homeDir .. "/scripts/shell_common/brightnessctl.sh --inc",
+    command = homeDir .. "/scripts/wm_common/brightnessctl.sh --inc",
     description = "Increase screen brightness",
     group = groupLuci4,
     shell = false,
@@ -204,7 +204,7 @@ local brightnessUp = {
     }
 }
 local brightnessDown = {
-    command = homeDir .. "/scripts/shell_common/brightnessctl.sh --dec",
+    command = homeDir .. "/scripts/wm_common/brightnessctl.sh --dec",
     description = "Decrease screen brightness",
     group = groupLuci4,
     shell = false,
@@ -301,11 +301,20 @@ local resetTor = {
     group = groupLuci4,
     shell = true,
     keyBinding = {
-        key1 =  { modkey },
+        key1 =  { modkey, "Mod1" },
         key2 = "i"
     }
 }
-
+local resetPicom = {
+    command = homeDir .. "/scripts/reset-picom.sh",
+    description = "Reset picom",
+    group = groupLuci4,
+    shell = true,
+    keyBinding = {
+        key1 =  { modkey, "Mod1" },
+        key2 = "p"
+    }
+}
 local placement = {
     centered = "centered",
     bottom_right = "bottom_right",
@@ -404,6 +413,9 @@ local applications = {
     },
     askOllama =  {
         command = askOllama
+    },
+    resetPicom = {
+        command = resetPicom
     },
     resetTor = {
         command = resetTor
@@ -738,7 +750,7 @@ local applications = {
             group = groupLuci4,
             shell = false,
             keyBinding = {
-                key1 =  { modkey, "Shift" },
+                key1 =  { modkey },
                 key2 = "z"
             }
         },
@@ -1237,8 +1249,8 @@ local applications = {
         class = "",
         favourite = false,
         command = {
-            command = homeDir .. "/apps/Audacity.AppImage",
-            description = "Audacity audio editor",
+            command = homeDir .. "/apps/Tenacity.AppImage",
+            description = "Tenacity audio editor",
             group = "",
             shell = false
         },

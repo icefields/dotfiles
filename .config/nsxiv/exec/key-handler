@@ -16,6 +16,7 @@ case "$1" in
         ;;
     "e")
         # Open in GIMP
+        notify-send "Opening Gimp"
         while read -r file; do
             $HOME/apps/Gimp.AppImage "$file" &
             # gimp "$file" &
