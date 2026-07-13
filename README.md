@@ -145,6 +145,10 @@ VPN_HOME_USER="user"
 VPN_HOME_PASS="pass"
 OVPN_HOME_CONFIG="/ovpn/config/location/on/disk/home.ovpn"
 
+# search
+SEARCH_URL="https://searx.instance.org/search?q=%s"
+SEARCH_AI_URL="https://ai.search.org/?q=%s"
+
 # currency conversion API
 CURRENCY_API = "https://currency.api.url"
 

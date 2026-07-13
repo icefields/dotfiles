@@ -983,6 +983,19 @@ local applications = {
         subGroup = subGroup.internet,
         properties = propertiesFloatingCentered
     },
+    luakit = {
+        label = "Luakit",
+        class = "",
+        favourite = true,
+        command = {
+            command = homeDir .. "/apps/Luakit",
+            description = "luakit browser",
+            group = "",
+            shell = true
+        },
+        icon = icons.luakit,
+        subGroup = subGroup.internet
+    },
     steam = {
         label = "Steam",
         class = "",
