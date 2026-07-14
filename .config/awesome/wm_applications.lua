@@ -25,7 +25,7 @@ local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
 
 local browserCmd = "librewolf"
-local terminalCmd = "kitty --single-instance"
+local terminalCmd = HomeEnv.TERMINAL_CMD -- or "st" --"kitty --single-instance"
 local editorCmd = terminalCmd .. " -e " .. (os.getenv("EDITOR") or "nvim")
 local modkey = "Mod4"
 
@@ -264,7 +264,7 @@ local shareMenu = {
     }
 }
 local shareMenuEncrypted = {
-    -- launching with kitty is not a good idea, switch to something more compatible like bash
+    -- launching with terminalCmd is not a good idea, switch to something more compatible like bash
     command = terminalCmd .. " " .. homeDir .. "/scripts/wm_common/launch_share_encrypted.sh",
     description = "Zip, encrypt, get a share link and copy to clipboard",
     group = groupLuci4,
@@ -421,9 +421,22 @@ local applications = {
         command = resetTor
     },
     terminal = {
-        label = "Kitty terminal",
-        class = "kitty",
+        label = "Default Terminal",
+        class = "xterm-256color",
         command = terminal,
+        subGroup = subGroup.terminals,
+        -- icon = icons.kitty,
+        favourite = true
+    },
+    kitty = {
+        label = "Kitty Terminal",
+        class = "kitty",
+        command = {
+            command = "kitty --single-instance",
+            description = "Open Kitty terminal",
+            group = groupLauncher,
+            shell = false,
+        },
         subGroup = subGroup.terminals,
         icon = icons.kitty,
         favourite = true
@@ -445,7 +458,7 @@ local applications = {
         icon = icons.kitty,
         favourite = true
     },
-        editor = {
+    editor = {
         label = "NeoVim",
         class = "",
         command = editor,
