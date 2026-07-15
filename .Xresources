@@ -6,6 +6,18 @@ Xft.rgba: none
 Xft.lcdfilter: lcddefault
 Xcursor.theme: Remus-Black
 
+st.font: VictorMono Nerd Font Mono:size=12:antialias=true:autohint=true
+st.alpha: 0.88
+st.borderpx: 2
+st.shell: /bin/sh
+st.bellvolume: 0
+st.blinktimeout: 0
+st.tabspaces: 4
+st.cursorColor: #ebdbb2
+st.termname: st-256color
+st.chscale: 0.877
+st.cwscale: 1
+
 Nsxiv.window.background: #000000
 Nsxiv.bar.background: #1c1c1c
 Nsxiv.bar.foreground: #d4d4d4
