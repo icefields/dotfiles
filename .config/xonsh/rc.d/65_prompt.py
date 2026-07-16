@@ -25,6 +25,7 @@ else:
         branchCol = ColourAnsi.MAGENTA.value
         promptCol = ColourAnsi.DARK_GREEN.value
 
+        atSeparator = f"{ColourAnsi.BRIGHT_BLACK.value}{RESET}"
         user = os.environ.get("USER", "user")
         host = socket.gethostname().split(".")[0]
         cwd = os.getcwd()
@@ -35,10 +36,11 @@ else:
             spacing = ""
 
         return (
-            f"{userCol}{user}{RESET}@{hostCol}{host}{RESET}:"
+            f"{userCol}{user}{RESET}{atSeparator}{hostCol}{host}{RESET}:"
             f"{cwdCol}{cwd}{RESET}"
             f"{branchCol}{branch}{RESET}{spacing}"
-            f"{promptCol}  {RESET}"
+            # f"{promptCol}  {RESET}"    󰚌 
+            f"{promptCol}󰅂 {RESET}"
         )
 
     __xonsh__.env['PROMPT'] = my_prompt
