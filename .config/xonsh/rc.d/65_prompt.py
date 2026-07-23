@@ -24,8 +24,10 @@ else:
         cwdCol = ColourAnsi.CYAN.value
         branchCol = ColourAnsi.MAGENTA.value
         promptCol = ColourAnsi.DARK_GREEN.value
+        separatorCol = ColourAnsi.BRIGHT_BLACK.value
 
-        atSeparator = f"{ColourAnsi.BRIGHT_BLACK.value}{RESET}"
+        atSeparator = f"{separatorCol}{RESET}"
+        colSeparator = f"{separatorCol}:{RESET}"
         user = os.environ.get("USER", "user")
         host = socket.gethostname().split(".")[0]
         cwd = os.getcwd()
@@ -36,7 +38,7 @@ else:
             spacing = ""
 
         return (
-            f"{userCol}{user}{RESET}{atSeparator}{hostCol}{host}{RESET}:"
+            f"{userCol}{user}{RESET}{atSeparator}{hostCol}{host}{RESET}{colSeparator}"
             f"{cwdCol}{cwd}{RESET}"
             f"{branchCol}{branch}{RESET}{spacing}"
             # f"{promptCol}  {RESET}"    󰚌 

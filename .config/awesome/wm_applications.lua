@@ -354,6 +354,11 @@ local propertiesFloatingCentered = {
 -- add properties to make the application follow defined window rules.
 -- set favourite to true to add the application to the favourite menu.
 local applications = {
+    luci4gtkwindow = {
+        command = { },
+        class = "Luci4GTKviewer",
+        properties = propertiesFloatingCentered
+    },
     playPauseMedia = {
         command = playPauseMedia
     },
@@ -998,13 +1003,17 @@ local applications = {
     },
     luakit = {
         label = "Luakit",
-        class = "",
+        class = "Luakit",
         favourite = true,
         command = {
             command = homeDir .. "/apps/Luakit",
-            description = "luakit browser",
-            group = "",
-            shell = true
+            description = "Luakit browser",
+            group = groupLuci4,
+            shell = false,
+            keyBinding = {
+                key1 = { modkey, "Shift" },
+                key2 = "b"
+            }
         },
         icon = icons.luakit,
         subGroup = subGroup.internet
@@ -1063,7 +1072,7 @@ local applications = {
         -- icon = icons.,
         subGroup = subGroup.multimedia,
         properties = {
-            floating = true, 
+            floating = true,
             -- windowPlacement = placement.centered,
             width = 800,
             height = 800
