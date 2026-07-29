@@ -161,6 +161,9 @@ CURRENCY_API = "https://currency.api.url"
 # cheat sheet self hosted url
 CHTSH_URL="https://cheat.chmod666.ca"
 
+# NPB fetcher library location (clone from github.com/icefields)
+NPB_FETCH_PATH="/home/user/Code/Python/BaseballNpbFetch"
+
 # location variables, for weather, red filter, etc...
 LOCATION_COORDINATES="43.6426,-79.3871"
 
