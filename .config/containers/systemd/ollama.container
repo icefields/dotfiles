@@ -1,0 +1,39 @@
+[Unit]
+Description=Ollama LLM Server (Flow Z13 Strix Halo, Vulkan)
+After=network-online.target
+RequiresMountsFor=/mnt/hd1
+
+[Container]
+Image=docker.io/ollama/ollama:0.32.15
+ContainerName=ollama
+PublishPort=127.0.0.1:11434:11434
+Volume=/mnt/hd1/llm/ollama:/root/.ollama:U
+
+AddDevice=/dev/dri
+AddDevice=/dev/kfd
+PodmanArgs=--group-add keep-groups --ipc=host
+
+Environment=OLLAMA_HOST=0.0.0.0:11434
+Environment=OLLAMA_MODELS=/root/.ollama/models
+Environment=OLLAMA_NO_CLOUD=1
+Environment=OLLAMA_TELEMETRY=0
+
+# Strix Halo verified path (issue #16462): Vulkan + iGPU enable
+Environment=OLLAMA_VULKAN=1
+Environment=OLLAMA_IGPU_ENABLE=1
+
+# Performance
+Environment=OLLAMA_FLASH_ATTENTION=1
+Environment=OLLAMA_KV_CACHE_TYPE=q8_0
+Environment=OLLAMA_KEEP_ALIVE=30m
+Environment=OLLAMA_NUM_PARALLEL=2
+#Environment=OLLAMA_CONTEXT_LENGTH=16384
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=1500
+
+[Install]
+WantedBy=default.target
+

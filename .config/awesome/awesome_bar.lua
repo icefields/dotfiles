@@ -210,6 +210,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local toggleMicButton = require("pipewire.toggle_mic_button")(args)
     -- updates 
     local updatesButton = require("updates_widget.update_button")(args)
+    -- asus profile
+    local profileButton = require("asusctl.asusctl_button")(args)
     -- Sports widget 
     local sportsWidget = require("sports.sports_widget")(args)
 
@@ -345,6 +347,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
             toggleMicButton,
             togglePipewireButton,
+            profileButton,
             separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
             s.mylayoutbox,
             -- default logout widget
