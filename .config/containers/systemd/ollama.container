@@ -1,13 +1,15 @@
 [Unit]
 Description=Ollama LLM Server (Flow Z13 Strix Halo, Vulkan)
-After=network-online.target
-RequiresMountsFor=/mnt/hd1
+AssertPathIsMountPoint=/opt/ollama
+#After=network-online.target
+#RequiresMountsFor=/mnt/hd1
 
 [Container]
 Image=docker.io/ollama/ollama:0.32.15
 ContainerName=ollama
 PublishPort=127.0.0.1:11434:11434
-Volume=/mnt/hd1/llm/ollama:/root/.ollama:U
+Volume=/opt/ollama/local:/root/.ollama:U
+#Volume=/mnt/hd1/llm/ollama:/root/.ollama:U
 
 AddDevice=/dev/dri
 AddDevice=/dev/kfd

@@ -329,7 +329,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             wifiButton,
             toggleVpnButton,
             vpnReconnectButton,
-            separator(beautiful, wibox, { showSeparator = true, margins = { left = dpi(1), right = dpi(5) } }),
+            separator(beautiful, wibox, { showSeparator = true, margins = { left = dpi(1), right = dpi(1) } }),
+            profileButton,
             batteryWidget(args),
             separator(beautiful, wibox, { margins = { left = dpi(2) } }),
             redshiftButton,
@@ -347,7 +348,6 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
             toggleMicButton,
             togglePipewireButton,
-            profileButton,
             separator(beautiful, wibox, { showSeparator = false, margins = { left = 1, right = 1 } }),
             s.mylayoutbox,
             -- default logout widget
