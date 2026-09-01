@@ -54,6 +54,7 @@ local koreader_icon = baseDir .. "koreader.svg"
 local sonobus_icon = baseDir .. "sonobus.svg"
 local deltaChat_icon = baseDir .. "delta-chat.svg"
 local luakit_icon = baseDir .. "luakit.svg"
+local thorium_browser = baseDir .. "thorium-browser.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -93,7 +94,8 @@ local icons = {
     koreader = koreader_icon,
     sonobus = sonobus_icon,
     luakit = luakit_icon,
-    deltaChat = deltaChat_icon
+    deltaChat = deltaChat_icon,
+    thoriumBrowser = thorium_browser
 }
 -- END LUCI4 Icon Theme
 return icons
