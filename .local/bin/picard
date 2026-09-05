@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [ -x "/usr/bin/picard" ]; then
+    exec /usr/bin/picard "$@"
+else
+    /usr/bin/distrobox enter music-arch -- picard "$@"
+fi
+

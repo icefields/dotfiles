@@ -25,11 +25,12 @@ local groupLuci4 = "luci4"
 local groupLauncher = "launcher"
 
 local browserCmd = "librewolf"
-local terminalCmd = "kitty"
+local terminalCmd = HomeEnv.TERMINAL_CMD -- or "st" --"kitty --single-instance"
 local editorCmd = terminalCmd .. " -e " .. (os.getenv("EDITOR") or "nvim")
 local modkey = "Mod4"
 
 local homeDir = os.getenv("HOME")
+local appImageDir = homeDir .. "/apps/"
 
 local browser = {
     command = browserCmd,
@@ -194,7 +195,7 @@ local muteVolume = {
     }
 }
 local brightnessUp = {
-    command = homeDir .. "/scripts/shell_common/brightnessctl.sh --inc",
+    command = homeDir .. "/scripts/wm_common/brightnessctl.sh --inc",
     description = "Increase screen brightness",
     group = groupLuci4,
     shell = false,
@@ -204,7 +205,7 @@ local brightnessUp = {
     }
 }
 local brightnessDown = {
-    command = homeDir .. "/scripts/shell_common/brightnessctl.sh --dec",
+    command = homeDir .. "/scripts/wm_common/brightnessctl.sh --dec",
     description = "Decrease screen brightness",
     group = groupLuci4,
     shell = false,
@@ -264,7 +265,7 @@ local shareMenu = {
     }
 }
 local shareMenuEncrypted = {
-    -- launching with kitty is not a good idea, switch to something more compatible like bash
+    -- launching with terminalCmd is not a good idea, switch to something more compatible like bash
     command = terminalCmd .. " " .. homeDir .. "/scripts/wm_common/launch_share_encrypted.sh",
     description = "Zip, encrypt, get a share link and copy to clipboard",
     group = groupLuci4,
@@ -301,11 +302,20 @@ local resetTor = {
     group = groupLuci4,
     shell = true,
     keyBinding = {
-        key1 =  { modkey },
+        key1 =  { modkey, "Mod1" },
         key2 = "i"
     }
 }
-
+local resetPicom = {
+    command = homeDir .. "/scripts/reset-picom.sh",
+    description = "Reset picom",
+    group = groupLuci4,
+    shell = true,
+    keyBinding = {
+        key1 =  { modkey, "Mod1" },
+        key2 = "p"
+    }
+}
 local placement = {
     centered = "centered",
     bottom_right = "bottom_right",
@@ -345,6 +355,11 @@ local propertiesFloatingCentered = {
 -- add properties to make the application follow defined window rules.
 -- set favourite to true to add the application to the favourite menu.
 local applications = {
+    luci4gtkwindow = {
+        command = { },
+        class = "Luci4GTKviewer",
+        properties = propertiesFloatingCentered
+    },
     playPauseMedia = {
         command = playPauseMedia
     },
@@ -405,13 +420,46 @@ local applications = {
     askOllama =  {
         command = askOllama
     },
+    resetPicom = {
+        command = resetPicom
+    },
     resetTor = {
         command = resetTor
     },
     terminal = {
-        label = "Kitty terminal",
-        class = "kitty",
+        label = "Default Terminal",
+        class = "xterm-256color",
         command = terminal,
+        subGroup = subGroup.terminals,
+        -- icon = icons.kitty,
+        favourite = true
+    },
+    kitty = {
+        label = "Kitty Terminal",
+        class = "kitty",
+        command = {
+            command = "kitty --single-instance",
+            description = "Open Kitty terminal",
+            group = groupLauncher,
+            shell = false,
+        },
+        subGroup = subGroup.terminals,
+        icon = icons.kitty,
+        favourite = true
+    },
+    terminalQuake = {
+        label = "Kitty Quake Terminal",
+        class = "kitty-quick-access",
+        command = {
+            command = "kitten quick-access-terminal",
+            description = "Open a Quake-style terminal",
+            group = groupLauncher,
+            shell = false,
+            keyBinding = {
+                key1 = { modkey, "Shift" },
+                key2 = "Return"
+            }
+        },
         subGroup = subGroup.terminals,
         icon = icons.kitty,
         favourite = true
@@ -555,8 +603,12 @@ local applications = {
         command = {
             command = "keepassxc",
             description = "Password manager",
-            group = "",
-            shell = false
+            group = groupLuci4,
+            shell = false,
+            keyBinding = {
+                key1 =  { modkey, "Shift" },
+                key2 = "x"
+            }
         },
         subGroup = subGroup.utils,
        -- icon = icons.keePass,
@@ -628,18 +680,18 @@ local applications = {
             windowPlacement = placement.centered
         }
     },
-    vivaldi = {
-        label = "Vivaldi Browser",
-        class = "Vivaldi-stable",
+    thorium = {
+        label = "Thorium Browser",
+        class = "",
         favourite = true,
         command = {
-            command = "vivaldi",
-            description = "Vivaldi web browser",
+            command = appImageDir .. "Thorium_Browser.AppImage",
+            description = "Thorium (Chromium based) web browser",
             group = "",
             shell = false
         },
         subGroup = subGroup.internet,
-        icon = icons.vivaldi,
+        icon = icons.thoriumBrowser,
         properties = {
             -- tag = "2",
             opacity = 1,
@@ -712,15 +764,19 @@ local applications = {
         label = "Nheko",
         favourite = true,
         command = {
-            command = "flatpak run im.nheko.Nheko",
+            command = "nheko",
             description = "Nheko messenger",
-            group = "",
-            shell = false
+            group = groupLuci4,
+            shell = false,
+            keyBinding = {
+                key1 =  { modkey },
+                key2 = "z"
+            }
         },
         subGroup = subGroup.messaging,
         -- icon = icons.telegram,
         properties = {
-            tag = "8",
+            -- tag = "8",
             floating = true,
             width = 1100,
             height = 800,
@@ -833,7 +889,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = homeDir .. "/apps/FreeTube.AppImage",
+            command = appImageDir .. "FreeTube.AppImage",
             description = "Freetube YouTube Invidious client",
             group = "",
             shell = false
@@ -885,7 +941,7 @@ local applications = {
         class = "",
         favourite = false,
         command = {
-            command = homeDir .. "/apps/Inkscape.AppImage",
+            command = appImageDir .. "Inkscape.AppImage",
             description = "Inkscape vector image editor",
             group = "",
             shell = false
@@ -911,7 +967,7 @@ local applications = {
         class = "",
         favourite = true,
         command = {
-            command = homeDir .. "/apps/Gimp.AppImage",
+            command = appImageDir .. "Gimp.AppImage",
             description = "Gimp image editor",
             group = "",
             shell = false
@@ -945,6 +1001,23 @@ local applications = {
         icon = icons.tor,
         subGroup = subGroup.internet,
         properties = propertiesFloatingCentered
+    },
+    luakit = {
+        label = "Luakit",
+        class = "Luakit",
+        favourite = true,
+        command = {
+            command = homeDir .. "/apps/Luakit",
+            description = "Luakit browser",
+            group = groupLuci4,
+            shell = false,
+            keyBinding = {
+                key1 = { modkey, "Shift" },
+                key2 = "b"
+            }
+        },
+        icon = icons.luakit,
+        subGroup = subGroup.internet
     },
     steam = {
         label = "Steam",
@@ -1000,7 +1073,7 @@ local applications = {
         -- icon = icons.,
         subGroup = subGroup.multimedia,
         properties = {
-            floating = true, 
+            floating = true,
             -- windowPlacement = placement.centered,
             width = 800,
             height = 800
@@ -1052,7 +1125,7 @@ local applications = {
         class = "Nextcloud",
         favourite = false,
         command = {
-            command = homeDir .. "/apps/Nextcloud.AppImage",
+            command = appImageDir .. "Nextcloud.AppImage",
             description = "Nextcloud cloud",
             group = "",
             shell = false
@@ -1212,8 +1285,8 @@ local applications = {
         class = "",
         favourite = false,
         command = {
-            command = homeDir .. "/apps/Audacity.AppImage",
-            description = "Audacity audio editor",
+            command = homeDir .. "/apps/Tenacity.AppImage",
+            description = "Tenacity audio editor",
             group = "",
             shell = false
         },

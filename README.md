@@ -131,6 +131,8 @@ Create `~/.shell_env`, and add the following variables.<br>
 ```
 # variable used to determine if the system is in dev. ie. xonsh errors will be more verbose
 IS_DEV_MODE="false"
+# terminal to be used everywhere. "st" or "kitty --single-instance"
+TERMINAL_CMD="st"
 
 TOR_PASSWORD="torPasswordForTheResetTorScript"
 GOOGLE_API_KEY="yourGoogleApiKey"
@@ -145,8 +147,22 @@ VPN_HOME_USER="user"
 VPN_HOME_PASS="pass"
 OVPN_HOME_CONFIG="/ovpn/config/location/on/disk/home.ovpn"
 
+# search
+SEARCH_URL="https://searx.instance.org/search?q=%s"
+SEARCH_AI_URL="https://ai.search.org/?q=%s"
+
+# shlink
+SHLINK_BASE_URL="https://sl.chmod666.ca"
+SHLINK_API_KEY="3de3c045-ba9f-4cbc-9354-55ce89d834b0"
+
 # currency conversion API
 CURRENCY_API = "https://currency.api.url"
+
+# cheat sheet self hosted url
+CHTSH_URL="https://cheat.chmod666.ca"
+
+# NPB fetcher library location (clone from github.com/icefields)
+NPB_FETCH_PATH="/home/user/Code/Python/BaseballNpbFetch"
 
 # location variables, for weather, red filter, etc...
 LOCATION_COORDINATES="43.6426,-79.3871"

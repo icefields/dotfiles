@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 if [ -x "/bin/full/path/of/executable" ]; then
-    . /bin/full/path/of/executable
+    exec /bin/full/path/of/executable "$@"
 else
     /usr/bin/distrobox enter container-name -- application "$@"
 fi
