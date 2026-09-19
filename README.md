@@ -163,6 +163,8 @@ CHTSH_URL="https://cheat.chmod666.ca"
 
 # NPB fetcher library location (clone from github.com/icefields)
 NPB_FETCH_PATH="/home/user/Code/Python/BaseballNpbFetch"
+# Xonsh-Ampache integration (https://github.com/icefields/ampache-data-xonsh)
+AMPACHE_XONSH_INTEGRATION_PATH="/home/user/Code/Python/ampache-data-xonsh"
 
 # location variables, for weather, red filter, etc...
 LOCATION_COORDINATES="43.6426,-79.3871"
@@ -181,6 +183,9 @@ KEEPASS_SECRET_KEYFILE="/file/to/unlock/secred-db/secrets.keyfile"
 # Android, Java vars. ANDROID_HOME is legacy
 ANDROID_SDK_ROOT="/opt/android-sdk"
 ANDROID_HOME="/opt/android-sdk"
+
+# Ubuntu Touch development, set this in case both Docker and Podman are installed
+CLICKABLE_DOCKER_COMMAND="podman"
 
 # UI related variables moved to .xprofile
 ```
