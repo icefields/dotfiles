@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
+
+# Sometime, when the condition has multiple branches, it might be necessary to
+# add a container guard. "If in a container just execute the application".
+# if [ -n "$CONTAINER_ID" ]; then
+#     exec /bin/full/path/of/executable "$@"
+#     # no exit necessary: exec replaces the process and does not return here.
+# fi
+
 if [ -x "/bin/full/path/of/executable" ]; then
     exec /bin/full/path/of/executable "$@"
 else
-    /usr/bin/distrobox enter container-name -- application "$@"
+    exec /usr/bin/distrobox enter container-name -- application "$@"
 fi
 

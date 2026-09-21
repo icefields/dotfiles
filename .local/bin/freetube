@@ -8,6 +8,6 @@ if [ -x "/usr/bin/freetube" ]; then
 elif [ -n "$appimage" ]; then
     exec "$appimage"
 else
-    distrobox enter ubuntu -- freetube
+    exec distrobox enter ubuntu -- freetube
 fi
 
