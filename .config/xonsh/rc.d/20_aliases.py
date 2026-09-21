@@ -147,6 +147,7 @@ else:
     # --------------------------------------------------------
     aliases.update({
         ":q": "exit",
+        ":s": "exec startx",
         "df": "df -h",
         "free": "free -m",
     })
@@ -179,4 +180,9 @@ else:
         })
         abbrevs["l"] = "exa -al --color=always --group-directories-first --icons"
 
+    # --------------------------------------------------------
+    # Distrobox
+    # --------------------------------------------------------
+    #aliases["aider-box"] = ["distrobox", "enter", "aider-box", "--", "fish"]
+    aliases["aider-box"] = ["distrobox", "enter", "aider-box"]
 

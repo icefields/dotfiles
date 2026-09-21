@@ -12,7 +12,7 @@ local function getButton(args)
     local naughty = args.naughty
     local beautiful = args.beautiful
     local button = buttonTooltip(args, {
-        -- tooltipScript = statusScript,
+        tooltipScript = "checkupdates",
         btnDefaultText = placeholderIcon,
         tooltipDefaultText = "Update System",
         buttonClickScript = toggleScript,

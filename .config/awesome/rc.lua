@@ -37,6 +37,7 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. config.chosenThemePat
 -- Collision
 require("collision")()
 
+local ruled = require("ruled")
 local wibox = require("wibox")
 
 -- Notification library
@@ -218,7 +219,12 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = require("awesome_rules").awesomeRules(awesomeArgs, awesomeApplications, clientkeys, clientbuttons)
+ruled.client.connect_signal("request::rules", function()
+    ruled.client.append_rules(
+        require("awesome_rules").awesomeRules(awesomeArgs, awesomeApplications, clientkeys, clientbuttons)
+    )
+end)
+-- awful.rules.rules = require("awesome_rules").awesomeRules(awesomeArgs, awesomeApplications, clientkeys, clientbuttons)
 -- }}}
 
 -- {{{ Signals
@@ -276,9 +282,14 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
+-- this is called for each screen when xrandr is called
+screen.connect_signal("property::outputs", function(s)
+    awful.spawn.with_shell("echo property_outputs_called")
+end)
+
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+    c:emit_signal("request::activate", "mouse_enter", { raise = false })
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)

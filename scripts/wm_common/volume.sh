@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/notify-debounced.sh"
+
 #iDIR="$HOME/.config/mako/icons"
 iDIR="$HOME/scripts/wm_common/icons/notifications"
 
@@ -35,14 +38,15 @@ notify_user() {
     if [[ "$NOTIFY_CMD" == "dunstify" ]]; then
         dunstify -r 9991 -u low -i "$(get_icon)" "Volume : $(get_volume) %"
     else
-        notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume : $(get_volume) %"
+        debounce_notify 0.3 "notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i \"\$(get_icon)\" \"Volume : \$(get_volume) %\""
+        #notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume : $(get_volume) %"
     fi
 }
 
 # Increase Volume
 inc_volume() {
 	if command -v pamixer &>/dev/null; then
-        pamixer --increase 1 && notify_user
+        pamixer --increase 4 && notify_user
     elif command -v amixer &>/dev/null; then
         amixer -D pulse sset Master 2%+ && notify_user
     else
@@ -55,7 +59,7 @@ inc_volume() {
 # Decrease Volume
 dec_volume() {
 	if command -v pamixer &>/dev/null; then
-        pamixer --decrease 1 && notify_user
+        pamixer --decrease 4 && notify_user
     elif command -v amixer &>/dev/null; then
         amixer -D pulse sset Master 2%- && notify_user
     else

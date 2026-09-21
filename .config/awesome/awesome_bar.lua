@@ -122,7 +122,7 @@ local function getSystemTray(wibox, beautiful, gears, dpi)
         gears.shape.rounded_rect(cr, dpi(width), dpi(height), 0)  --dpi(beautiful.rect_radius))
     end
     local trayMargin = beautiful.systray_margin
-    luciSysTrayColour:set_widget(wibox.layout.margin(systray, trayMargin, trayMargin, trayMargin, trayMargin))
+    luciSysTrayColour:set_widget(wibox.container.margin(systray, trayMargin, trayMargin, trayMargin, trayMargin))
     return luciSysTrayColour
 end
 
@@ -210,6 +210,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local toggleMicButton = require("pipewire.toggle_mic_button")(args)
     -- updates 
     local updatesButton = require("updates_widget.update_button")(args)
+    -- asus profile
+    local profileButton = require("asusctl.asusctl_button")(args)
     -- Sports widget 
     local sportsWidget = require("sports.sports_widget")(args)
 
@@ -262,7 +264,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
         -- show all tags regardless of the window
         -- source = function() return root.tags() end
     }
-    local luciTagListColour = wibox.widget.background()
+    local luciTagListColour = wibox.container.background()
     luciTagListColour:set_widget(luciTagList)
     --luciTagListColour:set_fg(beautiful.fg_systray)
     --luciTagListColour:set_bg(beautiful.bg_normal)
@@ -287,7 +289,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
 
     -- Create the wibox
     -- Luci4 bar customization
-    s.mywibox = awful.wibox({
+    s.mywibox = awful.wibar({
         screen = s,
         fg = beautiful.fg_normal,
         height = dpi(beautiful.topBar_height),
@@ -327,7 +329,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             wifiButton,
             toggleVpnButton,
             vpnReconnectButton,
-            separator(beautiful, wibox, { showSeparator = true, margins = { left = dpi(1), right = dpi(5) } }),
+            separator(beautiful, wibox, { showSeparator = true, margins = { left = dpi(1), right = dpi(1) } }),
+            profileButton,
             batteryWidget(args),
             separator(beautiful, wibox, { margins = { left = dpi(2) } }),
             redshiftButton,

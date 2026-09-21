@@ -3,7 +3,7 @@ local home = os.getenv("HOME")
 
 config.toggleScript     = home .. "/scripts/toggle-wifi-profile.sh toggle"
 config.getScript        = home .. "/scripts/toggle-wifi-profile.sh get"
-config.statusScript     = home .. "/scripts/toggle-wifi-profile.sh status"
+config.statusScript     = home .. "/scripts/toggle-wifi-profile.sh status" .. " && echo '' && " .. home .. "/scripts/mullvad_status.sh"
 config.reconnectScript  = home .. "/scripts/toggle-wifi-profile.sh reconnect"
 config.wifiIconScript  = home .. "/scripts/wm_common/wifi-status.sh -i"
 config.wifiStatusScript  = home .. "/scripts/wm_common/wifi-status.sh -s"

@@ -128,17 +128,19 @@ else:
     system = platform.system()
 
     if system == "Darwin":
-        OS_NAME = subprocess.check_output(
-            ["sw_vers", "-productName"], text=True
-        ).strip()
+        OS_NAME = "macos"
     else:
+        OS_NAME = system.lower()
         try:
-            OS_NAME = subprocess.check_output(
-                ["lsb_release", "-is"], text=True
-            ).strip()
-        except Exception:
-            OS_NAME = system
-    
+            with open("/etc/os-release", "r") as f:
+                for line in f:
+                    if line.startswith("ID="):
+                        # Strip 'ID=', then strip quotes and whitespace
+                        OS_NAME = line.split("=", 1)[1].strip().strip('"').strip("'").lower()
+                        break
+        except FileNotFoundError:
+            pass
+        
     __xonsh__.env['OS_NAME'] = OS_NAME
 
     # --------------------------------------------------------

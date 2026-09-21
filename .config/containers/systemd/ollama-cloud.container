@@ -1,0 +1,23 @@
+[Unit]
+Description=Ollama Cloud (on-demand, prompts leave this machine!)
+AssertPathIsMountPoint=/opt/ollama
+
+[Container]
+Image=docker.io/ollama/ollama:0.32.15
+ContainerName=ollama-cloud
+PublishPort=127.0.0.1:11435:11434
+# lives inside the @ollama subvol mounted at /opt/ollama
+Volume=/opt/ollama/cloud:/root/.ollama:U
+
+Environment=OLLAMA_HOST=0.0.0.0:11434
+Environment=OLLAMA_MODELS=/root/.ollama/models
+Environment=OLLAMA_NO_CLOUD=0
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=300
+
+# intentionally no [Install]: start on demand only
+# systemctl --user start ollama-cloud.service   # summon
+# systemctl --user stop ollama-cloud.service    # banish
