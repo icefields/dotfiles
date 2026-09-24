@@ -1,33 +1,48 @@
 #!/bin/sh
-case "$1" in
-    "c")
-        # Copy file to directory
-        while read -r file; do
-            cp "$file" ~/Downloads/pictures
-        done
-        notify-send "Copied to ~/Downloads/pictures"
-        ;;
-    "y")
-        # Yank image data to clipboard
-        notify-send "Copied to clipboard"
-        while read -r file; do
-            xclip -selection clipboard -t image/png -i "$file" &
-        done
-        ;;
-    "e")
-        # Open in GIMP
-        notify-send "Opening Gimp"
-        while read -r file; do
-            $HOME/apps/Gimp.AppImage "$file" &
-            # gimp "$file" &
-        done
-        ;;
-    "m")
-        # Move file
-        notify-send "Moved to ~/Downloads/pictures"
-        while read -r file; do
-            mv "$file" ~/Downloads/pictures
-        done
-        ;;
-esac
+# nsxiv pipes the file(s) to act on to stdin: one path per line normally,
+# NUL-separated when nsxiv runs with -0 (NSXIV_USING_NULL=1). tr converts
+# either layout to plain lines; a NUL byte can never occur inside a real
+# filename, so it's a no-op in non-(-0) mode.
 
+dest="$HOME/Downloads/pictures"
+
+case "$1" in
+"c")
+    mkdir -p "$dest"
+    failed=$(tr '\0' '\n' | while IFS= read -r file; do
+        cp -- "$file" "$dest" || printf '%s\n' "$file"
+    done)
+    if [ -n "$failed" ]; then
+        notify-send -u critical "Copy failed: $failed"
+    else
+        notify-send "Copied to ~/Downloads/pictures"
+    fi
+    ;;
+"m")
+    mkdir -p "$dest"
+    failed=$(tr '\0' '\n' | while IFS= read -r file; do
+        mv -- "$file" "$dest" || printf '%s\n' "$file"
+    done)
+    if [ -n "$failed" ]; then
+        notify-send -u critical "Move failed: $failed"
+    else
+        notify-send "Moved to ~/Downloads/pictures"
+    fi
+    ;;
+"y")
+    tr '\0' '\n' | while IFS= read -r file; do
+        case "$file" in
+        *.png)            t=image/png ;;
+        *.jpg|*.jpeg)     t=image/jpeg ;;
+        *)                t=$(file -b --mime-type -- "$file") ;;
+        esac
+        xclip -selection clipboard -t "$t" -i "$file" &
+    done
+    notify-send "Copied image to clipboard"
+    ;;
+"e")
+    tr '\0' '\n' | while IFS= read -r file; do
+        "$HOME/apps/Gimp.AppImage" "$file" &
+    done
+    ;;
+esac

@@ -1,0 +1,9 @@
+[Nemo Action]
+Name=Compress to 7z
+Comment=Compress the selection to .7z using 7-Zip
+Exec=/home/lucie/scripts/shell_common/compress-7z.sh 7z %F
+Icon-Name=package-x-generic
+Selection=notnone
+Extensions=any
+Quote=double
+
