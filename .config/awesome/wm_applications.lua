@@ -554,6 +554,28 @@ local applications = {
             windowPlacement = placement.centered
         }
     },
+    powerAmpache = {
+        label = "Power Ampache",
+        class = "powerampache.icefields",
+        favourite = true,
+        command = {
+            command = appImageDir .. "PowerAmpache-x86_64.AppImage",
+            description = "Ampache Media Player",
+            group = "",
+            shell = false
+        },
+        subGroup = { subGroup.music, subGroup.multimedia },
+        icon = icons.powerAmpache,
+        properties = {
+            floating = true,
+            width = 1000,
+            height = 800,
+            maximized_vertical = false,
+            maximized_horizontal = false,
+            maximized = false,
+            windowPlacement = placement.centered
+        }
+    },
     vlc = {
         label = "Vlc",
         class = "vlc",

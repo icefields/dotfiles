@@ -55,6 +55,7 @@ local sonobus_icon = baseDir .. "sonobus.svg"
 local deltaChat_icon = baseDir .. "delta-chat.svg"
 local luakit_icon = baseDir .. "luakit.svg"
 local thorium_browser = baseDir .. "thorium-browser.svg"
+local power_ampache = baseDir .. "power_ampache.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -95,7 +96,8 @@ local icons = {
     sonobus = sonobus_icon,
     luakit = luakit_icon,
     deltaChat = deltaChat_icon,
-    thoriumBrowser = thorium_browser
+    thoriumBrowser = thorium_browser,
+    powerAmpache = power_ampache,
 }
 -- END LUCI4 Icon Theme
 return icons
