@@ -1129,13 +1129,13 @@ local applications = {
         subGroup = subGroup.internet,
         properties = propertiesFloatingCentered
     },
-    libreOffice = {
-        label = "LibreOffice",
+    gnumeric = {
+        label = "Gnumeric",
         class = "",
         favourite = false,
         command = {
-            command = "libreoffice",
-            description = "LibreOffice office suite",
+            command = "gnumeric",
+            description = "Gnumeric spreadsheet (excel, calc)",
             group = "",
             shell = false
         },
