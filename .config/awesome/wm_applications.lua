@@ -1139,7 +1139,7 @@ local applications = {
             group = "",
             shell = false
         },
-        -- icon = ,
+        icon = icons.sheets,
         subGroup = subGroup.documents,
     },
     nextcloud = {
