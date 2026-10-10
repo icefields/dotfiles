@@ -57,6 +57,7 @@ local luakit_icon = baseDir .. "luakit.svg"
 local thorium_browser = baseDir .. "thorium-browser.svg"
 local power_ampache = baseDir .. "power_ampache.svg"
 local sheets_icon = baseDir .. "sheets.svg"
+local tenacity_icon = baseDir .. "tenacity.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -99,7 +100,8 @@ local icons = {
     deltaChat = deltaChat_icon,
     thoriumBrowser = thorium_browser,
     powerAmpache = power_ampache,
-    sheets = sheets_icon
+    sheets = sheets_icon,
+    tenacity = tenacity_icon
 }
 -- END LUCI4 Icon Theme
 return icons

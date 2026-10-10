@@ -1302,8 +1302,8 @@ local applications = {
         -- icon = ,
         subGroup = subGroup.multimedia,
     },
-    audacity = {
-        label = "Audacity",
+    tenacity = {
+        label = "Tenacity",
         class = "",
         favourite = false,
         command = {
@@ -1312,6 +1312,7 @@ local applications = {
             group = "",
             shell = false
         },
+        icon = icons.tenacity,
         subGroup = { subGroup.music, subGroup.multimedia }
     },
     digikam = {
