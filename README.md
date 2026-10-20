@@ -161,6 +161,10 @@ CURRENCY_API = "https://currency.api.url"
 # cheat sheet self hosted url
 CHTSH_URL="https://cheat.chmod666.ca"
 
+# ntfy
+NTFY_TOPICS="topic1,topic2,topic3"
+NTFY_URL="https://my.ntfy.org:1234/"
+
 # NPB fetcher library location (clone from github.com/icefields)
 NPB_FETCH_PATH="/home/user/Code/Python/BaseballNpbFetch"
 # Xonsh-Ampache integration (https://github.com/icefields/ampache-data-xonsh)

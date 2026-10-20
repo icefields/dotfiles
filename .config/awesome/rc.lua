@@ -78,6 +78,10 @@ local awesomeArgs = ({
 require("awesome_error_handling").initErrorHandling(awesome, naughty)
 -- }}}
 
+-- {{{ ntfy notifications
+require("ntfy.ntfy").subscribe(awesomeArgs)
+-- }}}
+
 -- {{{ Variable definitions
 terminal = awesomeApplications.terminal.command.command
 modkey = applicationsCore.modkey -- Default modkey.
