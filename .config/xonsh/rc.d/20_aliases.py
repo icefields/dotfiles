@@ -1,7 +1,7 @@
 # --- aliases for both interactive and non interactive shell
 aliases["backup"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'backup.sh')
-aliases["share"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy -p')
-aliases["sharesec"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy --secret -p')
+aliases["share"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy -l -p')
+aliases["sharesec"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy -l --secret -p')
 aliases["sharemega"] = str(Paths.SCRIPTS_DIR / 'share.sh -m --ntfy --secret -p')
 aliases["passgen"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'passgen_wrapper.sh')
 aliases["unzip"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'unzip.sh')
@@ -147,7 +147,7 @@ else:
     # --------------------------------------------------------
     aliases.update({
         ":q": "exit",
-        ":s": "exec startx",
+        ":s": "startx",
         "df": "df -h",
         "free": "free -m",
     })

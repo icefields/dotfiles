@@ -17,12 +17,14 @@ Options:
     -s, --secret      Enable secret mode (boolean flag)
     -p, --path PATH   Specify a custom path
     -m, --mega        Execute mega.sh script
+    -n, --ntfy        Send the share URL via ntfy notification
+    -l, --shorten     Shorten the share URL via url-shortener.sh
     -h, --help        Show this help message
 
 Examples:
     $(basename "$0") -s -p /home/lucie/data
     $(basename "$0") --mega
-    $(basename "$0") -sm
+    $(basename "$0") -s -l -p /home/lucie/data
 EOF
 }
 
@@ -82,10 +84,51 @@ megaShare() {
     fi
 }
 
+# Shortens the url passed as $1 via ~/scripts/url-shortener.sh:
+#     url-shortener.sh <longUrl> -s <id> -m 6 -q
+# <id> is a random 5-char slug generated here. Prints the short url
+# to stdout, returns non-zero (loudly, on stderr) if anything fails.
+shortenUrl() {
+    local shortener="$HOME/scripts/url-shortener.sh"
+    # first line only, stripped clean: megaShare can print the link
+    # twice inside its command substitution, guard against that
+    local longUrl
+    longUrl=$(head -n 1 <<< "$1" | tr -d '[:space:]')
+    local slug shortUrl expiry maxAccess
+
+    if [[ ! -f "$shortener" ]]; then
+        echo "Error: url-shortener.sh not found at $shortener" >&2
+        return 1
+    fi
+
+    # random 5-char slug; switch the charset to 'a-z0-9' if your
+    # shortener lowercases or rejects ids
+    slug=$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 5)
+    expiry=$(date -Iseconds -d "+6 days")
+    maxAccess="66"
+
+    if [[ -x "$shortener" ]]; then
+        shortUrl=$("$shortener" "$longUrl" -s "$slug" -m "$maxAccess" -q --valid-until "$expiry")
+    else
+        shortUrl=$(bash "$shortener" "$longUrl" -s "$slug" -m "$maxAccess" -q --valid-until "$expiry")
+    fi
+
+    # $() already strips trailing newlines; kill stray spaces/CR too,
+    # then sanity-check that we actually got a url back
+    shortUrl=${shortUrl//[[:space:]]/}
+    if [[ -z "$shortUrl" || "$shortUrl" != http* ]]; then
+        echo "Error: url-shortener.sh returned nothing usable (slug: $slug)" >&2
+        return 1
+    fi
+
+    echo "$shortUrl"
+}
+
 secretFlag=false
 pathValue=""
 megaFlag=false
 ntfyFlag=false
+shortenFlag=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -103,6 +146,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         -m|--mega)
             megaFlag=true
+            shift
+            ;;
+        -l|--shorten)
+            shortenFlag=true
             shift
             ;;
         -h|--help)
@@ -163,6 +210,15 @@ else
       -F "file=@$file" $SHARE_LINK_URL | jq -r .public_url)
 fi
 
+if [[ "$shortenFlag" == true ]]; then
+    if shortUrl=$(shortenUrl "$shareUrl"); then
+        shareUrl="$shortUrl"
+    else
+        echo "Shortening failed, porcodio! Keeping the long URL." >&2
+        notify-send "Error: shortener failed, keeping the long URL"
+    fi
+fi
+
 echo $shareUrl | copyClipboard
 echo $shareUrl
 
@@ -177,5 +233,4 @@ if [[ "$ntfyFlag" == true ]]; then
 fi
 
 notify-send "Link Copied for $file"
-
 
