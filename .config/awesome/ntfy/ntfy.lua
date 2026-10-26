@@ -1,5 +1,6 @@
 local json = require("json-library.json")
 local config = require("ntfy.config")
+local actions = require("ntfy.actions")
 
 local function priorityPreset(naughty, priority)
     if priority == 4 or priority == 5 then return naughty.config.presets.critical end
@@ -15,13 +16,32 @@ local function subscribe(args)
             stdout = function(line)
                 local ok, msg = pcall(json.decode, line)
                 if ok and msg and msg.event == "message" then
-                    naughty.notify({
+                    local buttons, resident = actions.build(msg, {
+                        awful = awful,
+                        naughty = naughty,
+                    })
+
+                    local notifyArgs = {
                         title   = msg.title or config.fallbackTitle,
                         message = msg.message,
                         preset  = priorityPreset(naughty, msg.priority),
                         icon = config.icon,
                         timeout = config.timeout
-                    })
+                    }
+                    if #buttons > 0 then
+                        notifyArgs.actions = buttons
+                        notifyArgs.resident = resident
+                    end
+
+                    naughty.notify(notifyArgs)
+
+                    --naughty.notify({
+                    --    title   = msg.title or config.fallbackTitle,
+                    --    message = msg.message,
+                    --    preset  = priorityPreset(naughty, msg.priority),
+                    --    icon = config.icon,
+                    --    timeout = config.timeout
+                    --})
                 end
             end,
             exit = function()

@@ -78,7 +78,7 @@ megaShare() {
         local fileOnly="${filename##/tmp/}"
         LINK=$(mega-export -a "/${fileOnly}" | grep -o 'https://mega.nz/.*')
         echo "$LINK"
-        echo "$LINK" | xclip -i -sel c -f #  xclip -selection clipboard
+        #echo "$LINK" | xclip -i -sel c -f #  xclip -selection clipboard
     else
         python3 "$scriptPath" "${filename}"
     fi
@@ -103,7 +103,9 @@ shortenUrl() {
 
     # random 5-char slug; switch the charset to 'a-z0-9' if your
     # shortener lowercases or rejects ids
-    slug=$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 5)
+    ext="${longUrl##*/}"; ext="${ext##*.}"
+    slug="$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 5).$ext"
+    # OR use same filename as the base url for the slug: slug="${longUrl##*/}"
     expiry=$(date -Iseconds -d "+6 days")
     maxAccess="66"
 
@@ -122,6 +124,12 @@ shortenUrl() {
     fi
 
     echo "$shortUrl"
+}
+
+cleanPath() {
+    local p="$1"
+    p=${p#"${p%%[![:space:]]*}"}
+    printf '%s' "${p%"${p##*[![:space:]]}"}"
 }
 
 secretFlag=false
@@ -166,7 +174,7 @@ done
 
 
 if [[ "$secretFlag" == true ]]; then
-    source ~/scripts/zip_and_cloak.sh
+    source $HOME/scripts/zip_and_cloak.sh
     dir=$(uuidgen | cut -d'-' -f1)
     mkdir /tmp/$dir
 fi
@@ -188,7 +196,7 @@ if [[ -n "$pathValue" ]]; then
         file=$pathValue
     fi
 else
-    file=$(~/scripts/share_find.sh | showmenu)
+    file=$($HOME/scripts/share_find.sh | showmenu)
     if [[ "$secretFlag" == true ]]; then
         cp "$file" /tmp/$dir
         file=$(zipAndCloak "/tmp/$dir")
@@ -202,9 +210,10 @@ fi
 
 if [[ "$megaFlag" == true ]]; then
     shareUrl=$(megaShare "$file") || { notify-send "Error: megaShare failed"; exit 1; }
-    # megaShare "$file" || exit 1
+    # cleanup: the output of megaShare comes in 2 lines, first line is the local file name
+    shareUrl="${shareUrl##*$'\n'}"
 else
-    # curl -F"file=@$file" 0x0.st | copyClipboard
+    file=$(cleanPath "$file")
     shareUrl=$(curl -k -X POST \
       -H "X-Auth-Token: $SHARE_LINK_AUTH" \
       -F "file=@$file" $SHARE_LINK_URL | jq -r .public_url)
@@ -224,12 +233,24 @@ echo $shareUrl
 
 # ntfy notification
 if [[ "$ntfyFlag" == true ]]; then
-  curl \
-    -H "Title: Upload Complete" \
-    -H "Priority: low" \
-    -H "Tags: skull" \
-    -d "$shareUrl" \
-    $SHARE_LINK_NOTIFICATION_URL
+    source $HOME/scripts/ntfy.sh
+    ntfy_send -T "Upload Complete" -p low -c "$shareUrl" --tags skull \
+        -a "$(ntfy_action_view 'Open link' "$shareUrl")" \
+        -a "$(ntfy_action_copy 'Copy' "$shareUrl" clear=false)" \
+        --topic "$NTFY_TOPIC_SHARE_LINK" \
+        "$shareUrl"
+
+
+
+    #curl \
+    #-H "Title: Upload Complete" \
+    #-H "Priority: low" \
+    #-H "Click: $shareUrl" \
+    #-H "Actions: view, Open link, $shareUrl, clear=true; copy, Copy, $shareUrl" \
+    #-H "Firebase: no" \
+    #-H "Tags: skull" \
+    #-d "$shareUrl" \
+    #$SHARE_LINK_NOTIFICATION_URL
 fi
 
 notify-send "Link Copied for $file"

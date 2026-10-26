@@ -140,7 +140,7 @@ GOOGLE_API_KEY="yourGoogleApiKey"
 # share-link application variables
 SHARE_LINK_AUTH="headerAuthCodeForTheShareScripts"
 SHARE_LINK_URL="https://share.url/upload"
-SHARE_LINK_NOTIFICATION_URL="https://ntfy.url/topic"
+NTFY_TOPIC_SHARE_LINK="topic"
 
 # home vpn
 VPN_HOME_USER="user"
@@ -152,18 +152,19 @@ SEARCH_URL="https://searx.instance.org/search?q=%s"
 SEARCH_AI_URL="https://ai.search.org/?q=%s"
 
 # shlink
-SHLINK_BASE_URL="https://sl.chmod666.ca"
-SHLINK_API_KEY="3de3c045-ba9f-4cbc-9354-55ce89d834b0"
+SHLINK_BASE_URL="https://your.shortlink.org"
+SHLINK_API_KEY="shlink-api-key"
 
 # currency conversion API
 CURRENCY_API = "https://currency.api.url"
 
 # cheat sheet self hosted url
-CHTSH_URL="https://cheat.chmod666.ca"
+CHTSH_URL="https://cheat.server.org"
 
 # ntfy
-NTFY_TOPICS="topic1,topic2,topic3"
+NTFY_TOPICS="topic1,topic2,topic3"   # topics the wm is listening to
 NTFY_URL="https://my.ntfy.org:1234/"
+NTFY_DEFAULT_TOPIC="topic2" # default send topic
 
 # NPB fetcher library location (clone from github.com/icefields)
 NPB_FETCH_PATH="/home/user/Code/Python/BaseballNpbFetch"
@@ -171,7 +172,7 @@ NPB_FETCH_PATH="/home/user/Code/Python/BaseballNpbFetch"
 AMPACHE_XONSH_INTEGRATION_PATH="/home/user/Code/Python/ampache-data-xonsh"
 
 # location variables, for weather, red filter, etc...
-LOCATION_COORDINATES="43.6426,-79.3871"
+LOCATION_COORDINATES="33.66,-59.37"
 
 # Ollama
 OLLAMA_API_BASE="http://localhost:11434"
