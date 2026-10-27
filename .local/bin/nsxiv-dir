@@ -1,0 +1,49 @@
+#!/bin/sh
+set -u
+
+# Graceful failure if no arguments are provided
+if [ "$#" -eq 0 ]; then
+    printf "Usage: %s <file|dir>\n" "$0" >&2
+    exit 1
+fi
+
+if [ -f "$1" ]; then
+    dir="$(cd "$(dirname "$1")" && pwd)"
+    target="$dir/$(basename "$1")"
+
+    # Include regular files AND symlinks; null-separated for safety.
+    # Pipe directly to nsxiv -i -0 (stdin + null separator) to avoid xargs ARG_MAX limits.
+    find "$dir" -maxdepth 1 \( -type f -o -type l \) -print0 | sort -z | \
+    awk -v RS='\0' -v ORS='\0' -v file="$target" '
+        $0 == file { print; found = 1; next }
+        found { print }
+        { before[++count] = $0 }
+        END { 
+            # Fallback: if find missed the target, print it first anyway
+            if (!found) print file
+            for (i = 1; i <= count; i++) print before[i] 
+        }
+    ' | nsxiv -i -0
+
+elif [ -d "$1" ]; then
+    # Replace shell process with nsxiv
+    exec nsxiv "$1"
+else
+    # Fallback for direct arguments or weird paths
+    exec nsxiv "$@"
+fi
+
+
+# SIMPLE:
+# #!/bin/sh
+#
+# if [ -f "$1" ]; then
+#     dir="$(dirname "$1")"
+#     exec nsxiv "$1" "$dir"
+# elif [ -d "$1" ]; then
+#     # If it's already a directory, just open it
+#     exec nsxiv "$1"
+# else
+#     exec nsxiv "$@"
+# fi
+

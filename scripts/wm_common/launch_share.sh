@@ -1,2 +1,2 @@
-$HOME/scripts/share.sh --ntfy
+$HOME/scripts/share.sh --ntfy -l
 

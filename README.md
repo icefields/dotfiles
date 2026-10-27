@@ -131,6 +131,8 @@ Create `~/.shell_env`, and add the following variables.<br>
 ```
 # variable used to determine if the system is in dev. ie. xonsh errors will be more verbose
 IS_DEV_MODE="false"
+# terminal to be used everywhere. "st" or "kitty --single-instance"
+TERMINAL_CMD="st"
 
 TOR_PASSWORD="torPasswordForTheResetTorScript"
 GOOGLE_API_KEY="yourGoogleApiKey"
@@ -138,18 +140,39 @@ GOOGLE_API_KEY="yourGoogleApiKey"
 # share-link application variables
 SHARE_LINK_AUTH="headerAuthCodeForTheShareScripts"
 SHARE_LINK_URL="https://share.url/upload"
-SHARE_LINK_NOTIFICATION_URL="https://ntfy.url/topic"
+NTFY_TOPIC_SHARE_LINK="topic"
 
 # home vpn
 VPN_HOME_USER="user"
 VPN_HOME_PASS="pass"
 OVPN_HOME_CONFIG="/ovpn/config/location/on/disk/home.ovpn"
 
+# search
+SEARCH_URL="https://searx.instance.org/search?q=%s"
+SEARCH_AI_URL="https://ai.search.org/?q=%s"
+
+# shlink
+SHLINK_BASE_URL="https://your.shortlink.org"
+SHLINK_API_KEY="shlink-api-key"
+
 # currency conversion API
 CURRENCY_API = "https://currency.api.url"
 
+# cheat sheet self hosted url
+CHTSH_URL="https://cheat.server.org"
+
+# ntfy
+NTFY_TOPICS="topic1,topic2,topic3"   # topics the wm is listening to
+NTFY_URL="https://my.ntfy.org:1234/"
+NTFY_DEFAULT_TOPIC="topic2" # default send topic
+
+# NPB fetcher library location (clone from github.com/icefields)
+NPB_FETCH_PATH="/home/user/Code/Python/BaseballNpbFetch"
+# Xonsh-Ampache integration (https://github.com/icefields/ampache-data-xonsh)
+AMPACHE_XONSH_INTEGRATION_PATH="/home/user/Code/Python/ampache-data-xonsh"
+
 # location variables, for weather, red filter, etc...
-LOCATION_COORDINATES="43.6426,-79.3871"
+LOCATION_COORDINATES="33.66,-59.37"
 
 # Ollama
 OLLAMA_API_BASE="http://localhost:11434"
@@ -165,6 +188,9 @@ KEEPASS_SECRET_KEYFILE="/file/to/unlock/secred-db/secrets.keyfile"
 # Android, Java vars. ANDROID_HOME is legacy
 ANDROID_SDK_ROOT="/opt/android-sdk"
 ANDROID_HOME="/opt/android-sdk"
+
+# Ubuntu Touch development, set this in case both Docker and Podman are installed
+CLICKABLE_DOCKER_COMMAND="podman"
 
 # UI related variables moved to .xprofile
 ```

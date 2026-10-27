@@ -107,7 +107,7 @@ local function fetchCurrencyRates()
             --return nil, "JSON parsing error: " .. err
             return "JSON parsing error: " .. err .. "\n" .. getWidgetText()
         end
-        
+
         local date = data.date
 
         --local output = ""
@@ -131,7 +131,7 @@ local function getWidget(args)
     local gears = args.gears
     local applyDpi = args.applyDpi
 
-    local currencySymbols = config.symbols 
+    local currencySymbols = config.symbols
     local randomSymbol = currencySymbols[math.random(#currencySymbols)]
 
     local widget = wibox.widget {

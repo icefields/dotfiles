@@ -150,10 +150,13 @@ if status is-interactive
 
     ### OS SPECIFIC ###
     if test (uname -s) = "Darwin"
-        set OS_NAME (sw_vers -productName)
+        set -g OS_NAME macos
     else
-        set OS_NAME (lsb_release -is)
-    end    
+        set -g OS_NAME linux
+        if test -e /etc/os-release
+            set -g OS_NAME (grep '^ID=' /etc/os-release | string replace -r '^ID="?(.+)"?$' '$1')
+        end
+    end
 
     # if the variable $CONTAINER_ID exists, the sessions is in a distrobox container
     if test -n "$CONTAINER_ID"
@@ -163,11 +166,11 @@ if status is-interactive
     end
 
     switch $OS_NAME
-        case "Ubuntu"
+        case "ubuntu"
             abbr --add ca batcat --color=always	        
             alias cat='batcat -p --color=always'
             abbr --add upd "sudo apt update && sudo apt upgrade -y"
-        case "Arch"
+        case "arch"
             abbr --add ca bat --color=always
             alias cat='bat -p --color=always'
             # pacman and yay
@@ -184,7 +187,7 @@ if status is-interactive
             alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
             alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
 
-        case "Fedora"
+        case "fedora"
             alias dmenu='wofi --dmenu'
             abbr --add vi "nvim"
             abbr --add upd "sudo dnf upgrade"
@@ -194,10 +197,10 @@ if status is-interactive
                 exec Hyprland
             end
 
-        case "macOS"
+        case "macos"
             abbr --add ca bat --color=always
             alias cat='bat -p --color=always'
-        case "Linuxmint"
+        case "linuxmint"
 	        abbr --add ca batcat --color=always
             alias cat='batcat -p --color=always'
             abbr --add upd "sudo apt update && sudo apt upgrade -y"

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [ -x "/usr/bin/gnumeric" ]; then
+    exec /usr/bin/gnumeric "$@"
+elif command -v flatpak >/dev/null 2>&1 && flatpak info org.gnumeric.Gnumeric >/dev/null 2>&1; then
+    exec flatpak run org.gnumeric.Gnumeric "$@"
+else
+    exec /usr/bin/distrobox enter isol-arch -- gnumeric "$@"
+fi
+

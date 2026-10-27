@@ -17,12 +17,14 @@ Options:
     -s, --secret      Enable secret mode (boolean flag)
     -p, --path PATH   Specify a custom path
     -m, --mega        Execute mega.sh script
+    -n, --ntfy        Send the share URL via ntfy notification
+    -l, --shorten     Shorten the share URL via url-shortener.sh
     -h, --help        Show this help message
 
 Examples:
     $(basename "$0") -s -p /home/lucie/data
     $(basename "$0") --mega
-    $(basename "$0") -sm
+    $(basename "$0") -s -l -p /home/lucie/data
 EOF
 }
 
@@ -76,16 +78,65 @@ megaShare() {
         local fileOnly="${filename##/tmp/}"
         LINK=$(mega-export -a "/${fileOnly}" | grep -o 'https://mega.nz/.*')
         echo "$LINK"
-        echo "$LINK" | xclip -i -sel c -f #  xclip -selection clipboard
+        #echo "$LINK" | xclip -i -sel c -f #  xclip -selection clipboard
     else
         python3 "$scriptPath" "${filename}"
     fi
+}
+
+# Shortens the url passed as $1 via ~/scripts/url-shortener.sh:
+#     url-shortener.sh <longUrl> -s <id> -m 6 -q
+# <id> is a random 5-char slug generated here. Prints the short url
+# to stdout, returns non-zero (loudly, on stderr) if anything fails.
+shortenUrl() {
+    local shortener="$HOME/scripts/url-shortener.sh"
+    # first line only, stripped clean: megaShare can print the link
+    # twice inside its command substitution, guard against that
+    local longUrl
+    longUrl=$(head -n 1 <<< "$1" | tr -d '[:space:]')
+    local slug shortUrl expiry maxAccess
+
+    if [[ ! -f "$shortener" ]]; then
+        echo "Error: url-shortener.sh not found at $shortener" >&2
+        return 1
+    fi
+
+    # random 5-char slug; switch the charset to 'a-z0-9' if your
+    # shortener lowercases or rejects ids
+    ext="${longUrl##*/}"; ext="${ext##*.}"
+    slug="$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 5).$ext"
+    # OR use same filename as the base url for the slug: slug="${longUrl##*/}"
+    expiry=$(date -Iseconds -d "+6 days")
+    maxAccess="66"
+
+    if [[ -x "$shortener" ]]; then
+        shortUrl=$("$shortener" "$longUrl" -s "$slug" -m "$maxAccess" -q --valid-until "$expiry")
+    else
+        shortUrl=$(bash "$shortener" "$longUrl" -s "$slug" -m "$maxAccess" -q --valid-until "$expiry")
+    fi
+
+    # $() already strips trailing newlines; kill stray spaces/CR too,
+    # then sanity-check that we actually got a url back
+    shortUrl=${shortUrl//[[:space:]]/}
+    if [[ -z "$shortUrl" || "$shortUrl" != http* ]]; then
+        echo "Error: url-shortener.sh returned nothing usable (slug: $slug)" >&2
+        return 1
+    fi
+
+    echo "$shortUrl"
+}
+
+cleanPath() {
+    local p="$1"
+    p=${p#"${p%%[![:space:]]*}"}
+    printf '%s' "${p%"${p##*[![:space:]]}"}"
 }
 
 secretFlag=false
 pathValue=""
 megaFlag=false
 ntfyFlag=false
+shortenFlag=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -105,6 +156,10 @@ while [[ $# -gt 0 ]]; do
             megaFlag=true
             shift
             ;;
+        -l|--shorten)
+            shortenFlag=true
+            shift
+            ;;
         -h|--help)
             showHelp
             exit 0
@@ -119,7 +174,7 @@ done
 
 
 if [[ "$secretFlag" == true ]]; then
-    source ~/scripts/zip_and_cloak.sh
+    source $HOME/scripts/zip_and_cloak.sh
     dir=$(uuidgen | cut -d'-' -f1)
     mkdir /tmp/$dir
 fi
@@ -141,7 +196,7 @@ if [[ -n "$pathValue" ]]; then
         file=$pathValue
     fi
 else
-    file=$(~/scripts/share_find.sh | showmenu)
+    file=$($HOME/scripts/share_find.sh | showmenu)
     if [[ "$secretFlag" == true ]]; then
         cp "$file" /tmp/$dir
         file=$(zipAndCloak "/tmp/$dir")
@@ -155,12 +210,22 @@ fi
 
 if [[ "$megaFlag" == true ]]; then
     shareUrl=$(megaShare "$file") || { notify-send "Error: megaShare failed"; exit 1; }
-    # megaShare "$file" || exit 1
+    # cleanup: the output of megaShare comes in 2 lines, first line is the local file name
+    shareUrl="${shareUrl##*$'\n'}"
 else
-    # curl -F"file=@$file" 0x0.st | copyClipboard
+    file=$(cleanPath "$file")
     shareUrl=$(curl -k -X POST \
       -H "X-Auth-Token: $SHARE_LINK_AUTH" \
       -F "file=@$file" $SHARE_LINK_URL | jq -r .public_url)
+fi
+
+if [[ "$shortenFlag" == true ]]; then
+    if shortUrl=$(shortenUrl "$shareUrl"); then
+        shareUrl="$shortUrl"
+    else
+        echo "Shortening failed, porcodio! Keeping the long URL." >&2
+        notify-send "Error: shortener failed, keeping the long URL"
+    fi
 fi
 
 echo $shareUrl | copyClipboard
@@ -168,14 +233,25 @@ echo $shareUrl
 
 # ntfy notification
 if [[ "$ntfyFlag" == true ]]; then
-  curl \
-    -H "Title: Upload Complete" \
-    -H "Priority: low" \
-    -H "Tags: skull" \
-    -d "$shareUrl" \
-    $SHARE_LINK_NOTIFICATION_URL
+    source $HOME/scripts/ntfy/ntfy.sh
+    ntfy_send -T "Upload Complete" -p low -c "$shareUrl" --tags skull \
+        -a "$(ntfy_action_view 'Open link' "$shareUrl")" \
+        -a "$(ntfy_action_copy 'Copy' "$shareUrl" clear=false)" \
+        --topic "$NTFY_TOPIC_SHARE_LINK" \
+        "$shareUrl"
+
+
+
+    #curl \
+    #-H "Title: Upload Complete" \
+    #-H "Priority: low" \
+    #-H "Click: $shareUrl" \
+    #-H "Actions: view, Open link, $shareUrl, clear=true; copy, Copy, $shareUrl" \
+    #-H "Firebase: no" \
+    #-H "Tags: skull" \
+    #-d "$shareUrl" \
+    #$SHARE_LINK_NOTIFICATION_URL
 fi
 
 notify-send "Link Copied for $file"
-
 

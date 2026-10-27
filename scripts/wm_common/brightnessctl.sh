@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/notify-debounced.sh"
+
 iDIR="$HOME/scripts/wm_common/icons/notifications"  # /.config/mako/icons"
 
 # Detect notification method
@@ -53,10 +56,12 @@ notify_user() {
             -i "$icon" \
             "Brightness: ${current}%"
     else
-        notify-send -h string:x-canonical-private-synchronous:sys-notify \
-            -u low \
-            -i "$icon" \
-            "Brightness: ${current}%"
+        debounce_notify 0.3 "notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i \"\$icon\" \"Brightness : \${current}%\""
+
+        #notify-send -h string:x-canonical-private-synchronous:sys-notify \
+        #    -u low \
+        #    -i "$icon" \
+        #    "Brightness: ${current}%"
     fi
 }
 

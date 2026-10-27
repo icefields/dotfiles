@@ -125,10 +125,10 @@ local function worker(user_args)
 
     local icon = args.icon or ICONS_DIR .. 'docker.svg'
     local number_of_containers = args.number_of_containers or -1
-    local executable_name = args.executable_name or 'docker'
+    local executable_name =  args.executable_name or 'docker'
     -- 180 is the default width of the container details part of the widget and
     -- 90 is the default width of the control buttons
-    local max_widget_width = args.max_widget_width or 180 + 90
+    local max_widget_width = args.max_widget_width or 666 + 360
 
     docker_widget:set_icon(icon)
 

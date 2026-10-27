@@ -1,0 +1,11 @@
+# ~/.local/share/nemo/actions/extract-7z.nemo_action
+[Nemo Action]
+Active=true
+Name=Extract to EXTRACTED (7z)
+Comment=Silently extract archive into 0_EXTRACTED subdirectory
+Exec=/home/lucie/scripts/shell_common/extract-7z.sh %F
+Icon-Name=archive-extract
+Selection=Any
+Extensions=7z;zip;rar;tar;gz;bz2;xz;zst;iso;deb;arj;ace;cab;
+Quote=double
+
