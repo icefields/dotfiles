@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+exec $HOME/scripts/ntfy/ntfy.sh "$@"
+

@@ -233,7 +233,7 @@ echo $shareUrl
 
 # ntfy notification
 if [[ "$ntfyFlag" == true ]]; then
-    source $HOME/scripts/ntfy.sh
+    source $HOME/scripts/ntfy/ntfy.sh
     ntfy_send -T "Upload Complete" -p low -c "$shareUrl" --tags skull \
         -a "$(ntfy_action_view 'Open link' "$shareUrl")" \
         -a "$(ntfy_action_copy 'Copy' "$shareUrl" clear=false)" \
