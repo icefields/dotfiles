@@ -56,8 +56,11 @@ notify_user() {
             -i "$icon" \
             "Brightness: ${current}%"
     else
-        debounce_notify 0.3 "notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i \"\$icon\" \"Brightness : \${current}%\""
-
+#        debounce_notify 0.3 "notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i \"\$icon\" \"Brightness : \${current}%\""
+        #local currentNotificationId=$(cat "/tmp/currentNotificationId" 2>/dev/null || echo 1)        
+        local currentNotificationId=$(cat "/tmp/currentNotificationId" 2>/dev/null)
+        currentNotificationId=${currentNotificationId:-1}
+        notify-send -p -r $currentNotificationId -h string:x-canonical-private-synchronous:sys-notify -u low -i "$icon" "Brightness : ${current}%" > /tmp/currentNotificationId
         #notify-send -h string:x-canonical-private-synchronous:sys-notify \
         #    -u low \
         #    -i "$icon" \
@@ -67,12 +70,40 @@ notify_user() {
 
 # Increase brightness
 inc_backlight() {
-    brightnessctl set 10%+ && get_icon && notify_user
+    local br=$(get_brightness)
+    local step
+    if [[ "$br" -ge 80 ]]; then
+        step=10
+    elif [[ "$br" -ge 60 ]]; then
+        step=8
+    elif [[ "$br" -ge 40 ]]; then
+        step=6
+    else
+        step=2
+    fi
+
+    brightnessctl set "$step"%+ && get_icon && notify_user
 }
 
 # Decrease brightness
 dec_backlight() {
-    brightnessctl set 10%- && get_icon && notify_user
+    local br=$(get_brightness)
+    local step
+    if [[ "$br" -ge 80 ]]; then
+        step=10
+    elif [[ "$br" -ge 60 ]]; then
+        step=8
+    elif [[ "$br" -ge 40 ]]; then
+        step=6
+    elif [[ "$br" -ge 20 ]]; then
+        step=4
+    elif [[ "$br" -ge 10 ]]; then
+        step=3
+    else
+        step=2
+    fi
+
+    brightnessctl set "$step"%- && get_icon && notify_user
 }
 
 # Execute

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/notify-debounced.sh"
+#source "$SCRIPT_DIR/notify-debounced.sh"
 
 #iDIR="$HOME/.config/mako/icons"
 iDIR="$HOME/scripts/wm_common/icons/notifications"
@@ -11,6 +11,9 @@ if command -v dunstify >/dev/null 2>&1; then
     NOTIFY_CMD="dunstify"
 else
     NOTIFY_CMD="notify-send"
+    notificationIdLocation="/tmp/currentNotificationId"
+    currentNotificationId=$(cat $notificationIdLocation 2>/dev/null)
+    currentNotificationId=${currentNotificationId:-1}
 fi
 
 # Get Volume
@@ -38,7 +41,7 @@ notify_user() {
     if [[ "$NOTIFY_CMD" == "dunstify" ]]; then
         dunstify -r 9991 -u low -i "$(get_icon)" "Volume : $(get_volume) %"
     else
-        debounce_notify 0.3 "notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i \"\$(get_icon)\" \"Volume : \$(get_volume) %\""
+        notify-send -p -r $currentNotificationId -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume : $(get_volume) %" > $notificationIdLocation
         #notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume : $(get_volume) %"
     fi
 }
@@ -66,7 +69,7 @@ dec_volume() {
         echo "porcodio: no audio backend found" >&2
         return 1
     fi
-    notify_user
+    #notify_user
     #pamixer -d 1 && notify_user
 }
 
@@ -74,9 +77,9 @@ dec_volume() {
 toggle_mute() {
 	if command -v pamixer &>/dev/null; then
         if [ "$(pamixer --get-mute)" == "false" ]; then
-		    pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
+		    pamixer -m && notify-send -p -r $currentNotificationId -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF" > $notificationIdLocation
 	    elif [ "$(pamixer --get-mute)" == "true" ]; then
-		    pamixer -u && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume Switched ON"
+		    pamixer -u && notify-send -p -r $currentNotificationId -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume Switched ON"  > $notificationIdLocation
 	    fi
     elif command -v amixer &>/dev/null; then
         amixer -D pulse sset Master toggle
@@ -89,9 +92,9 @@ toggle_mute() {
 # Toggle Mic
 toggle_mic() {
 	if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
-		pamixer --default-source -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/microphone-mute.png" "Microphone Switched OFF"
+		pamixer --default-source -m && notify-send -p -r $currentNotificationId -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/microphone-mute.png" "Microphone Switched OFF" > $notificationIdLocation
 	elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-		pamixer -u --default-source u && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/microphone.png" "Microphone Switched ON"
+		pamixer -u --default-source u && notify-send -p -r $currentNotificationId -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/microphone.png" "Microphone Switched ON" > $notificationIdLocation
 	fi
 }
 # Get icons
@@ -124,7 +127,7 @@ get_mic_text_icon() {
 
 # Notify
 notify_mic_user() {
-	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_mic_icon)" "Mic-Level : $(pamixer --default-source --get-volume) %"
+	notify-send -p -r $currentNotificationId -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_mic_icon)" "Mic-Level : $(pamixer --default-source --get-volume) %" > $notificationIdLocation
 }
 
 # Increase MIC Volume
