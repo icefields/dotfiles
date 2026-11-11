@@ -1,0 +1,4 @@
+[Network]
+NetworkName=hermes-net
+Driver=bridge
+

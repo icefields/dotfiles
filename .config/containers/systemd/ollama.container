@@ -8,6 +8,7 @@ AssertPathIsMountPoint=/opt/ollama
 Image=docker.io/ollama/ollama:0.32.15
 ContainerName=ollama
 PublishPort=127.0.0.1:11434:11434
+Network=hermes.network
 Volume=/opt/ollama/local:/root/.ollama:U
 #Volume=/mnt/hd1/llm/ollama:/root/.ollama:U
 
@@ -29,6 +30,9 @@ Environment=OLLAMA_FLASH_ATTENTION=1
 Environment=OLLAMA_KV_CACHE_TYPE=q8_0
 Environment=OLLAMA_KEEP_ALIVE=30m
 Environment=OLLAMA_NUM_PARALLEL=2
+
+# Hermes refuses to run below 64,000
+Environment=OLLAMA_CONTEXT_LENGTH=64000
 #Environment=OLLAMA_CONTEXT_LENGTH=16384
 
 [Service]
