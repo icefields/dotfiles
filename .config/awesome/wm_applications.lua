@@ -678,10 +678,10 @@ local applications = {
             -- tag = "2",
             -- screen = screen.count(), -- open on secondary screen if present
             -- minimized = true,
-            floating = true,
-            maximized_vertical = false,
-            maximized_horizontal = false,
-            maximized = false,
+            -- floating = true,
+            -- maximized_vertical = false,
+            -- maximized_horizontal = false,
+            maximized = true,
         }
     },
     lxAppearance = {
