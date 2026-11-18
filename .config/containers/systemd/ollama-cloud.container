@@ -6,12 +6,16 @@ AssertPathIsMountPoint=/opt/ollama
 Image=docker.io/ollama/ollama:0.40.16
 ContainerName=ollama-cloud
 PublishPort=127.0.0.1:11435:11434
+Network=hermes-cloud.network
 # lives inside the @ollama subvol mounted at /opt/ollama
 Volume=/opt/ollama/cloud:/root/.ollama:U
 
 Environment=OLLAMA_HOST=0.0.0.0:11434
 Environment=OLLAMA_MODELS=/root/.ollama/models
 Environment=OLLAMA_NO_CLOUD=0
+
+# Hermes refuses to run below 64,000 [1]
+Environment=OLLAMA_CONTEXT_LENGTH=64000
 
 [Service]
 Restart=on-failure

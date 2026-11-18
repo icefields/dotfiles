@@ -5,7 +5,7 @@ AssertPathIsMountPoint=/opt/ollama
 #RequiresMountsFor=/mnt/hd1
 
 [Container]
-Image=docker.io/ollama/ollama:0.32.15
+Image=docker.io/ollama/ollama:0.40.16
 ContainerName=ollama
 PublishPort=127.0.0.1:11434:11434
 Network=hermes.network

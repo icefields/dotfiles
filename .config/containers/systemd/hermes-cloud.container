@@ -1,0 +1,26 @@
+[Unit]
+Description=Hermes Agent (cloud)
+
+[Container]
+Image=docker.io/nousresearch/hermes-agent:stable
+ContainerName=hermes-cloud
+Network=hermes-cloud.network
+Volume=/mnt/lucie/hermes-cloud/data:/opt/data
+Volume=/mnt/lucie/hermes-cloud/workspace:/opt/data/home/workspace
+NoNewPrivileges=true
+PodmanArgs=--shm-size=1g --pids-limit=512
+# Environment=HERMES_API_TIMEOUT=1800   # uncomment if iGPU inference is slow
+# AutoUpdate=registry                   # see step 8
+Exec=gateway run
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=1500          # first pull of the image is chunky
+MemoryMax=4G
+CPUQuota=200%
+
+# leave commented, only start on demand
+# [Install]
+# WantedBy=default.target
+
