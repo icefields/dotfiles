@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""komai-summon - raise running Komai via its single-instance socket
+(KDSingleApplication v2 protocol), else cold-start the AppImage."""
+
+import glob
+import os
+import socket
+import subprocess
+import sys
+from pathlib import Path
+
+SOCKET_NAME = "kdsingleapp-cc.etke.komai.instance.native.default"
+APPIMAGE = Path.home() / "apps/Komai.AppImage" #"$HOME/apps/Komai.AppImage"
+
+def findSocket():
+    tmp = os.environ.get("TMPDIR", "/tmp")
+    explicit = os.path.join(tmp, SOCKET_NAME)
+    if os.path.exists(explicit):
+        return explicit
+    # fallback: any kdsingleapp socket (multiple profiles -> first match)
+    matches = sorted(glob.glob(os.path.join(tmp, "kdsingleapp-*")))
+    return matches[0] if matches else None
+
+
+def main():
+    path = findSocket()
+    if path:
+        try:
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
+                s.connect(path)
+                s.sendall(b"\x02\x00\x00\x00\x08activate")
+            sys.exit(0)
+        except OSError:
+            pass  # stale socket from a crashed instance -> cold start
+
+    subprocess.Popen([APPIMAGE], start_new_session=True,
+        stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL)
+
+if __name__ == "__main__":
+    main()
+

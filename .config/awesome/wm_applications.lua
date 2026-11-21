@@ -31,6 +31,7 @@ local modkey = "Mod4"
 
 local homeDir = os.getenv("HOME")
 local appImageDir = homeDir .. "/apps/"
+local komai = require("applications.komai")
 
 local browser = {
     command = browserCmd,
@@ -787,7 +788,33 @@ local applications = {
         favourite = true,
         command = {
             command = "nheko",
-            description = "Nheko messenger",
+            description = "Nheko Matrix messenger",
+            group = groupLuci4,
+            shell = false,
+            --keyBinding = {
+            --    key1 =  { modkey },
+            --    key2 = "z"
+            --}
+        },
+        subGroup = subGroup.messaging,
+        -- icon = icons.telegram,
+        properties = {
+            -- tag = "8",
+            floating = false,
+            width = 1100,
+            height = 800,
+            windowPlacement = placement.centered
+        }
+    },
+    komai = {
+        class = "komai",
+        label = "Komai",
+        favourite = true,
+        command = {
+            command = function ()
+                komai.summon()
+            end, --appImageDir .. "Komai.AppImage",
+            description = "Komai Matrix messenger",
             group = groupLuci4,
             shell = false,
             keyBinding = {

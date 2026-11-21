@@ -18,8 +18,13 @@
 homeDirSource="$1"
 homeDirDest="$2"
 
+# Those dirs should exist?
+# mkdir -p /mnt/lucie/distrobox-home/music/.config/fish &&
+# mkdir -p /mnt/lucie/distrobox-home/music/.config/fontconfig &&
+# mkdir -p /mnt/lucie/distrobox-home/music/.local/share &&
+
 paths=(
-    ".config/fontconfig"
+    ".config/fontconfig" # .config/fontconfig/fonts.conf
     ".local/share"
     ".config/gtk-3.0"
     ".config/gtk-4.0"
@@ -28,7 +33,7 @@ paths=(
     ".config/Kvantum"
     ".config/fish/config.fish"
     ".config/fish/conf.d"
-    ".config/fish/functions"
+    ".config/fish/functions" # /home/lucie/.config/fish/completions
     ".config/kitty"
     ".config/nvim"
     ".local/share/themes"
