@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# find the latest version of the AppImage
+appimage="$(find "$HOME/apps" -maxdepth 1 -type f -iname 'freetube*.AppImage' -executable | sort -V | tail -n 1)"
+# check first local installation, then appimage, lastly distrobox
+if [ -x "/usr/bin/freetube" ]; then
+    exec /usr/bin/freetube
+elif [ -n "$appimage" ]; then
+    exec "$appimage"
+else
+    exec distrobox enter ubuntu -- freetube
+fi
+

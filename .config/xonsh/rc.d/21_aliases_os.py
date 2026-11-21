@@ -27,7 +27,7 @@ else:
         archUpdateCmd += " && sudo flatpak update --assumeyes"
 
 
-    if OS_NAME == "Arch":
+    if OS_NAME == "arch":
         abbrevs["ca"] = "bat --color=always"
         abbrevs["upd"] = archUpdateCmd
         aliases["cat"] = "bat -p --color=always"
@@ -45,12 +45,12 @@ else:
             "mirrora": "sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist",
         })
 
-    elif OS_NAME == "Ubuntu":
+    elif OS_NAME == "ubuntu":
         abbrevs["ca"] = "batcat --color=always"
         abbrevs["upd"] = debUpdateCmd        
         aliases["cat"] = "batcat -p --color=always"
 
-    elif OS_NAME == "Fedora":
+    elif OS_NAME == "fedora":
         abbrevs["vi"] = "nvim"
         abbrevs["upd"] = "sudo dnf upgrade"
 
@@ -61,11 +61,11 @@ else:
         except Exception:
             pass
 
-    elif OS_NAME == "macOS":
+    elif OS_NAME == "macos":
         abbrevs["ca"] = "bat --color=always"
         aliases["cat"] = "bat -p --color=always"
 
-    elif OS_NAME == "Linuxmint":
+    elif OS_NAME == "linuxmint":
         abbrevs["ca"] = "batcat --color=always"
         abbrevs["upd"] = debUpdateCmd
         aliases["cat"] = "batcat -p --color=always"

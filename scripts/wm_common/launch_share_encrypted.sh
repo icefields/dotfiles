@@ -1,3 +1,3 @@
 #!/bin/bash
-$HOME/scripts/share.sh --ntfy --secret
+$HOME/scripts/share.sh --ntfy -l --secret
 

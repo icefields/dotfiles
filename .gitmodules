@@ -16,3 +16,6 @@
 [submodule "scripts/shell_common/SportsFetch"]
 	path = scripts/shell_common/SportsFetch
 	url = https://github.com/icefields/SportsFetchLibrary.git
+[submodule "scripts/wm_common/Luci4-GTK-Window"]
+	path = scripts/wm_common/Luci4-GTK-Window
+	url = https://github.com/icefields/Luci4-GTK-Window.git

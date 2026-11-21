@@ -16,6 +16,7 @@
 require("get_app_icon")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 local icons = require("wm_applications").icons
+local appUtils = require("applications.application_utils")
 
 local has_deb, debian = pcall(require, "debian.menu")
 --local debian = require("debian.menu") or nil -- Load Debian menu entries
@@ -26,11 +27,7 @@ local function getAwesomeMenu(awful, applications, configDir)
         local item = {
             app.label,
             function()
-                 if app.command.shell then
-                    awful.spawn.with_shell(app.command.command)
-                else
-                    awful.spawn(app.command.command)
-                end
+                appUtils.execute(awful, app.command)
             end,
             app.icon or get_icon_for_application(configDir, app.label)
         }

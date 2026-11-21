@@ -10,6 +10,14 @@ command_exists() {
     command -v "$1" &> /dev/null
 }
 
+sysTerm() {
+    case "$TERMINAL_CMD" in
+        st*)    $TERMINAL_CMD -t "$1" -e sh -c "$2" ;;
+        kitty*) $TERMINAL_CMD --title "$1" sh -c "$2" ;;
+        *)      $TERMINAL_CMD -e sh -c "$2" ;;
+    esac
+}
+
 # Calculate updates for each service
 AUR=$(yay -Qua | wc -l)
 OFFICIAL=$(checkupdates | wc -l)
@@ -41,7 +49,8 @@ if [ "$1" = "update" ]; then
         UPDATE_CMD="$UPDATE_CMD && distrobox upgrade --all"
     fi
 
-    kitty --title update-sys sh -c "$UPDATE_CMD"
+    sysTerm update-sys "$UPDATE_CMD"
+    # kitty --title update-sys sh -c "$UPDATE_CMD"
 fi
 
 # If there aren't any parameters, return the total number of updates

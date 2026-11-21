@@ -1,0 +1,9 @@
+[Nemo Action]
+Name=Compress to .tar.gz
+Comment=Compress the selection to .tar.gz using 7-Zip
+Exec=/home/lucie/scripts/shell_common/compress-7z.sh tar.gz %F
+Icon-Name=package-x-generic
+Selection=notnone
+Extensions=any
+Quote=double
+

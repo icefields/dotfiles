@@ -10,13 +10,14 @@ run() {
 # run "$HOME/scripts/wm_common/screens.sh"
 run "$HOME/scripts/wm_common/start_picom_delayed.sh"
 run "$HOME/scripts/wm_common/start_keepass.sh"
-sleep 2
+sleep 4
 run lxqt-policykit-agent
 #run blueman-applet
 #run nm-applet
 run xfce4-clipman
 run "$HOME/scripts/wm_common/power-management.sh" # "xfce4-power-manager --daemon --no-tray-icon" #xfce4-power-manager
 run "$HOME/scripts/wm_common/start_filemanager.sh"
+sleep 2 # give extra seconds to keepass to load
 run "$HOME/apps/Joplin/Joplin.AppImage"
 run "$HOME/scripts/wm_common/start_nextcloud.sh"
 run "$HOME/scripts/wm_common/start_tuta.sh"

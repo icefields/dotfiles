@@ -18,6 +18,7 @@ local applications = awesomeApps.applications
 local groupLuci4 = awesomeApps.groupLuci4
 local groupLauncher = awesomeApps.groupLauncher
 local modkey = awesomeApps.modkey
+local appUtils = require("applications.application_utils")
 
 local function getEntry(awful, cmdItem)
     local key1 = cmdItem.keyBinding.key1
@@ -25,11 +26,16 @@ local function getEntry(awful, cmdItem)
 
     return awful.key(key1, key2,
         function ()
-            if cmdItem.shell then
-                awful.spawn.with_shell(cmdItem.command)
-            else
-                awful.spawn(cmdItem.command)
-            end
+            appUtils.execute(awful, cmdItem)
+            --if type(cmdItem.command) == "function" then
+            --    cmdItem.command()
+            --else
+            --    if cmdItem.shell then
+            --        awful.spawn.with_shell(cmdItem.command)
+            --    else
+            --        awful.spawn(cmdItem.command)
+            --    end
+            --end
         end, {
             description = cmdItem.description,
             group = cmdItem.group
@@ -112,35 +118,35 @@ local function awesomeGlobalKeys(args, showMainMenu)
             {description = "reload awesome", group = "awesome"}),
         awful.key({ modkey, "Shift"   }, "q", awesome.quit,
             {description = "quit awesome", group = "awesome"}),
-        awful.key({ modkey,           }, "l", function () 
+        awful.key({ modkey,           }, "l", function ()
                 awful.tag.incmwfact( 0.05)
             end, {
             description = "increase master width factor", group = "layout"}),
-        awful.key({ modkey,           }, "h", function () 
+        awful.key({ modkey,           }, "h", function ()
                 awful.tag.incmwfact(-0.05)
             end, {
             description = "decrease master width factor", group = "layout"}),
-        awful.key({ modkey, "Shift"   }, "h", function () 
-             awful.tag.incnmaster( 1, nil, true) 
+        awful.key({ modkey, "Shift"   }, "h", function ()
+             awful.tag.incnmaster( 1, nil, true)
             end, {
             description = "increase the number of master clients", group = "layout"}),
         awful.key({ modkey, "Shift"   }, "l", function ()
-                awful.tag.incnmaster(-1, nil, true) 
+                awful.tag.incnmaster(-1, nil, true)
             end, {
             description = "decrease the number of master clients", group = "layout"}),
-        awful.key({ modkey, "Control" }, "h", function () 
+        awful.key({ modkey, "Control" }, "h", function ()
                 awful.tag.incncol( 1, nil, true)
             end, {
             description = "increase the number of columns", group = "layout"}),
-        awful.key({ modkey, "Control" }, "l", function () 
+        awful.key({ modkey, "Control" }, "l", function ()
                 awful.tag.incncol(-1, nil, true)
             end, {
             description = "decrease the number of columns", group = "layout"}),
-        awful.key({ modkey,           }, "space", function () 
+        awful.key({ modkey,           }, "space", function ()
                 awful.layout.inc( 1)
             end, {
             description = "select next", group = "layout"}),
-        awful.key({ modkey, "Shift"   }, "space", function () 
+        awful.key({ modkey, "Shift"   }, "space", function ()
                 awful.layout.inc(-1)
             end, {
             description = "select previous", group = "layout"}),
