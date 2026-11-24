@@ -23,6 +23,7 @@ local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 local worldtimeTooltip = require("worldtime_tooltip")
 local currencyWidget = require("currency.currency_widget")
 local todoWidget = require("todo-widget.todo")
+local podmanWidget = require("podman-widget.podman")
 
 -- Add library to path (football_widget is inside .config/awesome/) 
 --local awesome_dir = os.getenv("HOME") .. "/.config/awesome"
@@ -195,7 +196,7 @@ local function createAwesomeBar(args, s, lockScreenCommand)
     local wibox = args.wibox
     local dpi = args.applyDpi
 
-    local docker_widget = require("docker-widget.docker")
+--    local docker_widget = require("docker-widget.docker")
     local batteryWidget = require("battery.battery_widget")
     local weatherButton = require("weather.weather_button")(args)
     local redshiftButton = require("redshift.redshift_widget")(args)
@@ -315,7 +316,8 @@ local function createAwesomeBar(args, s, lockScreenCommand)
             separator(beautiful, wibox, { showSeparator = false, margins = { left = dpi(1), right = dpi(1) } }),
             getCpuWidget(beautiful, dpi),
             getRamWidget(beautiful, dpi),
-            docker_widget({ executable_name = 'podman', applyDpi = dpi }),
+            podmanWidget(),
+            --docker_widget({ executable_name = 'podman', applyDpi = dpi }),
             updatesButton,
             spacer,
             --mykeyboardlayout
