@@ -1,5 +1,6 @@
 # --- aliases for both interactive and non interactive shell
 aliases["backup"] = str(Paths.SHELL_COMMON_SCRIPTS_DIR / 'backup.sh')
+aliases["ntfy"] = str(Paths.SCRIPTS_DIR / 'ntfy/ntfy.sh')
 aliases["share"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy -l -p')
 aliases["sharesec"] = str(Paths.SCRIPTS_DIR / 'share.sh --ntfy -l --secret -p')
 aliases["sharemega"] = str(Paths.SCRIPTS_DIR / 'share.sh -m --ntfy --secret -p')

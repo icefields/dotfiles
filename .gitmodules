@@ -21,4 +21,5 @@
 	url = https://github.com/icefields/Luci4-GTK-Window.git
 [submodule ".config/awesome/podman-widget"]
 	path = .config/awesome/podman-widget
-	url = git@github.com:icefields/Awesome-Podman-Widget.git
+    url = https://github.com/icefields/Awesome-Podman-Widget.git
+
