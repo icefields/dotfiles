@@ -27,7 +27,7 @@ local function getAwesomeMenu(awful, applications, configDir)
         local item = {
             app.label,
             function()
-                appUtils.execute(awful, app.command)
+                appUtils.execute(awful, app.command.command, app.command.shell)
             end,
             app.icon or get_icon_for_application(configDir, app.label)
         }

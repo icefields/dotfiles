@@ -28,7 +28,7 @@ M.config = {
     script = os.getenv("HOME") .. "/scripts/wm_common/komai-summon",
     -- true  = close+reopen cycle: window open anywhere -> lands on current tag
     -- false = instant yank: move the existing client here, no flicker
-    cycle = true,
+    cycle = false,
     -- lowercased substring matched against WM_CLASS class and instance
     match = "komai",
 }

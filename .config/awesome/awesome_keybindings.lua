@@ -26,7 +26,7 @@ local function getEntry(awful, cmdItem)
 
     return awful.key(key1, key2,
         function ()
-            appUtils.execute(awful, cmdItem)
+            appUtils.execute(awful, cmdItem.command, cmdItem.shell)
             --if type(cmdItem.command) == "function" then
             --    cmdItem.command()
             --else

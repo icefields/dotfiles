@@ -132,12 +132,12 @@ notify_mic_user() {
 
 # Increase MIC Volume
 inc_mic_volume() {
-	pamixer --default-source -i 1 && notify_mic_user
+	pamixer --default-source -i 6 && notify_mic_user
 }
 
 # Decrease MIC Volume
 dec_mic_volume() {
-	pamixer --default-source -d 1 && notify_mic_user
+	pamixer --default-source -d 6 && notify_mic_user
 }
 
 # Execute accordingly

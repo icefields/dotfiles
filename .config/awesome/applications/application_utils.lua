@@ -1,12 +1,12 @@
 
-local function execute(awful, cmdItem)
-    if type(cmdItem.command) == "function" then
-        cmdItem.command()
+local function execute(awful, command, isShell)
+    if type(command) == "function" then
+        command()
     else
-        if cmdItem.shell then
-            awful.spawn.with_shell(cmdItem.command)
+        if isShell then
+            awful.spawn.with_shell(command)
         else
-            awful.spawn(cmdItem.command)
+            awful.spawn(command)
         end
     end
 end

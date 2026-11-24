@@ -59,6 +59,7 @@ local power_ampache = baseDir .. "power_ampache.svg"
 local sheets_icon = baseDir .. "sheets.svg"
 local tenacity_icon = baseDir .. "tenacity.svg"
 local ntfy_icon = baseDir .. "ntfy.svg"
+local komai_icon = baseDir .. "komai.svg"
 
 -- LUCI4 ICON THEME
 local icons = {
@@ -104,6 +105,7 @@ local icons = {
     sheets = sheets_icon,
     tenacity = tenacity_icon,
     ntfy = ntfy_icon,
+    komai = komai_icon,
 }
 -- END LUCI4 Icon Theme
 return icons

@@ -115,6 +115,16 @@ local screenshotFull = {
         key2 = "Print"
     }
 }
+local screenshotUpload = {
+    command = homeDir .. "/scripts/wm_common/screenshot_extra_features.sh upload",
+    description = "Print entire screen",
+    group = groupLuci4,
+    shell = false,
+    keyBinding = {
+        key1 = { "Shift" },
+        key2 = "Print"
+    }
+}
 local playPauseMedia = {
     command = "playerctl play-pause",
     description = "Play/Pause media playback",
@@ -358,7 +368,7 @@ local propertiesFloatingCentered = {
 local applications = {
     luci4gtkwindow = {
         command = { },
-        class = "Luci4GTKviewer",
+        class = "luci-sixsixsix-wm-gtkwindow", --"Luci4GTKviewer",
         properties = propertiesFloatingCentered
     },
     playPauseMedia = {
@@ -405,6 +415,9 @@ local applications = {
     },
     screenshotArea = {
         command = screenshotArea
+    },
+    screenshotUpload = {
+        command = screenshotUpload
     },
     dmenu = {
         command = dmenu
@@ -463,7 +476,7 @@ local applications = {
         },
         subGroup = subGroup.terminals,
         icon = icons.kitty,
-        favourite = true
+        favourite = false
     },
     editor = {
         label = "NeoVim",
@@ -479,7 +492,7 @@ local applications = {
         command = kittyArchDistrobox,
         subGroup = subGroup.terminals,
         icon = icons.kittyArch,
-        favourite = true
+        favourite = false
     },
     kittyArchDistroboxIsolated = {
         label = "Kitty Isolated",
@@ -785,7 +798,7 @@ local applications = {
     nheko = {
         class = "nheko",
         label = "Nheko",
-        favourite = true,
+        favourite = false,
         command = {
             command = "nheko",
             description = "Nheko Matrix messenger",
@@ -823,7 +836,7 @@ local applications = {
             }
         },
         subGroup = subGroup.messaging,
-        -- icon = icons.telegram,
+        icon = icons.komai,
         properties = {
             -- tag = "8",
             floating = true,
@@ -949,7 +962,7 @@ local applications = {
     soulseek = {
         label = "Soulseek",
         class = "",
-        favourite = true,
+        favourite = false,
         command = {
             command = homeDir .. "/apps/Soulseek",
             description = "Soulseek share music",
@@ -962,7 +975,7 @@ local applications = {
     transmission = {
         label = "Transmission",
         class = "",
-        favourite = true,
+        favourite = false,
         command = {
             command = homeDir .. "/apps/Transmission",
             description = "Torrent client",
@@ -975,7 +988,7 @@ local applications = {
     calibre = {
         label = "Calibre",
         class = "",
-        favourite = true,
+        favourite = false,
         command = {
             command = homeDir .. "/apps/Calibre",
             description = "Calibre books",
@@ -1071,7 +1084,7 @@ local applications = {
     steam = {
         label = "Steam",
         class = "",
-        favourite = true,
+        favourite = false,
         command = {
             command = "steam",
             description = "Steam gaming",
@@ -1237,7 +1250,7 @@ local applications = {
     geforcenow = {
         label = "GeForce Now",
         class = "",
-        favourite = true,
+        favourite = false,
         command = {
             command = homeDir .. "/apps/geforcenow-electron.AppImage",
             description = "GeForce Now (Electron application)",
@@ -1288,7 +1301,7 @@ local applications = {
     qtcreator = {
         label = "QtCreator",
         class = "",
-        favourite = true,
+        favourite = false,
         command = {
             command = homeDir .. "/apps/QtCreator",
             description = "QT Creator IDE",
